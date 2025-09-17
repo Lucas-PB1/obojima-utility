@@ -1,0 +1,193 @@
+Comum
+
+1. Sensorius Maximus
+This effervescent green potion tastes like an old sock. When imbibed, it heightens all the senses with an expansive, almost euphoric feeling. For the next hour, you gain a +3 bonus to Wisdom (Perception) checks.
+
+2. Flip and Skip
+This blue potion sparkles and fizzes when opened and makes your tongue tingle when imbibed. For the next hour, you gain a +3 bonus to Dexterity (Acrobatics) checks.
+
+3. Brute Brew
+Drinking this brownish broth fills your sinews with ogreish power. For the next hour, you gain a +3 bonus to Strength (Athletics) checks.
+
+4. Animal Affinity
+This potion has a violet color and smells like a spring meadow. When you drink it, you become very calm and are able to sense the subtle cues from all kinds of animals. For the next hour, you gain a +3 bonus to Wisdom (Animal Handling) checks.
+
+5. Detective’s Tonic
+This subtle bourbon-flavored potion burns when consumed. For the next hour, you gain a +3 bonus to Intelligence (Investigation) checks.
+
+6. Cave Diver
+When poured on your hands and feet, they temporarily become stained with a deep indigo color. For the next 10 minutes, you gain the ability to move up, down, and across vertical surfaces and upside down along ceilings, while leaving your hands free. You also gain a climbing speed equal to your walking speed.
+
+7. Perfect Memory
+For 1 hour after drinking this potion, everything you see and hear is recorded perfectly in your memory. You can recall these memories up to 24 hours later. After that, all the memories begin to fade with only the most memorable parts remaining.
+
+8. Eyes of Akibu
+When this potion is poured over your eyes, your long-range vision enhances. For 4 hours, you can see up to 300 feet away as if looking at something one-tenth as far away from you.
+
+9. Glowskin
+Ironically, glowskin potions are jet black in color. For 4 hours after drinking this potion, your skin sheds bright light in a 30-foot radius and dim light for an additional 30 feet.
+
+10. Tiny Telekinesis
+When you drink this potion, you feel a slight pressure behind your eyes as though something is pushing on the inside of your skull trying to get out. For the next minute, you gain the ability to move an inanimate object within 60 feet of you with your mind. The object can be no larger than 5 inches in diameter and weigh no more than 1 pound, and it can’t be worn or carried. Moving an object in this way requires an action. You can move the object up to 30 feet in any direction, and you can’t move it more than 60 feet away from you.
+
+11. Irresistible Charm
+Once imbibed, a tingling sensation builds within you, bubbling up into a giddy euphoria of confident charm. For the next 10 minutes, you gain expertise in the Persuasion skill, which means you can add twice your proficiency bonus to any ability check you make with it.
+
+12. Pathseeking
+This potion is brewed for the specific task of detecting tracks left by a secret path potion. These tracks appear to you as glowing footprints made with uncanny detail. You also gain the ability to see into the Spirit Realm (Ethereal Plane). The effects of this potion last for 1 hour.
+
+13. Iron Belly
+Legend has it that Obojiman rangers would use this potion during long treks in the wilderness so they could eat unknown roots and fungi as well as drink from lakes and lowland streams without fear of illness. When imbibed, you gain 5 temporary hit points and resistance to poison damage for 1 hour.
+
+14. Face of Fugari
+Fugari is a figure of legend, a dragon frog who would glower at his subjects, filling them with dread at being swallowed whole. Drinking this potion gives you a grim, bullfroggish demeanor which strikes fear into those who view you. For the next minute, you have advantage on Charisma (Intimidation) checks.
+
+15. Duck Foot
+When you drink this brackish-smelling potion, your hands and feet begin to tingle. Within seconds, they turn a bright orange and become webbed like a mallard’s feet. For the next hour, you gain a swimming speed of 40 feet and are able to make a very convincing quacking sound.
+
+16. Potion of Fog
+When you drink this potion, a billow of thick fog pours from your mouth, duplicating the effect of the Fog Cloud* spell (no concentration required) centered on you. The cloud lasts for 1 hour, and it moves with you, remaining centered on you. As an action, you can expel all remaining fog from your stomach, causing it to remain centered on that space for the duration. The fog produces a scent of your choice.
+
+17. Secret Path
+When this potion is applied to a pair of boots, it allows their wearer to leave a trail of magical tracks that are invisible to the naked eye. This trail is only visible to a creature who can see invisible objects (such as one benefiting from see invisibility or truesight) or has imbibed a pathseeking potion. When this potion is brewed, the creator can choose the color of the tracks. The boots leave tracks for 24 hours, and the tracks last for one month before fading from view.
+
+18. Grandma’s Turnip Soup
+This potion tastes like a soup made with love. When you consume it during a short rest, you can roll 1d4 Hit Dice (adding your Constitution modifier to each and regaining hit points equal to the total) without expending them.
+
+19. Herbalist’s Aid
+Drinking this highly sought-after potion grants you a unique sense helpful for detecting ingredients. For the next hour, you gain a +3 bonus to all ability checks made to locate an ingredient.
+
+20. Homeward Tonic
+This fiery red elixir smells of home and drinking it gives a sensation of comfort when consumed. For the next 24 hours, you always know the direction of the place you consider home, provided it is on the same plane of existence.
+
+21. Soft Paw
+When consumed, this liquorice-flavored potion turns your hands and feet into fur-covered paws. For the next 10 minutes, you have advantage on Dexterity checks.
+
+22. Potion of Healing Touch
+When this glowing blue potion is poured on your hands, it gives you the ability to heal. As a bonus action, you can touch a creature, causing it to regain 2d4 hit points. This potion’s effects last 1 hour or until you have used this ability.
+
+23. Cat’s Eye
+When you imbibe this potion, your eyes become catlike, and you can choose their color. For the next hour, you gain darkvision out to a range of 60 feet. If you already have darkvision from another source, its range increases by 30 feet.
+
+24. Liquid Mending
+Also known as “craftsman in a bottle,” this well-loved potion is found in most homes and shops. You can pour this potion over an object to repair a single break or tear in it, as if by the Mending* spell.
+
+25. Liquid Lockpick
+Although frowned upon in many villages, this useful potion is still sought after by many islanders for both wholesome and nefarious reasons. You can pour the potion into a lock, loosening the mechanism inside and decreasing the DC to pick it by 1d4. Once a lock’s DC is reduced by this potion, its DC can’t be reduced by another liquid lockpick potion. The effects of this potion last for 1 hour.
+
+26. Language Lore
+This grayish potion tastes like chewed up paper. For 1 hour after drinking it, you understand the literal meaning of any spoken language that you hear.
+
+27. Pig Snout
+After drinking this pink pastel potion, there is a brief uncomfortable transformation, where the imbiber grows a beautiful, snuffling pig snout. For the next hour, you become very fond of truffles, perhaps even to the point of belligerence, and you have advantage on Wisdom (Perception) checks that rely on smell.
+
+28. Machine Oil
+When poured over a machine that is in working condition, this dark black liquid powers up the device, allowing it to function as if it were whelmed by a spirit or activated by the Jolt* spell. The machine stays powered by this potion for 1 minute.
+
+29. Potion of Soft Steps
+When you drink this frothy brew, you float an inch off the ground and walk on a cushion of air. For the next 10 minutes, you gain a +2 bonus to Dexterity (Stealth) checks, and you leave no discernible tracks.
+
+30. Liquid Cat
+This lively swirling concoction transforms and solidifies into a friendly cat when poured out. The cat serves you as a familiar, as if from the Find Familiar* spell. The cat disappears after 24 hours.
+
+Incomum
+
+31. Twin Vision
+This potion must be shared with another creature, each of them ingesting half of the potion. When the second half of the potion is consumed, the first creature gains the ability to see through the eyes of the second creature, gaining the benefits of any special senses that creature has. While seeing in this way, the first creature is blind with regard to its own senses. Either creature can use its action to stop shared vision or reactivate it.” This ability lasts for 8 hours, and it can’t be used if the creatures are more than 1 mile apart.
+
+32. Spirit Repellent
+This potion can either be imbibed or poured on a 1-foot square causing the nearby area to become repulsive to spirits. Any spirit that has a challenge rating of 5 or lower within 30 feet of you or the square must make a DC 15 Charisma saving throw. On a failed save, the spirit is teleported to a random unoccupied space that is 35 feet away from you or the square, and can’t willingly move to a space within range for 1 minute. A spirit that hasn’t made this save must immediately do so if it moves within range, becoming affected by the repellant for the duration on a failed save.
+
+33. Essence of the River Spirit
+This small, stoppered vial contains a clear liquid that shimmers with a faint blue light. When the vial is opened, you can pour the liquid into a small pool of water, such as a bath or hot spring, transforming it into a healing pool. A creature that soaks in the pool for at least 10 minutes regains 4d4 + 4 hit points. The pool loses its magic after 1 hour or once six creatures have benefited from this effect.
+
+34. Potion of Freezing
+Pouring this grayish blue potion into any liquid will cause that liquid to freeze solid for 1 hour, after which it begins to thaw as normal. This effect can freeze no more than a 20-foot cube of liquid.
+
+35. Potion of Attunement
+As an action, you can pour a drop of this potion onto a magic item that requires attunement and drink the rest. Once you do so, you instantly become attuned to that item.
+
+36. Water Breathing
+This tropical fruity elixir tastes just as delicious as your favorite juice. For the duration, you can breathe underwater. The effects of the potion last for 1 hour.
+
+37. Liquid Dispel
+When thrown at a creature, object, or magical effect within 30 feet of you, this potion breaks, releasing its contents on the target. Any spell of 3rd level or lower on the target immediately ends.
+
+38. Pocket Stomach
+When imbibed, your stomach temporarily functions as a bag of holding, allowing you to store any object you can fit in your mouth inside its extradimensional space. The effects of this potion last for a 1 hour, after which you throw up anything consumed.
+
+39. Liquid Arcana
+The brewer of this potion rolls a d4 to determine the maximum level of the spell slot it can restore. When you drink it, you immediately regain an expended spell slot of that level or lower.
+
+40. Arcane Solvent
+When this potion is applied to a magic item, any creature that was attuned to it is no longer attuned. If the item is being worn or carried by the attuned creature, it can resist the effects of this potion with a successful DC 13 Wisdom saving throw.
+
+41. Gardner’s Solution
+When this oily, greenish potion is rubbed on a plant, the plant instantly grows to full maturity. If the plant is too big for the space—such as a redwood tree—it will stop growing once it has reasonably filled the space. If the potion is imbibed, it does nothing, but it tastes like maple syrup.
+
+42. Potion of Exertion
+When you drink this potion, you gain a surge of manic energy allowing you to take another action this round at initiative count 1.
+
+43. Breakfast in a Bottle
+The brewer of this potion rolls a d4 to determine the number of servings it creates. When poured out, this liquid quickly forms into an appetizing breakfast, such as some bread or pancakes. A creature that consumes a serving of it feels satiated for the day, and its exhaustion level is reduced by 1. It takes 1 minute to consume one serving, and once a creature benefits from this effect, it can’t do so again until it finishes a long rest. The food spoils after 24 hours, losing its magic.
+
+44. Twin Telepathy
+This potion must be shared with another creature, each of them ingesting half of the potion. When consumed, the potion allows the imbibers to communicate telepathically across any distance. The effects of this potion last for 24 hours.
+
+45. Potion of Reprieve
+When imbibed, this potion offers temporary relief from an ill effect. For the next hour, you gain the benefit of an effect of your choice from the Greater Restoration* spell. When this potion’s effects end, you lose the chosen benefit, causing the ill effect to return.
+
+46. Uncanny Focus
+For 1 minute after imbibing this purplish liquid, you have advantage on Constitution saving throws made to maintain concentration on spells. In addition, becoming incapacitated doesn’t cause you to lose concentration on a spell.
+
+47. Meditative Trance
+This violet colored potion smells like lavender and citrus. The next time you take a short rest after ingesting it, you enjoy a deep, dreamless sleep, granting you the benefits of a long rest, even if you already benefited from a long rest in the past 24 hours.
+
+48. Potion of Holistic Wellness
+When you uncork this potion of scintillating liquid, your senses are calmed with the smell of vanilla and honey along with a warm spring breeze. When imbibed, you feel like your whole soul is embraced in a loving hug, causing you to regain 4d8 + 4 hit points, and removing any conditions affecting you, excluding the grappled, prone, or restrained condition.
+
+49. Sharp Mind
+When you drink this potion, your mind becomes charged with magical energy. For the next 8 hours, you gain a +2 bonus to Intelligence saving throws, and you gain resistance to psychic damage. In addition, you can devour whole tomes of text, reading 10 times faster than normal.
+
+50. Mind over Might
+When consumed, this chalky elixir turns an intellectual scholar into an athlete. For the next 24 hours, you can use your Intelligence or Wisdom modifier (your choice), in place of your Strength or Dexterity modifier, when making Strength (Athletics) and Dexterity (Acrobatics) checks. You also gain proficiency in those skills for the duration, if you don’t already have it.
+
+Raro
+
+51. Simulacrum Elixir
+When consumed, this numbing concoction sends you into a deep sleep. When you awake, your mind has taken over a perfect clone of yourself. The clone appears to be the same as you in every way, but it has half of your hit point maximum and is formed without any equipment other than mundane clothes. Otherwise, the clone uses all of your statistics, except that it is a construct. The clone lacks the ability to learn or become more powerful, so it never increases its level or other abilities, nor can it regain expended spell slots. While the clone exists, your original body stays in a constant deep sleep, where it requires no nourishment, but it can still suffer damage as normal. The clone lasts until you dismiss it or it drops to 0 hit points, at which point it disappears in a cloud of butterflies. When it disappears, your mind returns to your original body.
+
+52. Hidden Hand
+When consumed, this grainy potion heightens your senses and gives you a sunken feeling of untapped strength. For the next 24 hours, you gain telekinetic powers as if you were under the effects of the Telekinesis* spell.
+
+53. Last Resort
+When this potion is downed, a crystalline cocoon begins forming around you. The cocoon becomes fully formed at the start of your next turn, and you can’t be contacted or interacted with in any way. The cocoon is immune to all damage, and it can’t be moved or destroyed by any means short of a wish spell. While in the cocoon, you are in stasis and don’t need to eat or breathe. The cocoon lasts between 1 hour and 4 decades. Roll on the table below to determine the measurement of time for the effect, from hours to decades. Then roll a d4 to determine the exact amount of time the cocoon exists.
+d6	Measurement of Time
+1	Hours
+2	Days
+3	Weeks
+4	Months
+5	Years
+6	Decades
+
+54. Elixir of Echoes
+When you drink this potion, you gain the ability to cast a spell that was cast by another creature within the last minute. The spell has to have been cast within 100 feet of you, and you must be aware that the spell was cast. Once imbibed, you can cast the copied spell once within the next minute, without expending a spell slot or material components. If the spell requires a saving throw or spell attack roll, you use the DC and attack bonus of the creature that originally cast the spell.
+
+55. Blessing of the Moon Spirit
+After drinking this potion, which glows like a full moon, you gain a strange and wondrous affinity for the moon’s light. This potion’s effects are permanent. While moonlight touches you, you can use a bonus action to expend three hit dice. You can use this ability once per long rest. When you first consume this potion, your hit point maximum is increased by 2d10. This doesn’t count against the number of potions you can have affecting you at once.
+
+56. Bowark’s Bombastic Beer
+This potion was discovered by accident by the great brewmaster, Bowark. Unsealing it fills the room with a strong scent of hops and yeasty goodness. When consumed this beer gives you a warm euphoric calm that makes you feel like everything will be alright. Until this potion’s effects end, you can choose to reroll any ability check, attack roll, or saving throw you make. You can reroll in this way a total of 7 times before the potion wears off.
+
+57. Unified Might
+When consumed, this potion produces a burning sensation that fills your body, leaving you with newfound intellectual and physical strength. For the next hour, two ability scores of your choice increase to 25.
+
+58. Umi’s Powerful Undertow
+This potent elixir allows the drinker to enhance their aquatic spells with the ocean’s wrath. For the next hour, when you cast a spell that produces or manipulates water in some capacity, the spell is cast as if using a spell slot of one level higher. Additionally, spells that use water to deal damage to a creature or object, deal an extra 2d12 bludgeoning damage. Alternatively, you can throw the potion into an unoccupied space within 30 feet of you, breaking the glass and summoning three water elementals in the nearest unoccupied spaces. These creatures are under your control until destroyed.
+
+59. Island Nectar
+Consuming this sweet potion gives you a calming sensation before reinvigorating your life force and pushing you into action. You regain 100 hit points, and as part of the same bonus action to consume it, you can immediately make a melee weapon attack, cast a spell that targets only one creature or object, or move up to your speed.
+
+60. Elixir of Omnimind
+This pale blue potion smells like ozone. When you drink it, your mind expands, and you gain a brief but exceptional capacity to comprehend the vast complexities of the arcane. For the next minute, you can concentrate on two spells at the same time. If you are forced to make a Constitution saving throw to maintain your concentration, you must make a separate saving throw for each spell.
+

@@ -1,0 +1,720 @@
+{
+  "descricao": "Ingredientes de Obojima organizados por região e raridade",
+  "regioes": {
+    "Coastal Highlands": {
+      "descricao": "Terras Altas Costeiras",
+      "comum": {
+        "dado": "d22",
+        "ingredientes": [
+          {"nome": "Blue Back Salmon", "id": 5},
+          {"nome": "Boom Beri", "id": 6},
+          {"nome": "Bora Bug", "id": 7},
+          {"nome": "Bundle of Driko Twigs", "id": 9},
+          {"nome": "Chicken Egg", "id": 11},
+          {"nome": "Creeping Bolete", "id": 15},
+          {"nome": "Earwax", "id": 18},
+          {"nome": "Fish Head", "id": 20},
+          {"nome": "Flash Paper", "id": 21},
+          {"nome": "Green Slime", "id": 22},
+          {"nome": "Jumping Bonfire", "id": 28},
+          {"nome": "Jack-O'-Lantern Bits", "id": 29},
+          {"nome": "Kojo Root", "id": 32},
+          {"nome": "Mountain Ox Dung", "id": 37},
+          {"nome": "Mouse Tree Nut", "id": 38},
+          {"nome": "Pink Candle Wax", "id": 43},
+          {"nome": "Poison", "id": 45},
+          {"nome": "Sheep Dragon Wool", "id": 56},
+          {"nome": "Spindle Leg Spider Webs", "id": 58},
+          {"nome": "Snap Vine Sap", "id": 57},
+          {"nome": "Venus Fly Rat", "id": 64},
+          {"nome": "Yuma Shrub", "id": 69}
+        ]
+      },
+      "incomum": {
+        "dado": "d10",
+        "ingredientes": [
+          {"nome": "Bottle Cap (Supa-Fizz!)", "id": 3},
+          {"nome": "Essence of Glumbug", "id": 11},
+          {"nome": "Kojobi Fruit", "id": 18},
+          {"nome": "Lions Blume", "id": 21},
+          {"nome": "Nakudama Spice", "id": 27},
+          {"nome": "Noodle Eel", "id": 29},
+          {"nome": "Petrified Alligator", "id": 32},
+          {"nome": "Spark Plug", "id": 37},
+          {"nome": "Spring", "id": 39},
+          {"nome": "Vinyl Record", "id": 42}
+        ]
+      }
+    },
+    "Gale Fields": {
+      "descricao": "Campos de Vendaval",
+      "comum": {
+        "dado": "d28",
+        "ingredientes": [
+          {"nome": "Apper Carrot", "id": 2},
+          {"nome": "Blue Back Salmon", "id": 5},
+          {"nome": "Bora Bug", "id": 7},
+          {"nome": "Bundle of Driko Twigs", "id": 9},
+          {"nome": "Camp Mite", "id": 10},
+          {"nome": "Chicken Egg", "id": 11},
+          {"nome": "Clay Snake Tail", "id": 13},
+          {"nome": "Cloud Horn", "id": 14},
+          {"nome": "Earwax", "id": 18},
+          {"nome": "Fish Head", "id": 20},
+          {"nome": "Green Slime", "id": 22},
+          {"nome": "Hakuma Sapwood", "id": 24},
+          {"nome": "Hill Dragon Egg", "id": 25},
+          {"nome": "Howler Fur", "id": 26},
+          {"nome": "Itchi Beri", "id": 27},
+          {"nome": "Jumping Bonfire", "id": 28},
+          {"nome": "Jack-O'-Lantern Bits", "id": 29},
+          {"nome": "Nobblewort", "id": 40},
+          {"nome": "Monkey's Coil", "id": 36},
+          {"nome": "Poison", "id": 45},
+          {"nome": "Pyramid Melon", "id": 47},
+          {"nome": "Rattle Shoot", "id": 50},
+          {"nome": "Sheep Dragon Wool", "id": 56},
+          {"nome": "Spindle Leg Spider Webs", "id": 58},
+          {"nome": "Ube", "id": 62},
+          {"nome": "Windbloom", "id": 65},
+          {"nome": "Witch's Broom", "id": 66},
+          {"nome": "Yugi Sap", "id": 68}
+        ]
+      },
+      "incomum": {
+        "dado": "d13",
+        "ingredientes": [
+          {"nome": "Bottle Cap (Supa-Fizz!)", "id": 3},
+          {"nome": "Dragon Root", "id": 9},
+          {"nome": "Feather Rock", "id": 12},
+          {"nome": "Glow Worms of the Vale", "id": 16},
+          {"nome": "Kojobi Fruit", "id": 18},
+          {"nome": "Living Spud", "id": 20},
+          {"nome": "Noodle Eel", "id": 29},
+          {"nome": "Petrified Alligator", "id": 32},
+          {"nome": "Spark Plug", "id": 37},
+          {"nome": "Spring", "id": 39},
+          {"nome": "Sun Shroom", "id": 40},
+          {"nome": "Vinyl Record", "id": 42},
+          {"nome": "Wolfenite", "id": 43}
+        ]
+      }
+    },
+    "Gift of Shuritashi": {
+      "descricao": "Dom de Shuritashi",
+      "comum": {
+        "dado": "d32",
+        "ingredientes": [
+          {"nome": "Apper Carrot", "id": 2},
+          {"nome": "Bamboo", "id": 3},
+          {"nome": "Bashu Powder", "id": 4},
+          {"nome": "Blue Back Salmon", "id": 5},
+          {"nome": "Boom Beri", "id": 6},
+          {"nome": "Bora Bug", "id": 7},
+          {"nome": "Bundle of Driko Twigs", "id": 9},
+          {"nome": "Camp Mite", "id": 10},
+          {"nome": "Chicken Egg", "id": 11},
+          {"nome": "Cloud Horn", "id": 14},
+          {"nome": "Creeping Bolete", "id": 15},
+          {"nome": "Earwax", "id": 18},
+          {"nome": "Fish Folk Tooth", "id": 19},
+          {"nome": "Fish Head", "id": 20},
+          {"nome": "Flash Paper", "id": 21},
+          {"nome": "Green Slime", "id": 22},
+          {"nome": "Hakuma Sapwood", "id": 24},
+          {"nome": "Jumping Bonfire", "id": 28},
+          {"nome": "Jack-O'-Lantern Bits", "id": 29},
+          {"nome": "Knobble Leaf Seaweed", "id": 31},
+          {"nome": "Lovers Vine", "id": 33},
+          {"nome": "Mellowort", "id": 35},
+          {"nome": "Nobblewort", "id": 40},
+          {"nome": "Narutomaki", "id": 39},
+          {"nome": "Pink Candle Wax", "id": 43},
+          {"nome": "Queen's Dilemma", "id": 48},
+          {"nome": "Scalefruit Rind", "id": 53},
+          {"nome": "Seashell", "id": 54},
+          {"nome": "Sea Water", "id": 55},
+          {"nome": "Spindle Leg Spider Webs", "id": 58},
+          {"nome": "Varrow", "id": 63},
+          {"nome": "Yugi Sap", "id": 68}
+        ]
+      },
+      "incomum": {
+        "dado": "d16",
+        "ingredientes": [
+          {"nome": "Bottle Cap (Supa-Fizz!)", "id": 3},
+          {"nome": "Dawn Petal", "id": 8},
+          {"nome": "Fizzing Green", "id": 13},
+          {"nome": "Happy Joy Cake", "id": 17},
+          {"nome": "Kojobi Fruit", "id": 18},
+          {"nome": "Laughing Moss", "id": 19},
+          {"nome": "Munchanka Root", "id": 26},
+          {"nome": "Nakudama Spice", "id": 27},
+          {"nome": "Noodle Eel", "id": 29},
+          {"nome": "Petrified Alligator", "id": 32},
+          {"nome": "Shadowroot", "id": 34},
+          {"nome": "Spark Plug", "id": 37},
+          {"nome": "Spring", "id": 39},
+          {"nome": "Toka Truffle", "id": 41},
+          {"nome": "Vinyl Record", "id": 42},
+          {"nome": "Wychwood", "id": 44}
+        ]
+      }
+    },
+    "Land of Hot Water": {
+      "descricao": "Terra da Água Quente",
+      "comum": {
+        "dado": "d25",
+        "ingredientes": [
+          {"nome": "Amber", "id": 1},
+          {"nome": "Bamboo", "id": 3},
+          {"nome": "Bashu Powder", "id": 4},
+          {"nome": "Blue Back Salmon", "id": 5},
+          {"nome": "Boom Beri", "id": 6},
+          {"nome": "Brush Reed", "id": 8},
+          {"nome": "Bundle of Driko Twigs", "id": 9},
+          {"nome": "Chicken Egg", "id": 11},
+          {"nome": "Clay Snake Tail", "id": 13},
+          {"nome": "Earwax", "id": 18},
+          {"nome": "Fish Folk Tooth", "id": 19},
+          {"nome": "Fish Head", "id": 20},
+          {"nome": "Flash Paper", "id": 21},
+          {"nome": "Gohaku Rice", "id": 23},
+          {"nome": "Jumping Bonfire", "id": 28},
+          {"nome": "Oporion Glass", "id": 41},
+          {"nome": "Origami Crane", "id": 42},
+          {"nome": "Pink Candle Wax", "id": 43},
+          {"nome": "Poison", "id": 45},
+          {"nome": "Raka Paste", "id": 49},
+          {"nome": "Seashell", "id": 54},
+          {"nome": "Sea Water", "id": 55},
+          {"nome": "Varrow", "id": 63},
+          {"nome": "Windbloom", "id": 65},
+          {"nome": "Noodle Eel", "id": 29}
+        ]
+      },
+      "incomum": {
+        "dado": "d12",
+        "ingredientes": [
+          {"nome": "Bottle Cap (Supa-Fizz!)", "id": 3},
+          {"nome": "Crackling Jasper", "id": 4},
+          {"nome": "Gargoyle Powder", "id": 15},
+          {"nome": "Kojobi Fruit", "id": 18},
+          {"nome": "Molted Lizard Skin", "id": 23},
+          {"nome": "Petrified Alligator", "id": 32},
+          {"nome": "Spark Plug", "id": 37},
+          {"nome": "Spirit Tea", "id": 38},
+          {"nome": "Spring", "id": 39},
+          {"nome": "Vinyl Record", "id": 42},
+          {"nome": "Yellow Slime", "id": 45}
+        ]
+      }
+    },
+    "Mount Arbora": {
+      "descricao": "Monte Arbora",
+      "comum": {
+        "dado": "d22",
+        "ingredientes": [
+          {"nome": "Amber", "id": 1},
+          {"nome": "Blue Back Salmon", "id": 5},
+          {"nome": "Boom Beri", "id": 6},
+          {"nome": "Bora Bug", "id": 7},
+          {"nome": "Bundle of Driko Twigs", "id": 9},
+          {"nome": "Clay Snake Tail", "id": 13},
+          {"nome": "Earwax", "id": 18},
+          {"nome": "Fish Head", "id": 20},
+          {"nome": "Hakuma Sapwood", "id": 24},
+          {"nome": "Howler Fur", "id": 26},
+          {"nome": "Mandrake Root", "id": 34},
+          {"nome": "Nobblewort", "id": 40},
+          {"nome": "Oporion Glass", "id": 41},
+          {"nome": "Peeping Willow", "id": 44},
+          {"nome": "Poison", "id": 45},
+          {"nome": "Queen's Dilemma", "id": 48},
+          {"nome": "Raka Paste", "id": 49},
+          {"nome": "Spirit Root", "id": 59},
+          {"nome": "Windbloom", "id": 65},
+          {"nome": "Yugi Sap", "id": 68},
+          {"nome": "Yuma Shrub", "id": 69},
+          {"nome": "Noodle Eel", "id": 29}
+        ]
+      },
+      "incomum": {
+        "dado": "d13",
+        "ingredientes": [
+          {"nome": "Black Cinnamon", "id": 2},
+          {"nome": "Bottle Cap (Supa-Fizz!)", "id": 3},
+          {"nome": "Dawn Petal", "id": 8},
+          {"nome": "Essence of Glumbug", "id": 11},
+          {"nome": "Forge Slag", "id": 14},
+          {"nome": "Gargoyle Powder", "id": 15},
+          {"nome": "Mountain Snail", "id": 24},
+          {"nome": "Opu Opu Spring Water", "id": 30},
+          {"nome": "Petrified Alligator", "id": 32},
+          {"nome": "Spark Plug", "id": 37},
+          {"nome": "Spring", "id": 39},
+          {"nome": "Vinyl Record", "id": 42},
+          {"nome": "Wolfenite", "id": 43}
+        ]
+      }
+    },
+    "Shallows": {
+      "descricao": "Raso",
+      "comum": {
+        "dado": "d13",
+        "ingredientes": [
+          {"nome": "Blue Back Salmon", "id": 5},
+          {"nome": "Brush Reed", "id": 8},
+          {"nome": "Fish Folk Tooth", "id": 19},
+          {"nome": "Fish Head", "id": 20},
+          {"nome": "Knobble Leaf Seaweed", "id": 31},
+          {"nome": "Oporion Glass", "id": 41},
+          {"nome": "Pungent Sea Foam", "id": 46},
+          {"nome": "Seashell", "id": 54},
+          {"nome": "Rust Crab", "id": 52},
+          {"nome": "Sea Water", "id": 55},
+          {"nome": "Squid Ink", "id": 60},
+          {"nome": "Tangle Weed", "id": 61},
+          {"nome": "Witch's Eye Coral", "id": 67}
+        ]
+      },
+      "incomum": {
+        "dado": "d5",
+        "ingredientes": [
+          {"nome": "Black Pearl", "id": 1},
+          {"nome": "Bottle Cap (Supa-Fizz!)", "id": 3},
+          {"nome": "Noodle Eel", "id": 29},
+          {"nome": "Pok Pok Flakes", "id": 31},
+          {"nome": "Petrified Alligator", "id": 32}
+        ]
+      }
+    },
+    "Brackwater Wetlands": {
+      "descricao": "Pântanos de Água Salobra",
+      "comum": {
+        "dado": "d28",
+        "ingredientes": [
+          {"nome": "Bamboo", "id": 3},
+          {"nome": "Blue Back Salmon", "id": 5},
+          {"nome": "Bora Bug", "id": 7},
+          {"nome": "Brush Reed", "id": 8},
+          {"nome": "Bundle of Driko Twigs", "id": 9},
+          {"nome": "Camp Mite", "id": 10},
+          {"nome": "Chicken Egg", "id": 11},
+          {"nome": "Clay Snake Tail", "id": 13},
+          {"nome": "Creeping Bolete", "id": 15},
+          {"nome": "Earwax", "id": 18},
+          {"nome": "Fish Folk Tooth", "id": 19},
+          {"nome": "Fish Head", "id": 20},
+          {"nome": "Green Slime", "id": 22},
+          {"nome": "Gohaku Rice", "id": 23},
+          {"nome": "Howler Fur", "id": 26},
+          {"nome": "Kloth Leech", "id": 30},
+          {"nome": "Knobble Leaf Seaweed", "id": 31},
+          {"nome": "Lovers Vine", "id": 33},
+          {"nome": "Mellowort", "id": 35},
+          {"nome": "Narutomaki", "id": 39},
+          {"nome": "Poison", "id": 45},
+          {"nome": "Queen's Dilemma", "id": 48},
+          {"nome": "Raka Paste", "id": 49},
+          {"nome": "Ribbon Rot", "id": 51},
+          {"nome": "Scalefruit Rind", "id": 53},
+          {"nome": "Seashell", "id": 54},
+          {"nome": "Sea Water", "id": 55},
+          {"nome": "Varrow", "id": 63}
+        ]
+      },
+      "incomum": {
+        "dado": "d15",
+        "ingredientes": [
+          {"nome": "Bottle Cap (Supa-Fizz!)", "id": 3},
+          {"nome": "Corrupted Seawater", "id": 5},
+          {"nome": "Corrupted Slime", "id": 6},
+          {"nome": "Hakumon's Ramen Broth", "id": 7},
+          {"nome": "Laughing Moss", "id": 19},
+          {"nome": "Mournshade", "id": 25},
+          {"nome": "Night Thistle", "id": 28},
+          {"nome": "Noodle Eel", "id": 29},
+          {"nome": "Petrified Alligator", "id": 32},
+          {"nome": "Shadowroot", "id": 34},
+          {"nome": "Scumweed", "id": 35},
+          {"nome": "Spark Plug", "id": 37},
+          {"nome": "Spring", "id": 39},
+          {"nome": "Vinyl Record", "id": 42},
+          {"nome": "Wulfenite", "id": 43}
+        ]
+      }
+    }
+  },
+  "ingredientes_especiais": {
+    "descricao": "Ingredientes que só são encontrados em circunstâncias específicas",
+    "categoria": "especial",
+    "dado": "d9",
+    "ingredientes": [
+      {
+        "nome_ingles": "Essence of Ill Omen",
+        "nome_portugues": "Essência de Mau Presságio",
+        "id": 10,
+        "circunstancia": "Criada espontaneamente como feedback mágico da magia de adivinhação",
+        "localizacao": "Qualquer lugar onde magia de adivinhação é praticada"
+      },
+      {
+        "nome_ingles": "Magic Monk's Rice Wine",
+        "nome_portugues": "Vinho de Arroz do Monge Mágico",
+        "id": 22,
+        "circunstancia": "Distribuído por espíritos nos solstícios",
+        "localizacao": "Tavernas e templos de Obojima (apenas nos solstícios)"
+      },
+      {
+        "nome_ingles": "Rubble from a Rubble Golem",
+        "nome_portugues": "Entulho de um Golem de Entulho",
+        "id": 33,
+        "circunstancia": "Restos de golems de entulho destruídos",
+        "localizacao": "Onde golems de entulho foram derrotados"
+      },
+      {
+        "nome_ingles": "Sleeping Merchant",
+        "nome_portugues": "Mercador Adormecido",
+        "id": 36,
+        "circunstancia": "Lírio d'água que só cresce em lagoas específicas",
+        "localizacao": "Certas lagoas e lagos (não pode ser cultivado)"
+      },
+      {
+        "nome_ingles": "Blossom of Spirit Vine",
+        "nome_portugues": "Flor da Vinha do Espírito",
+        "id": 1,
+        "circunstancia": "Apenas uma flor existe por vez no Reino Espiritual",
+        "localizacao": "Reino Espiritual (localização aleatória)"
+      },
+      {
+        "nome_ingles": "Bottled Lightning",
+        "nome_portugues": "Raio Engarrafado",
+        "id": 2,
+        "circunstancia": "Capturado durante tempestades por magos especializados",
+        "localizacao": "Durante tempestades elétricas"
+      },
+      {
+        "nome_ingles": "Coal From The Wandering Line",
+        "nome_portugues": "Carvão da Linha Errante",
+        "id": 4,
+        "circunstancia": "Extraído de minas que existem apenas quando a ferrovia passa",
+        "localizacao": "Minas temporárias da Linha Errante"
+      },
+      {
+        "nome_ingles": "Tears of the Moon",
+        "nome_portugues": "Lágrimas da Lua",
+        "id": 18,
+        "circunstancia": "Formadas durante eclipses lunares",
+        "localizacao": "Durante eclipses lunares em Obojima"
+      },
+      {
+        "nome_ingles": "Nokumai's Frozen Breath",
+        "nome_portugues": "Sopro Congelado de Nokumai",
+        "id": 19,
+        "circunstancia": "Sopro do dragão de neve lendário que respira uma vez a cada mil anos",
+        "localizacao": "Além da linha de neve (dragão pode ter desaparecido)"
+      }
+    ]
+  },
+  "ingredientes_raros": {
+    "descricao": "Ingredientes raros que podem ser encontrados em regiões específicas",
+    "categoria": "raro",
+    "dado": "d12",
+    "ingredientes": [
+      {
+        "nome_ingles": "Bubble Gum",
+        "nome_portugues": "Chiclete",
+        "id": 3,
+        "regioes": ["Gift of Shuritashi", "Coastal Highlands"],
+        "circunstancia": "Feito pelos duendes de Obojima"
+      },
+      {
+        "nome_ingles": "Crimson Octopus Ink",
+        "nome_portugues": "Tinta de Polvo Carmesim",
+        "id": 5,
+        "regioes": ["Shallows", "Brackwater Wetlands"],
+        "circunstancia": "Produzida por polvos gigantes das profundezas"
+      },
+      {
+        "nome_ingles": "Dragon Fang of Yutro",
+        "nome_portugues": "Presa de Dragão de Yutro",
+        "id": 6,
+        "regioes": ["Mount Arbora", "Land of Hot Water"],
+        "circunstancia": "Restos do dragão ancião Yutro"
+      },
+      {
+        "nome_ingles": "Fairy Willow",
+        "nome_portugues": "Salgueiro das Fadas",
+        "id": 7,
+        "regioes": ["Gift of Shuritashi", "Gale Fields"],
+        "circunstancia": "Cresce em clareiras onde fadas dançam"
+      },
+      {
+        "nome_ingles": "Giant Koi Fish Scale",
+        "nome_portugues": "Escama de Carpa Koi Gigante",
+        "id": 8,
+        "regioes": ["Land of Hot Water", "Brackwater Wetlands"],
+        "circunstancia": "Escamas de carpas koi dos lagos sagrados"
+      },
+      {
+        "nome_ingles": "Golden Root",
+        "nome_portugues": "Raiz Dourada",
+        "id": 9,
+        "regioes": ["Mount Arbora", "Gale Fields"],
+        "circunstancia": "Cresce nas raízes das árvores mais antigas"
+      },
+      {
+        "nome_ingles": "Hand of Eryo",
+        "nome_portugues": "Mão de Eryo",
+        "id": 10,
+        "regioes": ["Mount Arbora", "Coastal Highlands"],
+        "circunstancia": "Artefato do mago Eryo preservado por magia"
+      },
+      {
+        "nome_ingles": "Irimbi Chrysalis",
+        "nome_portugues": "Crisálida de Irimbi",
+        "id": 11,
+        "regioes": ["Gift of Shuritashi", "Gale Fields"],
+        "circunstancia": "Crisálidas de borboletas mágicas"
+      },
+      {
+        "nome_ingles": "Lionfish Poison",
+        "nome_portugues": "Veneno de Peixe-Leão",
+        "id": 12,
+        "regioes": ["Shallows", "Brackwater Wetlands"],
+        "circunstancia": "Extraído dos espinhos venenosos do peixe-leão"
+      },
+      {
+        "nome_ingles": "Orange Slime",
+        "nome_portugues": "Lodo Laranja",
+        "id": 13,
+        "regioes": ["Mount Arbora", "Land of Hot Water"],
+        "circunstancia": "Criatura mágica das cavernas profundas"
+      },
+      {
+        "nome_ingles": "Ota Lantern Oil",
+        "nome_portugues": "Óleo da Lanterna de Ota",
+        "id": 14,
+        "regioes": ["Coastal Highlands", "Gift of Shuritashi"],
+        "circunstancia": "Receita secreta da família Ota"
+      },
+      {
+        "nome_ingles": "Sage Arol's Beetle",
+        "nome_portugues": "Besouro do Sábio Arol",
+        "id": 20,
+        "regioes": ["Mount Arbora", "Gale Fields"],
+        "circunstancia": "Besouros que vivem no subsolo e raramente vêm à superfície"
+      }
+    ]
+  },
+  "ingredientes_raros_unicos": {
+    "descricao": "Ingredientes raros únicos que não se encaixam em regiões específicas",
+    "categoria": "raro_unico",
+    "dado": "d7",
+    "ingredientes": [
+      {
+        "nome_ingles": "Plumage of a Running Kirio",
+        "nome_portugues": "Plumagem de um Kirio Corredor",
+        "id": 15,
+        "circunstancia": "Penas de aves mágicas que correm mais rápido que o vento",
+        "localizacao": "Planícies de Obojima (coletadas durante a muda)"
+      },
+      {
+        "nome_ingles": "Ronin Neko Figurine",
+        "nome_portugues": "Estatueta de Neko Ronin",
+        "id": 16,
+        "circunstancia": "Feitas por artesãos especializados",
+        "localizacao": "Oficinas de artesãos em Obojima"
+      },
+      {
+        "nome_ingles": "Starstone",
+        "nome_portugues": "Pedra Estrela",
+        "id": 17,
+        "circunstancia": "Fragmentos de estrelas que caíram há milhares de anos",
+        "localizacao": "Crateras de meteoros em Obojima"
+      },
+      {
+        "nome_ingles": "Wufu Whisky",
+        "nome_portugues": "Uísque Wufu",
+        "id": 21,
+        "circunstancia": "Destilado pelos monges da montanha Wufu",
+        "localizacao": "Monastério da montanha Wufu (produzido anualmente)"
+      }
+    ]
+  },
+  "total_regioes": 7,
+  "ingredientes_unicos": {
+    "comum": [
+      "Amber",
+      "Apper Carrot",
+      "Bamboo",
+      "Bashu Powder",
+      "Blue Back Salmon",
+      "Boom Beri",
+      "Bora Bug",
+      "Brush Reed",
+      "Bundle of Driko Twigs",
+      "Camp Mite",
+      "Chicken Egg",
+      "Clay Snake Tail",
+      "Cloud Horn",
+      "Creeping Bolete",
+      "Earwax",
+      "Fish Folk Tooth",
+      "Fish Head",
+      "Flash Paper",
+      "Gohaku Rice",
+      "Green Slime",
+      "Hakuma Sapwood",
+      "Hill Dragon Egg",
+      "Howler Fur",
+      "Itchi Beri",
+      "Jack-O'-Lantern Bits",
+      "Jumping Bonfire",
+      "Kloth Leech",
+      "Knobble Leaf Seaweed",
+      "Kojo Root",
+      "Lovers Vine",
+      "Mandrake Root",
+      "Mellowort",
+      "Monkey's Coil",
+      "Mountain Ox Dung",
+      "Mouse Tree Nut",
+      "Narutomaki",
+      "Nobblewort",
+      "Noodle Eel",
+      "Oporion Glass",
+      "Origami Crane",
+      "Peeping Willow",
+      "Pink Candle Wax",
+      "Poison",
+      "Pungent Sea Foam",
+      "Pyramid Melon",
+      "Queen's Dilemma",
+      "Raka Paste",
+      "Rattle Shoot",
+      "Ribbon Rot",
+      "Rust Crab",
+      "Scalefruit Rind",
+      "Seashell",
+      "Sea Water",
+      "Sheep Dragon Wool",
+      "Snap Vine Sap",
+      "Spindle Leg Spider Webs",
+      "Spirit Root",
+      "Squid Ink",
+      "Tangle Weed",
+      "Ube",
+      "Varrow",
+      "Venus Fly Rat",
+      "Windbloom",
+      "Witch's Broom",
+      "Witch's Eye Coral",
+      "Yugi Sap",
+      "Yuma Shrub"
+    ],
+    "incomum": [
+      "Black Cinnamon",
+      "Black Pearl",
+      "Bottle Cap (Supa-Fizz!)",
+      "Corrupted Seawater",
+      "Corrupted Slime",
+      "Crackling Jasper",
+      "Dawn Petal",
+      "Dragon Root",
+      "Essence of Glumbug",
+      "Feather Rock",
+      "Fizzing Green",
+      "Forge Slag",
+      "Gargoyle Powder",
+      "Glow Worms of the Vale",
+      "Hakumon's Ramen Broth",
+      "Happy Joy Cake",
+      "Kojobi Fruit",
+      "Laughing Moss",
+      "Living Spud",
+      "Lions Blume",
+      "Molted Lizard Skin",
+      "Mournshade",
+      "Mountain Snail",
+      "Munchanka Root",
+      "Nakudama Spice",
+      "Night Thistle",
+      "Noodle Eel",
+      "Opu Opu Spring Water",
+      "Petrified Alligator",
+      "Pok Pok Flakes",
+      "Scumweed",
+      "Shadowroot",
+      "Spark Plug",
+      "Spirit Tea",
+      "Spring",
+      "Sun Shroom",
+      "Toka Truffle",
+      "Vinyl Record",
+      "Wolfenite",
+      "Wulfenite",
+      "Wychwood",
+      "Yellow Slime"
+    ]
+  },
+  "estatisticas": {
+    "total_ingredientes_comum": 69,
+    "total_ingredientes_incomum": 45,
+    "total_ingredientes_especiais": 9,
+    "total_ingredientes_raros": 12,
+    "total_ingredientes_raros_unicos": 4,
+    "total_ingredientes_unicos": 135,
+    "ingredientes_mais_comuns": [
+      "Blue Back Salmon",
+      "Bundle of Driko Twigs",
+      "Chicken Egg",
+      "Earwax",
+      "Fish Head",
+      "Poison",
+      "Spindle Leg Spider Webs"
+    ],
+    "ingredientes_mais_raros": [
+      "Black Pearl",
+      "Pok Pok Flakes",
+      "Corrupted Seawater",
+      "Corrupted Slime",
+      "Hakumon's Ramen Broth",
+      "Mournshade",
+      "Night Thistle",
+      "Scumweed",
+      "Shadowroot"
+    ],
+    "ingredientes_especiais": [
+      "Essence of Ill Omen",
+      "Magic Monk's Rice Wine",
+      "Rubble from a Rubble Golem",
+      "Sleeping Merchant",
+      "Blossom of Spirit Vine",
+      "Bottled Lightning",
+      "Coal From The Wandering Line",
+      "Tears of the Moon",
+      "Nokumai's Frozen Breath"
+    ],
+    "ingredientes_raros": [
+      "Bubble Gum",
+      "Crimson Octopus Ink",
+      "Dragon Fang of Yutro",
+      "Fairy Willow",
+      "Giant Koi Fish Scale",
+      "Golden Root",
+      "Hand of Eryo",
+      "Irimbi Chrysalis",
+      "Lionfish Poison",
+      "Orange Slime",
+      "Ota Lantern Oil",
+      "Sage Arol's Beetle"
+    ],
+    "ingredientes_raros_unicos": [
+      "Plumage of a Running Kirio",
+      "Ronin Neko Figurine",
+      "Starstone",
+      "Wufu Whisky"
+    ]
+  }
+}

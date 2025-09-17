@@ -1,0 +1,195 @@
+{
+  "total": 21,
+  "descricao": "Ingredientes raros da ilha de Obojima para criação de poções",
+  "ingredientes": [
+    {
+      "id": 1,
+      "nome_ingles": "Blossom of Spirit Vine",
+      "nome_portugues": "Flor da Vinha do Espírito",
+      "combat": 18,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "Há três tomos alquímicos crípticos em Obojima que falam das energias arcanas da vinha do espírito e seus usos. Apenas os fabricantes de poções mais especializados entendem como trabalhar com esta planta, e desses, apenas alguns podem liberar completamente seu poder. A vinha do espírito só cresce no Reino Espiritual, onde é abundante. No entanto, o que torna esta planta única é a flor. A qualquer momento, existe apenas uma flor. Quando ela murcha ou é colhida, outra se formará em outra vinha em um local aleatório."
+    },
+    {
+      "id": 2,
+      "nome_ingles": "Bottled Lightning",
+      "nome_portugues": "Raio Engarrafado",
+      "combat": 19,
+      "utility": 17,
+      "whimsy": 18,
+      "descricao": "O raio engarrafado é criado quando um mago ou druida captura um raio em uma garrafa especial durante uma tempestade. O processo é perigoso e requer habilidade considerável, pois o raio deve ser capturado no momento exato em que atinge o solo. As garrafas usadas para este propósito são feitas de vidro especial que pode conter a energia elétrica sem quebrar. O raio engarrafado é extremamente instável e deve ser usado rapidamente após a captura."
+    },
+    {
+      "id": 3,
+      "nome_ingles": "Bubble Gum",
+      "nome_portugues": "Chiclete",
+      "combat": 16,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "Este chiclete mágico é feito pelos duendes de Obojima usando uma receita secreta que inclui seiva de árvores antigas e pó de estrelas. Quando mastigado, o chiclete pode produzir bolhas que flutuam no ar e contêm pequenas magias. As bolhas podem ser estouradas para liberar efeitos mágicos menores, como luz, som ou pequenas ilusões. O chiclete mantém suas propriedades mágicas por até uma hora após ser mastigado."
+    },
+    {
+      "id": 4,
+      "nome_ingles": "Coal From The Wandering Line",
+      "nome_portugues": "Carvão da Linha Errante",
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 17,
+      "descricao": "A Linha Errante é uma ferrovia mágica que atravessa Obojima em um padrão que muda constantemente. O carvão usado para alimentar a locomotiva desta ferrovia é especial, pois é extraído de minas que existem apenas quando a ferrovia passa por elas. Este carvão queima com uma chama azul e produz fumaça que pode ser usada para criar ilusões. É extremamente raro conseguir este carvão, pois a ferrovia é imprevisível e as minas desaparecem quando ela se move."
+    },
+    {
+      "id": 5,
+      "nome_ingles": "Crimson Octopus Ink",
+      "nome_portugues": "Tinta de Polvo Carmesim",
+      "combat": 18,
+      "utility": 16,
+      "whimsy": 18,
+      "descricao": "Esta tinta é produzida por polvos gigantes que vivem nas profundezas do oceano ao redor de Obojima. Os polvos carmesim são criaturas inteligentes que usam sua tinta para criar arte subaquática complexa. A tinta tem propriedades mágicas únicas e pode ser usada para escrever feitiços que se ativam quando a tinta seca. É coletada com muito cuidado, pois os polvos carmesim são protetores de sua arte e podem se tornar agressivos."
+    },
+    {
+      "id": 6,
+      "nome_ingles": "Dragon Fang of Yutro",
+      "nome_portugues": "Presa de Dragão de Yutro",
+      "combat": 20,
+      "utility": 15,
+      "whimsy": 17,
+      "descricao": "Yutro era um dragão ancião que viveu nas montanhas de Obojima há milhares de anos. Quando ele morreu, suas presas se espalharam pela ilha e se tornaram objetos de poder. Cada presa contém uma fração do poder de Yutro e pode ser usada para criar poções extremamente poderosas. As presas são procuradas por colecionadores e fabricantes de poções, mas são extremamente raras e valiosas."
+    },
+    {
+      "id": 7,
+      "nome_ingles": "Fairy Willow",
+      "nome_portugues": "Salgueiro das Fadas",
+      "combat": 15,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "Os salgueiros das fadas são árvores especiais que crescem apenas em clareiras onde as fadas dançam à luz da lua. Estas árvores são conhecidas por suas propriedades curativas e por abrigar espíritos benevolentes. As folhas e casca do salgueiro das fadas podem ser usadas para criar poções de cura poderosas e para afastar espíritos malignos. As árvores são protegidas pelas fadas e só podem ser colhidas com sua permissão."
+    },
+    {
+      "id": 8,
+      "nome_ingles": "Giant Koi Fish Scale",
+      "nome_portugues": "Escama de Carpa Koi Gigante",
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "As carpas koi gigantes são criaturas mágicas que vivem nos lagos sagrados de Obojima. Estas carpas são reverenciadas pelos habitantes locais e são consideradas portadoras de boa sorte. Suas escamas têm propriedades mágicas únicas e podem ser usadas para criar poções que trazem fortuna e proteção. As escamas são coletadas apenas quando as carpas as perdem naturalmente, pois machucar uma carpa koi gigante é considerado um grande tabu."
+    },
+    {
+      "id": 9,
+      "nome_ingles": "Golden Root",
+      "nome_portugues": "Raiz Dourada",
+      "combat": 16,
+      "utility": 20,
+      "whimsy": 16,
+      "descricao": "A raiz dourada é uma planta extremamente rara que cresce apenas nas raízes das árvores mais antigas de Obojima. Esta planta é conhecida por suas propriedades de longevidade e por sua capacidade de armazenar energia mágica. A raiz dourada pode ser usada para criar poções que estendem a vida e para armazenar feitiços para uso posterior. É tão rara que apenas algumas pessoas em Obojima já a viram."
+    },
+    {
+      "id": 10,
+      "nome_ingles": "Hand of Eryo",
+      "nome_portugues": "Mão de Eryo",
+      "combat": 19,
+      "utility": 17,
+      "whimsy": 16,
+      "descricao": "Eryo era um mago poderoso que viveu em Obojima há séculos. Quando ele morreu, sua mão foi preservada por magia e se tornou um artefato mágico. A mão de Eryo pode ser usada para lançar feitiços sem a necessidade de componentes materiais e pode armazenar energia mágica. É um dos artefatos mais poderosos de Obojima e é procurado por magos de todo o mundo."
+    },
+    {
+      "id": 11,
+      "nome_ingles": "Irimbi Chrysalis",
+      "nome_portugues": "Crisálida de Irimbi",
+      "combat": 18,
+      "utility": 19,
+      "whimsy": 17,
+      "descricao": "As crisálidas de Irimbi são formadas por borboletas mágicas que vivem nas florestas de Obojima. Estas borboletas passam por uma metamorfose especial que as transforma em criaturas de pura energia mágica. As crisálidas contêm esta energia e podem ser usadas para criar poções que transformam o usuário temporariamente. O processo de coleta deve ser feito com muito cuidado, pois as crisálidas são frágeis e podem se quebrar facilmente."
+    },
+    {
+      "id": 12,
+      "nome_ingles": "Lionfish Poison",
+      "nome_portugues": "Veneno de Peixe-Leão",
+      "combat": 20,
+      "utility": 14,
+      "whimsy": 18,
+      "descricao": "O veneno do peixe-leão é extraído dos espinhos venenosos desta criatura marinha perigosa. O veneno é extremamente potente e pode ser usado para criar poções venenosas poderosas. No entanto, também pode ser usado para criar antídotos e poções de cura quando processado corretamente. A coleta do veneno é perigosa e deve ser feita por especialistas, pois o peixe-leão é agressivo e seu veneno pode ser fatal."
+    },
+    {
+      "id": 13,
+      "nome_ingles": "Orange Slime",
+      "nome_portugues": "Lodo Laranja",
+      "combat": 19,
+      "utility": 16,
+      "whimsy": 17,
+      "descricao": "O lodo laranja é uma criatura mágica que vive nas cavernas profundas de Obojima. Este lodo é conhecido por sua inteligência e por sua capacidade de se comunicar telepaticamente. O lodo laranja pode ser usado para criar poções que permitem comunicação mental e para melhorar habilidades psíquicas. É uma criatura pacífica que só se torna agressiva quando ameaçada."
+    },
+    {
+      "id": 14,
+      "nome_ingles": "Ota Lantern Oil",
+      "nome_portugues": "Óleo da Lanterna de Ota",
+      "combat": 15,
+      "utility": 20,
+      "whimsy": 19,
+      "descricao": "O óleo da lanterna de Ota é feito a partir de uma receita secreta que foi passada através de gerações da família Ota. Este óleo é usado para alimentar lanternas mágicas que podem iluminar áreas grandes e afastar criaturas das trevas. O óleo tem propriedades purificadoras e pode ser usado para limpar áreas contaminadas por magia negra. A receita é guardada a sete chaves pela família Ota."
+    },
+    {
+      "id": 15,
+      "nome_ingles": "Plumage of a Running Kirio",
+      "nome_portugues": "Plumagem de um Kirio Corredor",
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "Os kirios corredores são aves mágicas que vivem nas planícies de Obojima. Estas aves são conhecidas por sua velocidade incrível e por sua capacidade de correr mais rápido que o vento. Suas penas têm propriedades mágicas que podem ser usadas para criar poções de velocidade e agilidade. As penas são coletadas apenas quando as aves as perdem naturalmente durante a muda."
+    },
+    {
+      "id": 16,
+      "nome_ingles": "Ronin Neko Figurine",
+      "nome_portugues": "Estatueta de Neko Ronin",
+      "combat": 18,
+      "utility": 17,
+      "whimsy": 20,
+      "descricao": "As estatuetas de neko ronin são feitas por artesãos especializados em Obojima. Estas estatuetas representam gatos samurais e são conhecidas por suas propriedades mágicas. As estatuetas podem ser usadas para criar poções que concedem habilidades de combate e para invocar espíritos de gatos samurais. São feitas com materiais especiais e requerem anos de treinamento para serem criadas corretamente."
+    },
+    {
+      "id": 17,
+      "nome_ingles": "Starstone",
+      "nome_portugues": "Pedra Estrela",
+      "combat": 16,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "As pedras estrela são fragmentos de estrelas que caíram em Obojima há milhares de anos. Estas pedras contêm energia cósmica pura e podem ser usadas para criar poções que conectam o usuário com o cosmos. As pedras estrela são extremamente raras e são procuradas por astrólogos e magos que estudam as estrelas. Elas brilham com uma luz suave mesmo na escuridão total."
+    },
+    {
+      "id": 18,
+      "nome_ingles": "Tears of the Moon",
+      "nome_portugues": "Lágrimas da Lua",
+      "combat": 17,
+      "utility": 20,
+      "whimsy": 18,
+      "descricao": "As lágrimas da lua são formadas quando a lua chora sobre Obojima durante eclipses lunares. Estas lágrimas são coletadas em recipientes especiais e têm propriedades mágicas únicas. As lágrimas da lua podem ser usadas para criar poções que conectam o usuário com a lua e para realizar rituais lunares poderosos. São coletadas apenas durante eclipses lunares, tornando-as extremamente raras."
+    },
+    {
+      "id": 19,
+      "nome_ingles": "Nokumai's Frozen Breath",
+      "nome_portugues": "Sopro Congelado de Nokumai",
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 20,
+      "descricao": "Nas alturas além da linha de neve existe um reino árido onde muitos seres mágicos residem. Um deles é o lendário dragão de neve, Nokumai, cujo sopro gelado é desejado por todos que lidam com coisas de natureza arcana. Diz-se que o Sopro Congelado de Nokumai nunca derrete, e o grande dragão só respira uma vez a cada mil anos, embora ninguém vivo tenha realmente visto Nokumai e o dragão pode ter desaparecido há muito tempo."
+    },
+    {
+      "id": 20,
+      "nome_ingles": "Sage Arol's Beetle",
+      "nome_portugues": "Besouro do Sábio Arol",
+      "combat": 18,
+      "utility": 20,
+      "whimsy": 0,
+      "descricao": "Estes besouros foram tornados famosos pelo lendário sábio, Arol, por seu uso de suas mandíbulas como penas para sua caneta. Mas os fabricantes de poções começaram a usar os besouros para criação de poções quando uma bruxa do Coven Cabeça de Peixe começou a ver o raro inseto em seus sonhos. Os Besouros do Sábio Arol vivem profundamente no subsolo, fugindo até da luz mais fraca. Em raras ocasiões, eles vêm à superfície, embora a razão permaneça um mistério."
+    },
+    {
+      "id": 21,
+      "nome_ingles": "Wufu Whisky",
+      "nome_portugues": "Uísque Wufu",
+      "combat": 18,
+      "utility": 17,
+      "whimsy": 19,
+      "descricao": "O uísque Wufu é destilado pelos monges da montanha Wufu usando uma receita secreta que inclui ervas mágicas e água de nascente sagrada. Este uísque é conhecido por suas propriedades mágicas e por sua capacidade de abrir a mente para visões místicas. O uísque Wufu pode ser usado para criar poções que melhoram habilidades psíquicas e para realizar rituais de adivinhação. É produzido apenas uma vez por ano durante o festival da montanha."
+    }
+  ]
+}
