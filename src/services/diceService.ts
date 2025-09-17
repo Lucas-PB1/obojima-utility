@@ -42,8 +42,7 @@ class DiceService {
     let total = baseRoll + modifier;
     
     if (bonusDice) {
-      const bonusRoll = this.rollBonusDice(bonusDice.type);
-      total += bonusRoll;
+      total += bonusDice.value; // Usar o valor já rolado, não rolar novamente
     }
     
     return total;

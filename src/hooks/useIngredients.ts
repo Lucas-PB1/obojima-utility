@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { storageService } from '@/services/storageService';
+import { useHydration } from './useHydration';
 
 export function useIngredients() {
   const [ingredients, setIngredients] = useState<CollectedIngredient[]>([]);
   const [attempts, setAttempts] = useState<ForageAttempt[]>([]);
+  const isHydrated = useHydration();
 
   useEffect(() => {
-    setIngredients(storageService.getCollectedIngredients());
-    setAttempts(storageService.getForageAttempts());
-  }, []);
+    if (isHydrated) {
+      setIngredients(storageService.getCollectedIngredients());
+      setAttempts(storageService.getForageAttempts());
+    }
+  }, [isHydrated]);
 
   const refreshIngredients = () => {
     setIngredients(storageService.getCollectedIngredients());
@@ -42,14 +46,15 @@ export function useIngredients() {
   const getStats = () => storageService.getStats();
 
   return {
-    ingredients,
-    attempts,
+    ingredients: isHydrated ? ingredients : [],
+    attempts: isHydrated ? attempts : [],
     refreshIngredients,
     refreshAttempts,
     markAsUsed,
     removeIngredient,
     addIngredient,
     addAttempt,
-    getStats
+    getStats,
+    isHydrated
   };
 }

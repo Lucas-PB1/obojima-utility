@@ -99,15 +99,18 @@ class IngredientsService {
     ];
   }
 
-  calculateDC(rarity: 'comum' | 'incomum', isNative: boolean = true): number {
+  calculateDC(rarity: 'comum' | 'incomum', isNative: boolean = true): { dc: number; range: string } {
     if (rarity === 'comum' && isNative) {
-      return Math.floor(Math.random() * 6) + 10; // DC 10-15
+      const dc = Math.floor(Math.random() * 6) + 10; // DC 10-15
+      return { dc, range: '10-15' };
     } else if (rarity === 'incomum' && isNative) {
-      return Math.floor(Math.random() * 5) + 16; // DC 16-20
+      const dc = Math.floor(Math.random() * 5) + 16; // DC 16-20
+      return { dc, range: '16-20' };
     } else if (rarity === 'incomum' && !isNative) {
-      return Math.floor(Math.random() * 5) + 21; // DC 21-25
+      const dc = Math.floor(Math.random() * 5) + 21; // DC 21-25
+      return { dc, range: '21-25' };
     }
-    return 15; // Fallback
+    return { dc: 15, range: '10-15' }; // Fallback
   }
 }
 

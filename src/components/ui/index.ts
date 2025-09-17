@@ -16,6 +16,8 @@ export { default as RadioGroup } from './RadioGroup';
 export { default as StatsGrid } from './StatsGrid';
 export { default as IngredientCard } from './IngredientCard';
 export { default as EmptyState } from './EmptyState';
+export { default as DataTable } from './DataTable';
+export { default as Modal } from './Modal';
 
 // Layout Sections
 export { default as FilterSection } from './FilterSection';

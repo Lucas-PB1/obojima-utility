@@ -30,7 +30,31 @@ class StorageService {
     
     try {
       const current = this.getCollectedIngredients();
-      current.push(ingredient);
+      
+      // Verificar se já existe um ingrediente igual (mesmo ID)
+      const existingIndex = current.findIndex(ing => 
+        ing.ingredient.id === ingredient.ingredient.id
+      );
+      
+      if (existingIndex !== -1) {
+        const existing = current[existingIndex];
+        
+        if (existing.used) {
+          // Se estava usado, voltar a ficar disponível e acumular
+          existing.used = false;
+          existing.usedAt = undefined;
+          existing.quantity += ingredient.quantity;
+          existing.collectedAt = new Date();
+        } else {
+          // Se já estava disponível, apenas acumular
+          existing.quantity += ingredient.quantity;
+          existing.collectedAt = new Date();
+        }
+      } else {
+        // Adicionar novo ingrediente
+        current.push(ingredient);
+      }
+      
       localStorage.setItem(this.COLLECTED_KEY, JSON.stringify(current));
     } catch (error) {
       console.error('Erro ao adicionar ingrediente coletado:', error);
@@ -53,10 +77,30 @@ class StorageService {
   }
 
   markIngredientAsUsed(id: string): void {
-    this.updateCollectedIngredient(id, { 
-      used: true, 
-      usedAt: new Date() 
-    });
+    if (typeof window === 'undefined') return;
+    
+    try {
+      const current = this.getCollectedIngredients();
+      const index = current.findIndex(ing => ing.id === id);
+      if (index !== -1) {
+        const ingredient = current[index];
+        
+        if (ingredient.quantity > 0) {
+          // Diminuir quantidade
+          ingredient.quantity -= 1;
+          
+          // Se chegou a 0, marcar como usado
+          if (ingredient.quantity === 0) {
+            ingredient.used = true;
+            ingredient.usedAt = new Date();
+          }
+        }
+        
+        localStorage.setItem(this.COLLECTED_KEY, JSON.stringify(current));
+      }
+    } catch (error) {
+      console.error('Erro ao marcar ingrediente como usado:', error);
+    }
   }
 
   removeCollectedIngredient(id: string): void {

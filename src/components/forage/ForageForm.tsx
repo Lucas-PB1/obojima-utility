@@ -12,14 +12,15 @@ interface ForageFormProps {
   setRegion: (region: RegionKey) => void;
   testType: TestType;
   setTestType: (type: TestType) => void;
-  modifier: number;
-  setModifier: (modifier: number) => void;
+  modifier: number | '';
+  setModifier: (modifier: number | '') => void;
   bonusDice: { type: DiceType; value: number } | null;
   setBonusDice: (dice: { type: DiceType; value: number } | null) => void;
   advantage: AdvantageType;
   setAdvantage: (advantage: AdvantageType) => void;
   onForage: () => void;
   isLoading: boolean;
+  remainingAttempts: number;
 }
 
 export default function ForageForm({
@@ -34,7 +35,8 @@ export default function ForageForm({
   advantage,
   setAdvantage,
   onForage,
-  isLoading
+  isLoading,
+  remainingAttempts
 }: ForageFormProps) {
   const regionOptions = ingredientsService.getRegionKeys().map(key => ({
     value: key,
@@ -130,16 +132,22 @@ export default function ForageForm({
         {/* Forage Button */}
         <Button
           onClick={onForage}
-          disabled={isLoading}
+          disabled={isLoading || remainingAttempts <= 0}
           fullWidth
           size="lg"
-          className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600"
+          className={`${
+            remainingAttempts <= 0 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600'
+          }`}
         >
           {isLoading ? (
             <span className="flex items-center justify-center">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-2"></div>
               Forrageando...
             </span>
+          ) : remainingAttempts <= 0 ? (
+            '🚫 Limite diário atingido'
           ) : (
             '🌿 Tentar Forragear'
           )}

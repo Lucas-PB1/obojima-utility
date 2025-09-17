@@ -12,50 +12,161 @@ export default function ForageResult({ result }: ForageResultProps) {
 
   return (
     <ContentCard>
-      <div className={`p-6 rounded-xl border-2 ${
+      <div className={`relative overflow-hidden rounded-2xl border-2 ${
         result.success 
-          ? 'bg-emerald-50 border-emerald-300' 
-          : 'bg-red-50 border-red-300'
-      }`}>
-        <div className="text-center">
-          <div className={`text-4xl mb-2 ${
-            result.success ? 'text-emerald-600' : 'text-red-600'
-          }`}>
-            {result.success ? '🎉' : '😞'}
+          ? 'bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 border-emerald-300 shadow-emerald-200' 
+          : 'bg-gradient-to-br from-rose-50 via-pink-50 to-red-50 border-rose-300 shadow-rose-200'
+      } shadow-lg`}>
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
+          <div className={`w-full h-full rounded-full ${
+            result.success ? 'bg-emerald-400' : 'bg-rose-400'
+          } transform translate-x-16 -translate-y-16`}></div>
+        </div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 opacity-10">
+          <div className={`w-full h-full rounded-full ${
+            result.success ? 'bg-teal-400' : 'bg-pink-400'
+          } transform -translate-x-12 translate-y-12`}></div>
+        </div>
+        
+        <div className="relative p-6">
+          {/* Header */}
+          <div className="text-center mb-6">
+            <div className={`text-5xl mb-3 ${
+              result.success ? 'text-emerald-500' : 'text-rose-500'
+            }`}>
+              {result.success ? '✨' : '🌙'}
+            </div>
+            <h3 className={`text-2xl font-bold mb-2 ${
+              result.success ? 'text-emerald-800' : 'text-rose-800'
+            }`}>
+              {result.success ? 'Sucesso!' : 'Falha!'}
+            </h3>
+            <p className={`text-sm ${
+              result.success ? 'text-emerald-600' : 'text-rose-600'
+            }`}>
+              {result.success ? 'Você encontrou algo especial!' : 'A natureza guarda seus segredos...'}
+            </p>
           </div>
-          <h3 className={`text-xl font-bold mb-2 ${
-            result.success ? 'text-emerald-800' : 'text-red-800'
+
+          {/* Main Result */}
+          <div className={`text-center mb-6 p-4 rounded-xl ${
+            result.success 
+              ? 'bg-emerald-100/80 border border-emerald-200' 
+              : 'bg-rose-100/80 border border-rose-200'
           }`}>
-            {result.success ? 'Sucesso!' : 'Falha!'}
-          </h3>
-          <div className="text-sm text-gray-600 space-y-1">
-            <p><strong>Rolagem:</strong> {result.roll}</p>
-            <p><strong>DC:</strong> {result.dc}</p>
-            <p><strong>Região:</strong> {ingredientsService.getRegionDisplayName(result.region)}</p>
-            <p><strong>Raridade:</strong> {result.rarity}</p>
+            <div className="flex items-center justify-center space-x-4">
+              <div className="text-center">
+                <p className="text-xs text-gray-500 mb-1">Sua Rolagem</p>
+                <p className={`text-3xl font-bold ${
+                  result.success ? 'text-emerald-700' : 'text-rose-700'
+                }`}>
+                  {result.roll}
+                </p>
+              </div>
+              <div className="text-2xl text-gray-400">vs</div>
+              <div className="text-center">
+                <p className="text-xs text-gray-500 mb-1">Dificuldade</p>
+                <p className="text-3xl font-bold text-blue-700">{result.dcRange}</p>
+              </div>
+            </div>
+            <div className="mt-3 text-sm text-gray-600">
+              <span className="bg-white/60 px-3 py-1 rounded-full">
+                DC {result.dcRange} • {result.rarity}
+              </span>
+              <p className="text-xs text-gray-500 mt-2">
+                {result.success ? 
+                  `✅ Rolagem ${result.roll} está dentro da faixa ${result.dcRange}` :
+                  `❌ Rolagem ${result.roll} está abaixo da faixa ${result.dcRange}`
+                }
+              </p>
+            </div>
+          </div>
+
+          {/* Roll Breakdown */}
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 mb-4 border border-white/40">
+            <h4 className="font-semibold text-gray-800 mb-3 flex items-center text-sm">
+              <span className="mr-2">🎲</span>
+              Detalhes da Rolagem
+            </h4>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center space-x-2">
+                <span className="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-medium">
+                  d20
+                </span>
+                <span className="font-bold text-lg">
+                  {result.roll - result.modifier - (result.bonusDice?.value || 0)}
+                </span>
+              </div>
+              <div className="text-gray-400">+</div>
+              <div className="flex items-center space-x-2">
+                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-medium">
+                  Mod
+                </span>
+                <span className="font-bold text-lg text-blue-700">
+                  +{result.modifier}
+                </span>
+              </div>
+              {result.bonusDice && (
+                <>
+                  <div className="text-gray-400">+</div>
+                  <div className="flex items-center space-x-2">
+                    <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-medium">
+                      d{result.bonusDice.type.substring(1)}
+                    </span>
+                    <span className="font-bold text-lg text-purple-700">
+                      +{result.bonusDice.value}
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Location Info */}
+          <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
+            <div className="flex items-center">
+              <span className="mr-1">🌿</span>
+              <span>{ingredientsService.getRegionDisplayName(result.region)}</span>
+            </div>
+            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+            <div className="flex items-center">
+              <span className="mr-1">⭐</span>
+              <span className="capitalize">{result.rarity}</span>
+            </div>
           </div>
           
           {result.success && result.ingredient && (
-            <div className="mt-4 p-4 bg-white/90 rounded-lg border border-emerald-200">
-              <h4 className="font-bold text-emerald-800 mb-2">
-                🎁 Ingrediente Coletado!
-              </h4>
-              <p className="text-emerald-700 font-medium">
-                {result.ingredient.nome_portugues}
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                {result.ingredient.descricao.substring(0, 100)}...
-              </p>
-              <div className="flex justify-center space-x-4 mt-2 text-xs">
-                <span className="bg-red-100 text-red-700 px-2 py-1 rounded">
-                  ⚔️ {result.ingredient.combat}
-                </span>
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded">
-                  🛠️ {result.ingredient.utility}
-                </span>
-                <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded">
-                  ✨ {result.ingredient.whimsy}
-                </span>
+            <div className="mt-6 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl p-5 border-2 border-amber-200 shadow-lg">
+              <div className="text-center mb-4">
+                <div className="text-3xl mb-2">🎁</div>
+                <h4 className="font-bold text-amber-800 text-lg">
+                  Ingrediente Coletado!
+                </h4>
+              </div>
+              
+              <div className="bg-white/80 rounded-lg p-4 mb-4 border border-amber-100">
+                <h5 className="font-bold text-amber-900 text-lg mb-2">
+                  {result.ingredient.nome_portugues}
+                </h5>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {result.ingredient.descricao.substring(0, 120)}...
+                </p>
+              </div>
+              
+              <div className="flex justify-center space-x-3">
+                <div className="bg-red-100/80 border border-red-200 rounded-lg px-3 py-2 text-center">
+                  <div className="text-red-600 text-xs font-medium mb-1">⚔️ Combat</div>
+                  <div className="text-red-800 font-bold text-lg">{result.ingredient.combat}</div>
+                </div>
+                <div className="bg-blue-100/80 border border-blue-200 rounded-lg px-3 py-2 text-center">
+                  <div className="text-blue-600 text-xs font-medium mb-1">🛠️ Utility</div>
+                  <div className="text-blue-800 font-bold text-lg">{result.ingredient.utility}</div>
+                </div>
+                <div className="bg-purple-100/80 border border-purple-200 rounded-lg px-3 py-2 text-center">
+                  <div className="text-purple-600 text-xs font-medium mb-1">✨ Whimsy</div>
+                  <div className="text-purple-800 font-bold text-lg">{result.ingredient.whimsy}</div>
+                </div>
               </div>
             </div>
           )}

@@ -103,6 +103,7 @@ export interface ForageAttempt {
   };
   advantage: AdvantageType;
   dc: number;
+  dcRange: string;
   roll: number;
   success: boolean;
   ingredient?: Ingredient;

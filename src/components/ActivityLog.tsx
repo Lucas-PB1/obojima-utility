@@ -9,6 +9,7 @@ import StatsGrid from './ui/StatsGrid';
 import ActivityFilters from './filters/ActivityFilters';
 import EmptyState from './ui/EmptyState';
 import ContentCard from './ui/ContentCard';
+import ClientOnly from './ClientOnly';
 import { ingredientsService } from '@/services/ingredientsService';
 
 export default function ActivityLog() {
@@ -42,17 +43,18 @@ export default function ActivityLog() {
         icon="📋"
       />
 
-      {/* Stats */}
-      <StatsGrid title="📊 Estatísticas do Período" stats={statsData} className="mb-8" />
+      <ClientOnly fallback={<div className="text-center py-8">Carregando...</div>}>
+        {/* Stats */}
+        <StatsGrid title="📊 Estatísticas do Período" stats={statsData} className="mb-8" />
 
-      {/* Filters */}
-      <ActivityFilters 
-        attempts={attempts} 
-        onFilteredAttempts={setFilteredAttempts}
-      />
+        {/* Filters */}
+        <ActivityFilters 
+          attempts={attempts} 
+          onFilteredAttempts={setFilteredAttempts}
+        />
 
-      {/* Activity List */}
-      <ContentCard title={`Atividades (${filteredAttempts.length})`}>
+        {/* Activity List */}
+        <ContentCard title={`Atividades (${filteredAttempts.length})`}>
         {filteredAttempts.length === 0 ? (
           <EmptyState
             icon="📋"
@@ -109,7 +111,7 @@ export default function ActivityLog() {
                       <div>
                         <span className="font-medium text-gray-700">Rolagem:</span>
                         <p className="text-gray-600">
-                          {attempt.roll} (DC {attempt.dc})
+                          {attempt.roll} (DC {attempt.dcRange})
                         </p>
                       </div>
                       <div>
@@ -170,7 +172,8 @@ export default function ActivityLog() {
             ))}
           </div>
         )}
-      </ContentCard>
+        </ContentCard>
+      </ClientOnly>
     </PageLayout>
   );
 }

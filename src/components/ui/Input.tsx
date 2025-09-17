@@ -2,8 +2,8 @@ import React from 'react';
 
 interface InputProps {
   type?: 'text' | 'number' | 'email' | 'password';
-  value: string | number;
-  onChange: (value: string | number) => void;
+  value: string | number | '';
+  onChange: (value: string | number | '') => void;
   placeholder?: string;
   label?: string;
   className?: string;
@@ -32,13 +32,29 @@ export default function Input({
         type={type}
         value={value}
         onChange={(e) => {
-          const newValue = type === 'number' ? parseInt(e.target.value) || 0 : e.target.value;
-          onChange(newValue);
+          if (type === 'number') {
+            const value = e.target.value;
+            if (value === '') {
+              onChange('');
+            } else {
+              const numValue = parseInt(value);
+              onChange(isNaN(numValue) ? 0 : numValue);
+            }
+          } else {
+            onChange(e.target.value);
+          }
         }}
         placeholder={placeholder}
         min={min}
         max={max}
-        className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white shadow-sm transition-all duration-200 hover:border-emerald-400"
+        className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 shadow-sm transition-all duration-200 hover:border-emerald-400"
+        style={{
+          color: '#111827', // text-gray-900
+          backgroundColor: '#ffffff', // bg-white
+          WebkitAppearance: 'none',
+          MozAppearance: 'none',
+          appearance: 'none'
+        }}
       />
     </div>
   );
