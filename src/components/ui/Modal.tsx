@@ -43,7 +43,7 @@ export default function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop com efeito de blur e gradiente */}
       <div 
-        className={`fixed inset-0 bg-gradient-to-br from-emerald-900/20 via-teal-900/30 to-cyan-900/20 backdrop-blur-sm transition-all duration-300 ${
+        className={`fixed inset-0 bg-rose-900/5 backdrop-blur-sm transition-all duration-300 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={onClose}
@@ -59,19 +59,19 @@ export default function Modal({
           }`}
         >
           {/* Sombra flutuante */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-emerald-400/20 via-teal-400/20 to-cyan-400/20 rounded-3xl blur-xl"></div>
+          <div className="absolute -inset-4 bg-rose-400/10 rounded-3xl blur-xl"></div>
           
           {/* Modal principal */}
           <div className="relative overflow-hidden rounded-2xl bg-white/95 backdrop-blur-sm shadow-2xl border border-white/20">
             {/* Header com gradiente suave */}
-            <div className="bg-gradient-to-r from-emerald-50/80 via-teal-50/80 to-cyan-50/80 px-6 py-4 border-b border-emerald-200/50 backdrop-blur-sm">
+            <div className="bg-rose-50 px-6 py-4 border-b border-rose-200 backdrop-blur-sm">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-emerald-800">
+                <h3 className="text-lg font-semibold text-rose-400">
                   {title}
                 </h3>
                 <button
                   onClick={onClose}
-                  className="text-emerald-500 hover:text-emerald-700 transition-colors p-1 rounded-full hover:bg-emerald-100"
+                  className="text-rose-400 hover:text-rose-500 transition-colors p-1 rounded-full hover:bg-rose-100"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

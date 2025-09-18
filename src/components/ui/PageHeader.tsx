@@ -12,12 +12,12 @@ export default function PageHeader({ title, subtitle, icon, className = '', acti
   return (
     <div className={`mb-8 ${className}`}>
       {/* Background decorativo */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-50/80 via-teal-50/60 to-cyan-50/80 backdrop-blur-sm border border-emerald-200/50 shadow-lg">
+      <div className="relative overflow-hidden rounded-3xl bg-white backdrop-blur-md border border-rose-200 shadow-lg shadow-rose-100/20">
         {/* Elementos decorativos de fundo */}
         <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-4 left-4 w-16 h-16 bg-emerald-200/20 rounded-full blur-xl"></div>
-          <div className="absolute top-8 right-8 w-12 h-12 bg-teal-200/20 rounded-full blur-lg"></div>
-          <div className="absolute bottom-4 left-1/4 w-8 h-8 bg-cyan-200/20 rounded-full blur-md"></div>
+          <div className="absolute top-4 left-4 w-16 h-16 bg-rose-100/30 rounded-full blur-xl"></div>
+          <div className="absolute top-8 right-8 w-12 h-12 bg-pink-100/25 rounded-full blur-lg"></div>
+          <div className="absolute bottom-4 left-1/4 w-8 h-8 bg-purple-100/20 rounded-full blur-md"></div>
         </div>
         
         <div className="relative px-8 py-6">
@@ -27,16 +27,16 @@ export default function PageHeader({ title, subtitle, icon, className = '', acti
               <div className="flex items-center space-x-4">
                 {icon && (
                   <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center shadow-lg border border-emerald-200/50">
-                      <span className="text-3xl filter drop-shadow-sm">{icon}</span>
+                    <div className="w-20 h-20 bg-rose-100 rounded-3xl flex items-center justify-center shadow-lg border border-rose-200 backdrop-blur-sm">
+                      <span className="text-4xl filter drop-shadow-sm">{icon}</span>
                     </div>
                   </div>
                 )}
                 <div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-800 bg-clip-text text-transparent mb-1">
+                  <h1 className="text-4xl font-bold text-rose-400 mb-2">
                     {title}
                   </h1>
-                  <p className="text-emerald-600/80 text-base font-medium">
+                  <p className="text-rose-300 text-lg font-medium">
                     {subtitle}
                   </p>
                 </div>
@@ -53,7 +53,7 @@ export default function PageHeader({ title, subtitle, icon, className = '', acti
         </div>
         
         {/* Linha decorativa inferior */}
-        <div className="h-1 bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300"></div>
+        <div className="h-1 bg-rose-200"></div>
       </div>
     </div>
   );

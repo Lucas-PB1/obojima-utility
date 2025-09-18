@@ -16,20 +16,20 @@ export default function IngredientCard({
   showActions = true 
 }: IngredientCardProps) {
   return (
-    <div className={`bg-white/90 p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-lg ${
+    <div className={`bg-white p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-lg ${
       ingredient.used 
         ? 'border-gray-300 bg-gray-50' 
-        : 'border-emerald-200 hover:border-emerald-300'
+        : 'border-rose-200 hover:border-rose-300'
     }`}>
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
-        <h3 className="font-bold text-emerald-800 text-lg leading-tight">
+        <h3 className="font-bold text-rose-400 text-lg leading-tight">
           {ingredient.ingredient.nome_portugues}
         </h3>
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
           ingredient.used 
             ? 'bg-gray-200 text-gray-600' 
-            : 'bg-emerald-200 text-emerald-700'
+            : 'bg-rose-200 text-rose-400'
         }`}>
           {ingredient.used ? 'Usado' : 'Disponível'}
         </span>

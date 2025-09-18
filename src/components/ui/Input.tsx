@@ -24,7 +24,7 @@ export default function Input({
   return (
     <div className={className}>
       {label && (
-        <label className="block text-sm font-medium text-emerald-700 mb-2">
+        <label className="block text-sm font-medium text-rose-400 mb-2">
           {label}
         </label>
       )}
@@ -47,10 +47,8 @@ export default function Input({
         placeholder={placeholder}
         min={min}
         max={max}
-        className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 shadow-sm transition-all duration-200 hover:border-emerald-400"
+        className="w-full p-3 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-300 focus:border-rose-300 bg-white text-gray-900 placeholder-gray-500 shadow-sm transition-all duration-200 hover:border-rose-300"
         style={{
-          color: '#111827', // text-gray-900
-          backgroundColor: '#ffffff', // bg-white
           WebkitAppearance: 'none',
           MozAppearance: 'none',
           appearance: 'none'

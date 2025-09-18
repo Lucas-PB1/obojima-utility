@@ -4,7 +4,7 @@ export interface Column<T> {
   key: keyof T;
   label: string;
   sortable?: boolean;
-  render?: (value: any, item: T) => React.ReactNode;
+  render?: (value: unknown, item: T) => React.ReactNode;
   width?: string;
 }
 
@@ -26,7 +26,7 @@ interface DataTableProps<T> {
   className?: string;
 }
 
-export default function DataTable<T extends Record<string, any>>({
+export default function DataTable<T extends Record<string, unknown>>({
   data,
   columns,
   filters = [],
@@ -48,7 +48,7 @@ export default function DataTable<T extends Record<string, any>>({
     if (searchTerm && searchKey) {
       filtered = filtered.filter(item => {
         const value = searchKey.includes('.') 
-          ? searchKey.split('.').reduce((obj, key) => obj?.[key], item)
+          ? searchKey.split('.').reduce((obj: unknown, key) => (obj as Record<string, unknown>)?.[key], item)
           : item[searchKey];
         return value?.toString().toLowerCase().includes(searchTerm.toLowerCase());
       });
@@ -59,7 +59,7 @@ export default function DataTable<T extends Record<string, any>>({
       if (value) {
         filtered = filtered.filter(item => {
           const itemValue = key.includes('.') 
-            ? key.split('.').reduce((obj, k) => obj?.[k], item)
+            ? key.split('.').reduce((obj: unknown, k) => (obj as Record<string, unknown>)?.[k], item)
             : item[key];
           return itemValue?.toString().toLowerCase().includes(value.toLowerCase());
         });
@@ -133,7 +133,7 @@ export default function DataTable<T extends Record<string, any>>({
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900"
+                className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 placeholder-gray-500"
               />
             </div>
           )}
@@ -145,7 +145,7 @@ export default function DataTable<T extends Record<string, any>>({
                 <select
                   value={activeFilters[filter.key] || ''}
                   onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-                  className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900"
+                  className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 placeholder-gray-500"
                 >
                   <option value="">{filter.placeholder || `Todos os ${filter.label}`}</option>
                   {filter.options?.map(option => (
@@ -160,7 +160,7 @@ export default function DataTable<T extends Record<string, any>>({
                   placeholder={filter.placeholder || filter.label}
                   value={activeFilters[filter.key] || ''}
                   onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-                  className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900"
+                  className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 placeholder-gray-500"
                 />
               )}
             </div>
@@ -223,7 +223,7 @@ export default function DataTable<T extends Record<string, any>>({
                   <td key={String(column.key)} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {column.render 
                       ? column.render(item[column.key], item)
-                      : item[column.key]
+                      : String(item[column.key])
                     }
                   </td>
                 ))}

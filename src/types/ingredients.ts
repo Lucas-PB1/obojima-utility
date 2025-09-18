@@ -118,4 +118,5 @@ export interface CollectedIngredient {
   used: boolean;
   usedAt?: Date;
   forageAttemptId: string;
+  [key: string]: unknown;
 }

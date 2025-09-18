@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { DiceType } from '@/types/ingredients';
 import Modal from './ui/Modal';
 import Input from './ui/Input';
 import Select from './ui/Select';
@@ -75,6 +74,7 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
       size="md"
     >
       <div className="space-y-6">
+
         {/* Modificador Padrão */}
         <div>
           <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
@@ -84,7 +84,7 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
           <Input
             type="number"
             value={defaultModifier}
-            onChange={setDefaultModifier}
+            onChange={(value) => setDefaultModifier(value as number | '')}
             placeholder="Ex: 5"
             label="Valor do modificador que será usado por padrão"
           />
@@ -112,7 +112,7 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
             <Input
               type="number"
               value={defaultBonusValue}
-              onChange={setDefaultBonusValue}
+              onChange={(value) => setDefaultBonusValue(value as number)}
               placeholder="Ex: 2"
               label="Quantidade"
               min={1}

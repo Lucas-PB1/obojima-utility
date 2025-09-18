@@ -12,10 +12,10 @@ interface ButtonProps {
 }
 
 const variantClasses = {
-  primary: 'bg-emerald-500 hover:bg-emerald-600 text-white',
-  secondary: 'bg-white text-emerald-700 border border-emerald-300 hover:bg-emerald-50',
-  danger: 'bg-red-500 hover:bg-red-600 text-white',
-  success: 'bg-teal-500 hover:bg-teal-600 text-white'
+  primary: 'bg-rose-300 hover:bg-rose-400 text-white',
+  secondary: 'bg-rose-100 hover:bg-rose-200 text-gray-900',
+  danger: 'bg-red-600 hover:bg-red-700 text-white',
+  success: 'bg-teal-600 hover:bg-teal-700 text-white'
 };
 
 const sizeClasses = {
@@ -34,7 +34,7 @@ export default function Button({
   className = '',
   fullWidth = false
 }: ButtonProps) {
-  const baseClasses = 'font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2';
+  const baseClasses = 'font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-offset-2';
   const disabledClasses = 'disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400';
   
   return (

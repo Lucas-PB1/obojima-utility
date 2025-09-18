@@ -154,11 +154,11 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
             {/* Indicador de tentativas restantes */}
             <div className={`px-4 py-3 rounded-xl flex items-center space-x-3 shadow-md border transition-all duration-300 ${
               remainingAttempts > 0 
-                ? 'bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 border-emerald-200/50 hover:shadow-lg' 
+                ? 'bg-rose-100 text-rose-400 border-rose-200 hover:shadow-lg' 
                 : 'bg-gradient-to-r from-red-100 to-pink-100 text-red-700 border-red-200/50'
             }`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                remainingAttempts > 0 ? 'bg-emerald-200' : 'bg-red-200'
+                remainingAttempts > 0 ? 'bg-rose-200' : 'bg-red-200'
               }`}>
                 <span className="text-lg">🎯</span>
               </div>
@@ -172,9 +172,9 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
             
             <button
               onClick={() => setIsSettingsOpen(true)}
-              className="px-5 py-3 bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 rounded-xl hover:from-emerald-200 hover:to-teal-200 transition-all duration-300 flex items-center space-x-2 shadow-md border border-emerald-200/50 hover:shadow-lg"
+              className="px-5 py-3 bg-rose-100 text-rose-400 rounded-xl hover:bg-rose-200 transition-all duration-300 flex items-center space-x-2 shadow-md border border-rose-200 hover:shadow-lg"
             >
-              <div className="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center">
+              <div className="w-6 h-6 bg-rose-200 rounded-full flex items-center justify-center">
                 <span className="text-sm">⚙️</span>
               </div>
               <span className="font-medium">Configurações</span>

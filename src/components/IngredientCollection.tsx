@@ -48,20 +48,20 @@ export default function IngredientCollection() {
       width: '30%',
       render: (_, item) => (
         <div 
-          className="flex items-center space-x-3 cursor-pointer hover:bg-emerald-50 p-2 rounded-lg transition-colors"
+          className="flex items-center space-x-3 cursor-pointer hover:bg-rose-50 p-2 rounded-lg transition-colors"
           onClick={() => handleIngredientClick(item.ingredient)}
         >
           <div className="flex-shrink-0">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-rose-100 rounded-lg flex items-center justify-center">
               <span className="text-lg">🌿</span>
             </div>
           </div>
           <div className="flex-1">
-            <div className="font-medium text-gray-900 hover:text-emerald-700 transition-colors">
+            <div className="font-medium text-gray-900 hover:text-rose-400 transition-colors">
               {item.ingredient.nome_portugues}
             </div>
             <div className="text-sm text-gray-500">{item.ingredient.nome_ingles}</div>
-            <div className="text-xs text-emerald-600 mt-1">Clique para ver detalhes</div>
+            <div className="text-xs text-rose-300 mt-1">Clique para ver detalhes</div>
           </div>
         </div>
       )
@@ -71,10 +71,10 @@ export default function IngredientCollection() {
       label: 'Quantidade',
       sortable: true,
       width: '15%',
-      render: (value) => (
+      render: (value: unknown) => (
         <div className="flex items-center space-x-2">
-          <span className="bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full text-sm font-medium">
-            {value}
+          <span className="bg-rose-100 text-rose-400 px-2 py-1 rounded-full text-sm font-medium">
+            {String(value)}
           </span>
         </div>
       )
@@ -120,7 +120,7 @@ export default function IngredientCollection() {
             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
               item.used || item.quantity === 0
                 ? 'bg-gray-100 text-gray-800' 
-                : 'bg-emerald-100 text-emerald-800'
+                : 'bg-rose-100 text-rose-400'
             }`}>
               {item.used || item.quantity === 0 ? 'Usado (0)' : `${item.quantity} disponível(is)`}
             </span>
@@ -128,7 +128,7 @@ export default function IngredientCollection() {
           {!item.used && item.quantity > 0 && (
             <button
               onClick={() => handleMarkAsUsed(item.id)}
-              className="text-emerald-600 hover:text-emerald-800 text-xs underline bg-emerald-50 hover:bg-emerald-100 px-2 py-1 rounded transition-colors"
+              className="text-rose-400 hover:text-rose-500 text-xs underline bg-rose-50 hover:bg-rose-100 px-2 py-1 rounded transition-colors"
             >
               Usar 1
             </button>
@@ -209,7 +209,7 @@ export default function IngredientCollection() {
         <StatsGrid title="📊 Estatísticas" stats={statsData} className="mb-8" />
 
         {/* Tabela de Ingredientes */}
-        <DataTable
+        <DataTable<CollectedIngredient>
           data={ingredients}
           columns={columns}
           filters={filters}

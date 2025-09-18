@@ -68,7 +68,7 @@ export default function ForageForm({
         {/* Region Selection */}
         <Select
           value={region}
-          onChange={setRegion}
+          onChange={(value) => setRegion(value as RegionKey)}
           options={regionOptions}
           label="🌍 Região"
         />
@@ -76,7 +76,7 @@ export default function ForageForm({
         {/* Test Type */}
         <RadioGroup
           value={testType}
-          onChange={setTestType}
+          onChange={(value) => setTestType(value as TestType)}
           options={testTypeOptions}
           label="🎯 Tipo de Teste"
         />
@@ -85,14 +85,14 @@ export default function ForageForm({
         <Input
           type="number"
           value={modifier}
-          onChange={setModifier}
+          onChange={(value) => setModifier(value === '' ? '' : Number(value))}
           label="➕ Modificador do Teste"
           placeholder="Ex: +3"
         />
 
         {/* Bonus Dice */}
         <div>
-          <label className="block text-sm font-medium text-emerald-700 mb-2">
+          <label className="block text-sm font-medium text-rose-400 mb-2">
             🎲 Dados de Bônus
           </label>
           <div className="flex space-x-2">
@@ -124,7 +124,7 @@ export default function ForageForm({
         {/* Advantage */}
         <RadioGroup
           value={advantage}
-          onChange={setAdvantage}
+          onChange={(value) => setAdvantage(value as AdvantageType)}
           options={advantageOptions}
           label="🎯 Vantagem/Desvantagem"
         />
@@ -138,7 +138,7 @@ export default function ForageForm({
           className={`${
             remainingAttempts <= 0 
               ? 'bg-gray-400 cursor-not-allowed' 
-              : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600'
+              : 'bg-rose-300 hover:bg-rose-400'
           }`}
         >
           {isLoading ? (
