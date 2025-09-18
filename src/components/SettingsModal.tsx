@@ -51,7 +51,7 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
       <div className="space-y-6">
 
         <div>
-          <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
+          <h4 className="font-semibold text-totoro-gray mb-3 flex items-center">
             <span className="mr-2">🎯</span>
             Modificador Padrão
           </h4>
@@ -62,13 +62,13 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
             placeholder="Ex: 5"
             label="Valor do modificador que será usado por padrão"
           />
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-totoro-gray/60 mt-2">
             Deixe vazio para não usar modificador padrão
           </p>
         </div>
 
         <div>
-          <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
+          <h4 className="font-semibold text-totoro-gray mb-3 flex items-center">
             <span className="mr-2">🎲</span>
             Dado Bônus Padrão
           </h4>
@@ -93,24 +93,25 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
             />
           </div>
           
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-totoro-gray/60 mt-2">
             Configure um dado bônus que será usado automaticamente
           </p>
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h5 className="font-medium text-blue-800 mb-2">💡 Como Funciona</h5>
-          <ul className="text-sm text-blue-700 space-y-1">
+        <div className="bg-totoro-blue/10 border border-totoro-blue/20 rounded-lg p-4">
+          <h5 className="font-medium text-totoro-blue mb-2">💡 Como Funciona</h5>
+          <ul className="text-sm text-totoro-blue space-y-1">
             <li>• Os valores padrão serão aplicados automaticamente ao abrir a página</li>
             <li>• Você ainda pode alterar os valores individualmente</li>
             <li>• As configurações são salvas no seu navegador</li>
           </ul>
         </div>
 
-        <div className="flex justify-between pt-4 border-t border-gray-200">
+        <div className="flex justify-between pt-4 border-t border-totoro-gray/20">
           <Button
             onClick={handleClear}
             variant="danger"
+            effect="shimmer"
           >
             🗑️ Limpar Configurações
           </Button>
@@ -119,12 +120,14 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
             <Button
               onClick={onClose}
               variant="secondary"
+              effect="ripple"
             >
               Cancelar
             </Button>
             <Button
               onClick={handleSave}
               variant="primary"
+              effect="pulse-glow"
               disabled={isLoading}
             >
               {isLoading ? 'Salvando...' : '💾 Salvar'}

@@ -59,6 +59,7 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
               onClick={() => setFilter(option.value as any)}
               variant={filter === option.value ? 'primary' : 'secondary'}
               size="sm"
+              effect={filter === option.value ? 'pulse-glow' : 'shimmer'}
             >
               {option.label}
             </Button>

@@ -20,7 +20,7 @@ export default function TabNavigation<T = string>({
   className = '' 
 }: TabNavigationProps<T>) {
   return (
-    <div className={`bg-white backdrop-blur-md border-b border-rose-200 sticky top-16 z-40 shadow-sm ${className}`}>
+    <div className={`bg-white backdrop-blur-md border-b border-totoro-blue/20 sticky top-16 z-40 shadow-sm ${className}`}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex">
           {tabs.map((tab, index) => (
@@ -29,8 +29,8 @@ export default function TabNavigation<T = string>({
               onClick={() => onTabChange(tab.id)}
               className={`px-6 py-4 font-medium text-sm transition-all duration-300 border-b-2 relative ${
                 activeTab === tab.id
-                  ? 'text-rose-400 border-rose-300 bg-rose-50'
-                  : 'text-gray-600 border-transparent hover:text-rose-300 hover:border-rose-200 hover:bg-rose-50'
+                  ? 'text-totoro-blue border-totoro-blue bg-totoro-blue/10'
+                  : 'text-totoro-gray border-transparent hover:text-totoro-blue hover:border-totoro-blue/30 hover:bg-totoro-blue/5'
               }`}
             >
               <span className="flex items-center">

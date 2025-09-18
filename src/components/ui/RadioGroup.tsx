@@ -24,7 +24,7 @@ export default function RadioGroup({
   return (
     <div className={className}>
       {label && (
-        <label className="block text-sm font-medium text-rose-400 mb-2">
+        <label className="block text-sm font-medium text-totoro-gray mb-2">
           {label}
         </label>
       )}
@@ -36,9 +36,9 @@ export default function RadioGroup({
               value={option.value}
               checked={value === option.value}
               onChange={(e) => onChange(e.target.value)}
-              className="mr-2 text-rose-400 focus:ring-rose-300"
+              className="mr-2 text-totoro-blue focus:ring-totoro-blue"
             />
-            <span className="text-rose-400">
+            <span className="text-totoro-gray">
               {option.icon && <span className="mr-1">{option.icon}</span>}
               {option.label}
             </span>

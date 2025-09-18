@@ -8,9 +8,9 @@ interface ContentCardProps {
 
 export default function ContentCard({ children, title, className = '' }: ContentCardProps) {
   return (
-    <div className={`bg-white backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-rose-200 ${className}`}>
+    <div className={`bg-white backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-totoro-blue/20 ${className}`}>
       {title && (
-        <h2 className="text-2xl font-semibold text-rose-400 mb-6">
+        <h2 className="text-2xl font-semibold text-totoro-gray mb-6">
           {title}
         </h2>
       )}

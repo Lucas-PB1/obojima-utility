@@ -3,9 +3,154 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Paleta Totoro - Cores principais */
+  --totoro-blue: #4A90E2;
+  --totoro-green: #7ED321;
+  --totoro-yellow: #F5A623;
+  --totoro-gray: #2C3E50;
+  --totoro-orange: #E67E22;
+  
+  /* Cores do sistema baseadas na paleta Totoro */
+  --background: #f8fafc;
+  --foreground: #2C3E50;
+  --primary: #4A90E2;
+  --secondary: #7ED321;
+  --accent: #F5A623;
+  --muted: #e2e8f0;
+  --border: #cbd5e1;
+  
+  /* Cores para estados */
+  --success: #7ED321;
+  --warning: #F5A623;
+  --error: #E67E22;
+  --info: #4A90E2;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Classes utilitárias para a paleta Totoro */
+.bg-totoro-blue { background-color: var(--totoro-blue); }
+.bg-totoro-green { background-color: var(--totoro-green); }
+.bg-totoro-yellow { background-color: var(--totoro-yellow); }
+.bg-totoro-gray { background-color: var(--totoro-gray); }
+.bg-totoro-orange { background-color: var(--totoro-orange); }
+
+.text-totoro-blue { color: var(--totoro-blue); }
+.text-totoro-green { color: var(--totoro-green); }
+.text-totoro-yellow { color: var(--totoro-yellow); }
+.text-totoro-gray { color: var(--totoro-gray); }
+.text-totoro-orange { color: var(--totoro-orange); }
+
+.border-totoro-blue { border-color: var(--totoro-blue); }
+.border-totoro-green { border-color: var(--totoro-green); }
+.border-totoro-yellow { border-color: var(--totoro-yellow); }
+.border-totoro-gray { border-color: var(--totoro-gray); }
+.border-totoro-orange { border-color: var(--totoro-orange); }
+
+/* Animações personalizadas para botões */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.6), 0 0 30px rgba(74, 144, 226, 0.4);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Efeitos especiais para botões */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.btn-shimmer:hover::before {
+  left: 100%;
+}
+
+.btn-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.btn-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.btn-bounce-in {
+  animation: bounce-in 0.6s ease-out;
+}
+
+/* Efeito de ripple para cliques */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-ripple:active::after {
+  width: 300px;
+  height: 300px;
 }

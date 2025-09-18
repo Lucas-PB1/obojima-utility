@@ -25,7 +25,7 @@ export default function Select({
   return (
     <div className={className}>
       {label && (
-        <label className="block text-sm font-medium text-rose-400 mb-2">
+        <label className="block text-sm font-medium text-totoro-gray mb-2">
           {label}
         </label>
       )}
@@ -33,7 +33,7 @@ export default function Select({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full p-3 pr-10 border border-rose-200 rounded-lg focus:ring-2 focus:ring-rose-300 focus:border-rose-300 bg-white text-gray-900 shadow-sm transition-all duration-200 hover:border-rose-300 appearance-none cursor-pointer"
+          className="w-full p-3 pr-10 border border-totoro-blue/20 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-white text-totoro-gray shadow-sm transition-all duration-200 hover:border-totoro-blue/40 appearance-none cursor-pointer"
           style={{
             WebkitAppearance: 'none',
             MozAppearance: 'none',
@@ -56,7 +56,7 @@ export default function Select({
         </select>
         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
           <svg
-            className="w-5 h-5 text-rose-400"
+            className="w-5 h-5 text-totoro-blue"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

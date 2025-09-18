@@ -140,11 +140,11 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
           <div className="flex items-center space-x-4">
             <div className={`px-4 py-3 rounded-xl flex items-center space-x-3 shadow-md border transition-all duration-300 ${
               remainingAttempts > 0 
-                ? 'bg-rose-100 text-rose-400 border-rose-200 hover:shadow-lg' 
-                : 'bg-gradient-to-r from-red-100 to-pink-100 text-red-700 border-red-200/50'
+                ? 'bg-totoro-green/20 text-totoro-green border-totoro-green/30 hover:shadow-lg' 
+                : 'bg-gradient-to-r from-totoro-orange/20 to-totoro-orange/30 text-totoro-orange border-totoro-orange/30'
             }`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                remainingAttempts > 0 ? 'bg-rose-200' : 'bg-red-200'
+                remainingAttempts > 0 ? 'bg-totoro-green/30' : 'bg-totoro-orange/30'
               }`}>
                 <span className="text-lg">🎯</span>
               </div>

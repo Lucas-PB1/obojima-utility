@@ -45,10 +45,10 @@ export default function IngredientCollection() {
 
   const collectionStats = StatsService.calculateCollectionStats(ingredients, attempts);
   const statsData = [
-    { value: collectionStats.totalCollected, label: 'Total Coletados', color: 'emerald' as const },
-    { value: collectionStats.totalUsed, label: 'Usados', color: 'teal' as const },
-    { value: collectionStats.totalAttempts, label: 'Tentativas', color: 'cyan' as const },
-    { value: `${collectionStats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'slate' as const }
+    { value: collectionStats.totalCollected, label: 'Total Coletados', color: 'totoro-green' as const },
+    { value: collectionStats.totalUsed, label: 'Usados', color: 'totoro-blue' as const },
+    { value: collectionStats.totalAttempts, label: 'Tentativas', color: 'totoro-yellow' as const },
+    { value: `${collectionStats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'totoro-orange' as const }
   ];
 
   const columns: Column<CollectedIngredient>[] = [
@@ -59,20 +59,20 @@ export default function IngredientCollection() {
       width: '30%',
       render: (_, item) => (
         <div 
-          className="flex items-center space-x-3 cursor-pointer hover:bg-rose-50 p-2 rounded-lg transition-colors"
+          className="flex items-center space-x-3 cursor-pointer hover:bg-totoro-blue/5 p-2 rounded-lg transition-colors"
           onClick={() => handleIngredientClick(item.ingredient)}
         >
           <div className="flex-shrink-0">
-            <div className="w-10 h-10 bg-rose-100 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-totoro-green/20 rounded-lg flex items-center justify-center">
               <span className="text-lg">🌿</span>
             </div>
           </div>
           <div className="flex-1">
-            <div className="font-medium text-gray-900 hover:text-rose-400 transition-colors">
+            <div className="font-medium text-totoro-gray hover:text-totoro-blue transition-colors">
               {item.ingredient.nome_portugues}
             </div>
-            <div className="text-sm text-gray-500">{item.ingredient.nome_ingles}</div>
-            <div className="text-xs text-rose-300 mt-1">Clique para ver detalhes</div>
+            <div className="text-sm text-totoro-gray/60">{item.ingredient.nome_ingles}</div>
+            <div className="text-xs text-totoro-blue mt-1">Clique para ver detalhes</div>
           </div>
         </div>
       )
@@ -84,7 +84,7 @@ export default function IngredientCollection() {
       width: '15%',
       render: (value: unknown) => (
         <div className="flex items-center space-x-2">
-          <span className="bg-rose-100 text-rose-400 px-2 py-1 rounded-full text-sm font-medium">
+          <span className="bg-totoro-green/20 text-totoro-green px-2 py-1 rounded-full text-sm font-medium">
             {String(value)}
           </span>
         </div>
@@ -97,13 +97,13 @@ export default function IngredientCollection() {
       width: '25%',
       render: (_, item) => (
         <div className="flex space-x-2">
-          <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">
+          <span className="bg-totoro-orange/20 text-totoro-orange px-2 py-1 rounded text-xs">
             ⚔️ {item.ingredient.combat}
           </span>
-          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
+          <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs">
             🛠️ {item.ingredient.utility}
           </span>
-          <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">
+          <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs">
             ✨ {item.ingredient.whimsy}
           </span>
         </div>
@@ -115,7 +115,7 @@ export default function IngredientCollection() {
       sortable: true,
       width: '15%',
       render: (_, item) => (
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-totoro-gray">
           {new Date(item.collectedAt).toLocaleDateString('pt-BR')}
         </div>
       )
@@ -130,8 +130,8 @@ export default function IngredientCollection() {
           <div className="flex items-center space-x-2">
             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
               item.used || item.quantity === 0
-                ? 'bg-gray-100 text-gray-800' 
-                : 'bg-rose-100 text-rose-400'
+                ? 'bg-totoro-gray/20 text-totoro-gray' 
+                : 'bg-totoro-green/20 text-totoro-green'
             }`}>
               {item.used || item.quantity === 0 ? 'Usado (0)' : `${item.quantity} disponível(is)`}
             </span>
@@ -147,7 +147,7 @@ export default function IngredientCollection() {
             </Button>
           )}
           {item.used && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-totoro-gray/60">
               Usado em: {item.usedAt ? new Date(item.usedAt).toLocaleDateString('pt-BR') : 'N/A'}
             </span>
           )}
@@ -228,8 +228,8 @@ export default function IngredientCollection() {
         className="mb-8"
       />
 
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">💾 Backup</h3>
+      <div className="bg-white rounded-xl shadow-lg border border-totoro-blue/20 p-6">
+        <h3 className="text-lg font-semibold text-totoro-gray mb-4">💾 Backup</h3>
         <div className="flex flex-col md:flex-row gap-4">
           <Button
             onClick={handleExportData}

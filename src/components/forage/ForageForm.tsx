@@ -88,7 +88,7 @@ export default function ForageForm({
         />
 
         <div>
-          <label className="block text-sm font-medium text-rose-400 mb-2">
+          <label className="block text-sm font-medium text-totoro-gray mb-2">
             🎲 Dados de Bônus
           </label>
           <div className="flex space-x-2">
@@ -129,11 +129,8 @@ export default function ForageForm({
           disabled={isLoading || remainingAttempts <= 0}
           fullWidth
           size="lg"
-          className={`${
-            remainingAttempts <= 0 
-              ? 'bg-gray-400 cursor-not-allowed' 
-              : 'bg-rose-300 hover:bg-rose-400'
-          }`}
+          effect="pulse-glow"
+          variant="danger"
         >
           {isLoading ? (
             <span className="flex items-center justify-center">

@@ -22,7 +22,7 @@ export default function Home() {
 
   if (!isClient) {
     return (
-      <div className="min-h-screen bg-rose-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center">
         <EmptyState
           icon="🌿"
           title="Carregando Obojima..."
@@ -33,28 +33,29 @@ export default function Home() {
   }
 
   return (
-      <div className="min-h-screen bg-rose-50 transition-colors duration-300">
-        <div className="border-b border-rose-200 sticky top-0 z-50 bg-white backdrop-blur-md transition-colors duration-300">
+      <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 transition-colors duration-300">
+        <div className="border-b border-totoro-blue/20 sticky top-0 z-50 bg-white/90 backdrop-blur-md transition-colors duration-300">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-rose-400 transition-colors duration-300">
+                <h1 className="text-2xl font-bold text-totoro-gray transition-colors duration-300">
                   🌿 Obojima Utilities
                 </h1>
-                <p className="text-sm text-rose-300 transition-colors duration-300">
+                <p className="text-sm text-totoro-blue transition-colors duration-300">
                   Sistema de Forrageamento e Alquimia
                 </p>
               </div>
               
               {recentlyCollected.length > 0 && (
-                <div className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-rose-100 transition-colors duration-300">
-                  <span className="text-sm font-medium text-rose-400">
+                <div className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-totoro-yellow/20 transition-colors duration-300">
+                  <span className="text-sm font-medium text-totoro-orange">
                     🎁 {recentlyCollected.length} novo(s) ingrediente(s)!
                   </span>
                   <Button
                     onClick={handleViewCollection}
                     variant="secondary"
                     size="sm"
+                    effect="float"
                     className="text-sm"
                   >
                     Ver coleção
@@ -81,9 +82,9 @@ export default function Home() {
           {activeTab === 'log' && <ActivityLog />}
         </div>
 
-        <footer className="border-t border-rose-200 mt-12 bg-white backdrop-blur-md transition-colors duration-300">
+        <footer className="border-t border-totoro-blue/20 bg-white/90 backdrop-blur-md transition-colors duration-300">
           <div className="max-w-6xl mx-auto px-6 py-8">
-            <div className="text-center text-gray-900 transition-colors duration-300">
+            <div className="text-center text-totoro-gray transition-colors duration-300">
               <p className="mb-2">
                 🌿 Sistema de Forrageamento de Obojima
               </p>

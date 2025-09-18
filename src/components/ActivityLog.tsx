@@ -19,10 +19,10 @@ export default function ActivityLog() {
   const activityStats = StatsService.calculateActivityStats(filteredAttempts);
   
   const statsData = [
-    { value: activityStats.totalAttempts, label: 'Total de Tentativas', color: 'emerald' as const },
-    { value: `${activityStats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'teal' as const },
-    { value: activityStats.averageRoll.toFixed(1), label: 'Rolagem Média', color: 'cyan' as const },
-    { value: activityStats.ingredientsCollected, label: 'Ingredientes Coletados', color: 'slate' as const }
+    { value: activityStats.totalAttempts, label: 'Total de Tentativas', color: 'totoro-green' as const },
+    { value: `${activityStats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'totoro-blue' as const },
+    { value: activityStats.averageRoll.toFixed(1), label: 'Rolagem Média', color: 'totoro-yellow' as const },
+    { value: activityStats.ingredientsCollected, label: 'Ingredientes Coletados', color: 'totoro-gray' as const }
   ];
 
   return (
@@ -54,27 +54,27 @@ export default function ActivityLog() {
               key={attempt.id}
               className={`p-6 rounded-xl border-2 transition-all duration-300 ${
                 attempt.success 
-                  ? 'bg-emerald-50 border-emerald-200 hover:border-emerald-300' 
-                  : 'bg-red-50 border-red-200 hover:border-red-300'
+                  ? 'bg-totoro-green/10 border-totoro-green/20 hover:border-totoro-green/30' 
+                  : 'bg-totoro-orange/10 border-totoro-orange/20 hover:border-totoro-orange/30'
               }`}
             >
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <span className={`text-2xl ${
-                      attempt.success ? 'text-emerald-600' : 'text-red-600'
+                      attempt.success ? 'text-totoro-green' : 'text-totoro-orange'
                     }`}>
                       {attempt.success ? '🎉' : '😞'}
                     </span>
                     <h3 className={`text-lg font-bold ${
-                      attempt.success ? 'text-emerald-800' : 'text-red-800'
+                      attempt.success ? 'text-totoro-green' : 'text-totoro-orange'
                     }`}>
                       {attempt.success ? 'Forrageamento Bem-sucedido' : 'Forrageamento Falhou'}
                     </h3>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       attempt.rarity === 'comum' 
-                        ? 'bg-emerald-200 text-emerald-700' 
-                        : 'bg-teal-200 text-teal-700'
+                        ? 'bg-totoro-green/20 text-totoro-green' 
+                        : 'bg-totoro-blue/20 text-totoro-blue'
                     }`}>
                       {attempt.rarity}
                     </span>
@@ -82,42 +82,42 @@ export default function ActivityLog() {
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <span className="font-medium text-gray-700">Região:</span>
-                      <p className="text-gray-600">
+                      <span className="font-medium text-totoro-gray">Região:</span>
+                      <p className="text-totoro-gray">
                         {ingredientsService.getRegionDisplayName(attempt.region)}
                       </p>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-700">Teste:</span>
-                      <p className="text-gray-600 capitalize">
+                      <span className="font-medium text-totoro-gray">Teste:</span>
+                      <p className="text-totoro-gray capitalize">
                         {attempt.testType === 'natureza' ? '🌱 Natureza' : '🏕️ Sobrevivência'}
                       </p>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-700">Rolagem:</span>
-                      <p className="text-gray-600">
+                      <span className="font-medium text-totoro-gray">Rolagem:</span>
+                      <p className="text-totoro-gray">
                         {attempt.roll} (DC {attempt.dcRange})
                       </p>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-700">Data:</span>
-                      <p className="text-gray-600">
+                      <span className="font-medium text-totoro-gray">Data:</span>
+                      <p className="text-totoro-gray">
                         {attempt.timestamp.toLocaleString('pt-BR')}
                       </p>
                     </div>
                   </div>
 
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <span className="bg-teal-100 text-teal-700 px-2 py-1 rounded text-xs">
+                    <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs">
                       Mod: {attempt.modifier > 0 ? '+' : ''}{attempt.modifier}
                     </span>
                     {attempt.bonusDice && (
-                      <span className="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-xs">
+                      <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs">
                         {attempt.bonusDice.value}d{attempt.bonusDice.type.substring(1)}
                       </span>
                     )}
                     {attempt.advantage !== 'normal' && (
-                      <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs">
+                      <span className="bg-totoro-gray/20 text-totoro-gray px-2 py-1 rounded text-xs">
                         {attempt.advantage === 'vantagem' ? '✨ Vantagem' : '⚠️ Desvantagem'}
                       </span>
                     )}
@@ -126,24 +126,24 @@ export default function ActivityLog() {
 
                 {attempt.success && attempt.ingredient && (
                   <div className="md:w-80">
-                    <div className="bg-white/90 p-4 rounded-lg border border-emerald-200">
-                      <h4 className="font-bold text-emerald-800 mb-2">
+                    <div className="bg-white/90 p-4 rounded-lg border border-totoro-green/20">
+                      <h4 className="font-bold text-totoro-green mb-2">
                         🎁 Ingrediente Coletado
                       </h4>
-                      <p className="text-emerald-700 font-medium mb-2">
+                      <p className="text-totoro-green font-medium mb-2">
                         {attempt.ingredient.nome_portugues}
                       </p>
-                      <p className="text-sm text-gray-600 mb-3">
+                      <p className="text-sm text-totoro-gray mb-3">
                         {attempt.ingredient.descricao.substring(0, 120)}...
                       </p>
                       <div className="flex justify-center space-x-2">
-                        <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">
+                        <span className="bg-totoro-orange/20 text-totoro-orange px-2 py-1 rounded text-xs">
                           ⚔️ {attempt.ingredient.combat}
                         </span>
-                        <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
+                        <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs">
                           🛠️ {attempt.ingredient.utility}
                         </span>
-                        <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">
+                        <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs">
                           ✨ {attempt.ingredient.whimsy}
                         </span>
                       </div>
