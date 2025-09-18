@@ -17,7 +17,6 @@ export default function ForageResult({ result }: ForageResultProps) {
           ? 'bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 border-emerald-300 shadow-emerald-200' 
           : 'bg-gradient-to-br from-rose-50 via-pink-50 to-red-50 border-rose-300 shadow-rose-200'
       } shadow-lg`}>
-        {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
           <div className={`w-full h-full rounded-full ${
             result.success ? 'bg-emerald-400' : 'bg-rose-400'
@@ -30,7 +29,6 @@ export default function ForageResult({ result }: ForageResultProps) {
         </div>
         
         <div className="relative p-6">
-          {/* Header */}
           <div className="text-center mb-6">
             <div className={`text-5xl mb-3 ${
               result.success ? 'text-emerald-500' : 'text-rose-500'
@@ -49,7 +47,6 @@ export default function ForageResult({ result }: ForageResultProps) {
             </p>
           </div>
 
-          {/* Main Result */}
           <div className={`text-center mb-6 p-4 rounded-xl ${
             result.success 
               ? 'bg-emerald-100/80 border border-emerald-200' 
@@ -83,7 +80,6 @@ export default function ForageResult({ result }: ForageResultProps) {
             </div>
           </div>
 
-          {/* Roll Breakdown */}
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 mb-4 border border-white/40">
             <h4 className="font-semibold text-gray-800 mb-3 flex items-center text-sm">
               <span className="mr-2">🎲</span>
@@ -123,7 +119,6 @@ export default function ForageResult({ result }: ForageResultProps) {
             </div>
           </div>
 
-          {/* Location Info */}
           <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
             <div className="flex items-center">
               <span className="mr-1">🌿</span>

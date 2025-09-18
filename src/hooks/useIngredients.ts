@@ -1,60 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { storageService } from '@/services/storageService';
-import { useHydration } from './useHydration';
 
 export function useIngredients() {
   const [ingredients, setIngredients] = useState<CollectedIngredient[]>([]);
   const [attempts, setAttempts] = useState<ForageAttempt[]>([]);
-  const isHydrated = useHydration();
+
+  const refreshData = useCallback(() => {
+    const collectedIngredients = storageService.getCollectedIngredients();
+    const forageAttempts = storageService.getForageAttempts();
+    setIngredients(collectedIngredients);
+    setAttempts(forageAttempts);
+  }, []);
 
   useEffect(() => {
-    if (isHydrated) {
-      setIngredients(storageService.getCollectedIngredients());
-      setAttempts(storageService.getForageAttempts());
-    }
-  }, [isHydrated]);
+    refreshData();
+  }, [refreshData]);
 
-  const refreshIngredients = () => {
-    setIngredients(storageService.getCollectedIngredients());
-  };
-
-  const refreshAttempts = () => {
-    setAttempts(storageService.getForageAttempts());
-  };
-
-  const markAsUsed = (id: string) => {
+  const markAsUsed = useCallback((id: string) => {
     storageService.markIngredientAsUsed(id);
-    refreshIngredients();
-  };
+    setIngredients(storageService.getCollectedIngredients());
+  }, []);
 
-  const removeIngredient = (id: string) => {
+  const removeIngredient = useCallback((id: string) => {
     storageService.removeCollectedIngredient(id);
-    refreshIngredients();
-  };
+    setIngredients(storageService.getCollectedIngredients());
+  }, []);
 
-  const addIngredient = (ingredient: CollectedIngredient) => {
+  const addIngredient = useCallback((ingredient: CollectedIngredient) => {
     storageService.addCollectedIngredient(ingredient);
-    refreshIngredients();
-  };
+    setIngredients(storageService.getCollectedIngredients());
+  }, []);
 
-  const addAttempt = (attempt: ForageAttempt) => {
+  const addAttempt = useCallback((attempt: ForageAttempt) => {
     storageService.addForageAttempt(attempt);
-    refreshAttempts();
-  };
+    setAttempts(storageService.getForageAttempts());
+  }, []);
 
-  const getStats = () => storageService.getStats();
+  const getStats = useCallback(() => storageService.getStats(), []);
 
   return {
-    ingredients: isHydrated ? ingredients : [],
-    attempts: isHydrated ? attempts : [],
-    refreshIngredients,
-    refreshAttempts,
+    ingredients,
+    attempts,
     markAsUsed,
     removeIngredient,
     addIngredient,
     addAttempt,
     getStats,
-    isHydrated
+    refreshData
   };
 }

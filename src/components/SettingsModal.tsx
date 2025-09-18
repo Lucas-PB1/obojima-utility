@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Modal from './ui/Modal';
 import Input from './ui/Input';
 import Select from './ui/Select';
 import Button from './ui/Button';
-import { settingsService } from '@/services/settingsService';
+import { useSettings } from '@/hooks/useSettings';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -12,50 +12,25 @@ interface SettingsModalProps {
 }
 
 export default function SettingsModal({ isOpen, onClose, onSettingsChange }: SettingsModalProps) {
-  const [defaultModifier, setDefaultModifier] = useState<number | ''>('');
-  const [defaultBonusType, setDefaultBonusType] = useState<string>('');
-  const [defaultBonusValue, setDefaultBonusValue] = useState<number>(0);
+  const { settings, isLoading, saveSettings, clearSettings, updateSetting } = useSettings();
 
-  useEffect(() => {
-    if (isOpen) {
-      // Carregar configurações atuais
-      setDefaultModifier(settingsService.getDefaultModifier());
-      
-      const bonusDice = settingsService.getDefaultBonusDice();
-      if (bonusDice) {
-        setDefaultBonusType(bonusDice.type);
-        setDefaultBonusValue(bonusDice.value);
-      } else {
-        setDefaultBonusType('');
-        setDefaultBonusValue(0);
-      }
+  const handleSave = async () => {
+    try {
+      await saveSettings(settings);
+      onSettingsChange();
+      onClose();
+    } catch (error) {
+      console.error('Erro ao salvar configurações:', error);
     }
-  }, [isOpen]);
-
-  const handleSave = () => {
-    // Salvar modificador padrão
-    settingsService.setDefaultModifier(defaultModifier);
-    
-    // Salvar dado bônus padrão
-    if (defaultBonusType && defaultBonusValue > 0) {
-      settingsService.setDefaultBonusDice({
-        type: defaultBonusType,
-        value: defaultBonusValue
-      });
-    } else {
-      settingsService.setDefaultBonusDice(null);
-    }
-    
-    onSettingsChange();
-    onClose();
   };
 
-  const handleClear = () => {
-    setDefaultModifier('');
-    setDefaultBonusType('');
-    setDefaultBonusValue(0);
-    settingsService.clearSettings();
-    onSettingsChange();
+  const handleClear = async () => {
+    try {
+      await clearSettings();
+      onSettingsChange();
+    } catch (error) {
+      console.error('Erro ao limpar configurações:', error);
+    }
   };
 
   const diceOptions = [
@@ -75,7 +50,6 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
     >
       <div className="space-y-6">
 
-        {/* Modificador Padrão */}
         <div>
           <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
             <span className="mr-2">🎯</span>
@@ -83,8 +57,8 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
           </h4>
           <Input
             type="number"
-            value={defaultModifier}
-            onChange={(value) => setDefaultModifier(value as number | '')}
+            value={settings.defaultModifier}
+            onChange={(value) => updateSetting('defaultModifier', value as number | '')}
             placeholder="Ex: 5"
             label="Valor do modificador que será usado por padrão"
           />
@@ -93,7 +67,6 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
           </p>
         </div>
 
-        {/* Dado Bônus Padrão */}
         <div>
           <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
             <span className="mr-2">🎲</span>
@@ -102,8 +75,8 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
           
           <div className="grid grid-cols-2 gap-4">
             <Select
-              value={defaultBonusType}
-              onChange={setDefaultBonusType}
+              value={settings.defaultBonusType}
+              onChange={(value) => updateSetting('defaultBonusType', value)}
               options={diceOptions}
               placeholder="Selecione o dado"
               label="Tipo do Dado"
@@ -111,8 +84,8 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
             
             <Input
               type="number"
-              value={defaultBonusValue}
-              onChange={(value) => setDefaultBonusValue(value as number)}
+              value={settings.defaultBonusValue}
+              onChange={(value) => updateSetting('defaultBonusValue', value as number)}
               placeholder="Ex: 2"
               label="Quantidade"
               min={1}
@@ -125,7 +98,6 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
           </p>
         </div>
 
-        {/* Informações */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h5 className="font-medium text-blue-800 mb-2">💡 Como Funciona</h5>
           <ul className="text-sm text-blue-700 space-y-1">
@@ -135,7 +107,6 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
           </ul>
         </div>
 
-        {/* Botões */}
         <div className="flex justify-between pt-4 border-t border-gray-200">
           <Button
             onClick={handleClear}
@@ -154,8 +125,9 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
             <Button
               onClick={handleSave}
               variant="primary"
+              disabled={isLoading}
             >
-              💾 Salvar
+              {isLoading ? 'Salvando...' : '💾 Salvar'}
             </Button>
           </div>
         </div>

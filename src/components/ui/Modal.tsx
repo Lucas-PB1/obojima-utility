@@ -21,11 +21,9 @@ export default function Modal({
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
-      // Pequeno delay para garantir que o DOM foi atualizado
       setTimeout(() => setIsAnimating(true), 10);
     } else {
       setIsAnimating(false);
-      // Aguardar animação de saída antes de remover do DOM
       setTimeout(() => setIsVisible(false), 300);
     }
   }, [isOpen]);
@@ -41,7 +39,6 @@ export default function Modal({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      {/* Backdrop com efeito de blur e gradiente */}
       <div 
         className={`fixed inset-0 bg-rose-900/5 backdrop-blur-sm transition-all duration-300 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
@@ -49,7 +46,6 @@ export default function Modal({
         onClick={onClose}
       />
       
-      {/* Modal com animação flutuante */}
       <div className="flex min-h-full items-center justify-center p-4">
         <div 
           className={`relative w-full ${sizeClasses[size]} transform transition-all duration-300 ${
@@ -58,12 +54,9 @@ export default function Modal({
               : 'scale-95 opacity-0 translate-y-4'
           }`}
         >
-          {/* Sombra flutuante */}
           <div className="absolute -inset-4 bg-rose-400/10 rounded-3xl blur-xl"></div>
           
-          {/* Modal principal */}
           <div className="relative overflow-hidden rounded-2xl bg-white/95 backdrop-blur-sm shadow-2xl border border-white/20">
-            {/* Header com gradiente suave */}
             <div className="bg-rose-50 px-6 py-4 border-b border-rose-200 backdrop-blur-sm">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-rose-400">
@@ -80,7 +73,6 @@ export default function Modal({
               </div>
             </div>
             
-            {/* Content */}
             <div className="p-6 bg-white/80 backdrop-blur-sm">
               {children}
             </div>

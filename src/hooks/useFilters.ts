@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
 
@@ -7,40 +7,51 @@ export type SortType = 'date' | 'name' | 'rarity';
 export type ResultFilterType = 'all' | 'success' | 'failure';
 export type DateFilterType = 'all' | 'today' | 'week' | 'month';
 
+const filterIngredients = (ingredients: CollectedIngredient[], filter: FilterType) => {
+  if (filter === 'available') return ingredients.filter(ing => !ing.used);
+  if (filter === 'used') return ingredients.filter(ing => ing.used);
+  return ingredients;
+};
+
+const searchIngredients = (ingredients: CollectedIngredient[], searchTerm: string) => {
+  if (!searchTerm) return ingredients;
+  const term = searchTerm.toLowerCase();
+  return ingredients.filter(ing => 
+    ing.ingredient.nome_portugues.toLowerCase().includes(term) ||
+    ing.ingredient.nome_ingles.toLowerCase().includes(term)
+  );
+};
+
+const sortIngredients = (ingredients: CollectedIngredient[], sortBy: SortType) => {
+  return [...ingredients].sort((a, b) => {
+    switch (sortBy) {
+      case 'name':
+        return a.ingredient.nome_portugues.localeCompare(b.ingredient.nome_portugues);
+      case 'rarity':
+        return b.ingredient.id - a.ingredient.id;
+      case 'date':
+      default:
+        return b.collectedAt.getTime() - a.collectedAt.getTime();
+    }
+  });
+};
+
 export function useIngredientFilters(ingredients: CollectedIngredient[]) {
   const [filter, setFilter] = useState<FilterType>('all');
   const [sortBy, setSortBy] = useState<SortType>('date');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredIngredients = useMemo(() => {
-    return ingredients
-      .filter(ingredient => {
-        if (filter === 'available') return !ingredient.used;
-        if (filter === 'used') return ingredient.used;
-        return true;
-      })
-      .filter(ingredient => 
-        ingredient.ingredient.nome_portugues.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        ingredient.ingredient.nome_ingles.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .sort((a, b) => {
-        switch (sortBy) {
-          case 'name':
-            return a.ingredient.nome_portugues.localeCompare(b.ingredient.nome_portugues);
-          case 'rarity':
-            return b.ingredient.id - a.ingredient.id;
-          case 'date':
-          default:
-            return b.collectedAt.getTime() - a.collectedAt.getTime();
-        }
-      });
+    const filtered = filterIngredients(ingredients, filter);
+    const searched = searchIngredients(filtered, searchTerm);
+    return sortIngredients(searched, sortBy);
   }, [ingredients, filter, sortBy, searchTerm]);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setFilter('all');
     setSortBy('date');
     setSearchTerm('');
-  };
+  }, []);
 
   return {
     filter,
@@ -54,55 +65,67 @@ export function useIngredientFilters(ingredients: CollectedIngredient[]) {
   };
 }
 
+const filterByResult = (attempts: ForageAttempt[], filter: ResultFilterType) => {
+  if (filter === 'success') return attempts.filter(a => a.success);
+  if (filter === 'failure') return attempts.filter(a => !a.success);
+  return attempts;
+};
+
+const filterByRegion = (attempts: ForageAttempt[], regionFilter: string) => {
+  if (regionFilter === 'all') return attempts;
+  return attempts.filter(a => a.region === regionFilter);
+};
+
+const filterByDate = (attempts: ForageAttempt[], dateFilter: DateFilterType) => {
+  if (dateFilter === 'all') return attempts;
+  
+  const now = new Date();
+  const attemptDate = attempts[0]?.timestamp;
+  if (!attemptDate) return attempts;
+  
+  switch (dateFilter) {
+    case 'today':
+      return attempts.filter(a => a.timestamp.toDateString() === now.toDateString());
+    case 'week':
+      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      return attempts.filter(a => a.timestamp >= weekAgo);
+    case 'month':
+      const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      return attempts.filter(a => a.timestamp >= monthAgo);
+    default:
+      return attempts;
+  }
+};
+
+const sortAttempts = (attempts: ForageAttempt[]) => {
+  return [...attempts].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+};
+
 export function useActivityFilters(attempts: ForageAttempt[]) {
   const [filter, setFilter] = useState<ResultFilterType>('all');
   const [regionFilter, setRegionFilter] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<DateFilterType>('all');
 
   const filteredAttempts = useMemo(() => {
-    return attempts
-      .filter(attempt => {
-        if (filter === 'success') return attempt.success;
-        if (filter === 'failure') return !attempt.success;
-        return true;
-      })
-      .filter(attempt => {
-        if (regionFilter === 'all') return true;
-        return attempt.region === regionFilter;
-      })
-      .filter(attempt => {
-        const now = new Date();
-        const attemptDate = attempt.timestamp;
-        
-        switch (dateFilter) {
-          case 'today':
-            return attemptDate.toDateString() === now.toDateString();
-          case 'week':
-            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            return attemptDate >= weekAgo;
-          case 'month':
-            const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-            return attemptDate >= monthAgo;
-          default:
-            return true;
-        }
-      })
-      .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+    const resultFiltered = filterByResult(attempts, filter);
+    const regionFiltered = filterByRegion(resultFiltered, regionFilter);
+    const dateFiltered = filterByDate(regionFiltered, dateFilter);
+    return sortAttempts(dateFiltered);
   }, [attempts, filter, regionFilter, dateFilter]);
 
-  const getRegionOptions = () => {
+  const getRegionOptions = useCallback(() => {
     const regions = [...new Set(attempts.map(a => a.region))];
     return regions.map(region => ({
       value: region,
       label: ingredientsService.getRegionDisplayName(region)
     }));
-  };
+  }, [attempts]);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setFilter('all');
     setRegionFilter('all');
     setDateFilter('all');
-  };
+  }, []);
 
   return {
     filter,

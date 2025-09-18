@@ -42,7 +42,6 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
   return (
     <FilterSection className="mb-8">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-        {/* Search */}
         <div className="flex-1">
           <Input
             type="text"
@@ -53,7 +52,6 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
           />
         </div>
 
-        {/* Filter */}
         <div className="flex space-x-2">
           {filterOptions.map(option => (
             <Button
@@ -67,7 +65,6 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
           ))}
         </div>
 
-        {/* Sort */}
         <Select
           value={sortBy}
           onChange={setSortBy}

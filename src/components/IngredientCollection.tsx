@@ -3,16 +3,17 @@
 import React, { useState } from 'react';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
+import { StatsService } from '@/services/statsService';
+import { BackupService } from '@/services/backupService';
 import PageLayout from './ui/PageLayout';
 import PageHeader from './ui/PageHeader';
 import StatsGrid from './ui/StatsGrid';
 import DataTable, { Column, Filter } from './ui/DataTable';
 import Button from './ui/Button';
-import ClientOnly from './ClientOnly';
 import IngredientModal from './IngredientModal';
 
 export default function IngredientCollection() {
-  const { ingredients, markAsUsed, getStats } = useIngredients();
+  const { ingredients, attempts, markAsUsed, getStats } = useIngredients();
   const [selectedIngredient, setSelectedIngredient] = useState<CollectedIngredient['ingredient'] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -30,19 +31,29 @@ export default function IngredientCollection() {
     setSelectedIngredient(null);
   };
 
+  const handleExportData = () => {
+    const stats = getStats();
+    BackupService.exportData(ingredients, attempts, stats);
+  };
 
-  const stats = getStats();
+  const handleClearAllData = () => {
+    if (confirm('Isso irá limpar todos os dados atuais. Tem certeza?')) {
+      BackupService.clearAllData();
+      window.location.reload();
+    }
+  };
+
+  const collectionStats = StatsService.calculateCollectionStats(ingredients, attempts);
   const statsData = [
-    { value: stats.totalCollected, label: 'Total Coletados', color: 'emerald' as const },
-    { value: stats.totalUsed, label: 'Usados', color: 'teal' as const },
-    { value: stats.totalAttempts, label: 'Tentativas', color: 'cyan' as const },
-    { value: `${stats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'slate' as const }
+    { value: collectionStats.totalCollected, label: 'Total Coletados', color: 'emerald' as const },
+    { value: collectionStats.totalUsed, label: 'Usados', color: 'teal' as const },
+    { value: collectionStats.totalAttempts, label: 'Tentativas', color: 'cyan' as const },
+    { value: `${collectionStats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'slate' as const }
   ];
 
-  // Configuração das colunas da tabela
   const columns: Column<CollectedIngredient>[] = [
     {
-      key: 'ingredient',
+      key: 'ingredient' as keyof CollectedIngredient,
       label: 'Ingrediente',
       sortable: true,
       width: '30%',
@@ -67,7 +78,7 @@ export default function IngredientCollection() {
       )
     },
     {
-      key: 'quantity',
+      key: 'quantity' as keyof CollectedIngredient,
       label: 'Quantidade',
       sortable: true,
       width: '15%',
@@ -80,7 +91,7 @@ export default function IngredientCollection() {
       )
     },
     {
-      key: 'collectedAt',
+      key: 'collectedAt' as keyof CollectedIngredient,
       label: 'Estatísticas',
       sortable: false,
       width: '25%',
@@ -99,7 +110,7 @@ export default function IngredientCollection() {
       )
     },
     {
-      key: 'used',
+      key: 'used' as keyof CollectedIngredient,
       label: 'Coletado em',
       sortable: true,
       width: '15%',
@@ -110,7 +121,7 @@ export default function IngredientCollection() {
       )
     },
     {
-      key: 'id',
+      key: 'forageAttemptId' as keyof CollectedIngredient,
       label: 'Ações',
       sortable: true,
       width: '20%',
@@ -126,12 +137,14 @@ export default function IngredientCollection() {
             </span>
           </div>
           {!item.used && item.quantity > 0 && (
-            <button
+            <Button
               onClick={() => handleMarkAsUsed(item.id)}
-              className="text-rose-400 hover:text-rose-500 text-xs underline bg-rose-50 hover:bg-rose-100 px-2 py-1 rounded transition-colors"
+              variant="secondary"
+              size="sm"
+              className="text-xs"
             >
               Usar 1
-            </button>
+            </Button>
           )}
           {item.used && (
             <span className="text-xs text-gray-500">
@@ -143,7 +156,6 @@ export default function IngredientCollection() {
     }
   ];
 
-  // Filtros da tabela
   const filters: Filter[] = [
     {
       key: 'used',
@@ -204,61 +216,36 @@ export default function IngredientCollection() {
         icon="🎒"
       />
 
-      <ClientOnly fallback={<div className="text-center py-8">Carregando...</div>}>
-        {/* Stats */}
-        <StatsGrid title="📊 Estatísticas" stats={statsData} className="mb-8" />
+      <StatsGrid title="📊 Estatísticas" stats={statsData} className="mb-8" />
 
-        {/* Tabela de Ingredientes */}
-        <DataTable<CollectedIngredient>
-          data={ingredients}
-          columns={columns}
-          filters={filters}
-          searchKey="ingredient.nome_portugues"
-          searchPlaceholder="Buscar ingrediente..."
-          itemsPerPage={15}
-          className="mb-8"
-        />
+      <DataTable<CollectedIngredient>
+        data={ingredients}
+        columns={columns}
+        filters={filters}
+        searchKey="ingredient.nome_portugues"
+        searchPlaceholder="Buscar ingrediente..."
+        itemsPerPage={15}
+        className="mb-8"
+      />
 
-        {/* Export/Import */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">💾 Backup</h3>
-          <div className="flex flex-col md:flex-row gap-4">
-            <Button
-              onClick={() => {
-                const data = JSON.stringify({
-                  collectedIngredients: ingredients,
-                  stats,
-                  exportedAt: new Date().toISOString()
-                }, null, 2);
-                const blob = new Blob([data], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `obojima-backup-${new Date().toISOString().split('T')[0]}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-              }}
-              variant="primary"
-            >
-              📤 Exportar Dados
-            </Button>
-            <Button
-              onClick={() => {
-                if (confirm('Isso irá limpar todos os dados atuais. Tem certeza?')) {
-                  localStorage.removeItem('obojima_collected_ingredients');
-                  localStorage.removeItem('obojima_forage_attempts');
-                  window.location.reload();
-                }
-              }}
-              variant="danger"
-            >
-              🗑️ Limpar Todos os Dados
-            </Button>
-          </div>
+      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">💾 Backup</h3>
+        <div className="flex flex-col md:flex-row gap-4">
+          <Button
+            onClick={handleExportData}
+            variant="primary"
+          >
+            📤 Exportar Dados
+          </Button>
+          <Button
+            onClick={handleClearAllData}
+            variant="danger"
+          >
+            🗑️ Limpar Todos os Dados
+          </Button>
         </div>
-      </ClientOnly>
+      </div>
 
-      {/* Modal de Ingrediente */}
       <IngredientModal
         ingredient={selectedIngredient}
         isOpen={isModalOpen}

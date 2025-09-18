@@ -65,7 +65,6 @@ export default function ForageForm({
   return (
     <ContentCard title="⚙️ Configuração do Teste">
       <div className="space-y-6">
-        {/* Region Selection */}
         <Select
           value={region}
           onChange={(value) => setRegion(value as RegionKey)}
@@ -73,7 +72,6 @@ export default function ForageForm({
           label="🌍 Região"
         />
 
-        {/* Test Type */}
         <RadioGroup
           value={testType}
           onChange={(value) => setTestType(value as TestType)}
@@ -81,7 +79,6 @@ export default function ForageForm({
           label="🎯 Tipo de Teste"
         />
 
-        {/* Modifier */}
         <Input
           type="number"
           value={modifier}
@@ -90,7 +87,6 @@ export default function ForageForm({
           placeholder="Ex: +3"
         />
 
-        {/* Bonus Dice */}
         <div>
           <label className="block text-sm font-medium text-rose-400 mb-2">
             🎲 Dados de Bônus
@@ -121,7 +117,6 @@ export default function ForageForm({
           </div>
         </div>
 
-        {/* Advantage */}
         <RadioGroup
           value={advantage}
           onChange={(value) => setAdvantage(value as AdvantageType)}
@@ -129,7 +124,6 @@ export default function ForageForm({
           label="🎯 Vantagem/Desvantagem"
         />
 
-        {/* Forage Button */}
         <Button
           onClick={onForage}
           disabled={isLoading || remainingAttempts <= 0}

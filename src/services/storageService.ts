@@ -4,21 +4,27 @@ class StorageService {
   private readonly COLLECTED_KEY = 'obojima_collected_ingredients';
   private readonly ATTEMPTS_KEY = 'obojima_forage_attempts';
 
-  // Gerenciar ingredientes coletados
+  private isClient(): boolean {
+    return typeof window !== 'undefined';
+  }
+
+  private parseDates(items: (CollectedIngredient & { collectedAt: string; usedAt?: string })[]): CollectedIngredient[] {
+    return items.map(item => ({
+      ...item,
+      collectedAt: new Date(item.collectedAt),
+      usedAt: item.usedAt ? new Date(item.usedAt) : undefined
+    }));
+  }
+
   getCollectedIngredients(): CollectedIngredient[] {
-    if (typeof window === 'undefined') return [];
+    if (!this.isClient()) return [];
     
     try {
       const stored = localStorage.getItem(this.COLLECTED_KEY);
       if (!stored) return [];
       
       const ingredients = JSON.parse(stored);
-      // Converter strings de data de volta para objetos Date
-      return ingredients.map((ing: CollectedIngredient & { collectedAt: string; usedAt?: string }) => ({
-        ...ing,
-        collectedAt: new Date(ing.collectedAt),
-        usedAt: ing.usedAt ? new Date(ing.usedAt) : undefined
-      }));
+      return this.parseDates(ingredients);
     } catch (error) {
       console.error('Erro ao carregar ingredientes coletados:', error);
       return [];
@@ -26,43 +32,33 @@ class StorageService {
   }
 
   addCollectedIngredient(ingredient: CollectedIngredient): void {
-    if (typeof window === 'undefined') return;
+    if (!this.isClient()) return;
     
     try {
       const current = this.getCollectedIngredients();
-      
-      // Verificar se já existe um ingrediente igual (mesmo ID)
-      const existingIndex = current.findIndex(ing => 
-        ing.ingredient.id === ingredient.ingredient.id
-      );
+      const existingIndex = current.findIndex(ing => ing.ingredient.id === ingredient.ingredient.id);
       
       if (existingIndex !== -1) {
         const existing = current[existingIndex];
-        
+        existing.quantity += ingredient.quantity;
+        existing.collectedAt = new Date();
         if (existing.used) {
-          // Se estava usado, voltar a ficar disponível e acumular
           existing.used = false;
           existing.usedAt = undefined;
-          existing.quantity += ingredient.quantity;
-          existing.collectedAt = new Date();
-        } else {
-          // Se já estava disponível, apenas acumular
-          existing.quantity += ingredient.quantity;
-          existing.collectedAt = new Date();
         }
       } else {
-        // Adicionar novo ingrediente
         current.push(ingredient);
       }
       
       localStorage.setItem(this.COLLECTED_KEY, JSON.stringify(current));
+      console.log('Ingrediente adicionado à coleção:', ingredient.ingredient.nome_portugues);
     } catch (error) {
       console.error('Erro ao adicionar ingrediente coletado:', error);
     }
   }
 
   updateCollectedIngredient(id: string, updates: Partial<CollectedIngredient>): void {
-    if (typeof window === 'undefined') return;
+    if (!this.isClient()) return;
     
     try {
       const current = this.getCollectedIngredients();
@@ -77,23 +73,18 @@ class StorageService {
   }
 
   markIngredientAsUsed(id: string): void {
-    if (typeof window === 'undefined') return;
+    if (!this.isClient()) return;
     
     try {
       const current = this.getCollectedIngredients();
       const index = current.findIndex(ing => ing.id === id);
-      if (index !== -1) {
+      if (index !== -1 && current[index].quantity > 0) {
         const ingredient = current[index];
+        ingredient.quantity -= 1;
         
-        if (ingredient.quantity > 0) {
-          // Diminuir quantidade
-          ingredient.quantity -= 1;
-          
-          // Se chegou a 0, marcar como usado
-          if (ingredient.quantity === 0) {
-            ingredient.used = true;
-            ingredient.usedAt = new Date();
-          }
+        if (ingredient.quantity === 0) {
+          ingredient.used = true;
+          ingredient.usedAt = new Date();
         }
         
         localStorage.setItem(this.COLLECTED_KEY, JSON.stringify(current));
@@ -104,7 +95,7 @@ class StorageService {
   }
 
   removeCollectedIngredient(id: string): void {
-    if (typeof window === 'undefined') return;
+    if (!this.isClient()) return;
     
     try {
       const current = this.getCollectedIngredients();
@@ -115,16 +106,14 @@ class StorageService {
     }
   }
 
-  // Gerenciar tentativas de forrageamento
   getForageAttempts(): ForageAttempt[] {
-    if (typeof window === 'undefined') return [];
+    if (!this.isClient()) return [];
     
     try {
       const stored = localStorage.getItem(this.ATTEMPTS_KEY);
       if (!stored) return [];
       
       const attempts = JSON.parse(stored);
-      // Converter strings de data de volta para objetos Date
       return attempts.map((attempt: ForageAttempt & { timestamp: string }) => ({
         ...attempt,
         timestamp: new Date(attempt.timestamp)
@@ -136,7 +125,7 @@ class StorageService {
   }
 
   addForageAttempt(attempt: ForageAttempt): void {
-    if (typeof window === 'undefined') return;
+    if (!this.isClient()) return;
     
     try {
       const current = this.getForageAttempts();
@@ -147,7 +136,6 @@ class StorageService {
     }
   }
 
-  // Estatísticas
   getStats() {
     const collected = this.getCollectedIngredients();
     const attempts = this.getForageAttempts();
@@ -157,19 +145,8 @@ class StorageService {
     const totalAttempts = attempts.length;
     const successfulAttempts = attempts.filter(attempt => attempt.success).length;
     
-    const byRegion = collected.reduce((acc, ing) => {
-      const region = ing.forageAttemptId ? 
-        attempts.find(a => a.id === ing.forageAttemptId)?.region || 'Desconhecida' : 'Desconhecida';
-      acc[region] = (acc[region] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const byRarity = collected.reduce((acc, ing) => {
-      const rarity = ing.forageAttemptId ? 
-        attempts.find(a => a.id === ing.forageAttemptId)?.rarity || 'comum' : 'comum';
-      acc[rarity] = (acc[rarity] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const byRegion = this.groupByRegion(collected, attempts);
+    const byRarity = this.groupByRarity(collected, attempts);
 
     return {
       totalCollected,
@@ -182,15 +159,32 @@ class StorageService {
     };
   }
 
-  // Limpar dados
+  private groupByRegion(collected: CollectedIngredient[], attempts: ForageAttempt[]): Record<string, number> {
+    return collected.reduce((acc, ing) => {
+      const region = ing.forageAttemptId 
+        ? attempts.find(a => a.id === ing.forageAttemptId)?.region || 'Desconhecida' 
+        : 'Desconhecida';
+      acc[region] = (acc[region] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+  }
+
+  private groupByRarity(collected: CollectedIngredient[], attempts: ForageAttempt[]): Record<string, number> {
+    return collected.reduce((acc, ing) => {
+      const rarity = ing.forageAttemptId 
+        ? attempts.find(a => a.id === ing.forageAttemptId)?.rarity || 'comum' 
+        : 'comum';
+      acc[rarity] = (acc[rarity] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+  }
+
   clearAllData(): void {
-    if (typeof window === 'undefined') return;
-    
+    if (!this.isClient()) return;
     localStorage.removeItem(this.COLLECTED_KEY);
     localStorage.removeItem(this.ATTEMPTS_KEY);
   }
 
-  // Exportar dados
   exportData(): string {
     const data = {
       collectedIngredients: this.getCollectedIngredients(),
@@ -201,7 +195,6 @@ class StorageService {
     return JSON.stringify(data, null, 2);
   }
 
-  // Importar dados
   importData(jsonData: string): boolean {
     try {
       const data = JSON.parse(jsonData);

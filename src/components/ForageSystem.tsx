@@ -22,6 +22,7 @@ import ForageResult from './forage/ForageResult';
 import IngredientCard from './ui/IngredientCard';
 import SettingsModal from './SettingsModal';
 import ContentCard from './ui/ContentCard';
+import Button from './ui/Button';
 
 interface ForageSystemProps {
   onIngredientCollected?: (ingredient: CollectedIngredient) => void;
@@ -40,7 +41,6 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
   
   const { ingredients, addIngredient, addAttempt } = useIngredients();
 
-  // Carregar configurações padrão ao montar o componente
   useEffect(() => {
     const defaultModifier = settingsService.getDefaultModifier();
     const defaultBonusDice = settingsService.getDefaultBonusDice();
@@ -56,12 +56,10 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
       });
     }
 
-    // Atualizar tentativas restantes
     setRemainingAttempts(getRemainingAttemptsToday());
   }, []);
 
   const handleForage = async () => {
-    // Verificar limite diário
     if (isDailyLimitReached()) {
       alert(`Você já atingiu o limite de ${GAME_CONFIG.DAILY_FORAGE_LIMIT} tentativas hoje! Volte amanhã para continuar forrageando.`);
       return;
@@ -70,30 +68,23 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
     setIsLoading(true);
     
     try {
-      // Converter modificador para número (0 se vazio)
       const modifierValue = modifier === '' ? 0 : modifier;
       
-      // Determinar raridade baseada no modificador e região
       const rarity = modifierValue >= 5 ? 'incomum' : 'comum';
-      const isNative = true; // Assumindo que sempre é nativo da região
+      const isNative = true;
       
-      // Calcular DC
       const dcResult = ingredientsService.calculateDC(rarity, isNative);
       
-      // Fazer rolagem
       const { roll } = diceService.rollWithAdvantage(advantage);
       const totalRoll = diceService.calculateTotalRoll(roll, modifierValue, bonusDice || undefined);
       
-      // Verificar se a rolagem está dentro da faixa de DC
       const success = totalRoll >= parseInt(dcResult.range.split('-')[0]);
       
-      // Tentar obter ingrediente se sucesso
       let ingredient: Ingredient | null = null;
       if (success) {
         ingredient = await ingredientsService.getRandomIngredientFromRegion(region, rarity);
       }
       
-      // Criar tentativa
       const attempt: ForageAttempt = {
         id: Date.now().toString(),
         timestamp: new Date(),
@@ -110,13 +101,10 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
         rarity
       };
       
-      // Salvar tentativa
-      // Incrementar contador diário
       incrementDailyCounter();
       
       addAttempt(attempt);
       
-      // Se coletou ingrediente, adicionar à coleção
       if (success && ingredient) {
         const collectedIngredient: CollectedIngredient = {
           id: Date.now().toString() + '_ingredient',
@@ -133,7 +121,6 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
       
       setLastResult(attempt);
       
-      // Atualizar tentativas restantes
       setRemainingAttempts(getRemainingAttemptsToday());
       
     } catch (error) {
@@ -151,7 +138,6 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
         icon="🌿"
         action={
           <div className="flex items-center space-x-4">
-            {/* Indicador de tentativas restantes */}
             <div className={`px-4 py-3 rounded-xl flex items-center space-x-3 shadow-md border transition-all duration-300 ${
               remainingAttempts > 0 
                 ? 'bg-rose-100 text-rose-400 border-rose-200 hover:shadow-lg' 
@@ -170,21 +156,20 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
               </div>
             </div>
             
-            <button
+            <Button
               onClick={() => setIsSettingsOpen(true)}
-              className="px-5 py-3 bg-rose-100 text-rose-400 rounded-xl hover:bg-rose-200 transition-all duration-300 flex items-center space-x-2 shadow-md border border-rose-200 hover:shadow-lg"
+              variant="secondary"
+              size="lg"
+              className="flex items-center space-x-2"
             >
-              <div className="w-6 h-6 bg-rose-200 rounded-full flex items-center justify-center">
-                <span className="text-sm">⚙️</span>
-              </div>
-              <span className="font-medium">Configurações</span>
-            </button>
+              <span className="text-sm">⚙️</span>
+              <span>Configurações</span>
+            </Button>
           </div>
         }
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        {/* Left Column - Configuration */}
         <ForageForm
           region={region}
           setRegion={setRegion}
@@ -201,13 +186,11 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
           remainingAttempts={remainingAttempts}
         />
 
-        {/* Right Column - Results */}
         <div className="space-y-6">
           <ForageResult result={lastResult} />
         </div>
       </div>
 
-      {/* Collected Ingredients Summary */}
       {ingredients.length > 0 && (
         <ContentCard title={`🎒 Ingredientes Coletados (${ingredients.length})`}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -222,12 +205,10 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
         </ContentCard>
       )}
 
-      {/* Modal de Configurações */}
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         onSettingsChange={() => {
-          // Recarregar configurações padrão
           const defaultModifier = settingsService.getDefaultModifier();
           const defaultBonusDice = settingsService.getDefaultBonusDice();
           

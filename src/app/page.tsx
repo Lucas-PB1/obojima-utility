@@ -1,47 +1,39 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ForageSystem from '@/components/ForageSystem';
 import IngredientCollection from '@/components/IngredientCollection';
 import ActivityLog from '@/components/ActivityLog';
-import { TabNavigation } from '@/components/ui';
-import { CollectedIngredient } from '@/types/ingredients';
-
-type TabType = 'forage' | 'collection' | 'log';
+import TabNavigation from '@/components/ui/TabNavigation';
+import EmptyState from '@/components/ui/EmptyState';
+import Button from '@/components/ui/Button';
+import { useApp } from '@/hooks/useApp';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<TabType>('forage');
-  const [recentlyCollected, setRecentlyCollected] = useState<CollectedIngredient[]>([]);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const handleIngredientCollected = (ingredient: CollectedIngredient) => {
-    setRecentlyCollected(prev => [ingredient, ...prev.slice(0, 4)]); // Keep last 5
-  };
-
-  const tabs = [
-    { id: 'forage' as TabType, label: 'Forragear', icon: '🌿' },
-    { id: 'collection' as TabType, label: 'Coleção', icon: '🎒' },
-    { id: 'log' as TabType, label: 'Log', icon: '📋' }
-  ];
+  const {
+    activeTab,
+    recentlyCollected,
+    isClient,
+    tabs,
+    handleIngredientCollected,
+    handleTabChange,
+    handleViewCollection,
+  } = useApp();
 
   if (!isClient) {
     return (
       <div className="min-h-screen bg-rose-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-4xl mb-4">🌿</div>
-          <div className="text-rose-500 font-medium">Carregando Obojima...</div>
-        </div>
+        <EmptyState
+          icon="🌿"
+          title="Carregando Obojima..."
+          description="Preparando o sistema de forrageamento"
+        />
       </div>
     );
   }
 
   return (
       <div className="min-h-screen bg-rose-50 transition-colors duration-300">
-        {/* Header */}
         <div className="border-b border-rose-200 sticky top-0 z-50 bg-white backdrop-blur-md transition-colors duration-300">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
@@ -54,32 +46,31 @@ export default function Home() {
                 </p>
               </div>
               
-              {/* Recently Collected Notification */}
               {recentlyCollected.length > 0 && (
                 <div className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-rose-100 transition-colors duration-300">
                   <span className="text-sm font-medium text-rose-400">
                     🎁 {recentlyCollected.length} novo(s) ingrediente(s)!
                   </span>
-                  <button
-                    onClick={() => setActiveTab('collection')}
-                    className="text-sm underline hover:opacity-80 transition-opacity duration-200 text-rose-300"
+                  <Button
+                    onClick={handleViewCollection}
+                    variant="secondary"
+                    size="sm"
+                    className="text-sm"
                   >
                     Ver coleção
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Navigation Tabs */}
         <TabNavigation
           tabs={tabs}
           activeTab={activeTab}
-          onTabChange={(tabId) => setActiveTab(tabId as TabType)}
+          onTabChange={handleTabChange}
         />
 
-        {/* Main Content */}
         <div className="max-w-6xl mx-auto">
           {activeTab === 'forage' && (
             <ForageSystem 
@@ -90,7 +81,6 @@ export default function Home() {
           {activeTab === 'log' && <ActivityLog />}
         </div>
 
-        {/* Footer */}
         <footer className="border-t border-rose-200 mt-12 bg-white backdrop-blur-md transition-colors duration-300">
           <div className="max-w-6xl mx-auto px-6 py-8">
             <div className="text-center text-gray-900 transition-colors duration-300">

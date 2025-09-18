@@ -1,6 +1,21 @@
 import { DiceType, AdvantageType } from '@/types/ingredients';
 
 class DiceService {
+  private static readonly DICE_NAMES: Record<DiceType, string> = {
+    d4: 'D4',
+    d6: 'D6', 
+    d8: 'D8',
+    d10: 'D10',
+    d12: 'D12',
+    d20: 'D20'
+  };
+
+  private static readonly ADVANTAGE_NAMES: Record<AdvantageType, string> = {
+    normal: 'Normal',
+    vantagem: 'Vantagem',
+    desvantagem: 'Desvantagem'
+  };
+
   rollDice(sides: number): number {
     return Math.floor(Math.random() * sides) + 1;
   }
@@ -17,21 +32,16 @@ class DiceService {
   rollWithAdvantage(advantage: AdvantageType): { roll: number; secondRoll?: number } {
     const firstRoll = this.rollD20();
     
-    if (advantage === 'vantagem') {
-      const secondRoll = this.rollD20();
-      return {
-        roll: Math.max(firstRoll, secondRoll),
-        secondRoll
-      };
-    } else if (advantage === 'desvantagem') {
-      const secondRoll = this.rollD20();
-      return {
-        roll: Math.min(firstRoll, secondRoll),
-        secondRoll
-      };
+    if (advantage === 'normal') {
+      return { roll: firstRoll };
     }
     
-    return { roll: firstRoll };
+    const secondRoll = this.rollD20();
+    const roll = advantage === 'vantagem' 
+      ? Math.max(firstRoll, secondRoll)
+      : Math.min(firstRoll, secondRoll);
+    
+    return { roll, secondRoll };
   }
 
   calculateTotalRoll(
@@ -39,42 +49,23 @@ class DiceService {
     modifier: number,
     bonusDice?: { type: DiceType; value: number }
   ): number {
-    let total = baseRoll + modifier;
-    
-    if (bonusDice) {
-      total += bonusDice.value; // Usar o valor já rolado, não rolar novamente
-    }
-    
-    return total;
+    return baseRoll + modifier + (bonusDice?.value || 0);
   }
 
   getDiceDisplayName(type: DiceType): string {
-    const names: Record<DiceType, string> = {
-      d4: 'D4',
-      d6: 'D6', 
-      d8: 'D8',
-      d10: 'D10',
-      d12: 'D12',
-      d20: 'D20'
-    };
-    return names[type];
+    return DiceService.DICE_NAMES[type];
   }
 
   getAdvantageDisplayName(advantage: AdvantageType): string {
-    const names: Record<AdvantageType, string> = {
-      normal: 'Normal',
-      vantagem: 'Vantagem',
-      desvantagem: 'Desvantagem'
-    };
-    return names[advantage];
+    return DiceService.ADVANTAGE_NAMES[advantage];
   }
 
-  // Simular múltiplas rolagens para estatísticas
   simulateRolls(
     modifier: number,
     advantage: AdvantageType,
     bonusDice?: { type: DiceType; value: number },
-    iterations: number = 1000
+    iterations: number = 1000,
+    dc: number = 15
   ): {
     average: number;
     min: number;
@@ -90,8 +81,7 @@ class DiceService {
       const total = this.calculateTotalRoll(roll, modifier, bonusDice);
       results.push(total);
       
-      // Assumir DC 15 para cálculo de taxa de sucesso
-      if (total >= 15) successes++;
+      if (total >= dc) successes++;
     }
     
     const average = results.reduce((sum, roll) => sum + roll, 0) / results.length;
@@ -104,7 +94,7 @@ class DiceService {
       min,
       max,
       successRate: Math.round(successRate * 100) / 100,
-      dc: 15
+      dc
     };
   }
 }

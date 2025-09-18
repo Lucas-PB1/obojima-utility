@@ -21,7 +21,6 @@ export default function IngredientCard({
         ? 'border-gray-300 bg-gray-50' 
         : 'border-rose-200 hover:border-rose-300'
     }`}>
-      {/* Header */}
       <div className="flex justify-between items-start mb-3">
         <h3 className="font-bold text-rose-400 text-lg leading-tight">
           {ingredient.ingredient.nome_portugues}
@@ -35,17 +34,14 @@ export default function IngredientCard({
         </span>
       </div>
 
-      {/* English Name */}
       <p className="text-sm text-gray-600 mb-3 italic">
         {ingredient.ingredient.nome_ingles}
       </p>
 
-      {/* Description */}
       <p className="text-sm text-gray-700 mb-4 line-clamp-3">
         {ingredient.ingredient.descricao}
       </p>
 
-      {/* Stats */}
       <div className="flex justify-center space-x-2 mb-4">
         <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-medium">
           ⚔️ {ingredient.ingredient.combat}
@@ -58,12 +54,10 @@ export default function IngredientCard({
         </span>
       </div>
 
-      {/* Date */}
       <p className="text-xs text-gray-500 mb-4">
         Coletado em {ingredient.collectedAt.toLocaleDateString('pt-BR')}
       </p>
 
-      {/* Actions */}
       {showActions && (
         <div className="flex space-x-2">
           {!ingredient.used && onMarkAsUsed && (

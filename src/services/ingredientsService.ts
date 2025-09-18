@@ -12,28 +12,28 @@ class IngredientsService {
   private commonIngredients: CommonIngredientsData | null = null;
   private uncommonIngredients: UncommonIngredientsData | null = null;
 
-  async loadIngredientsData(): Promise<IngredientsData> {
-    if (!this.ingredientsData) {
-      const response = await fetch('/ingredientes/ingredientes-por-regiao.json');
-      this.ingredientsData = await response.json();
+  private async loadData<T>(url: string, cache: T | null): Promise<T> {
+    if (cache) return cache;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
     }
-    return this.ingredientsData!;
+    return await response.json();
+  }
+
+  async loadIngredientsData(): Promise<IngredientsData> {
+    this.ingredientsData = await this.loadData('/ingredientes/ingredientes-por-regiao.json', this.ingredientsData);
+    return this.ingredientsData;
   }
 
   async loadCommonIngredients(): Promise<CommonIngredientsData> {
-    if (!this.commonIngredients) {
-      const response = await fetch('/ingredientes/ingredientes comums/ingredientes-comuns.json');
-      this.commonIngredients = await response.json();
-    }
-    return this.commonIngredients!;
+    this.commonIngredients = await this.loadData('/ingredientes/ingredientes comums/ingredientes-comuns.json', this.commonIngredients);
+    return this.commonIngredients;
   }
 
   async loadUncommonIngredients(): Promise<UncommonIngredientsData> {
-    if (!this.uncommonIngredients) {
-      const response = await fetch('/ingredientes/ingredientes incomuns/ingredientes-incomuns.json');
-      this.uncommonIngredients = await response.json();
-    }
-    return this.uncommonIngredients!;
+    this.uncommonIngredients = await this.loadData('/ingredientes/ingredientes incomuns/ingredientes-incomuns.json', this.uncommonIngredients);
+    return this.uncommonIngredients;
   }
 
   async getRegionData(region: RegionKey): Promise<RegionData | null> {
@@ -42,17 +42,12 @@ class IngredientsService {
   }
 
   async getIngredientById(id: number): Promise<Ingredient | null> {
-    // Primeiro tenta nos ingredientes comuns
     const commonData = await this.loadCommonIngredients();
     const commonIngredient = commonData.ingredientes.find(ing => ing.id === id);
     if (commonIngredient) return commonIngredient;
 
-    // Depois tenta nos incomuns
     const uncommonData = await this.loadUncommonIngredients();
-    const uncommonIngredient = uncommonData.ingredientes.find(ing => ing.id === id);
-    if (uncommonIngredient) return uncommonIngredient;
-
-    return null;
+    return uncommonData.ingredientes.find(ing => ing.id === id) || null;
   }
 
   async getRandomIngredientFromRegion(
@@ -74,43 +69,51 @@ class IngredientsService {
     return await this.getIngredientById(selectedIngredient.id);
   }
 
+  private static readonly REGION_NAMES: Record<RegionKey, string> = {
+    'Coastal Highlands': 'Terras Altas Costeiras',
+    'Gale Fields': 'Campos de Vendaval',
+    'Gift of Shuritashi': 'Dom de Shuritashi',
+    'Land of Hot Water': 'Terra da Água Quente',
+    'Mount Arbora': 'Monte Arbora',
+    'Shallows': 'Raso',
+    'Brackwater Wetlands': 'Pântanos de Água Salobra'
+  };
+
+  private static readonly REGION_KEYS: RegionKey[] = [
+    'Coastal Highlands',
+    'Gale Fields', 
+    'Gift of Shuritashi',
+    'Land of Hot Water',
+    'Mount Arbora',
+    'Shallows',
+    'Brackwater Wetlands'
+  ];
+
   getRegionDisplayName(region: RegionKey): string {
-    const regionNames: Record<RegionKey, string> = {
-      'Coastal Highlands': 'Terras Altas Costeiras',
-      'Gale Fields': 'Campos de Vendaval',
-      'Gift of Shuritashi': 'Dom de Shuritashi',
-      'Land of Hot Water': 'Terra da Água Quente',
-      'Mount Arbora': 'Monte Arbora',
-      'Shallows': 'Raso',
-      'Brackwater Wetlands': 'Pântanos de Água Salobra'
-    };
-    return regionNames[region];
+    return IngredientsService.REGION_NAMES[region];
   }
 
   getRegionKeys(): RegionKey[] {
-    return [
-      'Coastal Highlands',
-      'Gale Fields', 
-      'Gift of Shuritashi',
-      'Land of Hot Water',
-      'Mount Arbora',
-      'Shallows',
-      'Brackwater Wetlands'
-    ];
+    return IngredientsService.REGION_KEYS;
   }
 
   calculateDC(rarity: 'comum' | 'incomum', isNative: boolean = true): { dc: number; range: string } {
     if (rarity === 'comum' && isNative) {
-      const dc = Math.floor(Math.random() * 6) + 10; // DC 10-15
+      const dc = Math.floor(Math.random() * 6) + 10;
       return { dc, range: '10-15' };
-    } else if (rarity === 'incomum' && isNative) {
-      const dc = Math.floor(Math.random() * 5) + 16; // DC 16-20
+    }
+    
+    if (rarity === 'incomum' && isNative) {
+      const dc = Math.floor(Math.random() * 5) + 16;
       return { dc, range: '16-20' };
-    } else if (rarity === 'incomum' && !isNative) {
-      const dc = Math.floor(Math.random() * 5) + 21; // DC 21-25
+    }
+    
+    if (rarity === 'incomum' && !isNative) {
+      const dc = Math.floor(Math.random() * 5) + 21;
       return { dc, range: '21-25' };
     }
-    return { dc: 15, range: '10-15' }; // Fallback
+    
+    return { dc: 15, range: '10-15' };
   }
 }
 

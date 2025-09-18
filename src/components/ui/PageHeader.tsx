@@ -11,9 +11,7 @@ interface PageHeaderProps {
 export default function PageHeader({ title, subtitle, icon, className = '', action }: PageHeaderProps) {
   return (
     <div className={`mb-8 ${className}`}>
-      {/* Background decorativo */}
       <div className="relative overflow-hidden rounded-3xl bg-white backdrop-blur-md border border-rose-200 shadow-lg shadow-rose-100/20">
-        {/* Elementos decorativos de fundo */}
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-4 left-4 w-16 h-16 bg-rose-100/30 rounded-full blur-xl"></div>
           <div className="absolute top-8 right-8 w-12 h-12 bg-pink-100/25 rounded-full blur-lg"></div>
@@ -22,7 +20,6 @@ export default function PageHeader({ title, subtitle, icon, className = '', acti
         
         <div className="relative px-8 py-6">
           <div className="flex items-center justify-between">
-            {/* Lado esquerdo - Título */}
             <div className="flex-1">
               <div className="flex items-center space-x-4">
                 {icon && (
@@ -43,7 +40,6 @@ export default function PageHeader({ title, subtitle, icon, className = '', acti
               </div>
             </div>
             
-            {/* Lado direito - Ações */}
             {action && (
               <div className="flex-shrink-0">
                 {action}
@@ -52,7 +48,6 @@ export default function PageHeader({ title, subtitle, icon, className = '', acti
           </div>
         </div>
         
-        {/* Linha decorativa inferior */}
         <div className="h-1 bg-rose-200"></div>
       </div>
     </div>

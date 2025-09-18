@@ -1,4 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React from "react";
+import Input from "./Input";
+import Select from "./Select";
+import Button from "./Button";
+import { useDataTable } from "@/hooks/useDataTable";
 
 export interface Column<T> {
   key: keyof T;
@@ -11,7 +15,7 @@ export interface Column<T> {
 export interface Filter {
   key: string;
   label: string;
-  type: 'select' | 'text' | 'date';
+  type: "select" | "text" | "date";
   options?: { value: string; label: string }[];
   placeholder?: string;
 }
@@ -31,168 +35,91 @@ export default function DataTable<T extends Record<string, unknown>>({
   columns,
   filters = [],
   searchKey,
-  searchPlaceholder = 'Buscar...',
+  searchPlaceholder = "Buscar...",
   itemsPerPage = 10,
-  className = ''
+  className = "",
 }: DataTableProps<T>) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(null);
-  const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
-
-  // Filtrar dados
-  const filteredData = useMemo(() => {
-    let filtered = data;
-
-    // Busca por texto
-    if (searchTerm && searchKey) {
-      filtered = filtered.filter(item => {
-        const value = searchKey.includes('.') 
-          ? searchKey.split('.').reduce((obj: unknown, key) => (obj as Record<string, unknown>)?.[key], item)
-          : item[searchKey];
-        return value?.toString().toLowerCase().includes(searchTerm.toLowerCase());
-      });
-    }
-
-    // Filtros específicos
-    Object.entries(activeFilters).forEach(([key, value]) => {
-      if (value) {
-        filtered = filtered.filter(item => {
-          const itemValue = key.includes('.') 
-            ? key.split('.').reduce((obj: unknown, k) => (obj as Record<string, unknown>)?.[k], item)
-            : item[key];
-          return itemValue?.toString().toLowerCase().includes(value.toLowerCase());
-        });
-      }
-    });
-
-    return filtered;
-  }, [data, searchTerm, searchKey, activeFilters]);
-
-  // Ordenar dados
-  const sortedData = useMemo(() => {
-    if (!sortConfig) return filteredData;
-
-    return [...filteredData].sort((a, b) => {
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
-
-      if (aValue < bValue) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-  }, [filteredData, sortConfig]);
-
-  // Paginação
-  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = sortedData.slice(startIndex, startIndex + itemsPerPage);
-
-  const handleSort = (key: keyof T) => {
-    setSortConfig(prev => {
-      if (prev?.key === key) {
-        return prev.direction === 'asc' 
-          ? { key, direction: 'desc' }
-          : null;
-      }
-      return { key, direction: 'asc' };
-    });
-  };
-
-  const handleFilterChange = (key: string, value: string) => {
-    setActiveFilters(prev => ({
-      ...prev,
-      [key]: value
-    }));
-    setCurrentPage(1);
-  };
-
-  const clearFilters = () => {
-    setActiveFilters({});
-    setSearchTerm('');
-    setCurrentPage(1);
-  };
+  const {
+    paginatedData,
+    totalPages,
+    currentPage,
+    startIndex,
+    searchTerm,
+    sortConfig,
+    activeFilters,
+    handleSort,
+    handleFilterChange,
+    clearFilters,
+    setPage,
+    setSearch,
+  } = useDataTable({
+    data,
+    searchKey,
+    itemsPerPage
+  });
 
   return (
-    <div className={`bg-white rounded-xl shadow-lg border border-gray-200 ${className}`}>
-      {/* Header com filtros */}
+    <div
+      className={`bg-white rounded-xl shadow-lg border border-gray-200 ${className}`}
+    >
       <div className="p-6 border-b border-gray-200">
         <div className="flex flex-col lg:flex-row gap-4">
-          {/* Busca */}
           {searchKey && (
             <div className="flex-1">
-              <input
+              <Input
                 type="text"
                 placeholder={searchPlaceholder}
                 value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 placeholder-gray-500"
+                onChange={(value) => setSearch(value as string)}
               />
             </div>
           )}
 
-          {/* Filtros */}
-          {filters.map(filter => (
+          {filters.map((filter) => (
             <div key={filter.key} className="min-w-48">
-              {filter.type === 'select' ? (
-                <select
-                  value={activeFilters[filter.key] || ''}
-                  onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-                  className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 placeholder-gray-500"
-                >
-                  <option value="">{filter.placeholder || `Todos os ${filter.label}`}</option>
-                  {filter.options?.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+              {filter.type === "select" ? (
+                <Select
+                  value={activeFilters[filter.key] || ""}
+                  onChange={(value) => handleFilterChange(filter.key, value)}
+                  options={filter.options || []}
+                  placeholder={filter.placeholder || `Todos os ${filter.label}`}
+                />
               ) : (
-                <input
-                  type={filter.type}
+                <Input
+                  type={filter.type === "date" ? "text" : filter.type}
                   placeholder={filter.placeholder || filter.label}
-                  value={activeFilters[filter.key] || ''}
-                  onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-                  className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 placeholder-gray-500"
+                  value={activeFilters[filter.key] || ""}
+                  onChange={(value) =>
+                    handleFilterChange(filter.key, value as string)
+                  }
                 />
               )}
             </div>
           ))}
 
-          {/* Botão limpar filtros */}
           {(Object.keys(activeFilters).length > 0 || searchTerm) && (
-            <button
-              onClick={clearFilters}
-              className="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-            >
+            <Button onClick={clearFilters} variant="secondary" size="md">
               Limpar
-            </button>
+            </Button>
           )}
         </div>
 
-        {/* Info dos resultados */}
         <div className="mt-4 text-sm text-gray-600">
-          Mostrando {startIndex + 1}-{Math.min(startIndex + itemsPerPage, sortedData.length)} de {sortedData.length} resultados
+          Mostrando {startIndex + 1}-
+          {Math.min(startIndex + itemsPerPage, paginatedData.length)} de{" "}
+          {paginatedData.length} resultados
         </div>
       </div>
 
-      {/* Tabela */}
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              {columns.map(column => (
+              {columns.map((column) => (
                 <th
                   key={String(column.key)}
                   className={`px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                    column.sortable ? 'cursor-pointer hover:bg-gray-100' : ''
+                    column.sortable ? "cursor-pointer hover:bg-gray-100" : ""
                   }`}
                   style={{ width: column.width }}
                   onClick={() => column.sortable && handleSort(column.key)}
@@ -201,14 +128,26 @@ export default function DataTable<T extends Record<string, unknown>>({
                     <span>{column.label}</span>
                     {column.sortable && (
                       <div className="flex flex-col">
-                        <span className={`text-xs ${
-                          sortConfig?.key === column.key && sortConfig.direction === 'asc' 
-                            ? 'text-emerald-600' : 'text-gray-300'
-                        }`}>▲</span>
-                        <span className={`text-xs ${
-                          sortConfig?.key === column.key && sortConfig.direction === 'desc' 
-                            ? 'text-emerald-600' : 'text-gray-300'
-                        }`}>▼</span>
+                        <span
+                          className={`text-xs ${
+                            sortConfig?.key === column.key &&
+                            sortConfig.direction === "asc"
+                              ? "text-emerald-600"
+                              : "text-gray-300"
+                          }`}
+                        >
+                          ▲
+                        </span>
+                        <span
+                          className={`text-xs ${
+                            sortConfig?.key === column.key &&
+                            sortConfig.direction === "desc"
+                              ? "text-emerald-600"
+                              : "text-gray-300"
+                          }`}
+                        >
+                          ▼
+                        </span>
                       </div>
                     )}
                   </div>
@@ -217,23 +156,36 @@ export default function DataTable<T extends Record<string, unknown>>({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {paginatedData.map((item, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                {columns.map(column => (
-                  <td key={String(column.key)} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {column.render 
-                      ? column.render(item[column.key], item)
-                      : String(item[column.key])
-                    }
-                  </td>
-                ))}
+            {paginatedData.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} className="px-6 py-12 text-center text-gray-500">
+                  <div className="flex flex-col items-center space-y-2">
+                    <span className="text-2xl">📦</span>
+                    <span>Nenhum item encontrado</span>
+                    <span className="text-xs">Total de dados: {data.length}</span>
+                  </div>
+                </td>
               </tr>
-            ))}
+            ) : (
+              paginatedData.map((item, index) => (
+                <tr key={index} className="hover:bg-gray-50">
+                  {columns.map((column) => (
+                    <td
+                      key={String(column.key)}
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                    >
+                      {column.render
+                        ? column.render(item[column.key], item)
+                        : String(item[column.key])}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
-      {/* Paginação */}
       {totalPages > 1 && (
         <div className="px-6 py-4 border-t border-gray-200">
           <div className="flex items-center justify-between">
@@ -241,38 +193,37 @@ export default function DataTable<T extends Record<string, unknown>>({
               Página {currentPage} de {totalPages}
             </div>
             <div className="flex space-x-2">
-              <button
-                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+              <Button
+                onClick={() => setPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                variant="secondary"
+                size="sm"
               >
                 Anterior
-              </button>
-              
+              </Button>
+
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                 const page = i + 1;
                 return (
-                  <button
+                  <Button
                     key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-2 text-sm rounded-lg ${
-                      currentPage === page
-                        ? 'bg-emerald-500 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                    onClick={() => setPage(page)}
+                    variant={currentPage === page ? "primary" : "secondary"}
+                    size="sm"
                   >
                     {page}
-                  </button>
+                  </Button>
                 );
               })}
-              
-              <button
-                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+
+              <Button
+                onClick={() => setPage(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                variant="secondary"
+                size="sm"
               >
                 Próxima
-              </button>
+              </Button>
             </div>
           </div>
         </div>

@@ -43,7 +43,6 @@ export default function ActivityFilters({ attempts, onFilteredAttempts }: Activi
   return (
     <FilterSection className="mb-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Result Filter */}
         <Select
           value={filter}
           onChange={(value) => setFilter(value as ResultFilterType)}
@@ -51,7 +50,6 @@ export default function ActivityFilters({ attempts, onFilteredAttempts }: Activi
           label="Resultado"
         />
 
-        {/* Region Filter */}
         <Select
           value={regionFilter}
           onChange={setRegionFilter}
@@ -59,7 +57,6 @@ export default function ActivityFilters({ attempts, onFilteredAttempts }: Activi
           label="Região"
         />
 
-        {/* Date Filter */}
         <Select
           value={dateFilter}
           onChange={(value) => setDateFilter(value as DateFilterType)}
@@ -67,7 +64,6 @@ export default function ActivityFilters({ attempts, onFilteredAttempts }: Activi
           label="Período"
         />
 
-        {/* Clear Filters */}
         <div className="flex items-end">
           <Button
             onClick={clearFilters}
