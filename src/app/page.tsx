@@ -7,6 +7,7 @@ import { PotionBrewing } from '@/components/PotionBrewing';
 import { CreatedPotionCollection } from '@/components/CreatedPotionCollection';
 import { RecipeCollection } from '@/components/RecipeCollection';
 import ActivityLog from '@/components/ActivityLog';
+import { BackupSection } from '@/components/BackupSection';
 import TabNavigation from '@/components/ui/TabNavigation';
 import EmptyState from '@/components/ui/EmptyState';
 import Button from '@/components/ui/Button';
@@ -112,6 +113,7 @@ export default function Home() {
           {activeTab === 'created-potions' && <CreatedPotionCollection />}
           {activeTab === 'recipes' && <RecipeCollection />}
           {activeTab === 'log' && <ActivityLog />}
+          {activeTab === 'backup' && <BackupSection />}
         </div>
 
         <footer className="border-t border-totoro-blue/20 bg-white/90 backdrop-blur-md transition-colors duration-300">

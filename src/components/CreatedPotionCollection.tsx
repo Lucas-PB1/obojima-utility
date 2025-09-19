@@ -6,6 +6,7 @@ import { createdPotionService } from '../services/createdPotionService';
 import ContentCard from './ui/ContentCard';
 import Button from './ui/Button';
 import Modal from './ui/Modal';
+import ExportImportSection from './ui/ExportImportSection';
 
 export const CreatedPotionCollection: React.FC = () => {
   const [potions, setPotions] = useState<CreatedPotion[]>([]);
@@ -237,6 +238,13 @@ export const CreatedPotionCollection: React.FC = () => {
           )}
         </div>
       </ContentCard>
+
+      {/* Seção de Export/Import */}
+      <ExportImportSection 
+        type="potions" 
+        onDataImported={loadPotions}
+        className="mb-6"
+      />
 
       {/* Modal de Detalhes */}
       {selectedPotion && (

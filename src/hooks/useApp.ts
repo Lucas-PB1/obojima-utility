@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient } from '@/types/ingredients';
 
-export type TabType = 'forage' | 'collection' | 'potions' | 'created-potions' | 'recipes' | 'log';
+export type TabType = 'forage' | 'collection' | 'potions' | 'created-potions' | 'recipes' | 'log' | 'backup';
 
 export interface Tab {
   id: TabType;
@@ -17,7 +17,8 @@ const TABS: Tab[] = [
   { id: 'potions', label: 'Poções', icon: '🧪' },
   { id: 'created-potions', label: 'Inventário', icon: '⚗️' },
   { id: 'recipes', label: 'Receitas', icon: '📜' },
-  { id: 'log', label: 'Log', icon: '📋' }
+  { id: 'log', label: 'Log', icon: '📋' },
+  { id: 'backup', label: 'Backup', icon: '💾' }
 ];
 
 const MAX_RECENT_ITEMS = 5;

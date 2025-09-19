@@ -7,6 +7,7 @@ import ContentCard from './ui/ContentCard';
 import Button from './ui/Button';
 import Modal from './ui/Modal';
 import SimpleIngredientCard from './ui/SimpleIngredientCard';
+import ExportImportSection from './ui/ExportImportSection';
 
 export const RecipeCollection: React.FC = () => {
   const [recipes, setRecipes] = useState<PotionRecipe[]>([]);
@@ -216,6 +217,13 @@ export const RecipeCollection: React.FC = () => {
           )}
         </div>
       </ContentCard>
+
+      {/* Seção de Export/Import */}
+      <ExportImportSection 
+        type="recipes" 
+        onDataImported={loadRecipes}
+        className="mb-6"
+      />
 
       {/* Modal de Detalhes */}
       {selectedRecipe && (

@@ -59,10 +59,16 @@ interface PotionRecipe {
 ### Serviços
 - `src/services/potionService.ts` - Lógica principal de criação de poções
 - `src/services/recipeService.ts` - Gerenciamento de receitas salvas
+- `src/services/createdPotionService.ts` - Gerenciamento de poções criadas
+- `src/services/exportImportService.ts` - Sistema de backup e exportação
 
 ### Componentes
 - `src/components/PotionBrewing.tsx` - Interface principal de criação
+- `src/components/CreatedPotionCollection.tsx` - Inventário de poções criadas
+- `src/components/RecipeCollection.tsx` - Coleção de receitas
+- `src/components/BackupSection.tsx` - Seção de backup completo
 - `src/components/ui/SimpleIngredientCard.tsx` - Card simplificado para ingredientes
+- `src/components/ui/ExportImportSection.tsx` - Componente reutilizável de export/import
 
 ### Tipos
 - `src/types/ingredients.ts` - Tipos TypeScript para o sistema
@@ -90,6 +96,14 @@ interface PotionRecipe {
 - Marcação automática como "usada" quando quantidade chega a 0
 - Histórico de quando cada poção foi usada
 
+### Sistema de Backup e Exportação
+- Exportação individual de cada tipo de dados (ingredientes, poções, receitas, logs)
+- Exportação completa de todos os dados do sistema
+- Importação de dados de arquivos TXT
+- Validação de versão e formato de arquivos
+- Backup automático em formato legível
+- Restauração completa do sistema a partir de backup
+
 ### Integração
 - Utiliza ingredientes coletados no sistema de forrageamento
 - Integrado com a navegação principal da aplicação
@@ -109,6 +123,9 @@ interface PotionRecipe {
 7. **Gerenciar Inventário**: Acesse a aba "Inventário" para ver suas poções criadas
 8. **Usar Poções**: Clique em "Usar" para consumir uma poção (diminui a quantidade)
 9. **Visualizar Receitas**: Acesse a aba "Receitas" para ver o histórico de criação
+10. **Fazer Backup**: Acesse a aba "Backup" para exportar todos os dados
+11. **Exportar Dados**: Use as seções de export/import em cada aba para backup específico
+12. **Importar Dados**: Restaure dados de arquivos TXT exportados anteriormente
 
 ## Categorias de Poções
 

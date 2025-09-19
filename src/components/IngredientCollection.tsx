@@ -11,9 +11,10 @@ import StatsGrid from './ui/StatsGrid';
 import DataTable, { Column, Filter } from './ui/DataTable';
 import Button from './ui/Button';
 import IngredientModal from './IngredientModal';
+import ExportImportSection from './ui/ExportImportSection';
 
 export default function IngredientCollection() {
-  const { ingredients, attempts, markAsUsed, getStats } = useIngredients();
+  const { ingredients, attempts, markAsUsed, getStats, refreshData } = useIngredients();
   
   // Filtrar ingredientes com quantidade > 0 para exibição
   const displayIngredients = ingredients.filter(ing => ing.quantity > 0);
@@ -231,14 +232,20 @@ export default function IngredientCollection() {
         className="mb-8"
       />
 
+      <ExportImportSection 
+        type="ingredients" 
+        onDataImported={refreshData}
+        className="mb-6"
+      />
+
       <div className="bg-white rounded-xl shadow-lg border border-totoro-blue/20 p-6">
-        <h3 className="text-lg font-semibold text-totoro-gray mb-4">💾 Backup</h3>
+        <h3 className="text-lg font-semibold text-totoro-gray mb-4">🗑️ Limpeza</h3>
         <div className="flex flex-col md:flex-row gap-4">
           <Button
             onClick={handleExportData}
             variant="primary"
           >
-            📤 Exportar Dados
+            📤 Exportar Dados (Legado)
           </Button>
           <Button
             onClick={handleClearAllData}

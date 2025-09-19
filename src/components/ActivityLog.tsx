@@ -11,9 +11,10 @@ import ActivityFilters from './filters/ActivityFilters';
 import EmptyState from './ui/EmptyState';
 import ContentCard from './ui/ContentCard';
 import { ingredientsService } from '@/services/ingredientsService';
+import ExportImportSection from './ui/ExportImportSection';
 
 export default function ActivityLog() {
-  const { attempts } = useIngredients();
+  const { attempts, refreshData } = useIngredients();
   const [filteredAttempts, setFilteredAttempts] = useState<ForageAttempt[]>([]);
 
   const activityStats = StatsService.calculateActivityStats(filteredAttempts);
@@ -156,6 +157,13 @@ export default function ActivityLog() {
         </div>
       )}
       </ContentCard>
+
+      {/* Seção de Export/Import */}
+      <ExportImportSection 
+        type="logs" 
+        onDataImported={refreshData}
+        className="mt-6"
+      />
     </PageLayout>
   );
 }
