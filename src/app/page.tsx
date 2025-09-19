@@ -3,11 +3,15 @@
 import React from 'react';
 import ForageSystem from '@/components/ForageSystem';
 import IngredientCollection from '@/components/IngredientCollection';
+import { PotionBrewing } from '@/components/PotionBrewing';
+import { CreatedPotionCollection } from '@/components/CreatedPotionCollection';
+import { RecipeCollection } from '@/components/RecipeCollection';
 import ActivityLog from '@/components/ActivityLog';
 import TabNavigation from '@/components/ui/TabNavigation';
 import EmptyState from '@/components/ui/EmptyState';
 import Button from '@/components/ui/Button';
 import { useApp } from '@/hooks/useApp';
+import { useIngredients } from '@/hooks/useIngredients';
 
 export default function Home() {
   const {
@@ -19,6 +23,22 @@ export default function Home() {
     handleTabChange,
     handleViewCollection,
   } = useApp();
+
+  const { ingredients, markAsUsed } = useIngredients();
+
+  // Converter ingredientes coletados para o formato esperado pelo sistema de poções
+  // Filtrar ingredientes não usados e com quantidade > 0
+  const availableIngredients = ingredients
+    .filter(ing => !ing.used && ing.quantity > 0)
+    .map(ing => ing.ingredient);
+
+  // Função para marcar ingredientes como usados
+  const handleIngredientsUsed = (ingredientIds: number[]) => {
+    // Encontrar os ingredientes coletados correspondentes e marcá-los como usados
+    ingredients
+      .filter(ing => ingredientIds.includes(ing.ingredient.id) && !ing.used)
+      .forEach(ing => markAsUsed(ing.id));
+  };
 
   if (!isClient) {
     return (
@@ -79,6 +99,18 @@ export default function Home() {
             />
           )}
           {activeTab === 'collection' && <IngredientCollection />}
+          {activeTab === 'potions' && (
+            <PotionBrewing 
+              availableIngredients={availableIngredients}
+              onPotionCreated={(recipe) => {
+                console.log('Poção criada:', recipe);
+                // A receita já é salva automaticamente pelo componente PotionBrewing
+              }}
+              onIngredientsUsed={handleIngredientsUsed}
+            />
+          )}
+          {activeTab === 'created-potions' && <CreatedPotionCollection />}
+          {activeTab === 'recipes' && <RecipeCollection />}
           {activeTab === 'log' && <ActivityLog />}
         </div>
 

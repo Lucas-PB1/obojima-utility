@@ -14,6 +14,9 @@ import IngredientModal from './IngredientModal';
 
 export default function IngredientCollection() {
   const { ingredients, attempts, markAsUsed, getStats } = useIngredients();
+  
+  // Filtrar ingredientes com quantidade > 0 para exibição
+  const displayIngredients = ingredients.filter(ing => ing.quantity > 0);
   const [selectedIngredient, setSelectedIngredient] = useState<CollectedIngredient['ingredient'] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,7 +46,7 @@ export default function IngredientCollection() {
     }
   };
 
-  const collectionStats = StatsService.calculateCollectionStats(ingredients, attempts);
+  const collectionStats = StatsService.calculateCollectionStats(displayIngredients, attempts);
   const statsData = [
     { value: collectionStats.totalCollected, label: 'Total Coletados', color: 'totoro-green' as const },
     { value: collectionStats.totalUsed, label: 'Usados', color: 'totoro-blue' as const },
@@ -129,14 +132,14 @@ export default function IngredientCollection() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-              item.used || item.quantity === 0
+              item.used
                 ? 'bg-totoro-gray/20 text-totoro-gray' 
                 : 'bg-totoro-green/20 text-totoro-green'
             }`}>
-              {item.used || item.quantity === 0 ? 'Usado (0)' : `${item.quantity} disponível(is)`}
+              {item.used ? 'Usado' : `${item.quantity} disponível(is)`}
             </span>
           </div>
-          {!item.used && item.quantity > 0 && (
+          {!item.used && (
             <Button
               onClick={() => handleMarkAsUsed(item.id)}
               variant="secondary"
@@ -219,7 +222,7 @@ export default function IngredientCollection() {
       <StatsGrid title="📊 Estatísticas" stats={statsData} className="mb-8" />
 
       <DataTable<CollectedIngredient>
-        data={ingredients}
+        data={displayIngredients}
         columns={columns}
         filters={filters}
         searchKey="ingredient.nome_portugues"

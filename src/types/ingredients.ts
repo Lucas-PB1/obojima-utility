@@ -120,3 +120,45 @@ export interface CollectedIngredient {
   forageAttemptId: string;
   [key: string]: unknown;
 }
+
+// Sistema de Poções
+export interface Potion {
+  id: number;
+  nome_ingles: string;
+  nome_portugues: string;
+  raridade: string;
+  descricao: string;
+}
+
+export interface PotionCategory {
+  total: number;
+  descricao: string;
+  pocoes: Potion[];
+}
+
+export interface PotionRecipe {
+  id: string;
+  ingredients: Ingredient[];
+  combatScore: number;
+  utilityScore: number;
+  whimsyScore: number;
+  winningAttribute: 'combat' | 'utility' | 'whimsy';
+  resultingPotion: Potion;
+  createdAt: Date;
+}
+
+export interface CreatedPotion {
+  id: string;
+  potion: Potion;
+  recipe: PotionRecipe;
+  quantity: number;
+  createdAt: Date;
+  used: boolean;
+  usedAt?: Date;
+}
+
+export interface PotionBrewingResult {
+  recipe: PotionRecipe;
+  success: boolean;
+  message: string;
+}
