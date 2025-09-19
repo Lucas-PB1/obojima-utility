@@ -185,6 +185,16 @@ class StorageService {
     localStorage.removeItem(this.ATTEMPTS_KEY);
   }
 
+  clearIngredients(): void {
+    if (!this.isClient()) return;
+    localStorage.removeItem(this.COLLECTED_KEY);
+  }
+
+  clearAttempts(): void {
+    if (!this.isClient()) return;
+    localStorage.removeItem(this.ATTEMPTS_KEY);
+  }
+
   exportData(): string {
     const data = {
       collectedIngredients: this.getCollectedIngredients(),

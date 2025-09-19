@@ -178,6 +178,13 @@ class CreatedPotionService {
       };
     });
   }
+
+  /**
+   * Limpa todas as poções criadas
+   */
+  public clearAllCreatedPotions(): void {
+    localStorage.removeItem(this.STORAGE_KEY);
+  }
 }
 
 export const createdPotionService = new CreatedPotionService();

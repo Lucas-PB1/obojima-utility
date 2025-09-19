@@ -39,6 +39,16 @@ export function useIngredients() {
 
   const getStats = useCallback(() => storageService.getStats(), []);
 
+  const clearIngredients = useCallback(() => {
+    storageService.clearIngredients();
+    setIngredients([]);
+  }, []);
+
+  const clearAttempts = useCallback(() => {
+    storageService.clearAttempts();
+    setAttempts([]);
+  }, []);
+
   return {
     ingredients,
     attempts,
@@ -47,6 +57,8 @@ export function useIngredients() {
     addIngredient,
     addAttempt,
     getStats,
-    refreshData
+    refreshData,
+    clearIngredients,
+    clearAttempts
   };
 }

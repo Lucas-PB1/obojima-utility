@@ -23,6 +23,13 @@ export const CreatedPotionCollection: React.FC = () => {
     setPotions(allPotions);
   };
 
+  const handleClearPotions = () => {
+    if (confirm('Isso irá limpar todas as poções criadas. Tem certeza?')) {
+      createdPotionService.clearAllCreatedPotions();
+      loadPotions();
+    }
+  };
+
   const filteredPotions = potions.filter(potion => {
     if (filter === 'all') return true;
     if (filter === 'available') return potion.quantity > 0;
@@ -140,13 +147,13 @@ export const CreatedPotionCollection: React.FC = () => {
 
           {/* Ações */}
           {potions.length > 0 && (
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-2">
               <Button
-                onClick={handleClearAll}
+                onClick={handleClearPotions}
                 variant="danger"
                 size="sm"
               >
-                🗑️ Limpar Todas
+                🗑️ Limpar Poções
               </Button>
             </div>
           )}

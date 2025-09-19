@@ -24,6 +24,13 @@ export const RecipeCollection: React.FC = () => {
     setRecipes(allRecipes);
   };
 
+  const handleClearRecipes = () => {
+    if (confirm('Isso irá limpar todas as receitas salvas. Tem certeza?')) {
+      recipeService.clearAllRecipes();
+      loadRecipes();
+    }
+  };
+
   const filteredRecipes = recipes.filter(recipe => {
     if (filter === 'all') return true;
     return recipe.winningAttribute === filter;

@@ -14,10 +14,16 @@ import { ingredientsService } from '@/services/ingredientsService';
 import ExportImportSection from './ui/ExportImportSection';
 
 export default function ActivityLog() {
-  const { attempts, refreshData } = useIngredients();
+  const { attempts, refreshData, clearAttempts } = useIngredients();
   const [filteredAttempts, setFilteredAttempts] = useState<ForageAttempt[]>([]);
 
   const activityStats = StatsService.calculateActivityStats(filteredAttempts);
+
+  const handleClearLogs = () => {
+    if (confirm('Isso irá limpar todos os logs de forrageamento. Tem certeza?')) {
+      clearAttempts();
+    }
+  };
   
   const statsData = [
     { value: activityStats.totalAttempts, label: 'Total de Tentativas', color: 'totoro-green' as const },
@@ -164,6 +170,16 @@ export default function ActivityLog() {
         onDataImported={refreshData}
         className="mt-6"
       />
+
+      {/* Botão de Limpeza */}
+      <div className="mt-6 flex justify-center">
+        <button
+          onClick={handleClearLogs}
+          className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
+        >
+          🗑️ Limpar Logs
+        </button>
+      </div>
     </PageLayout>
   );
 }

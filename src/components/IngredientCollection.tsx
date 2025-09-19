@@ -14,7 +14,7 @@ import IngredientModal from './IngredientModal';
 import ExportImportSection from './ui/ExportImportSection';
 
 export default function IngredientCollection() {
-  const { ingredients, attempts, markAsUsed, getStats, refreshData } = useIngredients();
+  const { ingredients, attempts, markAsUsed, getStats, refreshData, clearIngredients } = useIngredients();
   
   // Filtrar ingredientes com quantidade > 0 para exibição
   const displayIngredients = ingredients.filter(ing => ing.quantity > 0);
@@ -44,6 +44,12 @@ export default function IngredientCollection() {
     if (confirm('Isso irá limpar todos os dados atuais. Tem certeza?')) {
       BackupService.clearAllData();
       window.location.reload();
+    }
+  };
+
+  const handleClearIngredients = () => {
+    if (confirm('Isso irá limpar todos os ingredientes coletados. Tem certeza?')) {
+      clearIngredients();
     }
   };
 
@@ -248,10 +254,10 @@ export default function IngredientCollection() {
             📤 Exportar Dados (Legado)
           </Button>
           <Button
-            onClick={handleClearAllData}
+            onClick={handleClearIngredients}
             variant="danger"
           >
-            🗑️ Limpar Todos os Dados
+            🗑️ Limpar Ingredientes
           </Button>
         </div>
       </div>
