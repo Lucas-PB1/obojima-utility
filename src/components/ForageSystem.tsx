@@ -173,10 +173,15 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
       addAttempt(attempt);
       
       if (success && ingredient) {
+        // Verificar se o talento de forrageamento duplo está ativo
+        const doubleForageTalent = settingsService.getDoubleForageTalent();
+        const shouldDouble = doubleForageTalent && (rarity === 'comum' || rarity === 'incomum');
+        const quantity = shouldDouble ? 2 : 1;
+        
         const collectedIngredient: CollectedIngredient = {
           id: Date.now().toString() + '_ingredient',
           ingredient,
-          quantity: 1,
+          quantity,
           collectedAt: new Date(),
           used: false,
           forageAttemptId: attempt.id

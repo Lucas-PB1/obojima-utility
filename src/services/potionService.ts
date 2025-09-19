@@ -5,6 +5,7 @@ import {
   PotionRecipe, 
   PotionBrewingResult 
 } from '../types/ingredients';
+import { settingsService } from './settingsService';
 
 class PotionService {
   private combatPotions: PotionCategory | null = null;
@@ -32,9 +33,42 @@ class PotionService {
   }
 
   /**
+   * Calcula os scores disponíveis para escolha (usado quando Potion Brewer está ativo)
+   */
+  public calculateAvailableScores(ingredients: Ingredient[]): {
+    scores: Array<{ attribute: 'combat' | 'utility' | 'whimsy'; value: number; label: string }>;
+    canChoose: boolean;
+  } {
+    if (ingredients.length !== 3) {
+      return { scores: [], canChoose: false };
+    }
+
+    const combatScore = ingredients.reduce((sum, ing) => sum + ing.combat, 0);
+    const utilityScore = ingredients.reduce((sum, ing) => sum + ing.utility, 0);
+    const whimsyScore = ingredients.reduce((sum, ing) => sum + ing.whimsy, 0);
+
+    const scores = [
+      { attribute: 'combat' as const, value: combatScore, label: 'Combate' },
+      { attribute: 'utility' as const, value: utilityScore, label: 'Utilidade' },
+      { attribute: 'whimsy' as const, value: whimsyScore, label: 'Caprichoso' }
+    ];
+
+    // Ordenar por valor (maior primeiro)
+    scores.sort((a, b) => b.value - a.value);
+
+    const potionBrewerTalent = settingsService.getPotionBrewerTalent();
+    const canChoose = potionBrewerTalent && scores.length > 1 && scores[0].value !== scores[1].value;
+
+    // Retornar apenas os dois primeiros scores (maior e segundo maior)
+    const topTwoScores = scores.slice(0, 2);
+
+    return { scores: topTwoScores, canChoose };
+  }
+
+  /**
    * Cria uma poção baseada em três ingredientes únicos
    */
-  public async brewPotion(ingredients: Ingredient[]): Promise<PotionBrewingResult> {
+  public async brewPotion(ingredients: Ingredient[], chosenAttribute?: 'combat' | 'utility' | 'whimsy'): Promise<PotionBrewingResult> {
     // Validação: deve ter exatamente 3 ingredientes únicos
     if (ingredients.length !== 3) {
       return {
@@ -70,9 +104,26 @@ class PotionService {
     // Ordenar por valor (maior primeiro)
     scores.sort((a, b) => b.value - a.value);
 
-    // Se há empate, o primeiro da lista vence (combat > utility > whimsy)
-    const winningAttribute = scores[0].attribute;
-    const winningScore = scores[0].value;
+    // Determinar o atributo vencedor
+    const potionBrewerTalent = settingsService.getPotionBrewerTalent();
+    let winningAttribute: 'combat' | 'utility' | 'whimsy';
+    let winningScore: number;
+
+    if (chosenAttribute) {
+      // Usar o atributo escolhido pelo usuário
+      const chosenScore = scores.find(s => s.attribute === chosenAttribute);
+      if (chosenScore) {
+        winningAttribute = chosenAttribute;
+        winningScore = chosenScore.value;
+      } else {
+        winningAttribute = scores[0].attribute;
+        winningScore = scores[0].value;
+      }
+    } else {
+      // Usar o maior score (comportamento padrão)
+      winningAttribute = scores[0].attribute;
+      winningScore = scores[0].value;
+    }
 
     // Aguardar carregamento dos dados se necessário
     if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
@@ -102,11 +153,55 @@ class PotionService {
       createdAt: new Date()
     };
 
-    return {
+    // Verificar se o caldeirão especial está ativo e se a poção é incomum ou rara
+    const cauldronBonus = settingsService.getCauldronBonus();
+    const isUncommonOrRare = resultingPotion.raridade === 'Incomum' || resultingPotion.raridade === 'Rara';
+    
+    let message = `Poção criada com sucesso! ${resultingPotion.nome_portugues} (${resultingPotion.raridade})`;
+    
+    if (cauldronBonus && isUncommonOrRare) {
+      message += `\n\n✨ Caldeirão Especial ativado! Você também gerou uma poção comum do mesmo tipo com os restos!`;
+    }
+
+    const result: PotionBrewingResult = {
       recipe,
       success: true,
-      message: `Poção criada com sucesso! ${resultingPotion.nome_portugues} (${resultingPotion.raridade})`
+      message,
+      cauldronBonus: cauldronBonus && isUncommonOrRare
     };
+
+    // Se o caldeirão especial foi ativado, gerar a poção comum dos restos
+    if (cauldronBonus && isUncommonOrRare) {
+      try {
+        const commonPotion = await this.generateCommonPotionFromRemains(recipe.winningAttribute);
+        if (commonPotion) {
+          result.remainsPotion = commonPotion;
+        }
+      } catch (error) {
+        console.error('Erro ao gerar poção dos restos:', error);
+      }
+    }
+
+    // Sistema de porcentagem do Potion Brewer
+    if (potionBrewerTalent) {
+      const potionBrewerLevel = settingsService.getPotionBrewerLevel();
+      const percentageRoll = Math.floor(Math.random() * 100) + 1; // 1-100
+      
+      if (percentageRoll <= potionBrewerLevel) {
+        // Gerar uma segunda poção com o atributo vencedor original
+        const secondPotion = this.selectPotion(scores[0].attribute, scores[0].value);
+        if (secondPotion) {
+          result.secondPotion = secondPotion;
+          result.potionBrewerSuccess = true;
+          result.percentageRoll = percentageRoll;
+        }
+      } else {
+        result.potionBrewerSuccess = false;
+        result.percentageRoll = percentageRoll;
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -225,6 +320,44 @@ class PotionService {
       whimsyScore,
       winningAttribute: scores[0].attribute
     };
+  }
+
+  /**
+   * Gera uma poção comum do mesmo tipo baseada no atributo vencedor
+   */
+  public async generateCommonPotionFromRemains(winningAttribute: 'combat' | 'utility' | 'whimsy'): Promise<Potion | null> {
+    // Aguardar carregamento dos dados se necessário
+    if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
+      await this.loadPotionData();
+    }
+
+    let potionCategory: PotionCategory | null = null;
+
+    switch (winningAttribute) {
+      case 'combat':
+        potionCategory = this.combatPotions;
+        break;
+      case 'utility':
+        potionCategory = this.utilityPotions;
+        break;
+      case 'whimsy':
+        potionCategory = this.whimsicalPotions;
+        break;
+    }
+
+    if (!potionCategory || !potionCategory.pocoes.length) {
+      return null;
+    }
+
+    // Buscar a primeira poção comum da categoria
+    const commonPotion = potionCategory.pocoes.find(potion => potion.raridade === 'Comum');
+    
+    if (commonPotion) {
+      return commonPotion;
+    }
+
+    // Se não encontrar uma poção comum, retornar a primeira da lista
+    return potionCategory.pocoes[0];
   }
 }
 

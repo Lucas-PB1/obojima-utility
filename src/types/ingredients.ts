@@ -204,4 +204,9 @@ export interface PotionBrewingResult {
   recipe: PotionRecipe;
   success: boolean;
   message: string;
+  cauldronBonus?: boolean;
+  remainsPotion?: Potion;
+  potionBrewerSuccess?: boolean;
+  secondPotion?: Potion;
+  percentageRoll?: number;
 }

@@ -31,6 +31,12 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
     whimsyScore: number;
     winningAttribute: 'combat' | 'utility' | 'whimsy';
   } | null>(null);
+  const [availableScores, setAvailableScores] = useState<{
+    scores: Array<{ attribute: 'combat' | 'utility' | 'whimsy'; value: number; label: string }>;
+    canChoose: boolean;
+  } | null>(null);
+  const [chosenAttribute, setChosenAttribute] = useState<'combat' | 'utility' | 'whimsy' | null>(null);
+  const [showScoreChoice, setShowScoreChoice] = useState(false);
 
   // Calcular preview dos scores quando ingredientes são selecionados
   useEffect(() => {
@@ -38,11 +44,19 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       try {
         const scores = potionService.calculateScores(selectedIngredients);
         setPreviewScores(scores);
+        
+        // Verificar se pode escolher entre scores
+        const available = potionService.calculateAvailableScores(selectedIngredients);
+        setAvailableScores(available);
       } catch {
         setPreviewScores(null);
+        setAvailableScores(null);
       }
     } else {
       setPreviewScores(null);
+      setAvailableScores(null);
+      setChosenAttribute(null);
+      setShowScoreChoice(false);
     }
   }, [selectedIngredients]);
 
@@ -68,9 +82,15 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       return;
     }
 
+    // Se pode escolher entre scores e ainda não escolheu, mostrar modal de escolha
+    if (availableScores?.canChoose && !chosenAttribute) {
+      setShowScoreChoice(true);
+      return;
+    }
+
     setIsBrewing(true);
     try {
-      const result = await potionService.brewPotion(selectedIngredients);
+      const result = await potionService.brewPotion(selectedIngredients, chosenAttribute || undefined);
       setBrewingResult(result);
       setShowResultModal(true);
       
@@ -80,6 +100,52 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         
         // Adicionar a poção criada ao inventário
         createdPotionService.addCreatedPotion(result.recipe);
+        
+        // Se o caldeirão especial foi ativado, gerar poção comum dos restos
+        if (result.cauldronBonus && result.remainsPotion) {
+          try {
+            // Criar uma receita para a poção comum dos restos
+            const remainsRecipe: PotionRecipe = {
+              id: `remains_${result.recipe.id}`,
+              ingredients: [], // Poção dos restos não usa ingredientes
+              combatScore: 0,
+              utilityScore: 0,
+              whimsyScore: 0,
+              winningAttribute: result.recipe.winningAttribute,
+              resultingPotion: result.remainsPotion,
+              createdAt: new Date()
+            };
+            
+            // Salvar e adicionar a poção dos restos
+            recipeService.saveRecipe(remainsRecipe);
+            createdPotionService.addCreatedPotion(remainsRecipe);
+          } catch (error) {
+            console.error('Erro ao gerar poção dos restos:', error);
+          }
+        }
+
+        // Se o Potion Brewer foi ativado e teve sucesso, gerar segunda poção
+        if (result.potionBrewerSuccess && result.secondPotion) {
+          try {
+            // Criar uma receita para a segunda poção
+            const secondRecipe: PotionRecipe = {
+              id: `second_${result.recipe.id}`,
+              ingredients: [...selectedIngredients], // Usa os mesmos ingredientes
+              combatScore: result.recipe.combatScore,
+              utilityScore: result.recipe.utilityScore,
+              whimsyScore: result.recipe.whimsyScore,
+              winningAttribute: result.recipe.winningAttribute,
+              resultingPotion: result.secondPotion,
+              createdAt: new Date()
+            };
+            
+            // Salvar e adicionar a segunda poção
+            recipeService.saveRecipe(secondRecipe);
+            createdPotionService.addCreatedPotion(secondRecipe);
+          } catch (error) {
+            console.error('Erro ao gerar segunda poção:', error);
+          }
+        }
         
         // Marcar ingredientes como usados
         const ingredientIds = selectedIngredients.map(ing => ing.id);
@@ -126,6 +192,14 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
     setSelectedIngredients([]);
     setBrewingResult(null);
     setPreviewScores(null);
+    setAvailableScores(null);
+    setChosenAttribute(null);
+    setShowScoreChoice(false);
+  };
+
+  const handleScoreChoice = (attribute: 'combat' | 'utility' | 'whimsy') => {
+    setChosenAttribute(attribute);
+    setShowScoreChoice(false);
   };
 
   const getAttributeColor = (attribute: 'combat' | 'utility' | 'whimsy') => {
@@ -214,6 +288,24 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
               <div className="mt-3 text-sm text-gray-600">
                 Categoria vencedora: <span className="font-medium">{getAttributeLabel(previewScores.winningAttribute)}</span>
               </div>
+              
+              {/* Indicação do Potion Brewer */}
+              {availableScores?.canChoose && (
+                <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                  <div className="flex items-center text-purple-700 text-sm">
+                    <span className="mr-2">🧪</span>
+                    <span className="font-medium">Potion Brewer Ativo:</span>
+                  </div>
+                  <p className="text-xs text-purple-600 mt-1">
+                    Você pode escolher entre os scores disponíveis ao criar a poção
+                  </p>
+                  {chosenAttribute && (
+                    <p className="text-xs text-purple-800 mt-1 font-medium">
+                      Escolhido: {getAttributeLabel(chosenAttribute)}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
@@ -302,6 +394,89 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   </div>
                 </div>
 
+                {/* Poção dos Restos */}
+                {brewingResult.cauldronBonus && brewingResult.remainsPotion && (
+                  <div className="mt-6 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
+                    <div className="text-center mb-3">
+                      <div className="text-lg mb-2">✨</div>
+                      <h4 className="font-bold text-green-800 text-lg mb-2">
+                        Poção dos Restos
+                      </h4>
+                      <p className="text-green-700 text-sm mb-3">
+                        Gerada pelo Caldeirão Especial
+                      </p>
+                    </div>
+                    
+                    <div className="bg-white/80 rounded-lg p-4 border border-green-200">
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-green-700 mb-1">
+                          {brewingResult.remainsPotion.nome_portugues}
+                        </div>
+                        <div className="text-xs text-gray-600 mb-2">
+                          {brewingResult.remainsPotion.nome_ingles}
+                        </div>
+                        <div className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-3">
+                          {brewingResult.remainsPotion.raridade}
+                        </div>
+                        <p className="text-xs text-gray-700">
+                          {brewingResult.remainsPotion.descricao}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Segunda Poção do Potion Brewer */}
+                {brewingResult.potionBrewerSuccess && brewingResult.secondPotion && (
+                  <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
+                    <div className="text-center mb-3">
+                      <div className="text-lg mb-2">🧪</div>
+                      <h4 className="font-bold text-purple-800 text-lg mb-2">
+                        Segunda Poção
+                      </h4>
+                      <p className="text-purple-700 text-sm mb-3">
+                        Gerada pelo Potion Brewer (Rolagem: {brewingResult.percentageRoll}%)
+                      </p>
+                    </div>
+                    
+                    <div className="bg-white/80 rounded-lg p-4 border border-purple-200">
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-purple-700 mb-1">
+                          {brewingResult.secondPotion.nome_portugues}
+                        </div>
+                        <div className="text-xs text-gray-600 mb-2">
+                          {brewingResult.secondPotion.nome_ingles}
+                        </div>
+                        <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium mb-3 ${
+                          brewingResult.secondPotion.raridade === 'Comum' ? 'bg-green-100 text-green-800' :
+                          brewingResult.secondPotion.raridade === 'Incomum' ? 'bg-blue-100 text-blue-800' :
+                          'bg-purple-100 text-purple-800'
+                        }`}>
+                          {brewingResult.secondPotion.raridade}
+                        </div>
+                        <p className="text-xs text-gray-700">
+                          {brewingResult.secondPotion.descricao}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Resultado do Potion Brewer (falha) */}
+                {brewingResult.potionBrewerSuccess === false && (
+                  <div className="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-4">
+                    <div className="text-center">
+                      <div className="text-lg mb-2">🧪</div>
+                      <h4 className="font-bold text-gray-700 text-lg mb-2">
+                        Potion Brewer
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        Rolagem: {brewingResult.percentageRoll}% - Não foi possível gerar uma segunda poção
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h4 className="font-medium text-gray-900 mb-2">Descrição:</h4>
                   <p className="text-sm text-gray-700">
@@ -326,6 +501,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                     </div>
                   </div>
                 </div>
+
               </>
             ) : (
               <div className="text-center text-red-600">
@@ -337,6 +513,65 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             <div className="flex justify-end">
               <Button onClick={() => setShowResultModal(false)}>
                 Fechar
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* Modal de Escolha de Score */}
+      {showScoreChoice && availableScores && (
+        <Modal
+          isOpen={showScoreChoice}
+          onClose={() => setShowScoreChoice(false)}
+          title="🧪 Escolher Tipo de Poção"
+        >
+          <div className="space-y-4">
+            <div className="text-center">
+              <p className="text-gray-600 mb-4">
+                O talento Potion Brewer permite escolher entre o 1º e 2º maior score. 
+                Qual tipo de poção você deseja criar?
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {availableScores.scores.map((score, index) => (
+                <button
+                  key={score.attribute}
+                  onClick={() => handleScoreChoice(score.attribute)}
+                  className={`w-full p-4 rounded-lg border-2 transition-all ${
+                    getAttributeColor(score.attribute)
+                  } hover:shadow-md hover:scale-105`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="text-left">
+                      <div className="font-bold text-lg">{score.label}</div>
+                      <div className="text-sm opacity-80">Score: {score.value}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold">{score.value}</div>
+                      {index === 0 && (
+                        <div className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full mt-1">
+                          1º Maior Score
+                        </div>
+                      )}
+                      {index === 1 && (
+                        <div className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full mt-1">
+                          2º Maior Score
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            <div className="flex justify-end pt-4 border-t border-gray-200">
+              <Button
+                onClick={() => setShowScoreChoice(false)}
+                variant="secondary"
+              >
+                Cancelar
               </Button>
             </div>
           </div>

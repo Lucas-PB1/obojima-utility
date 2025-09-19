@@ -98,6 +98,90 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
           </p>
         </div>
 
+        <div>
+          <h4 className="font-semibold text-totoro-gray mb-3 flex items-center">
+            <span className="mr-2">✨</span>
+            Talentos Especiais
+          </h4>
+          
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg">
+              <div className="flex-1">
+                <h5 className="font-medium text-purple-800 mb-1">Forrageamento Duplo</h5>
+                <p className="text-sm text-purple-600">
+                  Quando ativo, você coleta o dobro de ingredientes comuns e incomuns
+                </p>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.doubleForageTalent || false}
+                  onChange={(e) => updateSetting('doubleForageTalent', e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+              </label>
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+              <div className="flex-1">
+                <h5 className="font-medium text-green-800 mb-1">Caldeirão Especial</h5>
+                <p className="text-sm text-green-600">
+                  Ao criar poções incomuns ou raras, você também gera uma poção comum do mesmo tipo
+                </p>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.cauldronBonus || false}
+                  onChange={(e) => updateSetting('cauldronBonus', e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+              </label>
+            </div>
+
+            <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex-1">
+                  <h5 className="font-medium text-purple-800 mb-1">Potion Brewer</h5>
+                  <p className="text-sm text-purple-600">
+                    Permite escolher o segundo maior modificador e tem chance de gerar duas poções
+                  </p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings.potionBrewerTalent || false}
+                    onChange={(e) => updateSetting('potionBrewerTalent', e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                </label>
+              </div>
+              
+              {settings.potionBrewerTalent && (
+                <div className="mt-3">
+                  <label className="block text-sm font-medium text-purple-700 mb-2">
+                    Level do Potion Brewer (1-20)
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={settings.potionBrewerLevel || 1}
+                    onChange={(e) => updateSetting('potionBrewerLevel', parseInt(e.target.value) || 1)}
+                    className="w-full px-3 py-2 border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                  />
+                  <p className="text-xs text-purple-600 mt-1">
+                    Chance de {settings.potionBrewerLevel || 1}% de gerar uma segunda poção
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         <div className="bg-totoro-blue/10 border border-totoro-blue/20 rounded-lg p-4">
           <h5 className="font-medium text-totoro-blue mb-2">💡 Como Funciona</h5>
           <ul className="text-sm text-totoro-blue space-y-1">

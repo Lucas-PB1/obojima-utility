@@ -1,6 +1,7 @@
 import React from 'react';
 import { ForageAttempt } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
+import { settingsService } from '@/services/settingsService';
 import ContentCard from '../ui/ContentCard';
 
 interface ForageResultProps {
@@ -138,6 +139,18 @@ export default function ForageResult({ result }: ForageResultProps) {
                 <h4 className="font-bold text-totoro-orange text-lg">
                   Ingrediente Coletado!
                 </h4>
+                {settingsService.getDoubleForageTalent() && (result.rarity === 'comum' || result.rarity === 'incomum') && (
+                  <div className="mt-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-300/30 rounded-lg px-3 py-2">
+                    <div className="text-purple-600 text-sm font-medium flex items-center justify-center">
+                      <span className="mr-2">✨</span>
+                      Talento Ativado: Forrageamento Duplo!
+                      <span className="ml-2">✨</span>
+                    </div>
+                    <div className="text-purple-500 text-xs mt-1">
+                      Você coletou 2x este ingrediente {result.rarity}!
+                    </div>
+                  </div>
+                )}
               </div>
               
               <div className="bg-white/80 rounded-lg p-4 mb-4 border border-totoro-yellow/20">

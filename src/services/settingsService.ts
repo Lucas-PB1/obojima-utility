@@ -1,11 +1,19 @@
 interface Settings {
   defaultModifier: number | '';
   defaultBonusDice: { type: string; value: number } | null;
+  doubleForageTalent: boolean;
+  cauldronBonus: boolean;
+  potionBrewerTalent: boolean;
+  potionBrewerLevel: number;
 }
 
 const defaultSettings: Settings = {
   defaultModifier: '',
-  defaultBonusDice: null
+  defaultBonusDice: null,
+  doubleForageTalent: false,
+  cauldronBonus: false,
+  potionBrewerTalent: false,
+  potionBrewerLevel: 1
 };
 
 class SettingsService {
@@ -54,6 +62,46 @@ class SettingsService {
   setDefaultBonusDice(bonusDice: { type: string; value: number } | null): void {
     const settings = this.getSettings();
     settings.defaultBonusDice = bonusDice;
+    this.saveSettings(settings);
+  }
+
+  getDoubleForageTalent(): boolean {
+    return this.getSettings().doubleForageTalent;
+  }
+
+  setDoubleForageTalent(enabled: boolean): void {
+    const settings = this.getSettings();
+    settings.doubleForageTalent = enabled;
+    this.saveSettings(settings);
+  }
+
+  getCauldronBonus(): boolean {
+    return this.getSettings().cauldronBonus;
+  }
+
+  setCauldronBonus(enabled: boolean): void {
+    const settings = this.getSettings();
+    settings.cauldronBonus = enabled;
+    this.saveSettings(settings);
+  }
+
+  getPotionBrewerTalent(): boolean {
+    return this.getSettings().potionBrewerTalent;
+  }
+
+  setPotionBrewerTalent(enabled: boolean): void {
+    const settings = this.getSettings();
+    settings.potionBrewerTalent = enabled;
+    this.saveSettings(settings);
+  }
+
+  getPotionBrewerLevel(): number {
+    return this.getSettings().potionBrewerLevel;
+  }
+
+  setPotionBrewerLevel(level: number): void {
+    const settings = this.getSettings();
+    settings.potionBrewerLevel = Math.max(1, Math.min(20, level));
     this.saveSettings(settings);
   }
 

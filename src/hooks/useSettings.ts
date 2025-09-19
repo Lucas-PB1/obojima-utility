@@ -6,12 +6,20 @@ export interface SettingsState {
   defaultModifier: number | '';
   defaultBonusType: string;
   defaultBonusValue: number;
+  doubleForageTalent: boolean;
+  cauldronBonus: boolean;
+  potionBrewerTalent: boolean;
+  potionBrewerLevel: number;
 }
 
 const defaultSettings: SettingsState = {
   defaultModifier: '',
   defaultBonusType: '',
-  defaultBonusValue: 0
+  defaultBonusValue: 0,
+  doubleForageTalent: false,
+  cauldronBonus: false,
+  potionBrewerTalent: false,
+  potionBrewerLevel: 1
 };
 
 export function useSettings() {
@@ -21,11 +29,19 @@ export function useSettings() {
   const loadSettings = useCallback(() => {
     const defaultModifier = settingsService.getDefaultModifier();
     const defaultBonusDice = settingsService.getDefaultBonusDice();
+    const doubleForageTalent = settingsService.getDoubleForageTalent();
+    const cauldronBonus = settingsService.getCauldronBonus();
+    const potionBrewerTalent = settingsService.getPotionBrewerTalent();
+    const potionBrewerLevel = settingsService.getPotionBrewerLevel();
     
     setSettings({
       defaultModifier,
       defaultBonusType: defaultBonusDice?.type || '',
-      defaultBonusValue: defaultBonusDice?.value || 0
+      defaultBonusValue: defaultBonusDice?.value || 0,
+      doubleForageTalent,
+      cauldronBonus,
+      potionBrewerTalent,
+      potionBrewerLevel
     });
   }, []);
 
@@ -44,6 +60,10 @@ export function useSettings() {
         : null;
       
       settingsService.setDefaultBonusDice(bonusDice);
+      settingsService.setDoubleForageTalent(newSettings.doubleForageTalent);
+      settingsService.setCauldronBonus(newSettings.cauldronBonus);
+      settingsService.setPotionBrewerTalent(newSettings.potionBrewerTalent);
+      settingsService.setPotionBrewerLevel(newSettings.potionBrewerLevel);
       setSettings(newSettings);
     } catch (error) {
       console.error('Erro ao salvar configurações:', error);
