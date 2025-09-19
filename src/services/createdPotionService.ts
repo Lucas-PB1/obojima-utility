@@ -1,4 +1,4 @@
-import { CreatedPotion, PotionRecipe } from '../types/ingredients';
+import { CreatedPotion, PotionRecipe, Potion } from '../types/ingredients';
 
 class CreatedPotionService {
   private readonly STORAGE_KEY = 'obojima_created_potions';
@@ -166,7 +166,7 @@ class CreatedPotionService {
     });
 
     // Converter para array com informações agregadas
-    return Array.from(grouped.entries()).map(([key, instances]) => {
+    return Array.from(grouped.entries()).map(([, instances]) => {
       const firstInstance = instances[0];
       const totalQuantity = instances.reduce((sum, instance) => sum + instance.quantity, 0);
       

@@ -80,12 +80,6 @@ export const CreatedPotionCollection: React.FC = () => {
     }
   };
 
-  const handleClearAll = () => {
-    if (confirm('Tem certeza que deseja excluir todas as poções? Esta ação não pode ser desfeita.')) {
-      createdPotionService.clearAllPotions();
-      loadPotions();
-    }
-  };
 
   return (
     <div className="space-y-6">

@@ -40,12 +40,6 @@ export default function IngredientCollection() {
     BackupService.exportData(ingredients, attempts, stats);
   };
 
-  const handleClearAllData = () => {
-    if (confirm('Isso irá limpar todos os dados atuais. Tem certeza?')) {
-      BackupService.clearAllData();
-      window.location.reload();
-    }
-  };
 
   const handleClearIngredients = () => {
     if (confirm('Isso irá limpar todos os ingredientes coletados. Tem certeza?')) {

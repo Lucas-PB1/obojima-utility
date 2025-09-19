@@ -172,7 +172,7 @@ export default function ExportImportSection({
         
         <Button
           onClick={handleImportClick}
-          variant="outline"
+          variant="secondary"
           className="w-full"
         >
           📥 Importar {getTypeLabel()}

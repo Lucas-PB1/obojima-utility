@@ -21,8 +21,7 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
     setSortBy,
     searchTerm,
     setSearchTerm,
-    filteredIngredients,
-    clearFilters
+    filteredIngredients
   } = useIngredientFilters(ingredients);
 
   React.useEffect(() => {
@@ -57,7 +56,7 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
           <Input
             type="text"
             value={searchTerm}
-            onChange={setSearchTerm}
+            onChange={(value) => setSearchTerm(String(value))}
             placeholder="🔍 Buscar ingredientes..."
             className="w-full"
           />
@@ -69,7 +68,7 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
             {filterOptions.map(option => (
               <Button
                 key={option.value}
-                onClick={() => setFilter(option.value as any)}
+                onClick={() => setFilter(option.value as 'all' | 'available' | 'used')}
                 variant={filter === option.value ? 'primary' : 'secondary'}
                 size="sm"
                 effect={filter === option.value ? 'pulse-glow' : 'shimmer'}
@@ -82,14 +81,14 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
           <div className="flex gap-2">
             <Select
               value={rarityFilter}
-              onChange={setRarityFilter}
+              onChange={(value) => setRarityFilter(value as 'all' | 'comum' | 'incomum' | 'raro' | 'unico')}
               options={rarityOptions}
               className="w-auto"
             />
             
             <Select
               value={sortBy}
-              onChange={setSortBy}
+              onChange={(value) => setSortBy(value as 'date' | 'name' | 'rarity')}
               options={sortOptions}
               className="w-auto"
             />
