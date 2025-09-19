@@ -69,20 +69,87 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
     
     try {
       const modifierValue = modifier === '' ? 0 : modifier;
-      
-      const rarity = modifierValue >= 5 ? 'incomum' : 'comum';
       const isNative = true;
-      
-      const dcResult = ingredientsService.calculateDC(rarity, isNative);
       
       const { roll } = diceService.rollWithAdvantage(advantage);
       const totalRoll = diceService.calculateTotalRoll(roll, modifierValue, bonusDice || undefined);
       
-      const success = totalRoll >= parseInt(dcResult.range.split('-')[0]);
+      // Determinar a raridade baseada no resultado da rolagem
+      let rarity: 'comum' | 'incomum' | 'raro' | 'unico' = 'comum';
+      let dcResult = ingredientsService.calculateDC('comum', isNative);
+      let success = false;
+      
+      // Lógica de sucesso baseada na faixa da rolagem
+      if (totalRoll >= 10 && totalRoll <= 15) {
+        // Faixa 10-15: Ingrediente comum da região
+        rarity = 'comum';
+        dcResult = ingredientsService.calculateDC('comum', isNative);
+        success = true;
+      } else if (totalRoll >= 16 && totalRoll <= 20) {
+        // Faixa 16-20: Ingrediente incomum da região
+        rarity = 'incomum';
+        dcResult = ingredientsService.calculateDC('incomum', isNative);
+        success = true;
+      } else if (totalRoll >= 21 && totalRoll <= 25) {
+        // Faixa 21-25: Ingrediente incomum de qualquer região (sorte)
+        rarity = 'incomum';
+        dcResult = ingredientsService.calculateDC('incomum', false); // Não nativo
+        success = true;
+      } else if (totalRoll >= 26 && totalRoll <= 30) {
+        // Faixa 26-30: Chance de ingrediente raro (evento especial)
+        const rareChance = Math.random();
+        if (rareChance <= 0.3) { // 30% de chance
+          rarity = 'raro';
+          dcResult = { dc: 26, range: '26-30' };
+          success = true;
+        } else {
+          // 70% de chance de fallback para incomum de qualquer região
+          rarity = 'incomum';
+          dcResult = { dc: 21, range: '21-25' };
+          success = true;
+        }
+      } else if (totalRoll >= 31) {
+        // Faixa 31+: Chance de ingrediente único (evento raríssimo)
+        const uniqueChance = Math.random();
+        if (uniqueChance <= 0.1) { // 10% de chance
+          rarity = 'unico';
+          dcResult = { dc: 31, range: '31+' };
+          success = true;
+        } else {
+          // 90% de chance de fallback para raro
+          const rareChance = Math.random();
+          if (rareChance <= 0.3) { // 30% de chance de raro
+            rarity = 'raro';
+            dcResult = { dc: 26, range: '26-30' };
+            success = true;
+          } else {
+            // 70% de chance de fallback para incomum de qualquer região
+            rarity = 'incomum';
+            dcResult = { dc: 21, range: '21-25' };
+            success = true;
+          }
+        }
+      } else {
+        // Abaixo de 10: Falha
+        dcResult = { dc: 10, range: '10-15' };
+        success = false;
+      }
       
       let ingredient: Ingredient | null = null;
       if (success) {
-        ingredient = await ingredientsService.getRandomIngredientFromRegion(region, rarity);
+        if (rarity === 'raro') {
+          // Ingrediente raro (evento especial)
+          ingredient = await ingredientsService.getRandomRareIngredient();
+        } else if (rarity === 'unico') {
+          // Ingrediente único (evento raríssimo)
+          ingredient = await ingredientsService.getRandomUniqueIngredient();
+        } else if (rarity === 'incomum' && (totalRoll >= 21)) {
+          // Ingrediente incomum de qualquer região (sorte ou fallback)
+          ingredient = await ingredientsService.getRandomUncommonIngredientFromAnyRegion();
+        } else {
+          // Ingrediente da região específica (comum ou incomum da região)
+          ingredient = await ingredientsService.getRandomIngredientFromRegion(region, rarity);
+        }
       }
       
       const attempt: ForageAttempt = {

@@ -3,6 +3,8 @@ import {
   IngredientsData, 
   CommonIngredientsData, 
   UncommonIngredientsData,
+  RareIngredient,
+  UniqueIngredientData,
   RegionKey,
   RegionData 
 } from '@/types/ingredients';
@@ -11,6 +13,8 @@ class IngredientsService {
   private ingredientsData: IngredientsData | null = null;
   private commonIngredients: CommonIngredientsData | null = null;
   private uncommonIngredients: UncommonIngredientsData | null = null;
+  private rareIngredients: { ingredientes: RareIngredient[] } | null = null;
+  private uniqueIngredients: { ingredientes: UniqueIngredientData[] } | null = null;
 
   private async loadData<T>(url: string, cache: T | null): Promise<T> {
     if (cache) return cache;
@@ -36,23 +40,61 @@ class IngredientsService {
     return this.uncommonIngredients;
   }
 
+  async loadRareIngredients(): Promise<{ ingredientes: RareIngredient[] }> {
+    this.rareIngredients = await this.loadData('/ingredientes/ingredientes raros/ingredientes-raros.json', this.rareIngredients);
+    return this.rareIngredients;
+  }
+
+  async loadUniqueIngredients(): Promise<{ ingredientes: UniqueIngredientData[] }> {
+    // Os ingredientes únicos estão no arquivo principal
+    const data = await this.loadIngredientsData();
+    this.uniqueIngredients = { ingredientes: data.ingredientes_raros_unicos.ingredientes };
+    return this.uniqueIngredients;
+  }
+
   async getRegionData(region: RegionKey): Promise<RegionData | null> {
     const data = await this.loadIngredientsData();
     return data.regioes[region] || null;
   }
 
   async getIngredientById(id: number): Promise<Ingredient | null> {
+    // Buscar em ingredientes comuns
     const commonData = await this.loadCommonIngredients();
     const commonIngredient = commonData.ingredientes.find(ing => ing.id === id);
-    if (commonIngredient) return commonIngredient;
+    if (commonIngredient) return { ...commonIngredient, raridade: 'comum' };
 
+    // Buscar em ingredientes incomuns
     const uncommonData = await this.loadUncommonIngredients();
-    return uncommonData.ingredientes.find(ing => ing.id === id) || null;
+    const uncommonIngredient = uncommonData.ingredientes.find(ing => ing.id === id);
+    if (uncommonIngredient) return { ...uncommonIngredient, raridade: 'incomum' };
+
+    // Buscar em ingredientes raros
+    const rareData = await this.loadRareIngredients();
+    const rareIngredient = rareData.ingredientes.find(ing => ing.id === id);
+    if (rareIngredient) return { ...rareIngredient, raridade: 'raro' };
+
+    // Buscar em ingredientes únicos
+    const uniqueData = await this.loadUniqueIngredients();
+    const uniqueIngredient = uniqueData.ingredientes.find(ing => ing.id === id);
+    if (uniqueIngredient) {
+      return {
+        id: uniqueIngredient.id,
+        nome_ingles: uniqueIngredient.nome_ingles,
+        nome_portugues: uniqueIngredient.nome_portugues,
+        combat: 20,
+        utility: 20,
+        whimsy: 20,
+        descricao: `${uniqueIngredient.circunstancia}. Localização: ${uniqueIngredient.localizacao}`,
+        raridade: 'unico'
+      };
+    }
+
+    return null;
   }
 
   async getRandomIngredientFromRegion(
     region: RegionKey, 
-    rarity: 'comum' | 'incomum'
+    rarity: 'comum' | 'incomum' | 'raro' | 'unico'
   ): Promise<Ingredient | null> {
     const regionData = await this.getRegionData(region);
     if (!regionData) return null;
@@ -67,6 +109,42 @@ class IngredientsService {
     const selectedIngredient = ingredientList[randomIndex];
     
     return await this.getIngredientById(selectedIngredient.id);
+  }
+
+  async getRandomUncommonIngredientFromAnyRegion(): Promise<Ingredient | null> {
+    const uncommonData = await this.loadUncommonIngredients();
+    if (uncommonData.ingredientes.length === 0) return null;
+
+    const randomIndex = Math.floor(Math.random() * uncommonData.ingredientes.length);
+    return { ...uncommonData.ingredientes[randomIndex], raridade: 'incomum' };
+  }
+
+  async getRandomRareIngredient(): Promise<Ingredient | null> {
+    const rareData = await this.loadRareIngredients();
+    if (rareData.ingredientes.length === 0) return null;
+
+    const randomIndex = Math.floor(Math.random() * rareData.ingredientes.length);
+    return { ...rareData.ingredientes[randomIndex], raridade: 'raro' };
+  }
+
+  async getRandomUniqueIngredient(): Promise<Ingredient | null> {
+    const uniqueData = await this.loadUniqueIngredients();
+    if (uniqueData.ingredientes.length === 0) return null;
+
+    const randomIndex = Math.floor(Math.random() * uniqueData.ingredientes.length);
+    const uniqueDataItem = uniqueData.ingredientes[randomIndex];
+    
+    // Criar um ingrediente completo com valores padrão para ingredientes únicos
+    return {
+      id: uniqueDataItem.id,
+      nome_ingles: uniqueDataItem.nome_ingles,
+      nome_portugues: uniqueDataItem.nome_portugues,
+      combat: 20, // Valores altos para ingredientes únicos
+      utility: 20,
+      whimsy: 20,
+      descricao: `${uniqueDataItem.circunstancia}. Localização: ${uniqueDataItem.localizacao}`,
+      raridade: 'unico'
+    };
   }
 
   private static readonly REGION_NAMES: Record<RegionKey, string> = {

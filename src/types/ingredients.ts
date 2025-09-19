@@ -6,11 +6,42 @@ export interface Ingredient {
   utility: number;
   whimsy: number;
   descricao: string;
+  raridade?: 'comum' | 'incomum' | 'raro' | 'unico';
 }
 
 export interface IngredientByRegion {
   nome: string;
   id: number;
+}
+
+export interface RareIngredient {
+  id: number;
+  nome_ingles: string;
+  nome_portugues: string;
+  combat: number;
+  utility: number;
+  whimsy: number;
+  descricao: string;
+  raridade: 'raro';
+}
+
+export interface UniqueIngredient {
+  id: number;
+  nome_ingles: string;
+  nome_portugues: string;
+  combat: number;
+  utility: number;
+  whimsy: number;
+  descricao: string;
+  raridade: 'unico';
+}
+
+export interface UniqueIngredientData {
+  id: number;
+  nome_ingles: string;
+  nome_portugues: string;
+  circunstancia: string;
+  localizacao: string;
 }
 
 export interface RegionData {
@@ -52,6 +83,18 @@ export interface IngredientsData {
       id: number;
       regioes: string[];
       circunstancia: string;
+    }>;
+  };
+  ingredientes_raros_unicos: {
+    descricao: string;
+    categoria: string;
+    dado: string;
+    ingredientes: Array<{
+      nome_ingles: string;
+      nome_portugues: string;
+      id: number;
+      circunstancia: string;
+      localizacao: string;
     }>;
   };
   total_regioes: number;
@@ -107,7 +150,7 @@ export interface ForageAttempt {
   roll: number;
   success: boolean;
   ingredient?: Ingredient;
-  rarity: 'comum' | 'incomum';
+  rarity: 'comum' | 'incomum' | 'raro' | 'unico';
 }
 
 export interface CollectedIngredient {

@@ -73,8 +73,8 @@ export default function ForageResult({ result }: ForageResultProps) {
               </span>
               <p className="text-xs text-totoro-gray/60 mt-2">
                 {result.success ? 
-                  `✅ Rolagem ${result.roll} está dentro da faixa ${result.dcRange}` :
-                  `❌ Rolagem ${result.roll} está abaixo da faixa ${result.dcRange}`
+                  `✅ Rolagem ${result.roll} passou no DC ${result.dc}` :
+                  `❌ Rolagem ${result.roll} não passou no DC ${result.dc}`
                 }
               </p>
             </div>

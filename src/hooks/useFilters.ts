@@ -3,6 +3,7 @@ import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
 
 export type FilterType = 'all' | 'available' | 'used';
+export type RarityFilterType = 'all' | 'comum' | 'incomum' | 'raro' | 'unico';
 export type SortType = 'date' | 'name' | 'rarity';
 export type ResultFilterType = 'all' | 'success' | 'failure';
 export type DateFilterType = 'all' | 'today' | 'week' | 'month';
@@ -11,6 +12,11 @@ const filterIngredients = (ingredients: CollectedIngredient[], filter: FilterTyp
   if (filter === 'available') return ingredients.filter(ing => !ing.used);
   if (filter === 'used') return ingredients.filter(ing => ing.used);
   return ingredients;
+};
+
+const filterByRarity = (ingredients: CollectedIngredient[], rarityFilter: RarityFilterType) => {
+  if (rarityFilter === 'all') return ingredients;
+  return ingredients.filter(ing => ing.ingredient.raridade === rarityFilter);
 };
 
 const searchIngredients = (ingredients: CollectedIngredient[], searchTerm: string) => {
@@ -28,7 +34,10 @@ const sortIngredients = (ingredients: CollectedIngredient[], sortBy: SortType) =
       case 'name':
         return a.ingredient.nome_portugues.localeCompare(b.ingredient.nome_portugues);
       case 'rarity':
-        return b.ingredient.id - a.ingredient.id;
+        const rarityOrder = { 'unico': 4, 'raro': 3, 'incomum': 2, 'comum': 1 };
+        const aRarity = a.ingredient.raridade || 'comum';
+        const bRarity = b.ingredient.raridade || 'comum';
+        return rarityOrder[bRarity] - rarityOrder[aRarity];
       case 'date':
       default:
         return b.collectedAt.getTime() - a.collectedAt.getTime();
@@ -38,17 +47,20 @@ const sortIngredients = (ingredients: CollectedIngredient[], sortBy: SortType) =
 
 export function useIngredientFilters(ingredients: CollectedIngredient[]) {
   const [filter, setFilter] = useState<FilterType>('all');
+  const [rarityFilter, setRarityFilter] = useState<RarityFilterType>('all');
   const [sortBy, setSortBy] = useState<SortType>('date');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredIngredients = useMemo(() => {
     const filtered = filterIngredients(ingredients, filter);
-    const searched = searchIngredients(filtered, searchTerm);
+    const rarityFiltered = filterByRarity(filtered, rarityFilter);
+    const searched = searchIngredients(rarityFiltered, searchTerm);
     return sortIngredients(searched, sortBy);
-  }, [ingredients, filter, sortBy, searchTerm]);
+  }, [ingredients, filter, rarityFilter, sortBy, searchTerm]);
 
   const clearFilters = useCallback(() => {
     setFilter('all');
+    setRarityFilter('all');
     setSortBy('date');
     setSearchTerm('');
   }, []);
@@ -56,6 +68,8 @@ export function useIngredientFilters(ingredients: CollectedIngredient[]) {
   return {
     filter,
     setFilter,
+    rarityFilter,
+    setRarityFilter,
     sortBy,
     setSortBy,
     searchTerm,

@@ -15,6 +15,8 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
   const {
     filter,
     setFilter,
+    rarityFilter,
+    setRarityFilter,
     sortBy,
     setSortBy,
     searchTerm,
@@ -33,6 +35,14 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
     { value: 'used', label: 'Usados' }
   ];
 
+  const rarityOptions = [
+    { value: 'all', label: 'Todas as Raridades' },
+    { value: 'comum', label: '🟢 Comum' },
+    { value: 'incomum', label: '🔵 Incomum' },
+    { value: 'raro', label: '🟣 Raro' },
+    { value: 'unico', label: '🟡 Único' }
+  ];
+
   const sortOptions = [
     { value: 'date', label: '📅 Data' },
     { value: 'name', label: '🔤 Nome' },
@@ -41,7 +51,8 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
 
   return (
     <FilterSection className="mb-8">
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="space-y-4">
+        {/* Primeira linha: Busca */}
         <div className="flex-1">
           <Input
             type="text"
@@ -52,26 +63,38 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
           />
         </div>
 
-        <div className="flex space-x-2">
-          {filterOptions.map(option => (
-            <Button
-              key={option.value}
-              onClick={() => setFilter(option.value as any)}
-              variant={filter === option.value ? 'primary' : 'secondary'}
-              size="sm"
-              effect={filter === option.value ? 'pulse-glow' : 'shimmer'}
-            >
-              {option.label}
-            </Button>
-          ))}
-        </div>
+        {/* Segunda linha: Filtros */}
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="flex flex-wrap gap-2">
+            {filterOptions.map(option => (
+              <Button
+                key={option.value}
+                onClick={() => setFilter(option.value as any)}
+                variant={filter === option.value ? 'primary' : 'secondary'}
+                size="sm"
+                effect={filter === option.value ? 'pulse-glow' : 'shimmer'}
+              >
+                {option.label}
+              </Button>
+            ))}
+          </div>
 
-        <Select
-          value={sortBy}
-          onChange={setSortBy}
-          options={sortOptions}
-          className="w-auto"
-        />
+          <div className="flex gap-2">
+            <Select
+              value={rarityFilter}
+              onChange={setRarityFilter}
+              options={rarityOptions}
+              className="w-auto"
+            />
+            
+            <Select
+              value={sortBy}
+              onChange={setSortBy}
+              options={sortOptions}
+              className="w-auto"
+            />
+          </div>
+        </div>
       </div>
     </FilterSection>
   );
