@@ -25,6 +25,23 @@ const sizeClasses = {
   lg: 'px-6 py-3 text-base'
 };
 
+/**
+ * Componente de botão reutilizável com efeitos visuais
+ * 
+ * @description
+ * Botão customizado com múltiplas variantes, tamanhos e efeitos visuais
+ * incluindo animações e estados de hover/focus.
+ * 
+ * @param children - Conteúdo do botão
+ * @param onClick - Função executada ao clicar
+ * @param type - Tipo do botão HTML
+ * @param variant - Variante visual do botão
+ * @param size - Tamanho do botão
+ * @param disabled - Se o botão está desabilitado
+ * @param className - Classes CSS adicionais
+ * @param fullWidth - Se o botão ocupa toda a largura
+ * @param effect - Efeito visual aplicado
+ */
 export default function Button({ 
   children, 
   onClick, 
@@ -36,6 +53,9 @@ export default function Button({
   fullWidth = false,
   effect = 'shimmer'
 }: ButtonProps) {
+  /**
+   * Retorna as classes CSS para o efeito visual selecionado
+   */
   const getEffectClasses = () => {
     if (disabled) return '';
     switch (effect) {
@@ -65,12 +85,10 @@ export default function Button({
         ${className}
       `}
     >
-      {/* Efeito de brilho animado */}
       {!disabled && (
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
       )}
       
-      {/* Efeito de partículas flutuantes para primary */}
       {!disabled && variant === 'primary' && (
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute top-1 left-2 w-1 h-1 bg-white/60 rounded-full animate-pulse"></div>
@@ -79,14 +97,12 @@ export default function Button({
         </div>
       )}
 
-      {/* Efeito de ondas para secondary */}
       {!disabled && variant === 'secondary' && (
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-totoro-green/10 via-transparent to-totoro-green/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
         </div>
       )}
 
-      {/* Efeito de chamas para danger */}
       {!disabled && variant === 'danger' && (
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-totoro-orange/60 rounded-full animate-pulse"></div>
@@ -95,7 +111,6 @@ export default function Button({
         </div>
       )}
 
-      {/* Efeito de folhas para success */}
       {!disabled && variant === 'success' && (
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute top-2 left-3 text-xs opacity-60 animate-bounce">🍃</div>
@@ -104,7 +119,6 @@ export default function Button({
         </div>
       )}
       
-      {/* Conteúdo do botão */}
       <span className="relative z-10 flex items-center justify-center">
         {children}
       </span>

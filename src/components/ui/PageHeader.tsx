@@ -8,6 +8,19 @@ interface PageHeaderProps {
   action?: React.ReactNode;
 }
 
+/**
+ * Componente de cabeçalho de página
+ * 
+ * @description
+ * Cabeçalho estilizado para páginas com título, subtítulo, ícone opcional
+ * e área para ações adicionais. Inclui efeitos visuais e backdrop blur.
+ * 
+ * @param title - Título principal da página
+ * @param subtitle - Subtítulo descritivo
+ * @param icon - Ícone opcional para o cabeçalho
+ * @param className - Classes CSS adicionais
+ * @param action - Elemento de ação opcional (botão, etc.)
+ */
 export default function PageHeader({ title, subtitle, icon, className = '', action }: PageHeaderProps) {
   return (
     <div className={`mb-8 ${className}`}>

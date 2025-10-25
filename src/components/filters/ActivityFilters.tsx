@@ -10,6 +10,16 @@ interface ActivityFiltersProps {
   onFilteredAttempts: (attempts: ForageAttempt[]) => void;
 }
 
+/**
+ * Componente de filtros para atividades de forrageamento
+ * 
+ * @description
+ * Filtros para tentativas de forrageamento incluindo filtros por resultado,
+ * região, período de tempo e ordenação por data.
+ * 
+ * @param attempts - Lista de tentativas a ser filtrada
+ * @param onFilteredAttempts - Callback executado quando os filtros mudam
+ */
 export default function ActivityFilters({ attempts, onFilteredAttempts }: ActivityFiltersProps) {
   const {
     filter,

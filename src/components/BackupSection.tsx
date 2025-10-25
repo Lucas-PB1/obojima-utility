@@ -8,19 +8,35 @@ import { createdPotionService } from '../services/createdPotionService';
 import ContentCard from './ui/ContentCard';
 import Button from './ui/Button';
 
+/**
+ * Componente para gerenciar operações de backup e importação de dados
+ * 
+ * @description
+ * Este componente fornece funcionalidades completas de backup e importação,
+ * incluindo exportação em diferentes formatos e limpeza de dados.
+ */
 export const BackupSection: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isImporting, setIsImporting] = useState(false);
   const [importMessage, setImportMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+  /**
+   * Exporta todos os dados em formato TXT legível
+   */
   const handleExportAll = () => {
     exportImportService.exportAllData();
   };
 
+  /**
+   * Exporta todos os dados em formato JSON para importação
+   */
   const handleExportJSON = () => {
     exportImportService.exportAllDataAsJSON();
   };
 
+  /**
+   * Limpa todos os dados do sistema após confirmação
+   */
   const handleClearAll = () => {
     if (confirm('⚠️ ATENÇÃO: Isso irá limpar TODOS os dados do sistema!\n\n• Todos os ingredientes coletados\n• Todas as poções criadas\n• Todas as receitas\n• Todos os logs de forrageamento\n\nEsta ação NÃO pode ser desfeita. Tem certeza?')) {
       storageService.clearAllData();
@@ -31,10 +47,18 @@ export const BackupSection: React.FC = () => {
     }
   };
 
+  /**
+   * Abre o seletor de arquivos para importação
+   */
   const handleImportClick = () => {
     fileInputRef.current?.click();
   };
 
+  /**
+   * Processa o arquivo selecionado para importação
+   * 
+   * @param event - Evento de mudança do input de arquivo
+   */
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -86,7 +110,6 @@ export const BackupSection: React.FC = () => {
           </ul>
         </div>
 
-        {/* Seção de Exportação */}
         <div className="space-y-4">
           <h4 className="font-medium text-gray-900">📤 Exportar Dados</h4>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
@@ -110,7 +133,6 @@ export const BackupSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Seção de Importação */}
         <div className="space-y-4">
           <h4 className="font-medium text-gray-900">📥 Importar Backup</h4>
           <div className="flex flex-col items-center gap-4">
@@ -144,7 +166,6 @@ export const BackupSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Seção de Limpeza */}
         <div className="space-y-4">
           <h4 className="font-medium text-gray-900">🗑️ Limpeza Geral</h4>
           <div className="bg-red-50 p-4 rounded-lg border border-red-200">

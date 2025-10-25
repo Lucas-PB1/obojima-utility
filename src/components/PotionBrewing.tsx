@@ -16,6 +16,17 @@ interface PotionBrewingProps {
   onIngredientsUsed?: (ingredientIds: number[]) => void;
 }
 
+/**
+ * Componente para criação de poções
+ * 
+ * @description
+ * Este componente permite selecionar ingredientes e criar poções,
+ * incluindo sistema de scores, escolha de atributos e aplicação de talentos.
+ * 
+ * @param availableIngredients - Lista de ingredientes disponíveis
+ * @param onPotionCreated - Callback executado quando uma poção é criada
+ * @param onIngredientsUsed - Callback executado quando ingredientes são usados
+ */
 export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   availableIngredients,
   onPotionCreated,

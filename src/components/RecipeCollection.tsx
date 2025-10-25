@@ -9,6 +9,13 @@ import Modal from './ui/Modal';
 import SimpleIngredientCard from './ui/SimpleIngredientCard';
 import ExportImportSection from './ui/ExportImportSection';
 
+/**
+ * Componente para gerenciar a coleção de receitas de poções
+ * 
+ * @description
+ * Este componente exibe todas as receitas de poções criadas,
+ * incluindo filtros, estatísticas e opções de exportação/importação.
+ */
 export const RecipeCollection: React.FC = () => {
   const [recipes, setRecipes] = useState<PotionRecipe[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<PotionRecipe | null>(null);
@@ -19,6 +26,9 @@ export const RecipeCollection: React.FC = () => {
     loadRecipes();
   }, []);
 
+  /**
+   * Carrega todas as receitas do serviço
+   */
   const loadRecipes = () => {
     const allRecipes = recipeService.getAllRecipes();
     setRecipes(allRecipes);

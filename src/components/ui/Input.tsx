@@ -11,6 +11,22 @@ interface InputProps {
   max?: number;
 }
 
+/**
+ * Componente de input reutilizável
+ * 
+ * @description
+ * Input customizado com suporte a diferentes tipos, validação e estilização
+ * consistente com o design system do Obojima.
+ * 
+ * @param type - Tipo do input HTML
+ * @param value - Valor atual do input
+ * @param onChange - Função executada ao alterar o valor
+ * @param placeholder - Texto placeholder
+ * @param label - Label do input
+ * @param className - Classes CSS adicionais
+ * @param min - Valor mínimo (para inputs numéricos)
+ * @param max - Valor máximo (para inputs numéricos)
+ */
 export default function Input({ 
   type = 'text',
   value, 

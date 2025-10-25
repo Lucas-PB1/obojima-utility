@@ -13,6 +13,18 @@ interface TabNavigationProps<T = string> {
   className?: string;
 }
 
+/**
+ * Componente de navegação por abas
+ * 
+ * @description
+ * Navegação horizontal por abas com ícones, estados ativos e transições suaves.
+ * Suporta tipos genéricos para flexibilidade de IDs de abas.
+ * 
+ * @param tabs - Array de abas disponíveis
+ * @param activeTab - Aba atualmente ativa
+ * @param onTabChange - Função executada ao trocar de aba
+ * @param className - Classes CSS adicionais
+ */
 export default function TabNavigation<T = string>({ 
   tabs, 
   activeTab, 

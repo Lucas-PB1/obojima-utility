@@ -23,6 +23,27 @@ interface ForageFormProps {
   remainingAttempts: number;
 }
 
+/**
+ * Formulário de configuração para forrageamento
+ * 
+ * @description
+ * Formulário completo para configurar parâmetros de forrageamento incluindo
+ * região, tipo de teste, modificadores, dados bônus e vantagem/desvantagem.
+ * 
+ * @param region - Região selecionada para forrageamento
+ * @param setRegion - Função para alterar a região
+ * @param testType - Tipo de teste selecionado
+ * @param setTestType - Função para alterar o tipo de teste
+ * @param modifier - Modificador numérico
+ * @param setModifier - Função para alterar o modificador
+ * @param bonusDice - Dados bônus configurados
+ * @param setBonusDice - Função para alterar os dados bônus
+ * @param advantage - Tipo de vantagem/desvantagem
+ * @param setAdvantage - Função para alterar a vantagem
+ * @param onForage - Função executada ao iniciar forrageamento
+ * @param isLoading - Estado de carregamento
+ * @param remainingAttempts - Tentativas restantes do dia
+ */
 export default function ForageForm({
   region,
   setRegion,

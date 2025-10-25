@@ -8,6 +8,15 @@ interface ForageResultProps {
   result: ForageAttempt | null;
 }
 
+/**
+ * Componente para exibir resultados de forrageamento
+ * 
+ * @description
+ * Exibe o resultado de uma tentativa de forrageamento com informações
+ * detalhadas sobre sucesso/falha, ingrediente coletado e estatísticas.
+ * 
+ * @param result - Resultado da tentativa de forrageamento
+ */
 export default function ForageResult({ result }: ForageResultProps) {
   if (!result) return null;
 

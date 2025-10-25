@@ -11,6 +11,16 @@ interface IngredientFiltersProps {
   onFilteredIngredients: (ingredients: CollectedIngredient[]) => void;
 }
 
+/**
+ * Componente de filtros para ingredientes
+ * 
+ * @description
+ * Filtros completos para ingredientes coletados incluindo busca por texto,
+ * filtros por raridade, status de uso e ordenação por diferentes critérios.
+ * 
+ * @param ingredients - Lista de ingredientes a ser filtrada
+ * @param onFilteredIngredients - Callback executado quando os filtros mudam
+ */
 export default function IngredientFilters({ ingredients, onFilteredIngredients }: IngredientFiltersProps) {
   const {
     filter,

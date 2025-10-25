@@ -30,6 +30,21 @@ interface DataTableProps<T> {
   className?: string;
 }
 
+/**
+ * Componente de tabela de dados reutilizável
+ * 
+ * @description
+ * Tabela completa com funcionalidades de busca, filtros, ordenação e paginação.
+ * Utiliza o hook useDataTable para gerenciar estado e operações.
+ * 
+ * @param data - Array de dados a ser exibido
+ * @param columns - Configuração das colunas da tabela
+ * @param filters - Filtros disponíveis para a tabela
+ * @param searchKey - Chave para busca nos dados
+ * @param searchPlaceholder - Placeholder do campo de busca
+ * @param itemsPerPage - Número de itens por página
+ * @param className - Classes CSS adicionais
+ */
 export default function DataTable<T extends Record<string, unknown>>({
   data,
   columns,

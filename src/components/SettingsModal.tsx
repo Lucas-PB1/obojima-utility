@@ -11,9 +11,23 @@ interface SettingsModalProps {
   onSettingsChange: () => void;
 }
 
+/**
+ * Modal para configurações do sistema
+ * 
+ * @description
+ * Este modal permite configurar valores padrão para forrageamento,
+ * talentos especiais e outras configurações do sistema.
+ * 
+ * @param isOpen - Estado de abertura do modal
+ * @param onClose - Função para fechar o modal
+ * @param onSettingsChange - Callback executado quando configurações mudam
+ */
 export default function SettingsModal({ isOpen, onClose, onSettingsChange }: SettingsModalProps) {
   const { settings, isLoading, saveSettings, clearSettings, updateSetting } = useSettings();
 
+  /**
+   * Salva as configurações atuais
+   */
   const handleSave = async () => {
     try {
       await saveSettings(settings);
@@ -24,6 +38,9 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
     }
   };
 
+  /**
+   * Limpa todas as configurações
+   */
   const handleClear = async () => {
     try {
       await clearSettings();
@@ -162,16 +179,14 @@ export default function SettingsModal({ isOpen, onClose, onSettingsChange }: Set
               
               {settings.potionBrewerTalent && (
                 <div className="mt-3">
-                  <label className="block text-sm font-medium text-purple-700 mb-2">
-                    Level do Potion Brewer (1-20)
-                  </label>
-                  <input
+                  <Input
                     type="number"
-                    min="1"
-                    max="20"
                     value={settings.potionBrewerLevel || 1}
-                    onChange={(e) => updateSetting('potionBrewerLevel', parseInt(e.target.value) || 1)}
-                    className="w-full px-3 py-2 border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                    onChange={(value) => updateSetting('potionBrewerLevel', value as number)}
+                    placeholder="Ex: 5"
+                    label="Level do Potion Brewer (1-20)"
+                    min={1}
+                    max={20}
                   />
                   <p className="text-xs text-purple-600 mt-1">
                     Chance de {settings.potionBrewerLevel || 1}% de gerar uma segunda poção

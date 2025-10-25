@@ -1,20 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { 
-  RegionKey, 
-  TestType, 
-  DiceType, 
-  AdvantageType, 
-  ForageAttempt,
-  CollectedIngredient,
-  Ingredient
-} from '@/types/ingredients';
-import { ingredientsService } from '@/services/ingredientsService';
-import { diceService } from '@/services/diceService';
-import { settingsService } from '@/services/settingsService';
+import React, { useState } from 'react';
+import { CollectedIngredient, DiceType } from '@/types/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
-import { isDailyLimitReached, incrementDailyCounter, getRemainingAttemptsToday, GAME_CONFIG } from '@/config/gameConfig';
+import { useForageLogic } from '@/hooks/useForageLogic';
+import { settingsService } from '@/services/settingsService';
 import PageLayout from './ui/PageLayout';
 import PageHeader from './ui/PageHeader';
 import ForageForm from './forage/ForageForm';
@@ -28,178 +18,41 @@ interface ForageSystemProps {
   onIngredientCollected?: (ingredient: CollectedIngredient) => void;
 }
 
+/**
+ * Componente principal do sistema de forrageamento
+ * 
+ * @description
+ * Este componente gerencia todo o sistema de forrageamento, incluindo
+ * configuração de parâmetros, execução de tentativas e exibição de resultados.
+ * 
+ * @param onIngredientCollected - Callback executado quando um ingrediente é coletado
+ */
 export default function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
-  const [region, setRegion] = useState<RegionKey>('Gale Fields');
-  const [testType, setTestType] = useState<TestType>('natureza');
-  const [modifier, setModifier] = useState<number | ''>('');
-  const [bonusDice, setBonusDice] = useState<{ type: DiceType; value: number } | null>(null);
-  const [advantage, setAdvantage] = useState<AdvantageType>('normal');
-  const [isLoading, setIsLoading] = useState(false);
-  const [lastResult, setLastResult] = useState<ForageAttempt | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [remainingAttempts, setRemainingAttempts] = useState<number>(GAME_CONFIG.DAILY_FORAGE_LIMIT);
   
   const { ingredients, addIngredient, addAttempt } = useIngredients();
+  const {
+    region,
+    setRegion,
+    testType,
+    setTestType,
+    modifier,
+    setModifier,
+    bonusDice,
+    setBonusDice,
+    advantage,
+    setAdvantage,
+    isLoading,
+    lastResult,
+    remainingAttempts,
+    executeForage
+  } = useForageLogic();
 
-  useEffect(() => {
-    const defaultModifier = settingsService.getDefaultModifier();
-    const defaultBonusDice = settingsService.getDefaultBonusDice();
-    
-    if (defaultModifier !== '') {
-      setModifier(defaultModifier);
-    }
-    
-    if (defaultBonusDice) {
-      setBonusDice({
-        type: defaultBonusDice.type as DiceType,
-        value: defaultBonusDice.value
-      });
-    }
-
-    setRemainingAttempts(getRemainingAttemptsToday());
-  }, []);
-
+  /**
+   * Executa uma tentativa de forrageamento
+   */
   const handleForage = async () => {
-    if (isDailyLimitReached()) {
-      alert(`Você já atingiu o limite de ${GAME_CONFIG.DAILY_FORAGE_LIMIT} tentativas hoje! Volte amanhã para continuar forrageando.`);
-      return;
-    }
-
-    setIsLoading(true);
-    
-    try {
-      const modifierValue = modifier === '' ? 0 : modifier;
-      const isNative = true;
-      
-      const { roll } = diceService.rollWithAdvantage(advantage);
-      const totalRoll = diceService.calculateTotalRoll(roll, modifierValue, bonusDice || undefined);
-      
-      // Determinar a raridade baseada no resultado da rolagem
-      let rarity: 'comum' | 'incomum' | 'raro' | 'unico' = 'comum';
-      let dcResult = ingredientsService.calculateDC('comum', isNative);
-      let success = false;
-      
-      // Lógica de sucesso baseada na faixa da rolagem
-      if (totalRoll >= 10 && totalRoll <= 15) {
-        // Faixa 10-15: Ingrediente comum da região
-        rarity = 'comum';
-        dcResult = ingredientsService.calculateDC('comum', isNative);
-        success = true;
-      } else if (totalRoll >= 16 && totalRoll <= 20) {
-        // Faixa 16-20: Ingrediente incomum da região
-        rarity = 'incomum';
-        dcResult = ingredientsService.calculateDC('incomum', isNative);
-        success = true;
-      } else if (totalRoll >= 21 && totalRoll <= 25) {
-        // Faixa 21-25: Ingrediente incomum de qualquer região (sorte)
-        rarity = 'incomum';
-        dcResult = ingredientsService.calculateDC('incomum', false); // Não nativo
-        success = true;
-      } else if (totalRoll >= 26 && totalRoll <= 30) {
-        // Faixa 26-30: Chance de ingrediente raro (evento especial)
-        const rareChance = Math.random();
-        if (rareChance <= 0.3) { // 30% de chance
-          rarity = 'raro';
-          dcResult = { dc: 26, range: '26-30' };
-          success = true;
-        } else {
-          // 70% de chance de fallback para incomum de qualquer região
-          rarity = 'incomum';
-          dcResult = { dc: 21, range: '21-25' };
-          success = true;
-        }
-      } else if (totalRoll >= 31) {
-        // Faixa 31+: Chance de ingrediente único (evento raríssimo)
-        const uniqueChance = Math.random();
-        if (uniqueChance <= 0.1) { // 10% de chance
-          rarity = 'unico';
-          dcResult = { dc: 31, range: '31+' };
-          success = true;
-        } else {
-          // 90% de chance de fallback para raro
-          const rareChance = Math.random();
-          if (rareChance <= 0.3) { // 30% de chance de raro
-            rarity = 'raro';
-            dcResult = { dc: 26, range: '26-30' };
-            success = true;
-          } else {
-            // 70% de chance de fallback para incomum de qualquer região
-            rarity = 'incomum';
-            dcResult = { dc: 21, range: '21-25' };
-            success = true;
-          }
-        }
-      } else {
-        // Abaixo de 10: Falha
-        dcResult = { dc: 10, range: '10-15' };
-        success = false;
-      }
-      
-      let ingredient: Ingredient | null = null;
-      if (success) {
-        if (rarity === 'raro') {
-          // Ingrediente raro (evento especial)
-          ingredient = await ingredientsService.getRandomRareIngredient();
-        } else if (rarity === 'unico') {
-          // Ingrediente único (evento raríssimo)
-          ingredient = await ingredientsService.getRandomUniqueIngredient();
-        } else if (rarity === 'incomum' && (totalRoll >= 21)) {
-          // Ingrediente incomum de qualquer região (sorte ou fallback)
-          ingredient = await ingredientsService.getRandomUncommonIngredientFromAnyRegion();
-        } else {
-          // Ingrediente da região específica (comum ou incomum da região)
-          ingredient = await ingredientsService.getRandomIngredientFromRegion(region, rarity);
-        }
-      }
-      
-      const attempt: ForageAttempt = {
-        id: Date.now().toString(),
-        timestamp: new Date(),
-        region,
-        testType,
-        modifier: modifierValue,
-        bonusDice: bonusDice || undefined,
-        advantage,
-        dc: dcResult.dc,
-        dcRange: dcResult.range,
-        roll: totalRoll,
-        success,
-        ingredient: ingredient || undefined,
-        rarity
-      };
-      
-      incrementDailyCounter();
-      
-      addAttempt(attempt);
-      
-      if (success && ingredient) {
-        // Verificar se o talento de forrageamento duplo está ativo
-        const doubleForageTalent = settingsService.getDoubleForageTalent();
-        const shouldDouble = doubleForageTalent && (rarity === 'comum' || rarity === 'incomum');
-        const quantity = shouldDouble ? 2 : 1;
-        
-        const collectedIngredient: CollectedIngredient = {
-          id: Date.now().toString() + '_ingredient',
-          ingredient,
-          quantity,
-          collectedAt: new Date(),
-          used: false,
-          forageAttemptId: attempt.id
-        };
-        
-        addIngredient(collectedIngredient);
-        onIngredientCollected?.(collectedIngredient);
-      }
-      
-      setLastResult(attempt);
-      
-      setRemainingAttempts(getRemainingAttemptsToday());
-      
-    } catch (error) {
-      console.error('Erro no forrageamento:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    await executeForage(onIngredientCollected, addIngredient, addAttempt);
   };
 
   return (

@@ -8,6 +8,19 @@ interface ModalProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
+/**
+ * Componente de modal reutilizável
+ * 
+ * @description
+ * Modal customizado com animações suaves, backdrop blur e diferentes tamanhos.
+ * Inclui controle de visibilidade e animações de entrada/saída.
+ * 
+ * @param isOpen - Estado de abertura do modal
+ * @param onClose - Função para fechar o modal
+ * @param title - Título do modal
+ * @param children - Conteúdo do modal
+ * @param size - Tamanho do modal
+ */
 export default function Modal({ 
   isOpen, 
   onClose, 

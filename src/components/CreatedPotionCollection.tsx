@@ -8,6 +8,13 @@ import Button from './ui/Button';
 import Modal from './ui/Modal';
 import ExportImportSection from './ui/ExportImportSection';
 
+/**
+ * Componente para gerenciar a coleção de poções criadas
+ * 
+ * @description
+ * Este componente exibe todas as poções criadas no inventário,
+ * incluindo filtros, estatísticas e opções de exportação/importação.
+ */
 export const CreatedPotionCollection: React.FC = () => {
   const [potions, setPotions] = useState<CreatedPotion[]>([]);
   const [selectedPotion, setSelectedPotion] = useState<CreatedPotion | null>(null);
@@ -18,11 +25,17 @@ export const CreatedPotionCollection: React.FC = () => {
     loadPotions();
   }, []);
 
+  /**
+   * Carrega todas as poções criadas do serviço
+   */
   const loadPotions = () => {
     const allPotions = createdPotionService.getAllCreatedPotions();
     setPotions(allPotions);
   };
 
+  /**
+   * Limpa todas as poções criadas após confirmação
+   */
   const handleClearPotions = () => {
     if (confirm('Isso irá limpar todas as poções criadas. Tem certeza?')) {
       createdPotionService.clearAllCreatedPotions();

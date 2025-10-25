@@ -28,6 +28,17 @@ const textColorClasses = {
   'totoro-orange': 'text-totoro-orange'
 };
 
+/**
+ * Componente de grid de estatísticas
+ * 
+ * @description
+ * Grid responsivo para exibir estatísticas com valores e labels coloridos.
+ * Suporta diferentes cores do tema Totoro e layout adaptativo.
+ * 
+ * @param title - Título da seção de estatísticas
+ * @param stats - Array de itens de estatística
+ * @param className - Classes CSS adicionais
+ */
 export default function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
   return (
     <div className={`bg-white backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-totoro-blue/20 ${className}`}>

@@ -13,12 +13,22 @@ import ContentCard from './ui/ContentCard';
 import { ingredientsService } from '@/services/ingredientsService';
 import ExportImportSection from './ui/ExportImportSection';
 
+/**
+ * Componente para exibir o log de atividades de forrageamento
+ * 
+ * @description
+ * Este componente exibe o histórico completo de tentativas de forrageamento,
+ * incluindo estatísticas, filtros e opções de exportação/importação.
+ */
 export default function ActivityLog() {
   const { attempts, refreshData, clearAttempts } = useIngredients();
   const [filteredAttempts, setFilteredAttempts] = useState<ForageAttempt[]>([]);
 
   const activityStats = StatsService.calculateActivityStats(filteredAttempts);
 
+  /**
+   * Limpa todos os logs de forrageamento após confirmação
+   */
   const handleClearLogs = () => {
     if (confirm('Isso irá limpar todos os logs de forrageamento. Tem certeza?')) {
       clearAttempts();
@@ -164,14 +174,12 @@ export default function ActivityLog() {
       )}
       </ContentCard>
 
-      {/* Seção de Export/Import */}
       <ExportImportSection 
         type="logs" 
         onDataImported={refreshData}
         className="mt-6"
       />
-
-      {/* Botão de Limpeza */}
+      
       <div className="mt-6 flex justify-center">
         <button
           onClick={handleClearLogs}

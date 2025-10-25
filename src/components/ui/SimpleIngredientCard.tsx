@@ -6,6 +6,16 @@ interface SimpleIngredientCardProps {
   className?: string;
 }
 
+/**
+ * Componente de card simples de ingrediente
+ * 
+ * @description
+ * Card simplificado para exibir ingredientes básicos com informações
+ * essenciais como nome, descrição e atributos, sem ações.
+ * 
+ * @param ingredient - Ingrediente a ser exibido
+ * @param className - Classes CSS adicionais
+ */
 export default function SimpleIngredientCard({ 
   ingredient, 
   className = ''

@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { settingsService } from '@/services/settingsService';
 import { DiceType } from '@/types/ingredients';
 
+/**
+ * Interface que define o estado das configurações do sistema
+ */
 export interface SettingsState {
   defaultModifier: number | '';
   defaultBonusType: string;
@@ -22,10 +25,24 @@ const defaultSettings: SettingsState = {
   potionBrewerLevel: 1
 };
 
+/**
+ * Hook para gerenciar as configurações do sistema Obojima
+ * 
+ * @description
+ * Este hook encapsula toda a lógica de gerenciamento de configurações, incluindo:
+ * - Carregamento de configurações salvas
+ * - Salvamento de novas configurações
+ * - Limpeza de configurações
+ * - Atualização individual de configurações
+ * 
+ */
 export function useSettings() {
   const [settings, setSettings] = useState<SettingsState>(defaultSettings);
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   * Carrega as configurações salvas do localStorage
+   */
   const loadSettings = useCallback(() => {
     const defaultModifier = settingsService.getDefaultModifier();
     const defaultBonusDice = settingsService.getDefaultBonusDice();
@@ -49,6 +66,11 @@ export function useSettings() {
     loadSettings();
   }, [loadSettings]);
 
+  /**
+   * Salva as configurações no localStorage
+   * 
+   * @param newSettings - Novas configurações a serem salvas
+   */
   const saveSettings = useCallback(async (newSettings: SettingsState) => {
     setIsLoading(true);
     
@@ -73,6 +95,9 @@ export function useSettings() {
     }
   }, []);
 
+  /**
+   * Limpa todas as configurações e volta aos valores padrão
+   */
   const clearSettings = useCallback(async () => {
     setIsLoading(true);
     
@@ -87,6 +112,12 @@ export function useSettings() {
     }
   }, []);
 
+  /**
+   * Atualiza uma configuração específica
+   * 
+   * @param key - Chave da configuração a ser atualizada
+   * @param value - Novo valor da configuração
+   */
   const updateSetting = useCallback(<K extends keyof SettingsState>(
     key: K,
     value: SettingsState[K]

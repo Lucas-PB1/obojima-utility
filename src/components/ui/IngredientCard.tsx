@@ -9,6 +9,18 @@ interface IngredientCardProps {
   showActions?: boolean;
 }
 
+/**
+ * Componente de card de ingrediente coletado
+ * 
+ * @description
+ * Card completo para exibir ingredientes coletados com informações detalhadas,
+ * atributos, status de uso e ações (marcar como usado, remover).
+ * 
+ * @param ingredient - Ingrediente coletado a ser exibido
+ * @param onMarkAsUsed - Função executada ao marcar como usado
+ * @param onRemove - Função executada ao remover o ingrediente
+ * @param showActions - Se deve exibir os botões de ação
+ */
 export default function IngredientCard({ 
   ingredient, 
   onMarkAsUsed, 

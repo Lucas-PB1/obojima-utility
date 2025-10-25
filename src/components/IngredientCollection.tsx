@@ -13,34 +13,58 @@ import Button from './ui/Button';
 import IngredientModal from './IngredientModal';
 import ExportImportSection from './ui/ExportImportSection';
 
+/**
+ * Componente para gerenciar a coleção de ingredientes
+ * 
+ * @description
+ * Este componente exibe e gerencia todos os ingredientes coletados,
+ * incluindo filtros, estatísticas e operações de exportação/importação.
+ */
 export default function IngredientCollection() {
   const { ingredients, attempts, markAsUsed, getStats, refreshData, clearIngredients } = useIngredients();
   
-  // Filtrar ingredientes com quantidade > 0 para exibição
   const displayIngredients = ingredients.filter(ing => ing.quantity > 0);
   const [selectedIngredient, setSelectedIngredient] = useState<CollectedIngredient['ingredient'] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  /**
+   * Marca um ingrediente como usado
+   * 
+   * @param id - ID do ingrediente a ser marcado como usado
+   */
   const handleMarkAsUsed = (id: string) => {
     markAsUsed(id);
   };
 
+  /**
+   * Abre o modal de detalhes do ingrediente
+   * 
+   * @param ingredient - Ingrediente selecionado
+   */
   const handleIngredientClick = (ingredient: CollectedIngredient['ingredient']) => {
     setSelectedIngredient(ingredient);
     setIsModalOpen(true);
   };
 
+  /**
+   * Fecha o modal de detalhes do ingrediente
+   */
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedIngredient(null);
   };
 
+  /**
+   * Exporta os dados da coleção
+   */
   const handleExportData = () => {
     const stats = getStats();
     BackupService.exportData(ingredients, attempts, stats);
   };
 
-
+  /**
+   * Limpa todos os ingredientes coletados após confirmação
+   */
   const handleClearIngredients = () => {
     if (confirm('Isso irá limpar todos os ingredientes coletados. Tem certeza?')) {
       clearIngredients();

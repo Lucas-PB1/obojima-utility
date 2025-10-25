@@ -11,6 +11,17 @@ interface ExportImportSectionProps {
   className?: string;
 }
 
+/**
+ * Componente para operações de exportação e importação de dados
+ * 
+ * @description
+ * Seção completa para exportar dados em diferentes formatos (TXT e JSON)
+ * e importar backups, com feedback visual e tratamento de erros.
+ * 
+ * @param type - Tipo de dados a serem exportados/importados
+ * @param onDataImported - Callback executado após importação bem-sucedida
+ * @param className - Classes CSS adicionais
+ */
 export default function ExportImportSection({ 
   type, 
   onDataImported,
@@ -75,10 +86,8 @@ export default function ExportImportSection({
       let result;
       
       if (type === 'all') {
-        // Para backup completo, usar importData
         result = await exportImportService.importData(file);
       } else {
-        // Para tipos específicos, usar importSpecificData
         const typeMap = {
           'ingredients': 'ingredients',
           'potions': 'createdPotions',
@@ -179,7 +188,6 @@ export default function ExportImportSection({
         </Button>
       </div>
 
-      {/* Modal de Importação */}
       <Modal
         isOpen={showImportModal}
         onClose={handleCloseModal}
