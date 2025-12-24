@@ -9,8 +9,9 @@ import {
 } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
 import { diceService } from '@/services/diceService';
-import { settingsService } from '@/services/settingsService';
-import { isDailyLimitReached, incrementDailyCounter, getRemainingAttemptsToday, GAME_CONFIG } from '@/config/gameConfig';
+import { firebaseSettingsService } from '@/services/firebaseSettingsService';
+import { firebaseStorageService } from '@/services/firebaseStorageService';
+import { GAME_CONFIG } from '@/config/gameConfig';
 
 /**
  * Hook para gerenciar a lógica de forrageamento no sistema Obojima
@@ -33,21 +34,30 @@ export function useForageLogic() {
   const [remainingAttempts, setRemainingAttempts] = useState<number>(GAME_CONFIG.DAILY_FORAGE_LIMIT);
 
   useEffect(() => {
-    const defaultModifier = settingsService.getDefaultModifier();
-    const defaultBonusDice = settingsService.getDefaultBonusDice();
+    const loadDefaults = async () => {
+      const defaultModifier = await firebaseSettingsService.getDefaultModifier();
+      const defaultBonusDice = await firebaseSettingsService.getDefaultBonusDice();
+      
+      if (defaultModifier !== '') {
+        setModifier(defaultModifier);
+      }
+      
+      if (defaultBonusDice) {
+        setBonusDice({
+          type: defaultBonusDice.type as DiceType,
+          value: defaultBonusDice.value
+        });
+      }
+    };
     
-    if (defaultModifier !== '') {
-      setModifier(defaultModifier);
-    }
-    
-    if (defaultBonusDice) {
-      setBonusDice({
-        type: defaultBonusDice.type as DiceType,
-        value: defaultBonusDice.value
-      });
-    }
+    loadDefaults();
 
-    setRemainingAttempts(getRemainingAttemptsToday());
+    const loadRemainingAttempts = async () => {
+      const remaining = await firebaseStorageService.getRemainingAttemptsToday();
+      setRemainingAttempts(remaining);
+    };
+    
+    loadRemainingAttempts();
   }, []);
 
   /**
@@ -116,8 +126,10 @@ export function useForageLogic() {
     addIngredient?: (ingredient: CollectedIngredient) => void,
     addAttempt?: (attempt: ForageAttempt) => void
   ) => {
-    if (isDailyLimitReached()) {
+    const currentRemaining = await firebaseStorageService.getRemainingAttemptsToday();
+    if (currentRemaining <= 0) {
       alert(`Você já atingiu o limite de ${GAME_CONFIG.DAILY_FORAGE_LIMIT} tentativas hoje! Volte amanhã para continuar forrageando.`);
+      setRemainingAttempts(0);
       return;
     }
 
@@ -148,11 +160,10 @@ export function useForageLogic() {
         rarity
       };
       
-      incrementDailyCounter();
       addAttempt?.(attempt);
       
       if (success && ingredient) {
-        const doubleForageTalent = settingsService.getDoubleForageTalent();
+        const doubleForageTalent = await firebaseSettingsService.getDoubleForageTalent();
         const shouldDouble = doubleForageTalent && (rarity === 'comum' || rarity === 'incomum');
         const quantity = shouldDouble ? 2 : 1;
         
@@ -170,7 +181,8 @@ export function useForageLogic() {
       }
       
       setLastResult(attempt);
-      setRemainingAttempts(getRemainingAttemptsToday());
+      const remaining = await firebaseStorageService.getRemainingAttemptsToday();
+      setRemainingAttempts(remaining);
       
     } catch (error) {
       console.error('Erro no forrageamento:', error);
@@ -182,9 +194,9 @@ export function useForageLogic() {
   /**
    * Atualiza as configurações do forrageamento com os valores padrão salvos
    */
-  const updateSettings = useCallback(() => {
-    const defaultModifier = settingsService.getDefaultModifier();
-    const defaultBonusDice = settingsService.getDefaultBonusDice();
+  const updateSettings = useCallback(async () => {
+    const defaultModifier = await firebaseSettingsService.getDefaultModifier();
+    const defaultBonusDice = await firebaseSettingsService.getDefaultBonusDice();
     
     if (defaultModifier !== '') {
       setModifier(defaultModifier);

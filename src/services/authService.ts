@@ -98,7 +98,6 @@ class AuthService {
   private handleAuthError(error: unknown): Error {
     let message = 'Erro desconhecido ao autenticar';
     
-    // Verificar se é um erro do Firebase
     if (error && typeof error === 'object' && 'code' in error) {
       const firebaseError = error as { code: string; message?: string };
       

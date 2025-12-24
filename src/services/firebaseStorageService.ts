@@ -8,9 +8,12 @@ import {
   query, 
   orderBy,
   onSnapshot,
+  where,
+  limit,
   Timestamp,
   Unsubscribe
 } from 'firebase/firestore';
+import { GAME_CONFIG } from '@/config/gameConfig';
 import { db } from '@/config/firebase';
 import { authService } from './authService';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
@@ -59,7 +62,6 @@ class FirebaseStorageService {
     return Timestamp.fromDate(date);
   }
 
-  // Collected Ingredients
   async getCollectedIngredients(): Promise<CollectedIngredient[]> {
     if (!this.isClient() || !this.getUserId()) return [];
     
@@ -129,7 +131,6 @@ class FirebaseStorageService {
       const existing = current.find(ing => ing.ingredient.id === ingredient.ingredient.id);
       
       if (existing) {
-        // Atualizar quantidade existente
         const existingRef = doc(db, this.getCollectedIngredientsPath(), existing.id);
         await updateDoc(existingRef, {
           quantity: existing.quantity + ingredient.quantity,
@@ -138,7 +139,6 @@ class FirebaseStorageService {
           usedAt: null
         });
       } else {
-        // Adicionar novo
         const ingredientsRef = collection(db, this.getCollectedIngredientsPath());
         await addDoc(ingredientsRef, {
           ...ingredient,
@@ -216,7 +216,6 @@ class FirebaseStorageService {
     }
   }
 
-  // Forage Attempts
   async getForageAttempts(): Promise<ForageAttempt[]> {
     if (!this.isClient() || !this.getUserId()) return [];
     
@@ -291,7 +290,29 @@ class FirebaseStorageService {
     }
   }
 
-  // Stats
+  async getRemainingAttemptsToday(): Promise<number> {
+    if (!this.isClient() || !this.getUserId()) return GAME_CONFIG.DAILY_FORAGE_LIMIT;
+    
+    try {
+      const now = new Date();
+      const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      
+      const attemptsRef = collection(db, this.getForageAttemptsPath());
+      const q = query(
+        attemptsRef, 
+        where('timestamp', '>=', this.convertDateToTimestamp(startOfDay))
+      );
+      
+      const snapshot = await getDocs(q);
+      const usedToday = snapshot.size;
+      
+      return Math.max(0, GAME_CONFIG.DAILY_FORAGE_LIMIT - usedToday);
+    } catch (error) {
+      console.error('Erro ao verificar tentativas restantes:', error);
+      return 0;
+    }
+  }
+
   async getStats() {
     const collected = await this.getCollectedIngredients();
     const attempts = await this.getForageAttempts();
@@ -335,9 +356,6 @@ class FirebaseStorageService {
     }, {} as Record<string, number>);
   }
 
-
-
-  // Cleanup subscriptions
   cleanup(): void {
     if (this.collectedIngredientsUnsubscribe) {
       this.collectedIngredientsUnsubscribe();

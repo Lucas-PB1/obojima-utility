@@ -7,15 +7,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Paleta Totoro
         totoro: {
-          blue: '#4A90E2',      // Azul do céu
-          green: '#7ED321',     // Verde da vegetação
-          yellow: '#F5A623',    // Amarelo da camisa/chapéu
-          gray: '#2C3E50',      // Cinza do Totoro
-          orange: '#E67E22',    // Laranja dos shorts/bolsa
+          blue: '#4A90E2',
+          green: '#7ED321',
+          yellow: '#F5A623',
+          gray: '#2C3E50',
+          orange: '#E67E22',
         },
-        // Cores do sistema
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         primary: 'var(--primary)',

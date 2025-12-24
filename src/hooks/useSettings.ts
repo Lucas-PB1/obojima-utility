@@ -85,7 +85,6 @@ export function useSettings() {
       return;
     }
 
-    // Configurar subscription em tempo real
     const unsubscribe = firebaseSettingsService.subscribeToSettings((firestoreSettings) => {
       const defaultBonusDice = firestoreSettings.defaultBonusDice;
       setSettings({

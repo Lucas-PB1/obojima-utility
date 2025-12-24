@@ -34,7 +34,6 @@ class FirebaseSettingsService {
   private getSettingsPath(): string {
     const userId = this.getUserId();
     if (!userId) throw new Error('Usuário não autenticado');
-    // Armazenar settings diretamente no documento do usuário
     return `users/${userId}`;
   }
   
@@ -57,7 +56,6 @@ class FirebaseSettingsService {
         }
       }
       
-      // Criar settings padrão se não existir
       await this.saveSettings(defaultSettings);
       return defaultSettings;
     } catch (error) {
@@ -195,7 +193,6 @@ class FirebaseSettingsService {
     }
   }
 
-  // Cleanup subscriptions
   cleanup(): void {
     if (this.settingsUnsubscribe) {
       this.settingsUnsubscribe();

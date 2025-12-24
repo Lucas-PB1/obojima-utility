@@ -49,14 +49,12 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   const [chosenAttribute, setChosenAttribute] = useState<'combat' | 'utility' | 'whimsy' | null>(null);
   const [showScoreChoice, setShowScoreChoice] = useState(false);
 
-  // Calcular preview dos scores quando ingredientes são selecionados
   useEffect(() => {
     if (selectedIngredients.length === 3) {
       try {
         const scores = potionService.calculateScores(selectedIngredients);
         setPreviewScores(scores);
         
-        // Verificar se pode escolher entre scores
         const available = potionService.calculateAvailableScores(selectedIngredients);
         setAvailableScores(available);
       } catch {
@@ -73,10 +71,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
   const handleIngredientSelect = (ingredient: Ingredient) => {
     if (selectedIngredients.length >= 3) {
-      return; // Máximo de 3 ingredientes
+      return;
     }
 
-    // Verificar se o ingrediente já foi selecionado
     if (selectedIngredients.some(ing => ing.id === ingredient.id)) {
       return;
     }
@@ -93,7 +90,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       return;
     }
 
-    // Se pode escolher entre scores e ainda não escolheu, mostrar modal de escolha
     if (availableScores?.canChoose && !chosenAttribute) {
       setShowScoreChoice(true);
       return;
@@ -106,19 +102,15 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       setShowResultModal(true);
       
       if (result.success) {
-        // Salvar a receita
         await firebaseRecipeService.saveRecipe(result.recipe);
         
-        // Adicionar a poção criada ao inventário
         await firebaseCreatedPotionService.addCreatedPotion(result.recipe);
         
-        // Se o caldeirão especial foi ativado, gerar poção comum dos restos
         if (result.cauldronBonus && result.remainsPotion) {
           try {
-            // Criar uma receita para a poção comum dos restos
             const remainsRecipe: PotionRecipe = {
               id: `remains_${result.recipe.id}`,
-              ingredients: [], // Poção dos restos não usa ingredientes
+              ingredients: [],
               combatScore: 0,
               utilityScore: 0,
               whimsyScore: 0,
@@ -127,7 +119,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
               createdAt: new Date()
             };
             
-            // Salvar e adicionar a poção dos restos
             await firebaseRecipeService.saveRecipe(remainsRecipe);
             await firebaseCreatedPotionService.addCreatedPotion(remainsRecipe);
           } catch (error) {
@@ -135,13 +126,11 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
           }
         }
 
-        // Se o Potion Brewer foi ativado e teve sucesso, gerar segunda poção
         if (result.potionBrewerSuccess && result.secondPotion) {
           try {
-            // Criar uma receita para a segunda poção
             const secondRecipe: PotionRecipe = {
               id: `second_${result.recipe.id}`,
-              ingredients: [...selectedIngredients], // Usa os mesmos ingredientes
+              ingredients: [...selectedIngredients],
               combatScore: result.recipe.combatScore,
               utilityScore: result.recipe.utilityScore,
               whimsyScore: result.recipe.whimsyScore,
@@ -150,7 +139,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
               createdAt: new Date()
             };
             
-            // Salvar e adicionar a segunda poção
             await firebaseRecipeService.saveRecipe(secondRecipe);
             await firebaseCreatedPotionService.addCreatedPotion(secondRecipe);
           } catch (error) {
@@ -158,13 +146,11 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
           }
         }
         
-        // Marcar ingredientes como usados
         const ingredientIds = selectedIngredients.map(ing => ing.id);
         if (onIngredientsUsed) {
           onIngredientsUsed(ingredientIds);
         }
         
-        // Limpar seleção após sucesso
         setSelectedIngredients([]);
         
         if (onPotionCreated) {

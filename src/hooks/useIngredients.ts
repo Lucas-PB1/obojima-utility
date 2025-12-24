@@ -57,7 +57,6 @@ export function useIngredients() {
       return;
     }
 
-    // Configurar subscriptions em tempo real
     const unsubscribeIngredients = firebaseStorageService.subscribeToCollectedIngredients((ingredients) => {
       setIngredients(ingredients);
       setLoading(false);

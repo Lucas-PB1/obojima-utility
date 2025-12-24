@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Ingredient, PotionRecipe, PotionBrewingResult } from '@/types/ingredients';
 import { potionService } from '@/services/potionService';
-import { recipeService } from '@/services/recipeService';
-import { createdPotionService } from '@/services/createdPotionService';
+import { firebaseRecipeService } from '@/services/firebaseRecipeService';
+import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
+import { useSettings } from './useSettings';
 
 /**
  * Hook para gerenciar a lógica de criação de poções no sistema Obojima
@@ -33,13 +34,15 @@ export function usePotionBrewing() {
   const [chosenAttribute, setChosenAttribute] = useState<'combat' | 'utility' | 'whimsy' | null>(null);
   const [showScoreChoice, setShowScoreChoice] = useState(false);
 
+  const { settings } = useSettings();
+  
   useEffect(() => {
     if (selectedIngredients.length === 3) {
       try {
         const scores = potionService.calculateScores(selectedIngredients);
         setPreviewScores(scores);
         
-        const available = potionService.calculateAvailableScores(selectedIngredients);
+        const available = potionService.calculateAvailableScores(selectedIngredients, settings.potionBrewerTalent);
         setAvailableScores(available);
       } catch {
         setPreviewScores(null);
@@ -51,7 +54,7 @@ export function usePotionBrewing() {
       setChosenAttribute(null);
       setShowScoreChoice(false);
     }
-  }, [selectedIngredients]);
+  }, [selectedIngredients, settings.potionBrewerTalent]);
 
   /**
    * Adiciona um ingrediente à seleção atual
@@ -105,8 +108,8 @@ export function usePotionBrewing() {
       setShowResultModal(true);
       
       if (result.success) {
-        recipeService.saveRecipe(result.recipe);
-        createdPotionService.addCreatedPotion(result.recipe);
+        await firebaseRecipeService.saveRecipe(result.recipe);
+        await firebaseCreatedPotionService.addCreatedPotion(result.recipe);
         
         if (result.cauldronBonus && result.remainsPotion) {
           try {
@@ -121,8 +124,8 @@ export function usePotionBrewing() {
               createdAt: new Date()
             };
             
-            recipeService.saveRecipe(remainsRecipe);
-            createdPotionService.addCreatedPotion(remainsRecipe);
+            await firebaseRecipeService.saveRecipe(remainsRecipe);
+            await firebaseCreatedPotionService.addCreatedPotion(remainsRecipe);
           } catch (error) {
             console.error('Erro ao gerar poção dos restos:', error);
           }
@@ -141,8 +144,8 @@ export function usePotionBrewing() {
               createdAt: new Date()
             };
             
-            recipeService.saveRecipe(secondRecipe);
-            createdPotionService.addCreatedPotion(secondRecipe);
+            await firebaseRecipeService.saveRecipe(secondRecipe);
+            await firebaseCreatedPotionService.addCreatedPotion(secondRecipe);
           } catch (error) {
             console.error('Erro ao gerar segunda poção:', error);
           }

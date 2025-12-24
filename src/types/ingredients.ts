@@ -164,7 +164,6 @@ export interface CollectedIngredient {
   [key: string]: unknown;
 }
 
-// Sistema de Poções
 export interface Potion {
   id: number;
   nome_ingles: string;

@@ -212,7 +212,7 @@ class FirebaseRecipeService {
       utility: number;
       whimsy: number;
     };
-    recent: number; // receitas criadas nos últimos 7 dias
+    recent: number;
   }> {
     const recipes = await this.getAllRecipes();
     const now = new Date();
@@ -229,9 +229,6 @@ class FirebaseRecipeService {
     };
   }
 
-
-
-  // Cleanup subscriptions
   cleanup(): void {
     if (this.recipesUnsubscribe) {
       this.recipesUnsubscribe();

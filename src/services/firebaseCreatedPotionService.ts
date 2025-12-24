@@ -68,7 +68,7 @@ class FirebaseCreatedPotionService {
         ...recipe,
         createdAt: recipe.createdAt
       },
-      quantity: 1, // Sempre começa com quantidade 1
+      quantity: 1,
       createdAt: new Date(),
       used: false
     };
@@ -278,7 +278,7 @@ class FirebaseCreatedPotionService {
       utility: number;
       whimsy: number;
     };
-    recent: number; // poções criadas nos últimos 7 dias
+    recent: number;
   }> {
     const potions = await this.getAllCreatedPotions();
     const now = new Date();
@@ -297,9 +297,6 @@ class FirebaseCreatedPotionService {
     };
   }
 
-
-
-  // Cleanup subscriptions
   cleanup(): void {
     if (this.potionsUnsubscribe) {
       this.potionsUnsubscribe();

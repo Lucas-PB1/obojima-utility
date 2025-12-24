@@ -21,7 +21,6 @@ export const CreatedPotionCollection: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'available' | 'used'>('all');
 
   useEffect(() => {
-    // Configurar subscription em tempo real
     const unsubscribe = firebaseCreatedPotionService.subscribeToCreatedPotions((potions) => {
       setPotions(potions);
     });

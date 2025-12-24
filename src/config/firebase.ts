@@ -16,7 +16,6 @@ let auth: Auth;
 let db: Firestore;
 
 if (typeof window !== 'undefined') {
-  // Inicializar Firebase apenas no cliente
   if (getApps().length === 0) {
     app = initializeApp(firebaseConfig);
   } else {
@@ -26,7 +25,6 @@ if (typeof window !== 'undefined') {
   auth = getAuth(app);
   db = getFirestore(app);
 } else {
-  // No servidor, criar objetos vazios
   auth = {} as Auth;
   db = {} as Firestore;
 }

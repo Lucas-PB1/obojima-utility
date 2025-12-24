@@ -1,7 +1,7 @@
 import React from 'react';
 import { ForageAttempt } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
-import { settingsService } from '@/services/settingsService';
+import { useSettings } from '@/hooks/useSettings';
 import ContentCard from '../ui/ContentCard';
 
 interface ForageResultProps {
@@ -18,6 +18,8 @@ interface ForageResultProps {
  * @param result - Resultado da tentativa de forrageamento
  */
 export default function ForageResult({ result }: ForageResultProps) {
+  const { settings } = useSettings();
+  
   if (!result) return null;
 
   return (
@@ -148,7 +150,7 @@ export default function ForageResult({ result }: ForageResultProps) {
                 <h4 className="font-bold text-totoro-orange text-lg">
                   Ingrediente Coletado!
                 </h4>
-                {settingsService.getDoubleForageTalent() && (result.rarity === 'comum' || result.rarity === 'incomum') && (
+                {settings.doubleForageTalent && (result.rarity === 'comum' || result.rarity === 'incomum') && (
                   <div className="mt-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-300/30 rounded-lg px-3 py-2">
                     <div className="text-purple-600 text-sm font-medium flex items-center justify-center">
                       <span className="mr-2">✨</span>

@@ -22,7 +22,6 @@ export const RecipeCollection: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'combat' | 'utility' | 'whimsy'>('all');
 
   useEffect(() => {
-    // Configurar subscription em tempo real
     const unsubscribe = firebaseRecipeService.subscribeToRecipes((recipes) => {
       setRecipes(recipes);
     });

@@ -46,7 +46,6 @@ class IngredientsService {
   }
 
   async loadUniqueIngredients(): Promise<{ ingredientes: UniqueIngredientData[] }> {
-    // Os ingredientes únicos estão no arquivo principal
     const data = await this.loadIngredientsData();
     this.uniqueIngredients = { ingredientes: data.ingredientes_raros_unicos.ingredientes };
     return this.uniqueIngredients;
@@ -58,22 +57,18 @@ class IngredientsService {
   }
 
   async getIngredientById(id: number): Promise<Ingredient | null> {
-    // Buscar em ingredientes comuns
     const commonData = await this.loadCommonIngredients();
     const commonIngredient = commonData.ingredientes.find(ing => ing.id === id);
     if (commonIngredient) return { ...commonIngredient, raridade: 'comum' };
 
-    // Buscar em ingredientes incomuns
     const uncommonData = await this.loadUncommonIngredients();
     const uncommonIngredient = uncommonData.ingredientes.find(ing => ing.id === id);
     if (uncommonIngredient) return { ...uncommonIngredient, raridade: 'incomum' };
 
-    // Buscar em ingredientes raros
     const rareData = await this.loadRareIngredients();
     const rareIngredient = rareData.ingredientes.find(ing => ing.id === id);
     if (rareIngredient) return { ...rareIngredient, raridade: 'raro' };
 
-    // Buscar em ingredientes únicos
     const uniqueData = await this.loadUniqueIngredients();
     const uniqueIngredient = uniqueData.ingredientes.find(ing => ing.id === id);
     if (uniqueIngredient) {
@@ -134,12 +129,11 @@ class IngredientsService {
     const randomIndex = Math.floor(Math.random() * uniqueData.ingredientes.length);
     const uniqueDataItem = uniqueData.ingredientes[randomIndex];
     
-    // Criar um ingrediente completo com valores padrão para ingredientes únicos
     return {
       id: uniqueDataItem.id,
       nome_ingles: uniqueDataItem.nome_ingles,
       nome_portugues: uniqueDataItem.nome_portugues,
-      combat: 20, // Valores altos para ingredientes únicos
+      combat: 20,
       utility: 20,
       whimsy: 20,
       descricao: `${uniqueDataItem.circunstancia}. Localização: ${uniqueDataItem.localizacao}`,

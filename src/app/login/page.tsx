@@ -19,10 +19,8 @@ export default function LoginPage() {
 
 
   useEffect(() => {
-    // Verificar se já está autenticado
     const unsubscribe = authService.onAuthStateChange((user) => {
       if (user) {
-        // Executar migração automática se necessário
         router.push('/');
       }
     });
@@ -39,11 +37,9 @@ export default function LoginPage() {
 
     try {
       if (isLogin) {
-        // Login
         await authService.login(email, password);
         router.push('/');
       } else {
-        // Registro
         if (password !== confirmPassword) {
           setError('As senhas não coincidem');
           setLoading(false);

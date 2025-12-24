@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { CollectedIngredient, DiceType } from '@/types/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
 import { useForageLogic } from '@/hooks/useForageLogic';
-import { settingsService } from '@/services/settingsService';
+
 import PageLayout from './ui/PageLayout';
 import PageHeader from './ui/PageHeader';
 import ForageForm from './forage/ForageForm';
@@ -45,7 +45,8 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
     isLoading,
     lastResult,
     remainingAttempts,
-    executeForage
+    executeForage,
+    updateSettings
   } = useForageLogic();
 
   /**
@@ -134,23 +135,7 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         onSettingsChange={() => {
-          const defaultModifier = settingsService.getDefaultModifier();
-          const defaultBonusDice = settingsService.getDefaultBonusDice();
-          
-          if (defaultModifier !== '') {
-            setModifier(defaultModifier);
-          } else {
-            setModifier('');
-          }
-          
-          if (defaultBonusDice) {
-            setBonusDice({
-              type: defaultBonusDice.type as DiceType,
-              value: defaultBonusDice.value
-            });
-          } else {
-            setBonusDice(null);
-          }
+          updateSettings();
         }}
       />
     </PageLayout>
