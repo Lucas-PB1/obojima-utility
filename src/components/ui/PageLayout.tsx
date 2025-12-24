@@ -20,7 +20,7 @@ interface PageLayoutProps {
 export default function PageLayout({ children, className = '', variant = 'default' }: PageLayoutProps) {
   if (variant === 'simple') {
     return (
-      <div className={`max-w-6xl mx-auto px-6 py-8 transition-all duration-300 ${className}`}>
+      <div className={`max-w-7xl mx-auto px-6 py-8 transition-all duration-300 ${className}`}>
         {children}
       </div>
     );
@@ -28,7 +28,7 @@ export default function PageLayout({ children, className = '', variant = 'defaul
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 p-6 transition-all duration-300 ${className}`}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {children}
       </div>
     </div>

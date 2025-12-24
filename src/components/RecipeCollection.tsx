@@ -7,6 +7,8 @@ import ContentCard from './ui/ContentCard';
 import Button from './ui/Button';
 import Modal from './ui/Modal';
 import SimpleIngredientCard from './ui/SimpleIngredientCard';
+import PageHeader from './ui/PageHeader';
+import StatsGrid from './ui/StatsGrid';
 
 /**
  * Componente para gerenciar a coleção de receitas de poções

@@ -10,8 +10,6 @@ import { RecipeCollection } from '@/components/RecipeCollection';
 import ActivityLog from '@/components/ActivityLog';
 
 import PageLayout from '@/components/ui/PageLayout';
-import TabNavigation from '@/components/ui/TabNavigation';
-import EmptyState from '@/components/ui/EmptyState';
 import Button from '@/components/ui/Button';
 import { useApp } from '@/hooks/useApp';
 import { useIngredients } from '@/hooks/useIngredients';
@@ -50,74 +48,108 @@ export default function Home() {
 
   if (!isClient || authLoading || !isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center p-4">
-        <EmptyState
-          icon="🌿"
-          title="Carregando Obojima..."
-          description="Preparando o sistema de forrageamento"
-        />
+      <div className="min-h-screen bg-mesh flex items-center justify-center p-4">
+        <main className="text-center">
+          <div className="text-6xl mb-6 animate-float">🌿</div>
+          <h2 className="text-3xl font-serif font-bold text-totoro-gray mb-3 pb-2 border-b-2 border-totoro-blue/10 inline-block">Carregando Obojima...</h2>
+          <p className="text-totoro-blue/70 font-semibold uppercase tracking-[0.2em] text-[10px] font-sans">Preparando o sistema arcano</p>
+        </main>
       </div>
     );
   }
 
   return (
-      <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 transition-colors duration-300">
-        <div className="border-b border-totoro-blue/20 sticky top-0 z-50 bg-white/90 backdrop-blur-md transition-colors duration-300">
-          <div className="max-w-6xl mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-bold text-totoro-gray transition-colors duration-300">
-                  🌿 Obojima Utilities
-                </h1>
-                <p className="text-sm text-totoro-blue transition-colors duration-300">
-                  Sistema de Forrageamento e Alquimia
-                </p>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                {user && (
-                  <div className="flex items-center gap-3">
-                    <div className="text-sm text-totoro-gray hidden sm:block">
-                      {user.email}
-                    </div>
-                    <Button
-                      onClick={logout}
-                      variant="secondary"
-                      size="sm"
-                      className="text-sm"
-                    >
-                      Sair
-                    </Button>
-                  </div>
-                )}
-                {recentlyCollected.length > 0 && (
-                  <div className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-totoro-yellow/20 transition-colors duration-300">
-                    <span className="text-sm font-medium text-totoro-orange">
-                      🎁 {recentlyCollected.length} novo(s) ingrediente(s)!
+    <main className="min-h-screen bg-mesh bg-topo transition-all duration-500">
+      <header className="sticky top-0 z-50 glass-panel border-b border-white/40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-serif font-bold text-totoro-gray tracking-tight transition-all duration-300">
+                🌿 Obojima Utilities
+              </h1>
+              <p className="text-[10px] font-semibold text-totoro-blue/70 uppercase tracking-[0.2em] font-sans -mt-1">
+                Arcana & Foraging System
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              {recentlyCollected.length > 0 && (
+                <div className="hidden lg:flex items-center bg-gradient-to-r from-totoro-yellow/20 to-totoro-orange/20 border border-totoro-yellow/30 px-4 py-2 rounded-2xl gap-3 animate-bounce-in shadow-sm shadow-totoro-yellow/10">
+                  <div className="relative">
+                    <span className="text-xl">🎁</span>
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-totoro-orange text-white text-[10px] font-bold rounded-full flex items-center justify-center ring-2 ring-white">
+                      {recentlyCollected.length}
                     </span>
-                    <Button
-                      onClick={handleViewCollection}
-                      variant="secondary"
-                      size="sm"
-                      effect="float"
-                      className="text-sm"
-                    >
-                      Ver coleção
-                    </Button>
                   </div>
-                )}
-              </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-totoro-orange uppercase tracking-wider leading-none mb-1">
+                      Novos Itens!
+                    </span>
+                    <button 
+                      onClick={handleViewCollection} 
+                      className="text-[10px] text-totoro-gray/70 hover:text-totoro-blue font-bold text-left transition-colors"
+                    >
+                      VER COLEÇÃO →
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {user && (
+                <div className="flex items-center bg-totoro-blue/5 rounded-2xl border border-totoro-blue/10 pl-4 pr-2 py-1.5 gap-3 shadow-sm transition-all hover:bg-white hover:shadow-md hover:border-totoro-blue/20">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-totoro-blue/10 flex items-center justify-center text-xs text-totoro-blue shadow-inner ring-1 ring-white/50">
+                      👤
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-totoro-gray max-w-[120px] sm:max-w-[180px] truncate font-sans">
+                        {user.email}
+                      </span>
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={logout} 
+                    variant="ghost" 
+                    size="sm" 
+                    className="!px-3 !py-1.5 !rounded-xl !text-[10px] !font-black hover:!bg-totoro-orange/10 hover:!text-totoro-orange transition-all"
+                  >
+                    SAIR
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
+
+          <nav className="mt-6 flex items-center justify-center overflow-x-auto pb-1 no-scrollbar">
+            <div className="flex p-1.5 bg-totoro-blue/10 rounded-2xl border border-totoro-blue/10 backdrop-blur-md">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`
+                    relative px-6 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-500 select-none font-sans
+                    ${activeTab === tab.id 
+                      ? 'text-white shadow-md' 
+                      : 'text-totoro-gray/50 hover:text-totoro-blue hover:bg-white/50'
+                    }
+                  `}
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    <span className="text-sm opacity-80">{tab.icon}</span>
+                    <span className="hidden sm:inline">{tab.label}</span>
+                  </span>
+                  {activeTab === tab.id && (
+                    <div className="absolute inset-0 bg-totoro-blue rounded-xl animate-bounce-in shadow-[0_4px_15px_rgba(74,144,226,0.3)] border-t border-white/20"></div>
+                  )}
+                </button>
+              ))}
+            </div>
+          </nav>
         </div>
+      </header>
 
-        <TabNavigation
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={handleTabChange}
-        />
-
-        <PageLayout variant="simple">
+      <div className="max-w-7xl mx-auto px-6">
+        <PageLayout variant="simple" className="!py-4">
           {activeTab === 'forage' && (
             <ForageSystem 
               onIngredientCollected={handleIngredientCollected}
@@ -137,19 +169,15 @@ export default function Home() {
           {activeTab === 'recipes' && <RecipeCollection />}
           {activeTab === 'log' && <ActivityLog />}
         </PageLayout>
-
-        <footer className="border-t border-totoro-blue/20 bg-white/90 backdrop-blur-md transition-colors duration-300">
-          <div className="max-w-6xl mx-auto px-6 py-8">
-            <div className="text-center text-totoro-gray transition-colors duration-300">
-              <p className="mb-2">
-                🌿 Sistema de Forrageamento de Obojima
-              </p>
-              <p className="text-sm opacity-80">
-                Explore as terras mágicas e colete ingredientes únicos para suas poções
-              </p>
-            </div>
-          </div>
-        </footer>
       </div>
+
+      <footer className="py-6 border-t border-totoro-blue/5">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-[10px] font-black text-totoro-blue/20 uppercase tracking-[0.4em]">
+            Obojima Utilities • Arcana System
+          </p>
+        </div>
+      </footer>
+    </main>
   );
 }

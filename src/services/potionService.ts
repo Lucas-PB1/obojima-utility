@@ -55,7 +55,7 @@ class PotionService {
 
     scores.sort((a, b) => b.value - a.value);
 
-    const canChoose = potionBrewerTalent && scores.length > 1 && scores[0].value !== scores[1].value;
+    const canChoose = potionBrewerTalent && scores.length >= 2;
     const topTwoScores = scores.slice(0, 2);
 
     return { scores: topTwoScores, canChoose };

@@ -63,33 +63,33 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
         subtitle="Explore as terras mágicas e colete ingredientes únicos"
         icon="🌿"
         action={
-          <div className="flex items-center space-x-4">
-            <div className={`px-4 py-3 rounded-xl flex items-center space-x-3 shadow-md border transition-all duration-300 ${
+          <div className="flex items-center gap-3">
+            <div className={`px-6 py-3 rounded-2xl flex items-center gap-4 transition-all duration-500 border ${
               remainingAttempts > 0 
-                ? 'bg-totoro-green/20 text-totoro-green border-totoro-green/30 hover:shadow-lg' 
-                : 'bg-gradient-to-r from-totoro-orange/20 to-totoro-orange/30 text-totoro-orange border-totoro-orange/30'
+                ? 'bg-totoro-green/5 text-totoro-green border-totoro-green/20' 
+                : 'bg-totoro-orange/5 text-totoro-orange border-totoro-orange/20 animate-pulse'
             }`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                remainingAttempts > 0 ? 'bg-totoro-green/30' : 'bg-totoro-orange/30'
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-inner ${
+                remainingAttempts > 0 ? 'bg-totoro-green/10' : 'bg-totoro-orange/10'
               }`}>
-                <span className="text-lg">🎯</span>
+                <span className="text-xl">🎯</span>
               </div>
               <div>
-                <div className="text-lg font-bold">{remainingAttempts}</div>
-                <div className="text-xs opacity-80">
-                  tentativa{remainingAttempts !== 1 ? 's' : ''} restante{remainingAttempts !== 1 ? 's' : ''}
+                <div className="text-2xl font-black leading-none mb-0.5">{remainingAttempts}</div>
+                <div className="text-[9px] font-black uppercase tracking-wider opacity-60">
+                  Tentativas
                 </div>
               </div>
             </div>
             
             <Button
               onClick={() => setIsSettingsOpen(true)}
-              variant="secondary"
-              size="lg"
-              className="flex items-center space-x-2"
+              variant="ghost"
+              size="md"
+              className="!bg-white/60 !rounded-2xl !px-5 !border-white group"
             >
-              <span className="text-sm">⚙️</span>
-              <span>Configurações</span>
+              <span className="text-lg group-hover:rotate-90 transition-transform duration-500">⚙️</span>
+              <span className="text-[10px] font-black uppercase tracking-widest ml-1">Ajustes</span>
             </Button>
           </div>
         }

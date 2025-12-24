@@ -9,6 +9,7 @@ import Button from './ui/Button';
 import ContentCard from './ui/ContentCard';
 import SimpleIngredientCard from './ui/SimpleIngredientCard';
 import Modal from './ui/Modal';
+import { useSettings } from '../hooks/useSettings';
 
 interface PotionBrewingProps {
   availableIngredients: Ingredient[];
@@ -48,6 +49,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   } | null>(null);
   const [chosenAttribute, setChosenAttribute] = useState<'combat' | 'utility' | 'whimsy' | null>(null);
   const [showScoreChoice, setShowScoreChoice] = useState(false);
+  const { settings } = useSettings();
 
   useEffect(() => {
     if (selectedIngredients.length === 3) {
@@ -55,7 +57,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         const scores = potionService.calculateScores(selectedIngredients);
         setPreviewScores(scores);
         
-        const available = potionService.calculateAvailableScores(selectedIngredients);
+        const available = potionService.calculateAvailableScores(selectedIngredients, settings.potionBrewerTalent);
         setAvailableScores(available);
       } catch {
         setPreviewScores(null);
@@ -67,7 +69,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       setChosenAttribute(null);
       setShowScoreChoice(false);
     }
-  }, [selectedIngredients]);
+  }, [selectedIngredients, settings.potionBrewerTalent]);
 
   const handleIngredientSelect = (ingredient: Ingredient) => {
     if (selectedIngredients.length >= 3) {
