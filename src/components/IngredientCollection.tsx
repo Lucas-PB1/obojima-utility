@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
 import { StatsService } from '@/services/statsService';
-import PageLayout from './ui/PageLayout';
+
 import PageHeader from './ui/PageHeader';
 import StatsGrid from './ui/StatsGrid';
 import DataTable, { Column, Filter } from './ui/DataTable';
@@ -222,7 +222,7 @@ export default function IngredientCollection() {
   ];
 
   return (
-    <PageLayout>
+    <div className="space-y-6">
       <PageHeader
         title="Coleção de Ingredientes"
         subtitle="Gerencie seus ingredientes coletados em Obojima"
@@ -250,6 +250,6 @@ export default function IngredientCollection() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       />
-    </PageLayout>
+    </div>
   );
 }

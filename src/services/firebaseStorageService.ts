@@ -280,10 +280,14 @@ class FirebaseStorageService {
     
     try {
       const attemptsRef = collection(db, this.getForageAttemptsPath());
-      await addDoc(attemptsRef, {
+      const dataToSave = {
         ...attempt,
-        timestamp: this.convertDateToTimestamp(attempt.timestamp)
-      });
+        timestamp: this.convertDateToTimestamp(attempt.timestamp),
+        bonusDice: attempt.bonusDice || null,
+        ingredient: attempt.ingredient || null
+      };
+
+      await addDoc(attemptsRef, dataToSave);
     } catch (error) {
       console.error('Erro ao adicionar tentativa de forrageamento:', error);
       throw error;

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { ForageAttempt } from '@/types/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
 import { StatsService } from '@/services/statsService';
-import PageLayout from './ui/PageLayout';
+
 import PageHeader from './ui/PageHeader';
 import StatsGrid from './ui/StatsGrid';
 import ActivityFilters from './filters/ActivityFilters';
@@ -39,7 +39,7 @@ export default function ActivityLog() {
   ];
 
   return (
-    <PageLayout>
+    <div className="space-y-6">
       <PageHeader
         title="Log de Atividades"
         subtitle="Histórico completo de suas tentativas de forrageamento"
@@ -171,6 +171,6 @@ export default function ActivityLog() {
       </ContentCard>
 
 
-    </PageLayout>
+    </div>
   );
 }

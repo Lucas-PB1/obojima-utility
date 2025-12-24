@@ -9,6 +9,7 @@ import { CreatedPotionCollection } from '@/components/CreatedPotionCollection';
 import { RecipeCollection } from '@/components/RecipeCollection';
 import ActivityLog from '@/components/ActivityLog';
 
+import PageLayout from '@/components/ui/PageLayout';
 import TabNavigation from '@/components/ui/TabNavigation';
 import EmptyState from '@/components/ui/EmptyState';
 import Button from '@/components/ui/Button';
@@ -49,7 +50,7 @@ export default function Home() {
 
   if (!isClient || authLoading || !isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center p-4">
         <EmptyState
           icon="🌿"
           title="Carregando Obojima..."
@@ -116,7 +117,7 @@ export default function Home() {
           onTabChange={handleTabChange}
         />
 
-        <div className="max-w-6xl mx-auto">
+        <PageLayout variant="simple">
           {activeTab === 'forage' && (
             <ForageSystem 
               onIngredientCollected={handleIngredientCollected}
@@ -135,7 +136,7 @@ export default function Home() {
           {activeTab === 'created-potions' && <CreatedPotionCollection />}
           {activeTab === 'recipes' && <RecipeCollection />}
           {activeTab === 'log' && <ActivityLog />}
-        </div>
+        </PageLayout>
 
         <footer className="border-t border-totoro-blue/20 bg-white/90 backdrop-blur-md transition-colors duration-300">
           <div className="max-w-6xl mx-auto px-6 py-8">

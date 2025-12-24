@@ -5,7 +5,7 @@ import { CollectedIngredient, DiceType } from '@/types/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
 import { useForageLogic } from '@/hooks/useForageLogic';
 
-import PageLayout from './ui/PageLayout';
+
 import PageHeader from './ui/PageHeader';
 import ForageForm from './forage/ForageForm';
 import ForageResult from './forage/ForageResult';
@@ -57,7 +57,7 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
   };
 
   return (
-    <PageLayout>
+    <div className="space-y-6">
       <PageHeader
         title="Sistema de Forrageamento de Obojima"
         subtitle="Explore as terras mágicas e colete ingredientes únicos"
@@ -138,6 +138,6 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
           updateSettings();
         }}
       />
-    </PageLayout>
+    </div>
   );
 }
