@@ -13,15 +13,17 @@ class PotionService {
   private whimsicalPotions: PotionCategory | null = null;
 
   constructor() {
-    this.loadPotionData();
+    if (typeof window !== 'undefined') {
+      this.loadPotionData();
+    }
   }
 
   private async loadPotionData(): Promise<void> {
     try {
       const [combatResponse, utilityResponse, whimsicalResponse] = await Promise.all([
-        fetch('/poções/combate/combat-potions.json'),
-        fetch('/poções/utilidade/utility-potions.json'),
-        fetch('/poções/caprichosas/whimsical-potions.json')
+        fetch('/potions/combate/combat-potions.json'),
+        fetch('/potions/utilidade/utility-potions.json'),
+        fetch('/potions/caprichosas/whimsical-potions.json')
       ]);
 
       this.combatPotions = await combatResponse.json();

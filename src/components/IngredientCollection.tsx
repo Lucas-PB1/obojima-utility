@@ -241,10 +241,6 @@ export default function IngredientCollection() {
         className="mb-8"
       />
 
-
-
-
-
       <IngredientModal
         ingredient={selectedIngredient}
         isOpen={isModalOpen}
