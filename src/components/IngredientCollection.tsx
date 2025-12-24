@@ -4,14 +4,12 @@ import React, { useState } from 'react';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useIngredients } from '@/hooks/useIngredients';
 import { StatsService } from '@/services/statsService';
-import { BackupService } from '@/services/backupService';
 import PageLayout from './ui/PageLayout';
 import PageHeader from './ui/PageHeader';
 import StatsGrid from './ui/StatsGrid';
 import DataTable, { Column, Filter } from './ui/DataTable';
 import Button from './ui/Button';
 import IngredientModal from './IngredientModal';
-import ExportImportSection from './ui/ExportImportSection';
 
 /**
  * Componente para gerenciar a coleção de ingredientes
@@ -21,7 +19,7 @@ import ExportImportSection from './ui/ExportImportSection';
  * incluindo filtros, estatísticas e operações de exportação/importação.
  */
 export default function IngredientCollection() {
-  const { ingredients, attempts, markAsUsed, getStats, refreshData, clearIngredients } = useIngredients();
+  const { ingredients, attempts, markAsUsed, getStats, refreshData } = useIngredients();
   
   const displayIngredients = ingredients.filter(ing => ing.quantity > 0);
   const [selectedIngredient, setSelectedIngredient] = useState<CollectedIngredient['ingredient'] | null>(null);
@@ -54,22 +52,9 @@ export default function IngredientCollection() {
     setSelectedIngredient(null);
   };
 
-  /**
-   * Exporta os dados da coleção
-   */
-  const handleExportData = () => {
-    const stats = getStats();
-    BackupService.exportData(ingredients, attempts, stats);
-  };
 
-  /**
-   * Limpa todos os ingredientes coletados após confirmação
-   */
-  const handleClearIngredients = () => {
-    if (confirm('Isso irá limpar todos os ingredientes coletados. Tem certeza?')) {
-      clearIngredients();
-    }
-  };
+
+
 
   const collectionStats = StatsService.calculateCollectionStats(displayIngredients, attempts);
   const statsData = [
@@ -256,29 +241,9 @@ export default function IngredientCollection() {
         className="mb-8"
       />
 
-      <ExportImportSection 
-        type="ingredients" 
-        onDataImported={refreshData}
-        className="mb-6"
-      />
 
-      <div className="bg-white rounded-xl shadow-lg border border-totoro-blue/20 p-6">
-        <h3 className="text-lg font-semibold text-totoro-gray mb-4">🗑️ Limpeza</h3>
-        <div className="flex flex-col md:flex-row gap-4">
-          <Button
-            onClick={handleExportData}
-            variant="primary"
-          >
-            📤 Exportar Dados (Legado)
-          </Button>
-          <Button
-            onClick={handleClearIngredients}
-            variant="danger"
-          >
-            🗑️ Limpar Ingredientes
-          </Button>
-        </div>
-      </div>
+
+
 
       <IngredientModal
         ingredient={selectedIngredient}

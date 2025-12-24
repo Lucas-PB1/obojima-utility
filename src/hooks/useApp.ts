@@ -6,7 +6,7 @@ import { CollectedIngredient } from '@/types/ingredients';
 /**
  * Tipos de abas disponíveis na aplicação
  */
-export type TabType = 'forage' | 'collection' | 'potions' | 'created-potions' | 'recipes' | 'log' | 'backup';
+export type TabType = 'forage' | 'collection' | 'potions' | 'created-potions' | 'recipes' | 'log';
 
 /**
  * Interface que define uma aba da aplicação
@@ -26,8 +26,7 @@ const TABS: Tab[] = [
   { id: 'potions', label: 'Poções', icon: '🧪' },
   { id: 'created-potions', label: 'Inventário', icon: '⚗️' },
   { id: 'recipes', label: 'Receitas', icon: '📜' },
-  { id: 'log', label: 'Log', icon: '📋' },
-  { id: 'backup', label: 'Backup', icon: '💾' }
+  { id: 'log', label: 'Log', icon: '📋' }
 ];
 
 const MAX_RECENT_ITEMS = 5;

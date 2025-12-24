@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { PotionRecipe } from '../types/ingredients';
-import { recipeService } from '../services/recipeService';
+import { firebaseRecipeService } from '../services/firebaseRecipeService';
 import ContentCard from './ui/ContentCard';
 import Button from './ui/Button';
 import Modal from './ui/Modal';
 import SimpleIngredientCard from './ui/SimpleIngredientCard';
-import ExportImportSection from './ui/ExportImportSection';
 
 /**
  * Componente para gerenciar a coleção de receitas de poções
@@ -23,14 +22,19 @@ export const RecipeCollection: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'combat' | 'utility' | 'whimsy'>('all');
 
   useEffect(() => {
-    loadRecipes();
+    // Configurar subscription em tempo real
+    const unsubscribe = firebaseRecipeService.subscribeToRecipes((recipes) => {
+      setRecipes(recipes);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   /**
-   * Carrega todas as receitas do serviço
+   * Carrega todas as receitas do serviço (mantido para compatibilidade)
    */
-  const loadRecipes = () => {
-    const allRecipes = recipeService.getAllRecipes();
+  const loadRecipes = async () => {
+    const allRecipes = await firebaseRecipeService.getAllRecipes();
     setRecipes(allRecipes);
   };
 
@@ -40,7 +44,15 @@ export const RecipeCollection: React.FC = () => {
     return recipe.winningAttribute === filter;
   });
 
-  const stats = recipeService.getRecipeStats();
+  const [stats, setStats] = useState({ total: 0, byCategory: { combat: 0, utility: 0, whimsy: 0 }, recent: 0 });
+
+  useEffect(() => {
+    const loadStats = async () => {
+      const statsData = await firebaseRecipeService.getRecipeStats();
+      setStats(statsData);
+    };
+    loadStats();
+  }, [recipes]);
 
   const getAttributeColor = (attribute: 'combat' | 'utility' | 'whimsy') => {
     switch (attribute) {
@@ -69,19 +81,14 @@ export const RecipeCollection: React.FC = () => {
     setShowModal(true);
   };
 
-  const handleDeleteRecipe = (recipeId: string) => {
+  const handleDeleteRecipe = async (recipeId: string) => {
     if (confirm('Tem certeza que deseja excluir esta receita?')) {
-      recipeService.removeRecipe(recipeId);
+      await firebaseRecipeService.removeRecipe(recipeId);
       loadRecipes();
     }
   };
 
-  const handleClearAll = () => {
-    if (confirm('Tem certeza que deseja excluir todas as receitas? Esta ação não pode ser desfeita.')) {
-      recipeService.clearAllRecipes();
-      loadRecipes();
-    }
-  };
+
 
   return (
     <div className="space-y-6">
@@ -148,18 +155,7 @@ export const RecipeCollection: React.FC = () => {
             </Button>
           </div>
 
-          {/* Ações */}
-          {recipes.length > 0 && (
-            <div className="flex justify-end">
-              <Button
-                onClick={handleClearAll}
-                variant="danger"
-                size="sm"
-              >
-                🗑️ Limpar Todas
-              </Button>
-            </div>
-          )}
+
         </div>
       </ContentCard>
 
@@ -228,13 +224,6 @@ export const RecipeCollection: React.FC = () => {
           )}
         </div>
       </ContentCard>
-
-      {/* Seção de Export/Import */}
-      <ExportImportSection 
-        type="recipes" 
-        onDataImported={loadRecipes}
-        className="mb-6"
-      />
 
       {/* Modal de Detalhes */}
       {selectedRecipe && (

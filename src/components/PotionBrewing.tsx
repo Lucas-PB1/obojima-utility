@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Ingredient, PotionRecipe, PotionBrewingResult } from '../types/ingredients';
 import { potionService } from '../services/potionService';
-import { recipeService } from '../services/recipeService';
-import { createdPotionService } from '../services/createdPotionService';
+import { firebaseRecipeService } from '../services/firebaseRecipeService';
+import { firebaseCreatedPotionService } from '../services/firebaseCreatedPotionService';
 import Button from './ui/Button';
 import ContentCard from './ui/ContentCard';
 import SimpleIngredientCard from './ui/SimpleIngredientCard';
@@ -107,10 +107,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       
       if (result.success) {
         // Salvar a receita
-        recipeService.saveRecipe(result.recipe);
+        await firebaseRecipeService.saveRecipe(result.recipe);
         
         // Adicionar a poção criada ao inventário
-        createdPotionService.addCreatedPotion(result.recipe);
+        await firebaseCreatedPotionService.addCreatedPotion(result.recipe);
         
         // Se o caldeirão especial foi ativado, gerar poção comum dos restos
         if (result.cauldronBonus && result.remainsPotion) {
@@ -128,8 +128,8 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             };
             
             // Salvar e adicionar a poção dos restos
-            recipeService.saveRecipe(remainsRecipe);
-            createdPotionService.addCreatedPotion(remainsRecipe);
+            await firebaseRecipeService.saveRecipe(remainsRecipe);
+            await firebaseCreatedPotionService.addCreatedPotion(remainsRecipe);
           } catch (error) {
             console.error('Erro ao gerar poção dos restos:', error);
           }
@@ -151,8 +151,8 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             };
             
             // Salvar e adicionar a segunda poção
-            recipeService.saveRecipe(secondRecipe);
-            createdPotionService.addCreatedPotion(secondRecipe);
+            await firebaseRecipeService.saveRecipe(secondRecipe);
+            await firebaseCreatedPotionService.addCreatedPotion(secondRecipe);
           } catch (error) {
             console.error('Erro ao gerar segunda poção:', error);
           }
@@ -355,13 +355,13 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {availableIngredients.map((ingredient) => {
+              {availableIngredients.map((ingredient, index) => {
                 const isSelected = selectedIngredients.some(ing => ing.id === ingredient.id);
                 const isDisabled = isSelected || selectedIngredients.length >= 3;
                 
                 return (
                   <div
-                    key={ingredient.id}
+                    key={`${ingredient.id}-${index}`}
                     className={`cursor-pointer transition-all ${
                       isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
                     }`}

@@ -2,11 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { CreatedPotion } from '../types/ingredients';
-import { createdPotionService } from '../services/createdPotionService';
+import { firebaseCreatedPotionService } from '../services/firebaseCreatedPotionService';
 import ContentCard from './ui/ContentCard';
 import Button from './ui/Button';
 import Modal from './ui/Modal';
-import ExportImportSection from './ui/ExportImportSection';
 
 /**
  * Componente para gerenciar a coleção de poções criadas
@@ -22,26 +21,23 @@ export const CreatedPotionCollection: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'available' | 'used'>('all');
 
   useEffect(() => {
-    loadPotions();
+    // Configurar subscription em tempo real
+    const unsubscribe = firebaseCreatedPotionService.subscribeToCreatedPotions((potions) => {
+      setPotions(potions);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   /**
-   * Carrega todas as poções criadas do serviço
+   * Carrega todas as poções criadas do serviço (mantido para compatibilidade)
    */
-  const loadPotions = () => {
-    const allPotions = createdPotionService.getAllCreatedPotions();
+  const loadPotions = async () => {
+    const allPotions = await firebaseCreatedPotionService.getAllCreatedPotions();
     setPotions(allPotions);
   };
 
-  /**
-   * Limpa todas as poções criadas após confirmação
-   */
-  const handleClearPotions = () => {
-    if (confirm('Isso irá limpar todas as poções criadas. Tem certeza?')) {
-      createdPotionService.clearAllCreatedPotions();
-      loadPotions();
-    }
-  };
+
 
   const filteredPotions = potions.filter(potion => {
     if (filter === 'all') return true;
@@ -50,7 +46,15 @@ export const CreatedPotionCollection: React.FC = () => {
     return true;
   });
 
-  const stats = createdPotionService.getPotionStats();
+  const [stats, setStats] = useState({ total: 0, available: 0, used: 0, byCategory: { combat: 0, utility: 0, whimsy: 0 }, recent: 0 });
+
+  useEffect(() => {
+    const loadStats = async () => {
+      const statsData = await firebaseCreatedPotionService.getPotionStats();
+      setStats(statsData);
+    };
+    loadStats();
+  }, [potions]);
 
   const getAttributeColor = (attribute: 'combat' | 'utility' | 'whimsy') => {
     switch (attribute) {
@@ -79,16 +83,16 @@ export const CreatedPotionCollection: React.FC = () => {
     setShowModal(true);
   };
 
-  const handleUsePotion = (potionId: string) => {
-    const success = createdPotionService.usePotion(potionId);
+  const handleUsePotion = async (potionId: string) => {
+    const success = await firebaseCreatedPotionService.usePotion(potionId);
     if (success) {
       loadPotions();
     }
   };
 
-  const handleDeletePotion = (potionId: string) => {
+  const handleDeletePotion = async (potionId: string) => {
     if (confirm('Tem certeza que deseja excluir esta poção?')) {
-      createdPotionService.removePotion(potionId);
+      await firebaseCreatedPotionService.removePotion(potionId);
       loadPotions();
     }
   };
@@ -152,18 +156,7 @@ export const CreatedPotionCollection: React.FC = () => {
             </Button>
           </div>
 
-          {/* Ações */}
-          {potions.length > 0 && (
-            <div className="flex justify-end gap-2">
-              <Button
-                onClick={handleClearPotions}
-                variant="danger"
-                size="sm"
-              >
-                🗑️ Limpar Poções
-              </Button>
-            </div>
-          )}
+
         </div>
       </ContentCard>
 
@@ -252,13 +245,6 @@ export const CreatedPotionCollection: React.FC = () => {
           )}
         </div>
       </ContentCard>
-
-      {/* Seção de Export/Import */}
-      <ExportImportSection 
-        type="potions" 
-        onDataImported={loadPotions}
-        className="mb-6"
-      />
 
       {/* Modal de Detalhes */}
       {selectedPotion && (

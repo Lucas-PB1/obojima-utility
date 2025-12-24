@@ -1,20 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import ForageSystem from '@/components/ForageSystem';
 import IngredientCollection from '@/components/IngredientCollection';
 import { PotionBrewing } from '@/components/PotionBrewing';
 import { CreatedPotionCollection } from '@/components/CreatedPotionCollection';
 import { RecipeCollection } from '@/components/RecipeCollection';
 import ActivityLog from '@/components/ActivityLog';
-import { BackupSection } from '@/components/BackupSection';
+
 import TabNavigation from '@/components/ui/TabNavigation';
 import EmptyState from '@/components/ui/EmptyState';
 import Button from '@/components/ui/Button';
 import { useApp } from '@/hooks/useApp';
 import { useIngredients } from '@/hooks/useIngredients';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Home() {
+  const router = useRouter();
+  const { user, loading: authLoading, isAuthenticated, logout } = useAuth();
   const {
     activeTab,
     recentlyCollected,
@@ -26,6 +30,12 @@ export default function Home() {
   } = useApp();
 
   const { ingredients, markAsUsed } = useIngredients();
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.push('/login');
+    }
+  }, [authLoading, isAuthenticated, router]);
 
   // Converter ingredientes coletados para o formato esperado pelo sistema de poções
   // Filtrar ingredientes não usados e com quantidade > 0
@@ -41,7 +51,7 @@ export default function Home() {
       .forEach(ing => markAsUsed(ing.id));
   };
 
-  if (!isClient) {
+  if (!isClient || authLoading || !isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center">
         <EmptyState
@@ -67,22 +77,39 @@ export default function Home() {
                 </p>
               </div>
               
-              {recentlyCollected.length > 0 && (
-                <div className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-totoro-yellow/20 transition-colors duration-300">
-                  <span className="text-sm font-medium text-totoro-orange">
-                    🎁 {recentlyCollected.length} novo(s) ingrediente(s)!
-                  </span>
-                  <Button
-                    onClick={handleViewCollection}
-                    variant="secondary"
-                    size="sm"
-                    effect="float"
-                    className="text-sm"
-                  >
-                    Ver coleção
-                  </Button>
-                </div>
-              )}
+              <div className="flex items-center gap-4">
+                {user && (
+                  <div className="flex items-center gap-3">
+                    <div className="text-sm text-totoro-gray hidden sm:block">
+                      {user.email}
+                    </div>
+                    <Button
+                      onClick={logout}
+                      variant="secondary"
+                      size="sm"
+                      className="text-sm"
+                    >
+                      Sair
+                    </Button>
+                  </div>
+                )}
+                {recentlyCollected.length > 0 && (
+                  <div className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-lg bg-totoro-yellow/20 transition-colors duration-300">
+                    <span className="text-sm font-medium text-totoro-orange">
+                      🎁 {recentlyCollected.length} novo(s) ingrediente(s)!
+                    </span>
+                    <Button
+                      onClick={handleViewCollection}
+                      variant="secondary"
+                      size="sm"
+                      effect="float"
+                      className="text-sm"
+                    >
+                      Ver coleção
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -113,7 +140,6 @@ export default function Home() {
           {activeTab === 'created-potions' && <CreatedPotionCollection />}
           {activeTab === 'recipes' && <RecipeCollection />}
           {activeTab === 'log' && <ActivityLog />}
-          {activeTab === 'backup' && <BackupSection />}
         </div>
 
         <footer className="border-t border-totoro-blue/20 bg-white/90 backdrop-blur-md transition-colors duration-300">
