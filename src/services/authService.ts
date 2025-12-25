@@ -1,3 +1,5 @@
+import { auth } from '@/config/firebase';
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,7 +8,6 @@ import {
   User,
   UserCredential
 } from 'firebase/auth';
-import { auth } from '@/config/firebase';
 
 class AuthService {
   async register(email: string, password: string): Promise<UserCredential> {

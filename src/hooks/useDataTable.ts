@@ -1,3 +1,4 @@
+'use client';
 import { useState, useMemo, useCallback } from 'react';
 import { DataTableService, SortConfig } from '@/services/dataTableService';
 

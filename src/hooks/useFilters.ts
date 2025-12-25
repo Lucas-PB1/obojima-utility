@@ -1,6 +1,7 @@
+'use client';
 import { useState, useMemo, useCallback } from 'react';
-import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
+import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 
 export type FilterType = 'all' | 'available' | 'used';
 export type RarityFilterType = 'all' | 'comum' | 'incomum' | 'raro' | 'unico';

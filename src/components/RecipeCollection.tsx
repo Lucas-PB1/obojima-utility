@@ -1,8 +1,8 @@
 import React from 'react';
-import { useRecipeCollection } from '@/hooks/useRecipeCollection';
-import ContentCard from '@/components/ui/ContentCard';
-import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
+import Button from '@/components/ui/Button';
+import ContentCard from '@/components/ui/ContentCard';
+import { useRecipeCollection } from '@/hooks/useRecipeCollection';
 import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
 import { POTION_CATEGORY_CONFIG, RECIPE_FILTER_OPTIONS } from '@/constants/potions';
 

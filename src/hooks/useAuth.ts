@@ -1,9 +1,8 @@
 'use client';
-
-import { useState, useEffect } from 'react';
 import { User } from 'firebase/auth';
-import { authService } from '@/services/authService';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { authService } from '@/services/authService';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);

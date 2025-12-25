@@ -1,3 +1,4 @@
+'use client';
 import { useState, useCallback } from 'react';
 import { ForageAttempt } from '@/types/ingredients';
 import { StatsService } from '@/services/statsService';

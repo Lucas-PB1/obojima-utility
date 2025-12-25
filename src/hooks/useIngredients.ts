@@ -1,3 +1,4 @@
+'use client';
 import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';

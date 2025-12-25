@@ -1,6 +1,6 @@
 'use client';
+import { useSettings } from '@/hooks/useSettings';
 import { potionService } from '@/services/potionService';
-import { useSettings } from '@/components/SettingsModal';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { firebaseRecipeService } from '@/services/firebaseRecipeService';
 import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';

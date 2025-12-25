@@ -1,9 +1,8 @@
 'use client';
-
 import { useState, useMemo, useCallback } from 'react';
-import { CollectedIngredient } from '@/types/ingredients';
-import { useIngredients } from '@/hooks/useIngredients';
 import { StatsService } from '@/services/statsService';
+import { useIngredients } from '@/hooks/useIngredients';
+import { CollectedIngredient } from '@/types/ingredients';
 
 export function useIngredientCollection() {
   const { ingredients, attempts, markAsUsed } = useIngredients();

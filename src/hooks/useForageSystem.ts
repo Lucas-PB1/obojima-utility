@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useCallback } from 'react';
 import { useIngredients } from '@/hooks/useIngredients';
 import { useForageLogic } from '@/hooks/useForageLogic';

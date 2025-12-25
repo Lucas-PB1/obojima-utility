@@ -1,11 +1,10 @@
 'use client';
-
 import React from 'react';
+import Modal from '@/components/ui/Modal';
+import Button from '@/components/ui/Button';
+import ContentCard from '@/components/ui/ContentCard';
 import { useCreatedPotionCollection } from '@/hooks/useCreatedPotionCollection';
 import { POTION_CATEGORY_CONFIG, POTION_FILTER_OPTIONS } from '@/constants/potions';
-import ContentCard from '@/components/ui/ContentCard';
-import Button from '@/components/ui/Button';
-import Modal from '@/components/ui/Modal';
 
 export const CreatedPotionCollection: React.FC = () => {
   const {

@@ -1,10 +1,9 @@
 'use client';
-
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useApp } from '@/hooks/useApp';
-import { useIngredients } from '@/hooks/useIngredients';
 import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { useIngredients } from '@/hooks/useIngredients';
 
 export function useHome() {
   const router = useRouter();

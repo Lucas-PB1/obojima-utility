@@ -1,9 +1,8 @@
 'use client';
-
-import { useState, useEffect, useMemo, useCallback } from 'react';
 import { CreatedPotion } from '@/types/ingredients';
-import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 import { PotionFilterType } from '@/constants/potions';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 
 export function useCreatedPotionCollection() {
   const [potions, setPotions] = useState<CreatedPotion[]>([]);

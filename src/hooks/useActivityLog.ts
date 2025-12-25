@@ -1,9 +1,8 @@
 'use client';
-
 import { useState, useMemo } from 'react';
 import { ForageAttempt } from '@/types/ingredients';
-import { useIngredients } from '@/hooks/useIngredients';
 import { StatsService } from '@/services/statsService';
+import { useIngredients } from '@/hooks/useIngredients';
 
 export function useActivityLog() {
   const { attempts, refreshData } = useIngredients();

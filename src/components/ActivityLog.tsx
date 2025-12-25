@@ -1,14 +1,12 @@
 'use client';
-
 import React from 'react';
-import { ingredientsService } from '@/services/ingredientsService';
-import { useActivityLog } from '@/hooks/useActivityLog';
-
-import PageHeader from '@/components/ui/PageHeader';
 import StatsGrid from '@/components/ui/StatsGrid';
-import ActivityFilters from '@/components/filters/ActivityFilters';
 import EmptyState from '@/components/ui/EmptyState';
+import PageHeader from '@/components/ui/PageHeader';
 import ContentCard from '@/components/ui/ContentCard';
+import { useActivityLog } from '@/hooks/useActivityLog';
+import ActivityFilters from '@/components/filters/ActivityFilters';
+import { ingredientsService } from '@/services/ingredientsService';
 
 export default function ActivityLog() {
   const { attempts, filteredAttempts, setFilteredAttempts, statsData } = useActivityLog();

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Ingredient } from '@/types/ingredients';
 import Modal from '@/components/ui/Modal';
+import { Ingredient } from '@/types/ingredients';
 
 interface IngredientModalProps {
   ingredient: Ingredient | null;

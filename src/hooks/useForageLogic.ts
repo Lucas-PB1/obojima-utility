@@ -1,4 +1,11 @@
+import { useSettings } from '@/hooks/useSettings';
+import { GAME_CONFIG } from '@/config/gameConfig';
+import { diceService } from '@/services/diceService';
 import { useState, useEffect, useCallback } from 'react';
+import { ingredientsService } from '@/services/ingredientsService';
+import { firebaseStorageService } from '@/services/firebaseStorageService';
+import { firebaseSettingsService } from '@/services/firebaseSettingsService';
+
 import {
   RegionKey,
   TestType,
@@ -7,12 +14,6 @@ import {
   ForageAttempt,
   CollectedIngredient
 } from '@/types/ingredients';
-import { ingredientsService } from '@/services/ingredientsService';
-import { diceService } from '@/services/diceService';
-import { useSettings } from '@/components/SettingsModal';
-import { firebaseSettingsService } from '@/services/firebaseSettingsService';
-import { firebaseStorageService } from '@/services/firebaseStorageService';
-import { GAME_CONFIG } from '@/config/gameConfig';
 
 export function useForageLogic() {
   const [region, setRegion] = useState<RegionKey>('Gale Fields');

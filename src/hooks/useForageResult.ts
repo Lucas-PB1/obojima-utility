@@ -1,9 +1,8 @@
 'use client';
-
 import React, { useMemo } from 'react';
+import { useSettings } from '@/hooks/useSettings';
 import { ForageAttempt } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
-import { useSettings } from '@/components/SettingsModal';
 
 export function useForageResult(result: ForageAttempt | null) {
   const { settings } = useSettings();

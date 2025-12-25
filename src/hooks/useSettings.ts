@@ -1,10 +1,9 @@
 'use client';
-
-import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { firebaseSettingsService } from '@/services/firebaseSettingsService';
-import { DEFAULT_SETTINGS, SettingsState } from '@/constants/settings';
 import { DiceType } from '@/types/ingredients';
+import { useState, useEffect, useCallback } from 'react';
+import { DEFAULT_SETTINGS, SettingsState } from '@/constants/settings';
+import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 
 export function useSettings() {
   const { isAuthenticated, loading: authLoading } = useAuth();
