@@ -46,10 +46,8 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
             isAnimating ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'
           }`}
         >
-          <div className="absolute -inset-4 bg-totoro-blue/10 rounded-3xl blur-xl"></div>
-
-          <div className="relative overflow-hidden rounded-2xl bg-background backdrop-blur-md shadow-2xl border border-border/40">
-            <div className="bg-primary/10 px-6 py-4 border-b border-border/40 backdrop-blur-sm">
+          <div className="relative overflow-hidden rounded-2xl bg-modal-bg shadow-2xl border border-border">
+            <div className="bg-primary/10 px-6 py-4 border-b border-border/40">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-foreground">{title}</h3>
                 <button
@@ -68,7 +66,7 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
               </div>
             </div>
 
-            <div className="p-6 bg-background/50 backdrop-blur-sm">{children}</div>
+            <div className="p-6 bg-modal-bg">{children}</div>
           </div>
         </div>
       </div>

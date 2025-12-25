@@ -32,6 +32,8 @@
 
   --input-bg: #ffffff;
   --input-border: #cbd5e1;
+
+  --modal-bg: #ffffff;
 }
 
 .dark {
@@ -52,6 +54,8 @@
 
   --input-bg: #1e293b;
   --input-border: #334155;
+
+  --modal-bg: #000000;
 }
 
 :root {
@@ -117,6 +121,10 @@ body {
 }
 .border-totoro-orange {
   border-color: var(--totoro-orange);
+}
+
+.bg-modal-bg {
+  background-color: var(--modal-bg);
 }
 
 @keyframes shimmer-premium {
