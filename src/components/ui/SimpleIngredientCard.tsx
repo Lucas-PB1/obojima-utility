@@ -22,38 +22,38 @@ export default function SimpleIngredientCard({
 
   return (
     <div
-      className={`group glass-panel p-5 rounded-3xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-xl hover:-translate-y-2 relative overflow-hidden ${className} ${getBadgeClass()}`}
+      className={`group glass-panel p-5 rounded-3xl border border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-xl hover:-translate-y-2 relative overflow-hidden ${className} ${getBadgeClass()}`}
     >
-      <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+      <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-1">
-          <h3 className="font-serif font-bold text-totoro-gray text-base leading-tight group-hover:text-totoro-blue transition-colors">
+          <h3 className="font-serif font-bold text-foreground text-base leading-tight group-hover:text-totoro-blue transition-colors">
             {ingredient.nome_portugues}
           </h3>
         </div>
 
-        <p className="text-[10px] text-totoro-blue/60 mb-3 font-semibold uppercase tracking-widest font-sans">
+        <p className="text-[10px] text-primary/60 mb-3 font-semibold uppercase tracking-widest font-sans">
           {ingredient.nome_ingles}
         </p>
 
-        <p className="text-xs text-totoro-gray/70 mb-5 line-clamp-2 leading-relaxed italic">
+        <p className="text-xs text-foreground/60 mb-5 line-clamp-2 leading-relaxed italic">
           &quot;{ingredient.descricao}&quot;
         </p>
 
-        <div className="flex justify-center items-center gap-1.5 pt-2 border-t border-black/5">
-          <div className="flex flex-col items-center bg-white/80 px-2 py-1 rounded-lg border border-totoro-orange/10 min-w-[32px] font-sans">
+        <div className="flex justify-center items-center gap-1.5 pt-2 border-t border-border/30">
+          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg border border-totoro-orange/20 min-w-[32px] font-sans">
             <span className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</span>
             <span className="text-xs font-bold text-totoro-orange font-mono">
               {ingredient.combat}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-white/80 px-2 py-1 rounded-lg border border-totoro-blue/10 min-w-[32px] font-sans">
+          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg border border-totoro-blue/20 min-w-[32px] font-sans">
             <span className="text-[9px] font-bold text-totoro-blue/60 uppercase">Utl</span>
             <span className="text-xs font-bold text-totoro-blue font-mono">
               {ingredient.utility}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-white/80 px-2 py-1 rounded-lg border border-totoro-yellow/10 min-w-[32px] font-sans">
+          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg border border-totoro-yellow/20 min-w-[32px] font-sans">
             <span className="text-[9px] font-bold text-totoro-yellow/60 uppercase">Why</span>
             <span className="text-xs font-bold text-totoro-yellow font-mono">
               {ingredient.whimsy}

@@ -71,26 +71,26 @@ export default function ActivityLog() {
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
-                        <span className="font-medium text-totoro-gray">Região:</span>
-                        <p className="text-totoro-gray">
+                        <span className="font-medium text-foreground/70">Região:</span>
+                        <p className="text-foreground/60">
                           {ingredientsService.getRegionDisplayName(attempt.region)}
                         </p>
                       </div>
                       <div>
-                        <span className="font-medium text-totoro-gray">Teste:</span>
-                        <p className="text-totoro-gray capitalize">
+                        <span className="font-medium text-foreground/70">Teste:</span>
+                        <p className="text-foreground/60 capitalize">
                           {attempt.testType === 'natureza' ? '🌱 Natureza' : '🏕️ Sobrevivência'}
                         </p>
                       </div>
                       <div>
-                        <span className="font-medium text-totoro-gray">Rolagem:</span>
-                        <p className="text-totoro-gray">
+                        <span className="font-medium text-foreground/70">Rolagem:</span>
+                        <p className="text-foreground/60">
                           {attempt.roll} (DC {attempt.dcRange})
                         </p>
                       </div>
                       <div>
-                        <span className="font-medium text-totoro-gray">Data:</span>
-                        <p className="text-totoro-gray">
+                        <span className="font-medium text-foreground/70">Data:</span>
+                        <p className="text-foreground/60">
                           {attempt.timestamp.toLocaleString('pt-BR')}
                         </p>
                       </div>
@@ -116,14 +116,14 @@ export default function ActivityLog() {
 
                   {attempt.success && attempt.ingredient && (
                     <div className="md:w-80">
-                      <div className="bg-white/90 p-4 rounded-lg border border-totoro-green/20">
+                      <div className="bg-muted/50 p-4 rounded-lg border border-totoro-green/20">
                         <h4 className="font-bold text-totoro-green mb-2">
                           🎁 Ingrediente Coletado
                         </h4>
                         <p className="text-totoro-green font-medium mb-2">
                           {attempt.ingredient.nome_portugues}
                         </p>
-                        <p className="text-sm text-totoro-gray mb-3">
+                        <p className="text-sm text-foreground/60 mb-3">
                           {attempt.ingredient.descricao.substring(0, 120)}...
                         </p>
                         <div className="flex justify-center space-x-2">

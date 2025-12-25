@@ -34,7 +34,7 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div
-        className={`fixed inset-0 bg-totoro-gray/5 backdrop-blur-sm transition-all duration-300 ${
+        className={`fixed inset-0 bg-background/60 backdrop-blur-md transition-all duration-300 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={onClose}
@@ -48,10 +48,10 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
         >
           <div className="absolute -inset-4 bg-totoro-blue/10 rounded-3xl blur-xl"></div>
 
-          <div className="relative overflow-hidden rounded-2xl bg-white/95 backdrop-blur-sm shadow-2xl border border-white/20">
-            <div className="bg-totoro-blue/10 px-6 py-4 border-b border-totoro-blue/20 backdrop-blur-sm">
+          <div className="relative overflow-hidden rounded-2xl bg-background backdrop-blur-md shadow-2xl border border-border/40">
+            <div className="bg-primary/10 px-6 py-4 border-b border-border/40 backdrop-blur-sm">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-totoro-gray">{title}</h3>
+                <h3 className="text-lg font-semibold text-foreground">{title}</h3>
                 <button
                   onClick={onClose}
                   className="text-totoro-blue hover:text-totoro-blue/80 transition-colors p-1 rounded-full hover:bg-totoro-blue/10"
@@ -68,7 +68,7 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' }:
               </div>
             </div>
 
-            <div className="p-6 bg-white/80 backdrop-blur-sm">{children}</div>
+            <div className="p-6 bg-background/50 backdrop-blur-sm">{children}</div>
           </div>
         </div>
       </div>

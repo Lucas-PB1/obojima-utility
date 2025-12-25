@@ -1,9 +1,11 @@
+import React from 'react';
 import Modal from '@/components/ui/Modal';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import Select from '@/components/ui/Select';
 import { useSettings } from '@/hooks/useSettings';
 import { DICE_OPTIONS } from '@/constants/settings';
+import { ThemeSwitch } from './ui/ThemeSwitch';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -13,9 +15,19 @@ interface SettingsModalProps {
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { settings, isLoading, handleSave, handleClear, updateSetting } = useSettings();
 
+  if (!isOpen) return null;
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="⚙️ Configurações Padrão" size="md">
+    <Modal isOpen={isOpen} onClose={onClose} title="⚙️ Configurações do Sistema" size="md">
       <div className="space-y-6">
+        <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">Aparência do Sistema</h3>
+            <p className="text-xs text-foreground/50">Escolha entre o tema claro e escuro</p>
+          </div>
+          <ThemeSwitch />
+        </div>
+
         <div>
           <h4 className="font-semibold text-totoro-gray mb-3 flex items-center">
             <span className="mr-2">🎯</span>
@@ -71,10 +83,10 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           </h4>
 
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800/50 rounded-lg">
               <div className="flex-1">
-                <h5 className="font-medium text-purple-800 mb-1">Forrageamento Duplo</h5>
-                <p className="text-sm text-purple-600">
+                <h5 className="font-medium text-purple-800 dark:text-purple-300 mb-1">Forrageamento Duplo</h5>
+                <p className="text-sm text-purple-600 dark:text-purple-400">
                   Quando ativo, você coleta o dobro de ingredientes comuns e incomuns
                 </p>
               </div>
@@ -85,14 +97,14 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   onChange={(e) => updateSetting('doubleForageTalent', e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                <div className="w-11 h-6 bg-gray-200 dark:bg-zinc-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-900/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
               </label>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border border-green-200 dark:border-green-800/50 rounded-lg">
               <div className="flex-1">
-                <h5 className="font-medium text-green-800 mb-1">Caldeirão Especial</h5>
-                <p className="text-sm text-green-600">
+                <h5 className="font-medium text-green-800 dark:text-green-300 mb-1">Caldeirão Especial</h5>
+                <p className="text-sm text-green-600 dark:text-green-400">
                   Ao criar poções incomuns ou raras, você também gera uma poção comum do mesmo tipo
                 </p>
               </div>
@@ -103,15 +115,15 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   onChange={(e) => updateSetting('cauldronBonus', e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                <div className="w-11 h-6 bg-gray-200 dark:bg-zinc-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-900/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
               </label>
             </div>
 
-            <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg">
+            <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800/50 rounded-lg">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex-1">
-                  <h5 className="font-medium text-purple-800 mb-1">Potion Brewer</h5>
-                  <p className="text-sm text-purple-600">
+                  <h5 className="font-medium text-purple-800 dark:text-purple-300 mb-1">Potion Brewer</h5>
+                  <p className="text-sm text-purple-600 dark:text-purple-400">
                     Permite escolher o segundo maior modificador e tem chance de gerar duas poções
                   </p>
                 </div>
@@ -122,7 +134,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     onChange={(e) => updateSetting('potionBrewerTalent', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                  <div className="w-11 h-6 bg-gray-200 dark:bg-zinc-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-900/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                 </label>
               </div>
 
@@ -137,7 +149,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     min={1}
                     max={20}
                   />
-                  <p className="text-xs text-purple-600 mt-1">
+                  <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
                     Chance de {settings.potionBrewerLevel || 1}% de gerar uma segunda poção
                   </p>
                 </div>
@@ -155,7 +167,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           </ul>
         </div>
 
-        <div className="flex justify-between pt-4 border-t border-totoro-gray/20">
+        <div className="flex justify-between pt-4 border-t border-border">
           <Button onClick={handleClear} variant="danger" effect="shimmer">
             🗑️ Limpar Configurações
           </Button>

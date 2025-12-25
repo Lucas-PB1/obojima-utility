@@ -68,9 +68,9 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
 
             <Button
               onClick={openSettings}
-              variant="ghost"
+              variant="secondary"
               size="md"
-              className="!bg-white/60 !rounded-2xl !px-5 !border-white group"
+              className="!rounded-2xl !px-5 group"
             >
               <span className="text-lg group-hover:rotate-90 transition-transform duration-500">
                 ⚙️

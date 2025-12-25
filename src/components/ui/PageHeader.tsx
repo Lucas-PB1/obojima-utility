@@ -17,7 +17,7 @@ export default function PageHeader({
 }: PageHeaderProps) {
   return (
     <div className={`mb-10 ${className}`}>
-      <div className="relative overflow-hidden rounded-3xl glass-panel border border-white/60 shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl glass-panel border border-border/40 shadow-xl">
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           <div className="absolute -top-10 -left-10 w-40 h-40 bg-totoro-blue/10 rounded-full blur-[60px]"></div>
           <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-totoro-green/10 rounded-full blur-[60px]"></div>
@@ -28,7 +28,7 @@ export default function PageHeader({
             <div className="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
               {icon && (
                 <div className="flex-shrink-0 animate-float">
-                  <div className="w-20 h-20 bg-white/80 rounded-2xl flex items-center justify-center shadow-lg border border-white relative group">
+                  <div className="w-20 h-20 bg-[var(--input-bg)]/80 rounded-2xl flex items-center justify-center shadow-lg border border-border/50 relative group">
                     <div className="absolute inset-0 bg-totoro-blue/5 rounded-2xl scale-90 group-hover:scale-110 transition-transform duration-500"></div>
                     <span className="text-4xl relative z-10 transition-transform duration-500 group-hover:scale-110">
                       {icon}
@@ -37,10 +37,10 @@ export default function PageHeader({
                 </div>
               )}
               <div>
-                <h1 className="text-4xl font-serif font-bold text-totoro-gray mb-2 tracking-tight leading-tight">
+                <h1 className="text-4xl font-serif font-bold text-foreground mb-2 tracking-tight leading-tight">
                   {title}
                 </h1>
-                <p className="text-totoro-blue/80 text-xs font-semibold uppercase tracking-[0.2em] font-sans">
+                <p className="text-primary/80 text-xs font-semibold uppercase tracking-[0.2em] font-sans">
                   {subtitle}
                 </p>
               </div>
@@ -48,7 +48,7 @@ export default function PageHeader({
 
             {action && (
               <div className="flex-shrink-0 w-full md:w-auto">
-                <div className="glass-panel !bg-white/40 p-1.5 rounded-2xl border border-white/40">
+                <div className="glass-panel !bg-muted/40 p-1.5 rounded-2xl border border-border/40">
                   {action}
                 </div>
               </div>

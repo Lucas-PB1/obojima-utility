@@ -70,7 +70,7 @@ export default function ForageForm({
         />
 
         <div>
-          <label className="block text-sm font-medium text-totoro-gray mb-2">
+          <label className="block text-sm font-medium text-foreground/80 mb-2">
             🎲 Dados de Bônus
           </label>
           <div className="flex space-x-2">

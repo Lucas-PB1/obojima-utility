@@ -23,7 +23,7 @@ export default function Input({
 }: InputProps) {
   return (
     <div className={className}>
-      {label && <label className="block text-sm font-medium text-totoro-gray mb-2">{label}</label>}
+      {label && <label className="block text-sm font-medium text-foreground/80 mb-2">{label}</label>}
       <input
         type={type}
         value={value}
@@ -43,7 +43,7 @@ export default function Input({
         placeholder={placeholder}
         min={min}
         max={max}
-        className="w-full p-3 border border-totoro-blue/20 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-white text-totoro-gray placeholder-totoro-gray/50 shadow-sm transition-all duration-200 hover:border-totoro-blue/40"
+        className="w-full p-3 border border-border/50 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-[var(--input-bg)] text-foreground placeholder-foreground/30 shadow-sm transition-all duration-200 hover:border-totoro-blue/40"
         style={{
           WebkitAppearance: 'none',
           MozAppearance: 'none',

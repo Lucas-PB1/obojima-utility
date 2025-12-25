@@ -46,12 +46,12 @@ export const RecipeCollection: React.FC = () => {
 
       <ContentCard>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-          <h3 className="text-lg font-black text-totoro-gray tracking-tight flex items-center gap-2">
+          <h3 className="text-lg font-black text-foreground tracking-tight flex items-center gap-2">
             <span className="w-1 h-5 bg-totoro-blue rounded-full"></span>
             Minhas Receitas ({filteredRecipes.length})
           </h3>
 
-          <div className="flex flex-wrap gap-2 p-1 bg-totoro-blue/5 rounded-2xl border border-white/40 backdrop-blur-sm">
+          <div className="flex flex-wrap gap-2 p-1 bg-primary/5 rounded-2xl border border-border/40 backdrop-blur-sm">
             {RECIPE_FILTER_OPTIONS.map((option) => (
               <button
                 key={option.value}
@@ -59,7 +59,7 @@ export const RecipeCollection: React.FC = () => {
                 className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
                   filter === option.value
                     ? 'bg-totoro-blue text-white shadow-lg shadow-totoro-blue/20'
-                    : 'text-totoro-gray/50 hover:text-totoro-blue hover:bg-white/50'
+                    : 'text-foreground/50 hover:text-totoro-blue hover:bg-muted'
                 }`}
               >
                 {option.label}
@@ -68,7 +68,7 @@ export const RecipeCollection: React.FC = () => {
           </div>
         </div>
         {filteredRecipes.length === 0 ? (
-          <div className="glass-panel text-totoro-gray/50 text-center py-12 rounded-3xl border border-dashed border-totoro-blue/20">
+          <div className="glass-panel text-foreground/50 text-center py-12 rounded-3xl border border-dashed border-border/40">
             <div className="text-4xl mb-3">📜</div>
             <p className="text-sm font-medium">
               {filter === 'all'
@@ -81,16 +81,16 @@ export const RecipeCollection: React.FC = () => {
             {filteredRecipes.map((recipe) => (
               <div
                 key={recipe.id}
-                className="glass-panel p-6 rounded-3xl border border-white/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer relative overflow-hidden group"
+                className="glass-panel p-6 rounded-3xl border border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer relative overflow-hidden group"
                 onClick={() => handleRecipeClick(recipe)}
               >
-                <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+                <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
                 <div className="relative z-10 space-y-4">
                   <div>
-                    <h4 className="font-serif font-bold text-totoro-gray text-lg leading-tight group-hover:text-totoro-blue transition-colors">
+                    <h4 className="font-serif font-bold text-foreground text-lg leading-tight group-hover:text-totoro-blue transition-colors">
                       {recipe.resultingPotion.nome_portugues}
                     </h4>
-                    <p className="text-[10px] text-totoro-blue/60 font-semibold uppercase tracking-widest font-sans">
+                    <p className="text-[10px] text-primary/60 font-semibold uppercase tracking-widest font-sans">
                       {recipe.resultingPotion.nome_ingles}
                     </p>
                   </div>
@@ -136,14 +136,14 @@ export const RecipeCollection: React.FC = () => {
         <Modal isOpen={showModal} onClose={closeModal} title="Detalhes da Receita">
           <div className="space-y-6 pt-2">
             <div className="text-center">
-              <h1 className="text-3xl font-serif font-bold text-totoro-gray mb-1">
+              <h1 className="text-3xl font-serif font-bold text-foreground mb-1">
                 {selectedRecipe.resultingPotion.nome_portugues}
               </h1>
-              <p className="text-xs text-totoro-blue/60 font-semibold uppercase tracking-[0.2em] mb-4">
+              <p className="text-xs text-primary/60 font-semibold uppercase tracking-[0.2em] mb-4">
                 {selectedRecipe.resultingPotion.nome_ingles}
               </p>
               <div
-                className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-white/40 shadow-sm ${
+                className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 shadow-sm ${
                   selectedRecipe.resultingPotion.raridade === 'Comum'
                     ? 'bg-totoro-green/20 text-totoro-green'
                     : selectedRecipe.resultingPotion.raridade === 'Incomum'
@@ -155,18 +155,18 @@ export const RecipeCollection: React.FC = () => {
               </div>
             </div>
 
-            <div className="glass-panel p-6 rounded-3xl border border-white/40 relative overflow-hidden">
-              <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
-              <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] mb-3 relative z-10">
+            <div className="glass-panel p-6 rounded-3xl border border-border/40 relative overflow-hidden">
+              <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+              <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-3 relative z-10">
                 Efeito da Poção
               </h4>
-              <p className="text-sm text-totoro-gray leading-relaxed italic relative z-10">
+              <p className="text-sm text-foreground leading-relaxed italic relative z-10">
                 &quot;{selectedRecipe.resultingPotion.descricao}&quot;
               </p>
             </div>
 
             <div className="space-y-4">
-              <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] pl-1">
+              <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] pl-1">
                 Ingredientes Utilizados
               </h4>
               <div className="grid grid-cols-1 gap-3">
@@ -176,9 +176,9 @@ export const RecipeCollection: React.FC = () => {
               </div>
             </div>
 
-            <div className="glass-panel p-6 rounded-3xl border border-white/40 shadow-sm relative overflow-hidden">
-              <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
-              <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] mb-4 relative z-10 text-center">
+            <div className="glass-panel p-6 rounded-3xl border border-border/40 shadow-sm relative overflow-hidden">
+              <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+              <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-4 relative z-10 text-center">
                 Potencial Místico
               </h4>
               <div className="grid grid-cols-3 gap-6 relative z-10">

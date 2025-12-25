@@ -59,8 +59,8 @@ export default function DataTable<T extends Record<string, unknown>>({
   });
 
   return (
-    <div className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/40 overflow-hidden ${className}`}>
-      <div className="p-6 border-b border-white/20">
+    <div className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-border/40 overflow-hidden ${className}`}>
+      <div className="p-6 border-b border-border/20">
         <div className="flex flex-col lg:flex-row gap-4">
           {searchKey && (
             <div className="flex-1">
@@ -100,7 +100,7 @@ export default function DataTable<T extends Record<string, unknown>>({
           )}
         </div>
 
-        <div className="mt-4 text-sm text-totoro-gray">
+        <div className="mt-4 text-sm text-foreground/60">
           Mostrando {startIndex + 1}-{Math.min(startIndex + itemsPerPage, paginatedData.length)} de{' '}
           {paginatedData.length} resultados
         </div>
@@ -108,13 +108,13 @@ export default function DataTable<T extends Record<string, unknown>>({
 
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-white/20">
+          <thead className="bg-muted/20">
             <tr>
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
-                  className={`px-6 py-4 text-left text-xs font-medium text-totoro-gray uppercase tracking-wider ${
-                    column.sortable ? 'cursor-pointer hover:bg-totoro-blue/10' : ''
+                  className={`px-6 py-4 text-left text-xs font-medium text-foreground/70 uppercase tracking-wider ${
+                    column.sortable ? 'cursor-pointer hover:bg-primary/10' : ''
                   }`}
                   style={{ width: column.width }}
                   onClick={() => column.sortable && handleSort(column.key)}
@@ -148,10 +148,10 @@ export default function DataTable<T extends Record<string, unknown>>({
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white/5 divide-y divide-white/10">
+          <tbody className="bg-muted/5 divide-y divide-border/10">
             {paginatedData.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="px-6 py-12 text-center text-totoro-gray/60">
+                <td colSpan={columns.length} className="px-6 py-12 text-center text-foreground/60">
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-2xl">📦</span>
                     <span>Nenhum item encontrado</span>
@@ -161,11 +161,11 @@ export default function DataTable<T extends Record<string, unknown>>({
               </tr>
             ) : (
               paginatedData.map((item, index) => (
-                <tr key={index} className="hover:bg-white/10 transition-colors">
+                <tr key={index} className="hover:bg-muted/10 transition-colors">
                   {columns.map((column) => (
                     <td
                       key={String(column.key)}
-                      className="px-6 py-4 whitespace-nowrap text-sm text-totoro-gray"
+                      className="px-6 py-4 whitespace-nowrap text-sm text-foreground/80"
                     >
                       {column.render
                         ? column.render(item[column.key], item)
@@ -180,9 +180,9 @@ export default function DataTable<T extends Record<string, unknown>>({
       </div>
 
       {totalPages > 1 && (
-        <div className="px-6 py-4 border-t border-white/20">
+        <div className="px-6 py-4 border-t border-border/20">
           <div className="flex items-center justify-between">
-            <div className="text-sm text-totoro-gray">
+            <div className="text-sm text-foreground/60">
               Página {currentPage} de {totalPages}
             </div>
             <div className="flex space-x-2">

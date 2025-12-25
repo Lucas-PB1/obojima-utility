@@ -22,22 +22,22 @@ export default function IngredientCard({
   );
 
   const getBadgeClass = () => {
-    if (ingredient.used) return 'bg-totoro-gray/5 border-totoro-gray/10';
+    if (ingredient.used) return 'bg-muted/10 border-border/20';
     if (ingredient.ingredient.combat === maxAttr)
-      return 'bg-totoro-orange/5 border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
+      return 'bg-totoro-orange/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
     if (ingredient.ingredient.utility === maxAttr)
-      return 'bg-totoro-blue/5 border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
-    return 'bg-totoro-yellow/5 border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
+      return 'bg-totoro-blue/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
+    return 'bg-totoro-yellow/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
   };
 
   return (
     <div
       className={`glass-panel p-6 rounded-3xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden group ${getBadgeClass()}`}
     >
-      <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+      <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="font-serif font-bold text-totoro-gray text-xl leading-tight group-hover:text-totoro-blue transition-colors">
+          <h3 className="font-serif font-bold text-foreground text-xl leading-tight group-hover:text-totoro-blue transition-colors">
             {ingredient.ingredient.nome_portugues}
           </h3>
           <span
@@ -55,24 +55,24 @@ export default function IngredientCard({
           {ingredient.ingredient.nome_ingles}
         </p>
 
-        <p className="text-sm text-totoro-gray/70 mb-6 line-clamp-3 leading-relaxed italic">
+        <p className="text-sm text-foreground/60 mb-6 line-clamp-3 leading-relaxed italic">
           &quot;{ingredient.ingredient.descricao}&quot;
         </p>
 
         <div className="grid grid-cols-3 gap-2 mb-6">
-          <div className="flex flex-col items-center bg-white/60 p-2 rounded-xl border border-totoro-orange/10 shadow-sm font-sans">
+          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-orange/20 shadow-sm font-sans">
             <span className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</span>
             <span className="text-xl font-bold text-totoro-orange font-mono">
               {ingredient.ingredient.combat}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-white/60 p-2 rounded-xl border border-totoro-blue/10 shadow-sm font-sans">
+          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-blue/20 shadow-sm font-sans">
             <span className="text-[9px] font-bold text-totoro-blue/60 uppercase">Utl</span>
             <span className="text-xl font-bold text-totoro-blue font-mono">
               {ingredient.ingredient.utility}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-white/60 p-2 rounded-xl border border-totoro-yellow/10 shadow-sm font-sans">
+          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-yellow/20 shadow-sm font-sans">
             <span className="text-[9px] font-bold text-totoro-yellow/60 uppercase">Why</span>
             <span className="text-xl font-bold text-totoro-yellow font-mono">
               {ingredient.ingredient.whimsy}
@@ -80,8 +80,8 @@ export default function IngredientCard({
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-black/5">
-          <p className="text-[10px] font-bold text-totoro-gray/40 uppercase tracking-wider">
+        <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/30">
+          <p className="text-[10px] font-bold text-foreground/30 uppercase tracking-wider">
             {ingredient.collectedAt.toLocaleDateString('pt-BR')}
           </p>
 

@@ -24,12 +24,12 @@ export default function Select({
 }: SelectProps) {
   return (
     <div className={className}>
-      {label && <label className="block text-sm font-medium text-totoro-gray mb-2">{label}</label>}
+      {label && <label className="block text-sm font-medium text-foreground/80 mb-2">{label}</label>}
       <div className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full p-3 pr-10 border border-totoro-blue/20 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-white text-totoro-gray shadow-sm transition-all duration-200 hover:border-totoro-blue/40 appearance-none cursor-pointer"
+          className="w-full p-3 pr-10 border border-border/50 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-[var(--input-bg)] text-foreground shadow-sm transition-all duration-200 hover:border-totoro-blue/40 appearance-none cursor-pointer"
           style={{
             WebkitAppearance: 'none',
             MozAppearance: 'none',

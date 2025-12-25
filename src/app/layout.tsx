@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   }
 };
 
+import { ThemeProvider } from '@/components/ThemeProvider';
+
 export default function RootLayout({
   children
 }: Readonly<{
@@ -40,7 +42,14 @@ export default function RootLayout({
         className={`${outfit.variable} ${bitter.variable} ${quicksand.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

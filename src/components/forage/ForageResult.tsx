@@ -77,15 +77,15 @@ export default function ForageResult({ result }: ForageResultProps) {
       </div>
 
       {result.success && result.ingredient && (
-        <div className="p-8 bg-white">
+        <div className="p-8 bg-background">
           <div className="text-center mb-6">
             <div className="text-3xl mb-2">🎁</div>
-            <h4 className="font-black text-totoro-gray text-xl uppercase tracking-tight">
+            <h4 className="font-black text-foreground text-xl uppercase tracking-tight">
               Ingrediente Coletado!
             </h4>
             {showDoubleForage && (
-              <div className="mt-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-200 rounded-2xl px-4 py-3">
-                <div className="text-purple-600 text-sm font-black flex items-center justify-center gap-2">
+              <div className="mt-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl px-4 py-3">
+                <div className="text-purple-500 text-sm font-black flex items-center justify-center gap-2">
                   <span>✨</span>
                   FORRAGEAMENTO DUPLO ATIVADO!
                   <span>✨</span>
@@ -101,10 +101,10 @@ export default function ForageResult({ result }: ForageResultProps) {
             <div className="absolute top-0 right-0 p-4 text-4xl opacity-10 font-black italic">
               {result.rarity}
             </div>
-            <h5 className="font-black text-totoro-gray text-2xl mb-2 relative z-10">
+            <h5 className="font-black text-foreground text-2xl mb-2 relative z-10">
               {result.ingredient.nome_portugues}
             </h5>
-            <p className="text-totoro-gray/60 leading-relaxed italic relative z-10">
+            <p className="text-foreground/60 leading-relaxed italic relative z-10">
               &quot;{result.ingredient.descricao}&quot;
             </p>
           </div>

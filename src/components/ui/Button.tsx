@@ -10,19 +10,20 @@ interface ButtonProps {
   className?: string;
   fullWidth?: boolean;
   effect?: 'shimmer' | 'float' | 'pulse-glow' | 'ripple' | 'none';
+  title?: string;
 }
 
 const variantClasses = {
   primary:
     'bg-gradient-to-br from-totoro-blue via-totoro-blue to-[#357ABD] text-white border-[#5DA9FF] shadow-[0_4px_15px_rgba(74,144,226,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(74,144,226,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
   secondary:
-    'bg-white text-totoro-gray border-totoro-blue/20 hover:border-totoro-blue/40 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0',
+    'bg-[var(--input-bg)] text-foreground border-border/50 hover:border-totoro-blue/40 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0',
   success:
     'bg-gradient-to-br from-totoro-green via-totoro-green to-[#6AB31D] text-white border-[#9FE842] shadow-[0_4px_15px_rgba(126,211,33,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(126,211,33,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
   danger:
     'bg-gradient-to-br from-totoro-orange via-totoro-orange to-[#C0661A] text-white border-[#FF9F4D] shadow-[0_4px_15px_rgba(230,126,34,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(230,126,34,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
   ghost:
-    'bg-transparent hover:bg-totoro-blue/10 text-totoro-gray border-transparent hover:text-totoro-blue shadow-none transform hover:scale-105 active:scale-95',
+    'bg-transparent hover:bg-totoro-blue/10 text-foreground border-transparent hover:text-totoro-blue shadow-none transform hover:scale-105 active:scale-95',
   outline:
     'bg-transparent border-2 border-totoro-blue text-totoro-blue hover:bg-totoro-blue hover:text-white shadow-none transform hover:-translate-y-0.5'
 };
@@ -43,7 +44,8 @@ export default function Button({
   disabled = false,
   className = '',
   fullWidth = false,
-  effect = 'shimmer'
+  effect = 'shimmer',
+  title
 }: ButtonProps) {
   const getEffectClasses = () => {
     if (disabled) return '';
@@ -69,6 +71,7 @@ export default function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
+      title={title}
       className={`
         ${baseClasses}
         ${variantClasses[variant]}
