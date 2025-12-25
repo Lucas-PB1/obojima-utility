@@ -12,17 +12,10 @@ export default function IngredientModal({ ingredient, isOpen, onClose }: Ingredi
   if (!ingredient) return null;
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={`🌿 ${ingredient.nome_portugues}`}
-      size="lg"
-    >
+    <Modal isOpen={isOpen} onClose={onClose} title={`🌿 ${ingredient.nome_portugues}`} size="lg">
       <div className="space-y-6">
         <div className="text-center">
-          <h4 className="text-lg font-medium text-totoro-gray mb-2">
-            {ingredient.nome_ingles}
-          </h4>
+          <h4 className="text-lg font-medium text-totoro-gray mb-2">{ingredient.nome_ingles}</h4>
           <div className="w-16 h-1 bg-gradient-to-r from-totoro-green to-totoro-blue mx-auto rounded-full"></div>
         </div>
 
@@ -46,9 +39,7 @@ export default function IngredientModal({ ingredient, isOpen, onClose }: Ingredi
             <span className="mr-2">📖</span>
             Descrição
           </h5>
-          <p className="text-totoro-gray leading-relaxed text-justify">
-            {ingredient.descricao}
-          </p>
+          <p className="text-totoro-gray leading-relaxed text-justify">{ingredient.descricao}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

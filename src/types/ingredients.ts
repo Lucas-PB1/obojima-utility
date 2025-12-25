@@ -119,7 +119,7 @@ export interface UncommonIngredientsData {
   ingredientes: Ingredient[];
 }
 
-export type RegionKey = 
+export type RegionKey =
   | 'Coastal Highlands'
   | 'Gale Fields'
   | 'Gift of Shuritashi'

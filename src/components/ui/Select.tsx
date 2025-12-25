@@ -14,21 +14,17 @@ interface SelectProps {
   label?: string;
 }
 
-export default function Select({ 
-  value, 
-  onChange, 
-  options, 
-  placeholder = '', 
+export default function Select({
+  value,
+  onChange,
+  options,
+  placeholder = '',
   className = '',
-  label 
+  label
 }: SelectProps) {
   return (
     <div className={className}>
-      {label && (
-        <label className="block text-sm font-medium text-totoro-gray mb-2">
-          {label}
-        </label>
-      )}
+      {label && <label className="block text-sm font-medium text-totoro-gray mb-2">{label}</label>}
       <div className="relative">
         <select
           value={value}
@@ -40,16 +36,9 @@ export default function Select({
             appearance: 'none'
           }}
         >
-          {placeholder && (
-            <option value="">
-              {placeholder}
-            </option>
-          )}
-          {options.map(option => (
-            <option 
-              key={option.value} 
-              value={option.value}
-            >
+          {placeholder && <option value="">{placeholder}</option>}
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
@@ -61,12 +50,7 @@ export default function Select({
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>
       </div>

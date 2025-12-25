@@ -13,7 +13,7 @@ export function useDataTable<T extends Record<string, unknown>>({
   itemsPerPage = 10
 }: UseDataTableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null);
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
 
@@ -23,19 +23,22 @@ export function useDataTable<T extends Record<string, unknown>>({
     return DataTableService.paginateData(sorted, currentPage, itemsPerPage);
   }, [data, searchTerm, searchKey, activeFilters, sortConfig, currentPage, itemsPerPage]);
 
-  const handleSort = useCallback((key: keyof T) => {
-    const newDirection = DataTableService.getSortDirection(sortConfig, key);
-    setSortConfig(newDirection ? { key, direction: newDirection } : null);
-  }, [sortConfig]);
+  const handleSort = useCallback(
+    (key: keyof T) => {
+      const newDirection = DataTableService.getSortDirection(sortConfig, key);
+      setSortConfig(newDirection ? { key, direction: newDirection } : null);
+    },
+    [sortConfig]
+  );
 
   const handleFilterChange = useCallback((key: string, value: string) => {
-    setActiveFilters(prev => ({ ...prev, [key]: value }));
+    setActiveFilters((prev) => ({ ...prev, [key]: value }));
     setCurrentPage(1);
   }, []);
 
   const clearFilters = useCallback(() => {
     setActiveFilters({});
-    setSearchTerm("");
+    setSearchTerm('');
     setCurrentPage(1);
   }, []);
 
@@ -62,6 +65,6 @@ export function useDataTable<T extends Record<string, unknown>>({
     handleFilterChange,
     clearFilters,
     setPage,
-    setSearch,
+    setSearch
   };
 }

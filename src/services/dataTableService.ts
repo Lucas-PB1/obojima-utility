@@ -5,8 +5,8 @@ export interface SortConfig<T> {
 
 export class DataTableService {
   private static getNestedValue<T>(item: T, key: string): unknown {
-    return key.includes(".")
-      ? key.split(".").reduce((obj: unknown, k) => (obj as Record<string, unknown>)?.[k], item)
+    return key.includes('.')
+      ? key.split('.').reduce((obj: unknown, k) => (obj as Record<string, unknown>)?.[k], item)
       : item[key as keyof T];
   }
 
@@ -23,7 +23,7 @@ export class DataTableService {
     let filtered = data;
 
     if (searchTerm && searchKey) {
-      filtered = filtered.filter(item => {
+      filtered = filtered.filter((item) => {
         const value = this.getNestedValue(item, searchKey);
         return this.matchesSearch(value, searchTerm);
       });
@@ -31,7 +31,7 @@ export class DataTableService {
 
     Object.entries(activeFilters).forEach(([key, value]) => {
       if (value) {
-        filtered = filtered.filter(item => {
+        filtered = filtered.filter((item) => {
           const itemValue = this.getNestedValue(item, key);
           return this.matchesSearch(itemValue, value);
         });
@@ -51,8 +51,8 @@ export class DataTableService {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
 
-      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
       return 0;
     });
   }
@@ -74,8 +74,8 @@ export class DataTableService {
     columnKey: keyof T
   ): 'asc' | 'desc' | null {
     if (currentSort?.key === columnKey) {
-      return currentSort.direction === "asc" ? "desc" : null;
+      return currentSort.direction === 'asc' ? 'desc' : null;
     }
-    return "asc";
+    return 'asc';
   }
 }

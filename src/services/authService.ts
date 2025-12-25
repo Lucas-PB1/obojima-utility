@@ -1,4 +1,4 @@
-import { 
+import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -13,7 +13,7 @@ class AuthService {
     if (typeof window === 'undefined') {
       throw new Error('Autenticação só pode ser feita no cliente');
     }
-    
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       return userCredential;
@@ -27,7 +27,7 @@ class AuthService {
     if (typeof window === 'undefined') {
       throw new Error('Autenticação só pode ser feita no cliente');
     }
-    
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential;
@@ -39,7 +39,7 @@ class AuthService {
 
   async logout(): Promise<void> {
     if (typeof window === 'undefined') return;
-    
+
     try {
       await signOut(auth);
     } catch (error) {
@@ -58,7 +58,7 @@ class AuthService {
       callback(null);
       return () => {};
     }
-    
+
     return onAuthStateChanged(auth, callback);
   }
 
@@ -73,48 +73,47 @@ class AuthService {
 
   private handleAuthError(error: unknown): Error {
     let message = 'Erro desconhecido ao autenticar';
-    
+
     if (error && typeof error === 'object' && 'code' in error) {
       const firebaseError = error as { code: string; message?: string };
-      
+
       switch (firebaseError.code) {
-      case 'auth/email-already-in-use':
-        message = 'Este email já está em uso';
-        break;
-      case 'auth/invalid-email':
-        message = 'Email inválido';
-        break;
-      case 'auth/operation-not-allowed':
-        message = 'Operação não permitida';
-        break;
-      case 'auth/weak-password':
-        message = 'Senha muito fraca. Use pelo menos 6 caracteres';
-        break;
-      case 'auth/user-disabled':
-        message = 'Usuário desabilitado';
-        break;
-      case 'auth/user-not-found':
-        message = 'Usuário não encontrado';
-        break;
-      case 'auth/wrong-password':
-        message = 'Senha incorreta';
-        break;
-      case 'auth/too-many-requests':
-        message = 'Muitas tentativas. Tente novamente mais tarde';
-        break;
-      case 'auth/network-request-failed':
-        message = 'Erro de conexão. Verifique sua internet';
-        break;
-      default:
-        message = firebaseError.message || message;
+        case 'auth/email-already-in-use':
+          message = 'Este email já está em uso';
+          break;
+        case 'auth/invalid-email':
+          message = 'Email inválido';
+          break;
+        case 'auth/operation-not-allowed':
+          message = 'Operação não permitida';
+          break;
+        case 'auth/weak-password':
+          message = 'Senha muito fraca. Use pelo menos 6 caracteres';
+          break;
+        case 'auth/user-disabled':
+          message = 'Usuário desabilitado';
+          break;
+        case 'auth/user-not-found':
+          message = 'Usuário não encontrado';
+          break;
+        case 'auth/wrong-password':
+          message = 'Senha incorreta';
+          break;
+        case 'auth/too-many-requests':
+          message = 'Muitas tentativas. Tente novamente mais tarde';
+          break;
+        case 'auth/network-request-failed':
+          message = 'Erro de conexão. Verifique sua internet';
+          break;
+        default:
+          message = firebaseError.message || message;
       }
     } else if (error instanceof Error) {
       message = error.message;
     }
-    
+
     return new Error(message);
   }
 }
 
 export const authService = new AuthService();
-

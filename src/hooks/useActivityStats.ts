@@ -14,25 +14,25 @@ export function useActivityStats() {
   }, []);
 
   const statsData = [
-    { 
-      value: activityStats.totalAttempts, 
-      label: 'Total de Tentativas', 
-      color: 'totoro-green' as const 
+    {
+      value: activityStats.totalAttempts,
+      label: 'Total de Tentativas',
+      color: 'totoro-green' as const
     },
-    { 
-      value: `${activityStats.successRate.toFixed(1)}%`, 
-      label: 'Taxa de Sucesso', 
-      color: 'totoro-blue' as const 
+    {
+      value: `${activityStats.successRate.toFixed(1)}%`,
+      label: 'Taxa de Sucesso',
+      color: 'totoro-blue' as const
     },
-    { 
-      value: activityStats.averageRoll.toFixed(1), 
-      label: 'Rolagem Média', 
-      color: 'totoro-yellow' as const 
+    {
+      value: activityStats.averageRoll.toFixed(1),
+      label: 'Rolagem Média',
+      color: 'totoro-yellow' as const
     },
-    { 
-      value: activityStats.ingredientsCollected, 
-      label: 'Ingredientes Coletados', 
-      color: 'totoro-gray' as const 
+    {
+      value: activityStats.ingredientsCollected,
+      label: 'Ingredientes Coletados',
+      color: 'totoro-gray' as const
     }
   ];
 

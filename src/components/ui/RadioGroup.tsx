@@ -14,22 +14,18 @@ interface RadioGroupProps {
   className?: string;
 }
 
-export default function RadioGroup({ 
-  value, 
-  onChange, 
-  options, 
+export default function RadioGroup({
+  value,
+  onChange,
+  options,
   label,
   className = ''
 }: RadioGroupProps) {
   return (
     <div className={className}>
-      {label && (
-        <label className="block text-sm font-medium text-totoro-gray mb-2">
-          {label}
-        </label>
-      )}
+      {label && <label className="block text-sm font-medium text-totoro-gray mb-2">{label}</label>}
       <div className="flex space-x-4">
-        {options.map(option => (
+        {options.map((option) => (
           <label key={option.value} className="flex items-center">
             <input
               type="radio"

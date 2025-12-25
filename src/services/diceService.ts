@@ -3,7 +3,7 @@ import { DiceType, AdvantageType } from '@/types/ingredients';
 class DiceService {
   private static readonly DICE_NAMES: Record<DiceType, string> = {
     d4: 'D4',
-    d6: 'D6', 
+    d6: 'D6',
     d8: 'D8',
     d10: 'D10',
     d12: 'D12',
@@ -31,16 +31,15 @@ class DiceService {
 
   rollWithAdvantage(advantage: AdvantageType): { roll: number; secondRoll?: number } {
     const firstRoll = this.rollD20();
-    
+
     if (advantage === 'normal') {
       return { roll: firstRoll };
     }
-    
+
     const secondRoll = this.rollD20();
-    const roll = advantage === 'vantagem' 
-      ? Math.max(firstRoll, secondRoll)
-      : Math.min(firstRoll, secondRoll);
-    
+    const roll =
+      advantage === 'vantagem' ? Math.max(firstRoll, secondRoll) : Math.min(firstRoll, secondRoll);
+
     return { roll, secondRoll };
   }
 
@@ -75,20 +74,20 @@ class DiceService {
   } {
     const results: number[] = [];
     let successes = 0;
-    
+
     for (let i = 0; i < iterations; i++) {
       const { roll } = this.rollWithAdvantage(advantage);
       const total = this.calculateTotalRoll(roll, modifier, bonusDice);
       results.push(total);
-      
+
       if (total >= dc) successes++;
     }
-    
+
     const average = results.reduce((sum, roll) => sum + roll, 0) / results.length;
     const min = Math.min(...results);
     const max = Math.max(...results);
     const successRate = (successes / iterations) * 100;
-    
+
     return {
       average: Math.round(average * 100) / 100,
       min,

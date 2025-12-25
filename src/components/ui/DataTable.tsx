@@ -1,8 +1,8 @@
-import React from "react";
-import Input from "@/components/ui/Input";
-import Select from "@/components/ui/Select";
-import Button from "@/components/ui/Button";
-import { useDataTable } from "@/hooks/useDataTable";
+import React from 'react';
+import Input from '@/components/ui/Input';
+import Select from '@/components/ui/Select';
+import Button from '@/components/ui/Button';
+import { useDataTable } from '@/hooks/useDataTable';
 
 export interface Column<T> {
   key: keyof T;
@@ -15,7 +15,7 @@ export interface Column<T> {
 export interface Filter {
   key: string;
   label: string;
-  type: "select" | "text" | "date";
+  type: 'select' | 'text' | 'date';
   options?: { value: string; label: string }[];
   placeholder?: string;
 }
@@ -35,9 +35,9 @@ export default function DataTable<T extends Record<string, unknown>>({
   columns,
   filters = [],
   searchKey,
-  searchPlaceholder = "Buscar...",
+  searchPlaceholder = 'Buscar...',
   itemsPerPage = 10,
-  className = "",
+  className = ''
 }: DataTableProps<T>) {
   const {
     paginatedData,
@@ -51,7 +51,7 @@ export default function DataTable<T extends Record<string, unknown>>({
     handleFilterChange,
     clearFilters,
     setPage,
-    setSearch,
+    setSearch
   } = useDataTable({
     data,
     searchKey,
@@ -59,9 +59,7 @@ export default function DataTable<T extends Record<string, unknown>>({
   });
 
   return (
-    <div
-      className={`bg-white rounded-xl shadow-lg border border-totoro-blue/20 ${className}`}
-    >
+    <div className={`bg-white rounded-xl shadow-lg border border-totoro-blue/20 ${className}`}>
       <div className="p-6 border-b border-totoro-blue/20">
         <div className="flex flex-col lg:flex-row gap-4">
           {searchKey && (
@@ -77,21 +75,19 @@ export default function DataTable<T extends Record<string, unknown>>({
 
           {filters.map((filter) => (
             <div key={filter.key} className="min-w-48">
-              {filter.type === "select" ? (
+              {filter.type === 'select' ? (
                 <Select
-                  value={activeFilters[filter.key] || ""}
+                  value={activeFilters[filter.key] || ''}
                   onChange={(value) => handleFilterChange(filter.key, value)}
                   options={filter.options || []}
                   placeholder={filter.placeholder || `Todos os ${filter.label}`}
                 />
               ) : (
                 <Input
-                  type={filter.type === "date" ? "text" : filter.type}
+                  type={filter.type === 'date' ? 'text' : filter.type}
                   placeholder={filter.placeholder || filter.label}
-                  value={activeFilters[filter.key] || ""}
-                  onChange={(value) =>
-                    handleFilterChange(filter.key, value as string)
-                  }
+                  value={activeFilters[filter.key] || ''}
+                  onChange={(value) => handleFilterChange(filter.key, value as string)}
                 />
               )}
             </div>
@@ -105,8 +101,7 @@ export default function DataTable<T extends Record<string, unknown>>({
         </div>
 
         <div className="mt-4 text-sm text-totoro-gray">
-          Mostrando {startIndex + 1}-
-          {Math.min(startIndex + itemsPerPage, paginatedData.length)} de{" "}
+          Mostrando {startIndex + 1}-{Math.min(startIndex + itemsPerPage, paginatedData.length)} de{' '}
           {paginatedData.length} resultados
         </div>
       </div>
@@ -119,7 +114,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 <th
                   key={String(column.key)}
                   className={`px-6 py-4 text-left text-xs font-medium text-totoro-gray uppercase tracking-wider ${
-                    column.sortable ? "cursor-pointer hover:bg-totoro-blue/10" : ""
+                    column.sortable ? 'cursor-pointer hover:bg-totoro-blue/10' : ''
                   }`}
                   style={{ width: column.width }}
                   onClick={() => column.sortable && handleSort(column.key)}
@@ -130,20 +125,18 @@ export default function DataTable<T extends Record<string, unknown>>({
                       <div className="flex flex-col">
                         <span
                           className={`text-xs ${
-                            sortConfig?.key === column.key &&
-                            sortConfig.direction === "asc"
-                              ? "text-totoro-green"
-                              : "text-totoro-gray/30"
+                            sortConfig?.key === column.key && sortConfig.direction === 'asc'
+                              ? 'text-totoro-green'
+                              : 'text-totoro-gray/30'
                           }`}
                         >
                           ▲
                         </span>
                         <span
                           className={`text-xs ${
-                            sortConfig?.key === column.key &&
-                            sortConfig.direction === "desc"
-                              ? "text-totoro-green"
-                              : "text-totoro-gray/30"
+                            sortConfig?.key === column.key && sortConfig.direction === 'desc'
+                              ? 'text-totoro-green'
+                              : 'text-totoro-gray/30'
                           }`}
                         >
                           ▼
@@ -208,7 +201,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                   <Button
                     key={page}
                     onClick={() => setPage(page)}
-                    variant={currentPage === page ? "primary" : "secondary"}
+                    variant={currentPage === page ? 'primary' : 'secondary'}
                     size="sm"
                   >
                     {page}

@@ -7,7 +7,7 @@ import { CollectedIngredient } from '@/types/ingredients';
 
 export function useForageSystem(onIngredientCollected?: (ingredient: CollectedIngredient) => void) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  
+
   const { ingredients, addIngredient, addAttempt } = useIngredients();
   const forageLogic = useForageLogic();
 

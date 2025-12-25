@@ -42,12 +42,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       <ContentCard>
         <div className="space-y-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              Criação de Poções
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">Criação de Poções</h2>
             <p className="text-gray-600 text-sm">
-              Selecione exatamente 3 ingredientes únicos para criar uma poção. 
-              O tipo de poção será determinado pelos atributos dos ingredientes.
+              Selecione exatamente 3 ingredientes únicos para criar uma poção. O tipo de poção será
+              determinado pelos atributos dos ingredientes.
             </p>
           </div>
 
@@ -55,11 +53,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             <h3 className="text-lg font-medium text-gray-900 mb-3">
               Ingredientes Selecionados ({selectedIngredients.length}/3)
             </h3>
-            
+
             {selectedIngredients.length === 0 ? (
-              <div className="text-gray-500 text-sm italic">
-                Nenhum ingrediente selecionado
-              </div>
+              <div className="text-gray-500 text-sm italic">Nenhum ingrediente selecionado</div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {selectedIngredients.map((ingredient) => (
@@ -79,25 +75,31 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
           {previewScores && (
             <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="text-sm font-medium text-gray-900 mb-3">
-                Preview da Receita
-              </h4>
+              <h4 className="text-sm font-medium text-gray-900 mb-3">Preview da Receita</h4>
               <div className="grid grid-cols-3 gap-4">
                 {(['combat', 'utility', 'whimsy'] as const).map((attr) => (
-                  <div key={attr} className={`p-3 rounded-lg border ${POTION_CATEGORY_CONFIG[attr].classes} ${previewScores.winningAttribute === attr ? 'ring-2 ring-opacity-50 ring-current' : ''}`}>
+                  <div
+                    key={attr}
+                    className={`p-3 rounded-lg border ${POTION_CATEGORY_CONFIG[attr].classes} ${previewScores.winningAttribute === attr ? 'ring-2 ring-opacity-50 ring-current' : ''}`}
+                  >
                     <div className="text-xs font-medium">{POTION_CATEGORY_CONFIG[attr].label}</div>
                     <div className="text-lg font-bold">
-                      {attr === 'combat' ? previewScores.combatScore : 
-                       attr === 'utility' ? previewScores.utilityScore : 
-                       previewScores.whimsyScore}
+                      {attr === 'combat'
+                        ? previewScores.combatScore
+                        : attr === 'utility'
+                          ? previewScores.utilityScore
+                          : previewScores.whimsyScore}
                     </div>
                   </div>
                 ))}
               </div>
               <div className="mt-3 text-sm text-gray-600">
-                Categoria vencedora: <span className="font-medium">{POTION_CATEGORY_CONFIG[previewScores.winningAttribute].label}</span>
+                Categoria vencedora:{' '}
+                <span className="font-medium">
+                  {POTION_CATEGORY_CONFIG[previewScores.winningAttribute].label}
+                </span>
               </div>
-              
+
               {availableScores?.canChoose && (
                 <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
                   <div className="flex items-center text-purple-700 text-sm">
@@ -125,12 +127,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             >
               {isBrewing ? 'Criando Poção...' : 'Criar Poção'}
             </Button>
-            
+
             {selectedIngredients.length > 0 && (
-              <Button
-                onClick={handleClearSelection}
-                variant="secondary"
-              >
+              <Button onClick={handleClearSelection} variant="secondary">
                 Limpar Seleção
               </Button>
             )}
@@ -140,10 +139,8 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
       <ContentCard>
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">
-            Ingredientes Disponíveis
-          </h3>
-          
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Ingredientes Disponíveis</h3>
+
           {availableIngredients.length === 0 ? (
             <div className="text-gray-500 text-center py-8">
               Nenhum ingrediente disponível para criação de poções
@@ -151,9 +148,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {availableIngredients.map((ingredient, index) => {
-                const isSelected = selectedIngredients.some(ing => ing.id === ingredient.id);
+                const isSelected = selectedIngredients.some((ing) => ing.id === ingredient.id);
                 const isDisabled = isSelected || selectedIngredients.length >= 3;
-                
+
                 return (
                   <div
                     key={`${ingredient.id}-${index}`}
@@ -162,8 +159,8 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                     }`}
                     onClick={() => !isDisabled && handleIngredientSelect(ingredient)}
                   >
-                    <SimpleIngredientCard 
-                      ingredient={ingredient} 
+                    <SimpleIngredientCard
+                      ingredient={ingredient}
                       className={isSelected ? 'ring-2 ring-green-500' : ''}
                     />
                   </div>
@@ -178,7 +175,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         <Modal
           isOpen={showResultModal}
           onClose={closeResultModal}
-          title={brewingResult.success ? "Poção Criada!" : "Erro na Criação"}
+          title={brewingResult.success ? 'Poção Criada!' : 'Erro na Criação'}
         >
           <div className="space-y-4">
             {brewingResult.success ? (
@@ -190,11 +187,15 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="text-sm text-gray-600 mb-4">
                     {brewingResult.recipe.resultingPotion.nome_ingles}
                   </div>
-                  <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                    brewingResult.recipe.resultingPotion.raridade === 'Comum' ? 'bg-green-100 text-green-800' :
-                    brewingResult.recipe.resultingPotion.raridade === 'Incomum' ? 'bg-blue-100 text-blue-800' :
-                    'bg-purple-100 text-purple-800'
-                  }`}>
+                  <div
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                      brewingResult.recipe.resultingPotion.raridade === 'Comum'
+                        ? 'bg-green-100 text-green-800'
+                        : brewingResult.recipe.resultingPotion.raridade === 'Incomum'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-purple-100 text-purple-800'
+                    }`}
+                  >
                     {brewingResult.recipe.resultingPotion.raridade}
                   </div>
                 </div>
@@ -203,14 +204,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="mt-6 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
                     <div className="text-center mb-3">
                       <div className="text-lg mb-2">✨</div>
-                      <h4 className="font-bold text-green-800 text-lg mb-2">
-                        Poção dos Restos
-                      </h4>
-                      <p className="text-green-700 text-sm mb-3">
-                        Gerada pelo Caldeirão Especial
-                      </p>
+                      <h4 className="font-bold text-green-800 text-lg mb-2">Poção dos Restos</h4>
+                      <p className="text-green-700 text-sm mb-3">Gerada pelo Caldeirão Especial</p>
                     </div>
-                    
+
                     <div className="bg-white/80 rounded-lg p-4 border border-green-200">
                       <div className="text-center">
                         <div className="text-xl font-bold text-green-700 mb-1">
@@ -234,14 +231,12 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
                     <div className="text-center mb-3">
                       <div className="text-lg mb-2">🧪</div>
-                      <h4 className="font-bold text-purple-800 text-lg mb-2">
-                        Segunda Poção
-                      </h4>
+                      <h4 className="font-bold text-purple-800 text-lg mb-2">Segunda Poção</h4>
                       <p className="text-purple-700 text-sm mb-3">
                         Gerada pelo Potion Brewer (Rolagem: {brewingResult.percentageRoll}%)
                       </p>
                     </div>
-                    
+
                     <div className="bg-white/80 rounded-lg p-4 border border-purple-200">
                       <div className="text-center">
                         <div className="text-xl font-bold text-purple-700 mb-1">
@@ -250,11 +245,15 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                         <div className="text-xs text-gray-600 mb-2">
                           {brewingResult.secondPotion.nome_ingles}
                         </div>
-                        <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium mb-3 ${
-                          brewingResult.secondPotion.raridade === 'Comum' ? 'bg-green-100 text-green-800' :
-                          brewingResult.secondPotion.raridade === 'Incomum' ? 'bg-blue-100 text-blue-800' :
-                          'bg-purple-100 text-purple-800'
-                        }`}>
+                        <div
+                          className={`inline-block px-2 py-1 rounded-full text-xs font-medium mb-3 ${
+                            brewingResult.secondPotion.raridade === 'Comum'
+                              ? 'bg-green-100 text-green-800'
+                              : brewingResult.secondPotion.raridade === 'Incomum'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-purple-100 text-purple-800'
+                          }`}
+                        >
                           {brewingResult.secondPotion.raridade}
                         </div>
                         <p className="text-xs text-gray-700">
@@ -269,11 +268,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-4">
                     <div className="text-center">
                       <div className="text-lg mb-2">🧪</div>
-                      <h4 className="font-bold text-gray-700 text-lg mb-2">
-                        Potion Brewer
-                      </h4>
+                      <h4 className="font-bold text-gray-700 text-lg mb-2">Potion Brewer</h4>
                       <p className="text-gray-600 text-sm">
-                        Rolagem: {brewingResult.percentageRoll}% - Não foi possível gerar uma segunda poção
+                        Rolagem: {brewingResult.percentageRoll}% - Não foi possível gerar uma
+                        segunda poção
                       </p>
                     </div>
                   </div>
@@ -291,17 +289,22 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="grid grid-cols-3 gap-3 text-sm">
                     {(['combat', 'utility', 'whimsy'] as const).map((attr) => (
                       <div key={attr} className="text-center">
-                        <div className={`font-medium ${POTION_CATEGORY_CONFIG[attr].classes.split(' ')[0]}`}>{POTION_CATEGORY_CONFIG[attr].label}</div>
+                        <div
+                          className={`font-medium ${POTION_CATEGORY_CONFIG[attr].classes.split(' ')[0]}`}
+                        >
+                          {POTION_CATEGORY_CONFIG[attr].label}
+                        </div>
                         <div className="text-lg font-bold">
-                          {attr === 'combat' ? brewingResult.recipe.combatScore : 
-                           attr === 'utility' ? brewingResult.recipe.utilityScore : 
-                           brewingResult.recipe.whimsyScore}
+                          {attr === 'combat'
+                            ? brewingResult.recipe.combatScore
+                            : attr === 'utility'
+                              ? brewingResult.recipe.utilityScore
+                              : brewingResult.recipe.whimsyScore}
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-
               </>
             ) : (
               <div className="text-center text-red-600">
@@ -311,9 +314,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             )}
 
             <div className="flex justify-end">
-              <Button onClick={closeResultModal}>
-                Fechar
-              </Button>
+              <Button onClick={closeResultModal}>Fechar</Button>
             </div>
           </div>
         </Modal>
@@ -328,8 +329,8 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
           <div className="space-y-4">
             <div className="text-center">
               <p className="text-gray-600 mb-4">
-                O talento Potion Brewer permite escolher entre o 1º e 2º maior score. 
-                Qual tipo de poção você deseja criar?
+                O talento Potion Brewer permite escolher entre o 1º e 2º maior score. Qual tipo de
+                poção você deseja criar?
               </p>
             </div>
 
@@ -344,7 +345,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                 >
                   <div className="flex items-center justify-between">
                     <div className="text-left">
-                      <div className="font-bold text-lg">{POTION_CATEGORY_CONFIG[score.attribute].label}</div>
+                      <div className="font-bold text-lg">
+                        {POTION_CATEGORY_CONFIG[score.attribute].label}
+                      </div>
                       <div className="text-sm opacity-80">Score: {score.value}</div>
                     </div>
                     <div className="text-right">
@@ -366,10 +369,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             </div>
 
             <div className="flex justify-end pt-4 border-t border-gray-200">
-              <Button
-                onClick={closeScoreChoiceModal}
-                variant="secondary"
-              >
+              <Button onClick={closeScoreChoiceModal} variant="secondary">
                 Cancelar
               </Button>
             </div>
@@ -379,4 +379,3 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
     </div>
   );
 };
-

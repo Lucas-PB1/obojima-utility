@@ -30,7 +30,9 @@ const textColorClasses = {
 
 export default function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
   return (
-    <div className={`bg-white backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-totoro-blue/20 ${className}`}>
+    <div
+      className={`bg-white backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-totoro-blue/20 ${className}`}
+    >
       <h2 className="text-2xl font-semibold text-totoro-gray mb-4">{title}</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
@@ -38,9 +40,7 @@ export default function StatsGrid({ title, stats, className = '' }: StatsGridPro
             <div className={`text-2xl font-bold ${colorClasses[stat.color].split(' ')[1]}`}>
               {stat.value}
             </div>
-            <div className={`text-sm ${textColorClasses[stat.color]}`}>
-              {stat.label}
-            </div>
+            <div className={`text-sm ${textColorClasses[stat.color]}`}>{stat.label}</div>
           </div>
         ))}
       </div>

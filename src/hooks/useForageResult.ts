@@ -32,8 +32,9 @@ export function useForageResult(result: ForageAttempt | null) {
     settings,
     regionDisplayName,
     particles,
-    showDoubleForage: settings.doubleForageTalent && 
-                     result?.success && 
-                     (result.rarity === 'comum' || result.rarity === 'incomum')
+    showDoubleForage:
+      settings.doubleForageTalent &&
+      result?.success &&
+      (result.rarity === 'comum' || result.rarity === 'incomum')
   };
 }

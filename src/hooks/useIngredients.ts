@@ -40,10 +40,12 @@ export function useIngredients() {
       return;
     }
 
-    const unsubscribeIngredients = firebaseStorageService.subscribeToCollectedIngredients((ingredients) => {
-      setIngredients(ingredients);
-      setLoading(false);
-    });
+    const unsubscribeIngredients = firebaseStorageService.subscribeToCollectedIngredients(
+      (ingredients) => {
+        setIngredients(ingredients);
+        setLoading(false);
+      }
+    );
 
     const unsubscribeAttempts = firebaseStorageService.subscribeToForageAttempts((attempts) => {
       setAttempts(attempts);
@@ -55,41 +57,53 @@ export function useIngredients() {
     };
   }, [isAuthenticated, authLoading]);
 
-  const markAsUsed = useCallback(async (id: string) => {
-    if (!isAuthenticated) return;
-    try {
-      await firebaseStorageService.markIngredientAsUsed(id);
-    } catch (error) {
-      console.error('Erro ao marcar ingrediente como usado:', error);
-    }
-  }, [isAuthenticated]);
+  const markAsUsed = useCallback(
+    async (id: string) => {
+      if (!isAuthenticated) return;
+      try {
+        await firebaseStorageService.markIngredientAsUsed(id);
+      } catch (error) {
+        console.error('Erro ao marcar ingrediente como usado:', error);
+      }
+    },
+    [isAuthenticated]
+  );
 
-  const removeIngredient = useCallback(async (id: string) => {
-    if (!isAuthenticated) return;
-    try {
-      await firebaseStorageService.removeCollectedIngredient(id);
-    } catch (error) {
-      console.error('Erro ao remover ingrediente:', error);
-    }
-  }, [isAuthenticated]);
+  const removeIngredient = useCallback(
+    async (id: string) => {
+      if (!isAuthenticated) return;
+      try {
+        await firebaseStorageService.removeCollectedIngredient(id);
+      } catch (error) {
+        console.error('Erro ao remover ingrediente:', error);
+      }
+    },
+    [isAuthenticated]
+  );
 
-  const addIngredient = useCallback(async (ingredient: CollectedIngredient) => {
-    if (!isAuthenticated) return;
-    try {
-      await firebaseStorageService.addCollectedIngredient(ingredient);
-    } catch (error) {
-      console.error('Erro ao adicionar ingrediente:', error);
-    }
-  }, [isAuthenticated]);
+  const addIngredient = useCallback(
+    async (ingredient: CollectedIngredient) => {
+      if (!isAuthenticated) return;
+      try {
+        await firebaseStorageService.addCollectedIngredient(ingredient);
+      } catch (error) {
+        console.error('Erro ao adicionar ingrediente:', error);
+      }
+    },
+    [isAuthenticated]
+  );
 
-  const addAttempt = useCallback(async (attempt: ForageAttempt) => {
-    if (!isAuthenticated) return;
-    try {
-      await firebaseStorageService.addForageAttempt(attempt);
-    } catch (error) {
-      console.error('Erro ao adicionar tentativa:', error);
-    }
-  }, [isAuthenticated]);
+  const addAttempt = useCallback(
+    async (attempt: ForageAttempt) => {
+      if (!isAuthenticated) return;
+      try {
+        await firebaseStorageService.addForageAttempt(attempt);
+      } catch (error) {
+        console.error('Erro ao adicionar tentativa:', error);
+      }
+    },
+    [isAuthenticated]
+  );
 
   const getStats = useCallback(async () => {
     if (!isAuthenticated) {
@@ -105,8 +119,6 @@ export function useIngredients() {
     }
     return await firebaseStorageService.getStats();
   }, [isAuthenticated]);
-
-
 
   return {
     ingredients,

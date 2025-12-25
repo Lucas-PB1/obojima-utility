@@ -28,8 +28,6 @@ export default function ActivityFilters({ attempts, onFilteredAttempts }: Activi
     onFilteredAttempts(filteredAttempts);
   }, [filteredAttempts, onFilteredAttempts]);
 
-
-
   return (
     <FilterSection className="mb-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -55,11 +53,7 @@ export default function ActivityFilters({ attempts, onFilteredAttempts }: Activi
         />
 
         <div className="flex items-end">
-          <Button
-            onClick={clearFilters}
-            variant="secondary"
-            fullWidth
-          >
+          <Button onClick={clearFilters} variant="secondary" fullWidth>
             Limpar Filtros
           </Button>
         </div>

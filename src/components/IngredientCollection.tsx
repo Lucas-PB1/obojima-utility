@@ -27,7 +27,7 @@ export default function IngredientCollection() {
       sortable: true,
       width: '30%',
       render: (_, item) => (
-        <div 
+        <div
           className="flex items-center space-x-3 cursor-pointer hover:bg-totoro-blue/5 p-2 rounded-lg transition-colors"
           onClick={() => handleIngredientClick(item.ingredient)}
         >
@@ -97,11 +97,13 @@ export default function IngredientCollection() {
       render: (_, item) => (
         <div className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-              item.used
-                ? 'bg-totoro-gray/20 text-totoro-gray' 
-                : 'bg-totoro-green/20 text-totoro-green'
-            }`}>
+            <span
+              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                item.used
+                  ? 'bg-totoro-gray/20 text-totoro-gray'
+                  : 'bg-totoro-green/20 text-totoro-green'
+              }`}
+            >
               {item.used ? 'Usado' : `${item.quantity} disponível(is)`}
             </span>
           </div>

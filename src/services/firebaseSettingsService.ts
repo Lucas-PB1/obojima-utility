@@ -36,18 +36,18 @@ class FirebaseSettingsService {
     if (!userId) throw new Error('Usuário não autenticado');
     return `users/${userId}`;
   }
-  
+
   private getSettingsFieldPath(): string {
     return 'settings';
   }
 
   private async getSettings(): Promise<Settings> {
     if (!this.isClient() || !this.getUserId()) return defaultSettings;
-    
+
     try {
       const userRef = doc(db, this.getSettingsPath());
       const snapshot = await getDoc(userRef);
-      
+
       if (snapshot.exists()) {
         const data = snapshot.data();
         const settings = data[this.getSettingsFieldPath()] as Settings | undefined;
@@ -55,7 +55,7 @@ class FirebaseSettingsService {
           return settings;
         }
       }
-      
+
       await this.saveSettings(defaultSettings);
       return defaultSettings;
     } catch (error) {
@@ -66,7 +66,7 @@ class FirebaseSettingsService {
 
   private async saveSettings(settings: Settings): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
-    
+
     try {
       const userRef = doc(db, this.getSettingsPath());
       await setDoc(userRef, { [this.getSettingsFieldPath()]: settings }, { merge: true });
@@ -84,23 +84,27 @@ class FirebaseSettingsService {
 
     try {
       const userRef = doc(db, this.getSettingsPath());
-      
-      this.settingsUnsubscribe = onSnapshot(userRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          const settings = data[this.getSettingsFieldPath()] as Settings | undefined;
-          if (settings) {
-            callback(settings);
+
+      this.settingsUnsubscribe = onSnapshot(
+        userRef,
+        (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+            const settings = data[this.getSettingsFieldPath()] as Settings | undefined;
+            if (settings) {
+              callback(settings);
+            } else {
+              callback(defaultSettings);
+            }
           } else {
             callback(defaultSettings);
           }
-        } else {
+        },
+        (error) => {
+          console.error('Erro ao observar configurações:', error);
           callback(defaultSettings);
         }
-      }, (error) => {
-        console.error('Erro ao observar configurações:', error);
-        callback(defaultSettings);
-      });
+      );
 
       return () => {
         if (this.settingsUnsubscribe) {
@@ -183,7 +187,7 @@ class FirebaseSettingsService {
 
   async clearSettings(): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
-    
+
     try {
       const userRef = doc(db, this.getSettingsPath());
       await setDoc(userRef, { [this.getSettingsFieldPath()]: defaultSettings }, { merge: true });
@@ -202,4 +206,3 @@ class FirebaseSettingsService {
 }
 
 export const firebaseSettingsService = new FirebaseSettingsService();
-

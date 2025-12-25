@@ -11,11 +11,11 @@ interface InputProps {
   max?: number;
 }
 
-export default function Input({ 
+export default function Input({
   type = 'text',
-  value, 
-  onChange, 
-  placeholder = '', 
+  value,
+  onChange,
+  placeholder = '',
   label,
   className = '',
   min,
@@ -23,11 +23,7 @@ export default function Input({
 }: InputProps) {
   return (
     <div className={className}>
-      {label && (
-        <label className="block text-sm font-medium text-totoro-gray mb-2">
-          {label}
-        </label>
-      )}
+      {label && <label className="block text-sm font-medium text-totoro-gray mb-2">{label}</label>}
       <input
         type={type}
         value={value}

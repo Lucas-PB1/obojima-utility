@@ -2,7 +2,7 @@ module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
     extend: {
@@ -12,7 +12,7 @@ module.exports = {
           green: '#7ED321',
           yellow: '#F5A623',
           gray: '#2C3E50',
-          orange: '#E67E22',
+          orange: '#E67E22'
         },
         background: 'var(--background)',
         foreground: 'var(--foreground)',
@@ -20,9 +20,9 @@ module.exports = {
         secondary: 'var(--secondary)',
         accent: 'var(--accent)',
         muted: 'var(--muted)',
-        border: 'var(--border)',
-      },
-    },
+        border: 'var(--border)'
+      }
+    }
   },
-  plugins: [],
-}
+  plugins: []
+};

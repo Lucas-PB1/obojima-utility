@@ -12,7 +12,7 @@ export function useModalState(initialState: boolean = false) {
   }, []);
 
   const toggleModal = useCallback(() => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   }, []);
 
   return {

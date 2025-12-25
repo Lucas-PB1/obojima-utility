@@ -39,12 +39,10 @@ export default function ForageForm({
   isLoading,
   remainingAttempts
 }: ForageFormProps) {
-  const regionOptions = ingredientsService.getRegionKeys().map(key => ({
+  const regionOptions = ingredientsService.getRegionKeys().map((key) => ({
     value: key,
     label: ingredientsService.getRegionDisplayName(key)
   }));
-
-
 
   return (
     <ContentCard title="⚙️ Configuração do Teste">

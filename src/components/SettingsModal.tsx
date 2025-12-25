@@ -1,144 +1,9 @@
 import Modal from '@/components/ui/Modal';
 import Input from '@/components/ui/Input';
-import { useAuth } from '@/hooks/useAuth';
 import Button from '@/components/ui/Button';
 import Select from '@/components/ui/Select';
-import { DiceType } from '@/types/ingredients';
-import { useState, useEffect, useCallback } from 'react';
-import { firebaseSettingsService } from '@/services/firebaseSettingsService';
-
-export interface SettingsState {
-  defaultModifier: number | '';
-  defaultBonusType: string;
-  defaultBonusValue: number;
-  doubleForageTalent: boolean;
-  cauldronBonus: boolean;
-  potionBrewerTalent: boolean;
-  potionBrewerLevel: number;
-}
-
-const defaultSettings: SettingsState = {
-  defaultModifier: '',
-  defaultBonusType: '',
-  defaultBonusValue: 0,
-  doubleForageTalent: false,
-  cauldronBonus: false,
-  potionBrewerTalent: false,
-  potionBrewerLevel: 1
-};
-
-export function useSettings() {
-  const { isAuthenticated, loading: authLoading } = useAuth();
-  const [settings, setSettings] = useState<SettingsState>(defaultSettings);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const loadSettings = useCallback(async () => {
-    if (!isAuthenticated) {
-      setSettings(defaultSettings);
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const defaultModifier = await firebaseSettingsService.getDefaultModifier();
-      const defaultBonusDice = await firebaseSettingsService.getDefaultBonusDice();
-      const doubleForageTalent = await firebaseSettingsService.getDoubleForageTalent();
-      const cauldronBonus = await firebaseSettingsService.getCauldronBonus();
-      const potionBrewerTalent = await firebaseSettingsService.getPotionBrewerTalent();
-      const potionBrewerLevel = await firebaseSettingsService.getPotionBrewerLevel();
-      
-      setSettings({
-        defaultModifier,
-        defaultBonusType: defaultBonusDice?.type || '',
-        defaultBonusValue: defaultBonusDice?.value || 0,
-        doubleForageTalent,
-        cauldronBonus,
-        potionBrewerTalent,
-        potionBrewerLevel
-      });
-    } catch (error) {
-      console.error('Erro ao carregar configurações:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [isAuthenticated]);
-
-  useEffect(() => {
-    if (authLoading) return;
-
-    if (!isAuthenticated) {
-      setSettings(defaultSettings);
-      return;
-    }
-
-    const unsubscribe = firebaseSettingsService.subscribeToSettings((firestoreSettings) => {
-      const defaultBonusDice = firestoreSettings.defaultBonusDice;
-      setSettings({
-        defaultModifier: firestoreSettings.defaultModifier,
-        defaultBonusType: defaultBonusDice?.type || '',
-        defaultBonusValue: defaultBonusDice?.value || 0,
-        doubleForageTalent: firestoreSettings.doubleForageTalent,
-        cauldronBonus: firestoreSettings.cauldronBonus,
-        potionBrewerTalent: firestoreSettings.potionBrewerTalent,
-        potionBrewerLevel: firestoreSettings.potionBrewerLevel
-      });
-    });
-
-    return () => unsubscribe();
-  }, [isAuthenticated, authLoading]);
-
-  const saveSettings = useCallback(async (newSettings: SettingsState) => {
-    if (!isAuthenticated) return;
-    setIsLoading(true);
-    try {
-      await firebaseSettingsService.setDefaultModifier(newSettings.defaultModifier);
-      const bonusDice = newSettings.defaultBonusType && newSettings.defaultBonusValue > 0
-        ? { type: newSettings.defaultBonusType as DiceType, value: newSettings.defaultBonusValue }
-        : null;
-      await firebaseSettingsService.setDefaultBonusDice(bonusDice);
-      await firebaseSettingsService.setDoubleForageTalent(newSettings.doubleForageTalent);
-      await firebaseSettingsService.setCauldronBonus(newSettings.cauldronBonus);
-      await firebaseSettingsService.setPotionBrewerTalent(newSettings.potionBrewerTalent);
-      await firebaseSettingsService.setPotionBrewerLevel(newSettings.potionBrewerLevel);
-      setSettings(newSettings);
-    } catch (error) {
-      console.error('Erro ao salvar configurações:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [isAuthenticated]);
-
-  const clearSettings = useCallback(async () => {
-    if (!isAuthenticated) return;
-    setIsLoading(true);
-    try {
-      await firebaseSettingsService.clearSettings();
-      setSettings(defaultSettings);
-    } catch (error) {
-      console.error('Erro ao limpar configurações:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [isAuthenticated]);
-
-  const updateSetting = useCallback(<K extends keyof SettingsState>(
-    key: K,
-    value: SettingsState[K]
-  ) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
-  }, []);
-
-  return {
-    settings,
-    isLoading: isLoading || authLoading,
-    loadSettings,
-    saveSettings,
-    clearSettings,
-    updateSetting
-  };
-}
+import { useSettings } from '@/hooks/useSettings';
+import { DICE_OPTIONS } from '@/constants/settings';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -146,42 +11,11 @@ interface SettingsModalProps {
 }
 
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
-  const { settings, isLoading, saveSettings, clearSettings, updateSetting } = useSettings();
-
-  const handleSave = async () => {
-    try {
-      await saveSettings(settings);
-      onClose();
-    } catch (error) {
-      console.error('Erro ao salvar configurações:', error);
-    }
-  };
-
-  const handleClear = async () => {
-    try {
-      await clearSettings();
-    } catch (error) {
-      console.error('Erro ao limpar configurações:', error);
-    }
-  };
-
-  const diceOptions = [
-    { value: 'd4', label: 'D4' },
-    { value: 'd6', label: 'D6' },
-    { value: 'd8', label: 'D8' },
-    { value: 'd10', label: 'D10' },
-    { value: 'd12', label: 'D12' }
-  ];
+  const { settings, isLoading, handleSave, handleClear, updateSetting } = useSettings();
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="⚙️ Configurações Padrão"
-      size="md"
-    >
+    <Modal isOpen={isOpen} onClose={onClose} title="⚙️ Configurações Padrão" size="md">
       <div className="space-y-6">
-
         <div>
           <h4 className="font-semibold text-totoro-gray mb-3 flex items-center">
             <span className="mr-2">🎯</span>
@@ -204,16 +38,16 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <span className="mr-2">🎲</span>
             Dado Bônus Padrão
           </h4>
-          
+
           <div className="grid grid-cols-2 gap-4">
             <Select
               value={settings.defaultBonusType}
               onChange={(value) => updateSetting('defaultBonusType', value)}
-              options={diceOptions}
+              options={DICE_OPTIONS as unknown as { value: string; label: string }[]}
               placeholder="Selecione o dado"
               label="Tipo do Dado"
             />
-            
+
             <Input
               type="number"
               value={settings.defaultBonusValue}
@@ -224,7 +58,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               max={10}
             />
           </div>
-          
+
           <p className="text-sm text-totoro-gray/60 mt-2">
             Configure um dado bônus que será usado automaticamente
           </p>
@@ -235,7 +69,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <span className="mr-2">✨</span>
             Talentos Especiais
           </h4>
-          
+
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg">
               <div className="flex-1">
@@ -291,7 +125,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                 </label>
               </div>
-              
+
               {settings.potionBrewerTalent && (
                 <div className="mt-3">
                   <Input
@@ -322,24 +156,16 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         </div>
 
         <div className="flex justify-between pt-4 border-t border-totoro-gray/20">
-          <Button
-            onClick={handleClear}
-            variant="danger"
-            effect="shimmer"
-          >
+          <Button onClick={handleClear} variant="danger" effect="shimmer">
             🗑️ Limpar Configurações
           </Button>
-          
+
           <div className="space-x-3">
-            <Button
-              onClick={onClose}
-              variant="secondary"
-              effect="ripple"
-            >
+            <Button onClick={onClose} variant="secondary" effect="ripple">
               Cancelar
             </Button>
             <Button
-              onClick={handleSave}
+              onClick={() => handleSave(onClose)}
               variant="primary"
               effect="pulse-glow"
               disabled={isLoading}

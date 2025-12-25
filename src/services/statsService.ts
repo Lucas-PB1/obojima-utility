@@ -29,11 +29,11 @@ export class StatsService {
       };
     }
 
-    const successes = attempts.filter(a => a.success).length;
+    const successes = attempts.filter((a) => a.success).length;
     const successRate = this.calculateSuccessRate(successes, attempts.length);
     const totalRolls = attempts.reduce((sum, a) => sum + a.roll, 0);
     const averageRoll = totalRolls / attempts.length;
-    const ingredientsCollected = attempts.filter(a => a.success && a.ingredient).length;
+    const ingredientsCollected = attempts.filter((a) => a.success && a.ingredient).length;
 
     return {
       totalAttempts: attempts.length,
@@ -48,9 +48,9 @@ export class StatsService {
     attempts: ForageAttempt[]
   ): CollectionStats {
     const totalCollected = ingredients.length;
-    const totalUsed = ingredients.filter(i => i.used).length;
+    const totalUsed = ingredients.filter((i) => i.used).length;
     const totalAttempts = attempts.length;
-    const successes = attempts.filter(a => a.success).length;
+    const successes = attempts.filter((a) => a.success).length;
     const successRate = this.calculateSuccessRate(successes, totalAttempts);
 
     return {
@@ -66,9 +66,10 @@ export class StatsService {
       totalAttempts: stats.totalAttempts,
       successRate: `${stats.successRate.toFixed(1)}%`,
       averageRoll: 'averageRoll' in stats ? stats.averageRoll.toFixed(1) : undefined,
-      ingredientsCollected: 'ingredientsCollected' in stats ? stats.ingredientsCollected : undefined,
+      ingredientsCollected:
+        'ingredientsCollected' in stats ? stats.ingredientsCollected : undefined,
       totalCollected: 'totalCollected' in stats ? stats.totalCollected : undefined,
-      totalUsed: 'totalUsed' in stats ? stats.totalUsed : undefined,
+      totalUsed: 'totalUsed' in stats ? stats.totalUsed : undefined
     };
   }
 }

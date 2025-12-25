@@ -1,9 +1,9 @@
-import { 
-  Ingredient, 
-  Potion, 
-  PotionCategory, 
-  PotionRecipe, 
-  PotionBrewingResult 
+import {
+  Ingredient,
+  Potion,
+  PotionCategory,
+  PotionRecipe,
+  PotionBrewingResult
 } from '@/types/ingredients';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 
@@ -34,7 +34,10 @@ class PotionService {
     }
   }
 
-  public calculateAvailableScores(ingredients: Ingredient[], potionBrewerTalent: boolean = false): {
+  public calculateAvailableScores(
+    ingredients: Ingredient[],
+    potionBrewerTalent: boolean = false
+  ): {
     scores: Array<{ attribute: 'combat' | 'utility' | 'whimsy'; value: number; label: string }>;
     canChoose: boolean;
   } {
@@ -60,7 +63,10 @@ class PotionService {
     return { scores: topTwoScores, canChoose };
   }
 
-  public async brewPotion(ingredients: Ingredient[], chosenAttribute?: 'combat' | 'utility' | 'whimsy'): Promise<PotionBrewingResult> {
+  public async brewPotion(
+    ingredients: Ingredient[],
+    chosenAttribute?: 'combat' | 'utility' | 'whimsy'
+  ): Promise<PotionBrewingResult> {
     if (ingredients.length !== 3) {
       return {
         recipe: this.createEmptyRecipe(),
@@ -69,7 +75,7 @@ class PotionService {
       };
     }
 
-    const ingredientIds = ingredients.map(ing => ing.id);
+    const ingredientIds = ingredients.map((ing) => ing.id);
     const uniqueIds = new Set(ingredientIds);
     if (uniqueIds.size !== 3) {
       return {
@@ -95,7 +101,7 @@ class PotionService {
     let winningScore: number;
 
     if (chosenAttribute) {
-      const chosenScore = scores.find(s => s.attribute === chosenAttribute);
+      const chosenScore = scores.find((s) => s.attribute === chosenAttribute);
       if (chosenScore) {
         winningAttribute = chosenAttribute;
         winningScore = chosenScore.value;
@@ -134,10 +140,11 @@ class PotionService {
     };
 
     const cauldronBonus = await firebaseSettingsService.getCauldronBonus();
-    const isUncommonOrRare = resultingPotion.raridade === 'Incomum' || resultingPotion.raridade === 'Rara';
-    
+    const isUncommonOrRare =
+      resultingPotion.raridade === 'Incomum' || resultingPotion.raridade === 'Rara';
+
     let message = `Poção criada com sucesso! ${resultingPotion.nome_portugues} (${resultingPotion.raridade})`;
-    
+
     if (cauldronBonus && isUncommonOrRare) {
       message += `\n\n✨ Caldeirão Especial ativado! Você também gerou uma poção comum do mesmo tipo com os restos!`;
     }
@@ -163,7 +170,7 @@ class PotionService {
     if (potionBrewerTalent) {
       const potionBrewerLevel = await firebaseSettingsService.getPotionBrewerLevel();
       const percentageRoll = Math.floor(Math.random() * 100) + 1;
-      
+
       if (percentageRoll <= potionBrewerLevel) {
         const secondPotion = this.selectPotion(scores[0].attribute, scores[0].value);
         if (secondPotion) {
@@ -243,9 +250,12 @@ class PotionService {
     }
   }
 
-  public async getPotionById(category: 'combat' | 'utility' | 'whimsy', id: number): Promise<Potion | null> {
+  public async getPotionById(
+    category: 'combat' | 'utility' | 'whimsy',
+    id: number
+  ): Promise<Potion | null> {
     const potions = await this.getPotionsByCategory(category);
-    return potions.find(potion => potion.id === id) || null;
+    return potions.find((potion) => potion.id === id) || null;
   }
 
   public calculateScores(ingredients: Ingredient[]): {
@@ -278,7 +288,9 @@ class PotionService {
     };
   }
 
-  public async generateCommonPotionFromRemains(winningAttribute: 'combat' | 'utility' | 'whimsy'): Promise<Potion | null> {
+  public async generateCommonPotionFromRemains(
+    winningAttribute: 'combat' | 'utility' | 'whimsy'
+  ): Promise<Potion | null> {
     if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
       await this.loadPotionData();
     }
@@ -301,8 +313,8 @@ class PotionService {
       return null;
     }
 
-    const commonPotions = potionCategory.pocoes.filter(potion => potion.raridade === 'Comum');
-    
+    const commonPotions = potionCategory.pocoes.filter((potion) => potion.raridade === 'Comum');
+
     if (commonPotions.length > 0) {
       const randomIndex = Math.floor(Math.random() * commonPotions.length);
       return commonPotions[randomIndex];

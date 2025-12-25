@@ -26,9 +26,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-totoro-blue/20">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-totoro-gray mb-2">
-              🌿 Obojima Utilities
-            </h1>
+            <h1 className="text-3xl font-bold text-totoro-gray mb-2">🌿 Obojima Utilities</h1>
             <p className="text-totoro-blue">
               {isLogin ? 'Faça login para continuar' : 'Crie sua conta'}
             </p>
@@ -74,7 +72,9 @@ export default function LoginPage() {
               type="submit"
               variant="primary"
               fullWidth
-              disabled={loading || !email || !password || (!isLogin && password !== confirmPassword)}
+              disabled={
+                loading || !email || !password || (!isLogin && password !== confirmPassword)
+              }
               className="mt-6"
             >
               {loading ? 'Carregando...' : isLogin ? 'Entrar' : 'Criar Conta'}
@@ -86,9 +86,7 @@ export default function LoginPage() {
               onClick={toggleMode}
               className="text-sm text-totoro-blue hover:text-totoro-blue/80 transition-colors"
             >
-              {isLogin
-                ? 'Não tem uma conta? Criar conta'
-                : 'Já tem uma conta? Fazer login'}
+              {isLogin ? 'Não tem uma conta? Criar conta' : 'Já tem uma conta? Fazer login'}
             </button>
           </div>
         </div>
@@ -102,5 +100,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-

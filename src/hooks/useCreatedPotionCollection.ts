@@ -10,12 +10,12 @@ export function useCreatedPotionCollection() {
   const [selectedPotion, setSelectedPotion] = useState<CreatedPotion | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState<PotionFilterType>('all');
-  const [stats, setStats] = useState({ 
-    total: 0, 
-    available: 0, 
-    used: 0, 
-    byCategory: { combat: 0, utility: 0, whimsy: 0 }, 
-    recent: 0 
+  const [stats, setStats] = useState({
+    total: 0,
+    available: 0,
+    used: 0,
+    byCategory: { combat: 0, utility: 0, whimsy: 0 },
+    recent: 0
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export function useCreatedPotionCollection() {
   }, []);
 
   const filteredPotions = useMemo(() => {
-    return potions.filter(potion => {
+    return potions.filter((potion) => {
       if (filter === 'all') return true;
       if (filter === 'available') return potion.quantity > 0;
       if (filter === 'used') return potion.used;
@@ -53,19 +53,25 @@ export function useCreatedPotionCollection() {
     setShowModal(true);
   }, []);
 
-  const handleUsePotion = useCallback(async (potionId: string) => {
-    const success = await firebaseCreatedPotionService.usePotion(potionId);
-    if (success) {
-      loadPotions();
-    }
-  }, [loadPotions]);
+  const handleUsePotion = useCallback(
+    async (potionId: string) => {
+      const success = await firebaseCreatedPotionService.usePotion(potionId);
+      if (success) {
+        loadPotions();
+      }
+    },
+    [loadPotions]
+  );
 
-  const handleDeletePotion = useCallback(async (potionId: string) => {
-    if (confirm('Tem certeza que deseja excluir esta poção?')) {
-      await firebaseCreatedPotionService.removePotion(potionId);
-      loadPotions();
-    }
-  }, [loadPotions]);
+  const handleDeletePotion = useCallback(
+    async (potionId: string) => {
+      if (confirm('Tem certeza que deseja excluir esta poção?')) {
+        await firebaseCreatedPotionService.removePotion(potionId);
+        loadPotions();
+      }
+    },
+    [loadPotions]
+  );
 
   const closeModal = useCallback(() => {
     setShowModal(false);

@@ -16,7 +16,7 @@ export function useHome() {
     tabs,
     handleIngredientCollected,
     handleTabChange,
-    handleViewCollection,
+    handleViewCollection
   } = useApp();
 
   const { ingredients, markAsUsed } = useIngredients();
@@ -28,13 +28,13 @@ export function useHome() {
   }, [authLoading, isAuthenticated, router]);
 
   const availableIngredients = ingredients
-    .filter(ing => !ing.used && ing.quantity > 0)
-    .map(ing => ing.ingredient);
+    .filter((ing) => !ing.used && ing.quantity > 0)
+    .map((ing) => ing.ingredient);
 
   const handleIngredientsUsed = (ingredientIds: number[]) => {
     ingredients
-      .filter(ing => ingredientIds.includes(ing.ingredient.id) && !ing.used)
-      .forEach(ing => markAsUsed(ing.id));
+      .filter((ing) => ingredientIds.includes(ing.ingredient.id) && !ing.used)
+      .forEach((ing) => markAsUsed(ing.id));
   };
 
   return {

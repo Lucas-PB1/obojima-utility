@@ -9,10 +9,10 @@ export function useRecipeCollection() {
   const [selectedRecipe, setSelectedRecipe] = useState<PotionRecipe | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState<'all' | 'combat' | 'utility' | 'whimsy'>('all');
-  const [stats, setStats] = useState({ 
-    total: 0, 
-    byCategory: { combat: 0, utility: 0, whimsy: 0 }, 
-    recent: 0 
+  const [stats, setStats] = useState({
+    total: 0,
+    byCategory: { combat: 0, utility: 0, whimsy: 0 },
+    recent: 0
   });
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function useRecipeCollection() {
   }, []);
 
   const filteredRecipes = useMemo(() => {
-    return recipes.filter(recipe => {
+    return recipes.filter((recipe) => {
       if (filter === 'all') return true;
       return recipe.winningAttribute === filter;
     });
@@ -48,12 +48,15 @@ export function useRecipeCollection() {
     setShowModal(true);
   }, []);
 
-  const handleDeleteRecipe = useCallback(async (recipeId: string) => {
-    if (confirm('Tem certeza que deseja excluir esta receita?')) {
-      await firebaseRecipeService.removeRecipe(recipeId);
-      loadRecipes();
-    }
-  }, [loadRecipes]);
+  const handleDeleteRecipe = useCallback(
+    async (recipeId: string) => {
+      if (confirm('Tem certeza que deseja excluir esta receita?')) {
+        await firebaseRecipeService.removeRecipe(recipeId);
+        loadRecipes();
+      }
+    },
+    [loadRecipes]
+  );
 
   const closeModal = useCallback(() => {
     setShowModal(false);

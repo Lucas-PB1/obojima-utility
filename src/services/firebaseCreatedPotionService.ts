@@ -1,12 +1,12 @@
-import { 
-  collection, 
-  doc, 
-  getDocs, 
+import {
+  collection,
+  doc,
+  getDocs,
   getDoc,
-  addDoc, 
+  addDoc,
   updateDoc,
-  deleteDoc, 
-  query, 
+  deleteDoc,
+  query,
   orderBy,
   onSnapshot,
   Timestamp,
@@ -57,7 +57,7 @@ class FirebaseCreatedPotionService {
     if (!this.isClient() || !this.getUserId()) {
       throw new Error('Usuário não autenticado');
     }
-    
+
     const createdPotion: Omit<CreatedPotion, 'id'> = {
       potion: recipe.resultingPotion,
       recipe: {
@@ -92,12 +92,12 @@ class FirebaseCreatedPotionService {
 
   async getAllCreatedPotions(): Promise<CreatedPotion[]> {
     if (!this.isClient() || !this.getUserId()) return [];
-    
+
     try {
       const potionsRef = collection(db, this.getPotionsPath());
       const snapshot = await getDocs(potionsRef);
-      
-      return snapshot.docs.map(doc => {
+
+      return snapshot.docs.map((doc) => {
         const data = doc.data();
         return {
           ...data,
@@ -125,26 +125,30 @@ class FirebaseCreatedPotionService {
     try {
       const potionsRef = collection(db, this.getPotionsPath());
       const q = query(potionsRef, orderBy('createdAt', 'desc'));
-      
-      this.potionsUnsubscribe = onSnapshot(q, (snapshot) => {
-        const potions = snapshot.docs.map(doc => {
-          const data = doc.data();
-          return {
-            ...data,
-            id: doc.id,
-            createdAt: this.convertTimestampToDate(data.createdAt),
-            usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
-            recipe: {
-              ...data.recipe,
-              createdAt: this.convertTimestampToDate(data.recipe.createdAt)
-            }
-          } as CreatedPotion;
-        });
-        callback(potions);
-      }, (error) => {
-        console.error('Erro ao observar poções:', error);
-        callback([]);
-      });
+
+      this.potionsUnsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          const potions = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+              ...data,
+              id: doc.id,
+              createdAt: this.convertTimestampToDate(data.createdAt),
+              usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
+              recipe: {
+                ...data.recipe,
+                createdAt: this.convertTimestampToDate(data.recipe.createdAt)
+              }
+            } as CreatedPotion;
+          });
+          callback(potions);
+        },
+        (error) => {
+          console.error('Erro ao observar poções:', error);
+          callback([]);
+        }
+      );
 
       return () => {
         if (this.potionsUnsubscribe) {
@@ -161,22 +165,22 @@ class FirebaseCreatedPotionService {
 
   async getAvailablePotions(): Promise<CreatedPotion[]> {
     const potions = await this.getAllCreatedPotions();
-    return potions.filter(potion => potion.quantity > 0);
+    return potions.filter((potion) => potion.quantity > 0);
   }
 
   async usePotion(potionId: string): Promise<boolean> {
     if (!this.isClient() || !this.getUserId()) return false;
-    
+
     try {
       const potion = await this.getPotionById(potionId);
-      
+
       if (!potion || potion.quantity <= 0) {
         return false;
       }
 
       const newQuantity = potion.quantity - 1;
       const potionRef = doc(db, this.getPotionsPath(), potionId);
-      
+
       if (newQuantity === 0) {
         await updateDoc(potionRef, {
           quantity: 0,
@@ -188,7 +192,7 @@ class FirebaseCreatedPotionService {
           quantity: newQuantity
         });
       }
-      
+
       return true;
     } catch (error) {
       console.error('Erro ao usar poção:', error);
@@ -198,7 +202,7 @@ class FirebaseCreatedPotionService {
 
   async removePotion(potionId: string): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
-    
+
     try {
       const potionRef = doc(db, this.getPotionsPath(), potionId);
       await deleteDoc(potionRef);
@@ -210,11 +214,11 @@ class FirebaseCreatedPotionService {
 
   async getPotionById(potionId: string): Promise<CreatedPotion | null> {
     if (!this.isClient() || !this.getUserId()) return null;
-    
+
     try {
       const potionRef = doc(db, this.getPotionsPath(), potionId);
       const snapshot = await getDoc(potionRef);
-      
+
       if (snapshot.exists()) {
         const data = snapshot.data();
         return {
@@ -228,7 +232,7 @@ class FirebaseCreatedPotionService {
           }
         } as CreatedPotion;
       }
-      
+
       return null;
     } catch (error) {
       console.error('Erro ao buscar poção:', error);
@@ -238,7 +242,7 @@ class FirebaseCreatedPotionService {
 
   async getPotionsByCategory(category: 'combat' | 'utility' | 'whimsy'): Promise<CreatedPotion[]> {
     const potions = await this.getAllCreatedPotions();
-    return potions.filter(potion => potion.recipe.winningAttribute === category);
+    return potions.filter((potion) => potion.recipe.winningAttribute === category);
   }
   async getPotionStats(): Promise<{
     total: number;
@@ -257,14 +261,14 @@ class FirebaseCreatedPotionService {
 
     return {
       total: potions.length,
-      available: potions.filter(p => p.quantity > 0).length,
-      used: potions.filter(p => p.used).length,
+      available: potions.filter((p) => p.quantity > 0).length,
+      used: potions.filter((p) => p.used).length,
       byCategory: {
-        combat: potions.filter(p => p.recipe.winningAttribute === 'combat').length,
-        utility: potions.filter(p => p.recipe.winningAttribute === 'utility').length,
-        whimsy: potions.filter(p => p.recipe.winningAttribute === 'whimsy').length,
+        combat: potions.filter((p) => p.recipe.winningAttribute === 'combat').length,
+        utility: potions.filter((p) => p.recipe.winningAttribute === 'utility').length,
+        whimsy: potions.filter((p) => p.recipe.winningAttribute === 'whimsy').length
       },
-      recent: potions.filter(p => p.createdAt >= sevenDaysAgo).length
+      recent: potions.filter((p) => p.createdAt >= sevenDaysAgo).length
     };
   }
 
@@ -277,4 +281,3 @@ class FirebaseCreatedPotionService {
 }
 
 export const firebaseCreatedPotionService = new FirebaseCreatedPotionService();
-

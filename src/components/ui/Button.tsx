@@ -13,12 +13,18 @@ interface ButtonProps {
 }
 
 const variantClasses = {
-  primary: 'bg-gradient-to-br from-totoro-blue via-totoro-blue to-[#357ABD] text-white border-[#5DA9FF] shadow-[0_4px_15px_rgba(74,144,226,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(74,144,226,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
-  secondary: 'bg-white text-totoro-gray border-totoro-blue/20 hover:border-totoro-blue/40 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0',
-  success: 'bg-gradient-to-br from-totoro-green via-totoro-green to-[#6AB31D] text-white border-[#9FE842] shadow-[0_4px_15px_rgba(126,211,33,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(126,211,33,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
-  danger: 'bg-gradient-to-br from-totoro-orange via-totoro-orange to-[#C0661A] text-white border-[#FF9F4D] shadow-[0_4px_15px_rgba(230,126,34,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(230,126,34,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
-  ghost: 'bg-transparent hover:bg-totoro-blue/10 text-totoro-gray border-transparent hover:text-totoro-blue shadow-none transform hover:scale-105 active:scale-95',
-  outline: 'bg-transparent border-2 border-totoro-blue text-totoro-blue hover:bg-totoro-blue hover:text-white shadow-none transform hover:-translate-y-0.5'
+  primary:
+    'bg-gradient-to-br from-totoro-blue via-totoro-blue to-[#357ABD] text-white border-[#5DA9FF] shadow-[0_4px_15px_rgba(74,144,226,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(74,144,226,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
+  secondary:
+    'bg-white text-totoro-gray border-totoro-blue/20 hover:border-totoro-blue/40 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0',
+  success:
+    'bg-gradient-to-br from-totoro-green via-totoro-green to-[#6AB31D] text-white border-[#9FE842] shadow-[0_4px_15px_rgba(126,211,33,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(126,211,33,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
+  danger:
+    'bg-gradient-to-br from-totoro-orange via-totoro-orange to-[#C0661A] text-white border-[#FF9F4D] shadow-[0_4px_15px_rgba(230,126,34,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(230,126,34,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
+  ghost:
+    'bg-transparent hover:bg-totoro-blue/10 text-totoro-gray border-transparent hover:text-totoro-blue shadow-none transform hover:scale-105 active:scale-95',
+  outline:
+    'bg-transparent border-2 border-totoro-blue text-totoro-blue hover:bg-totoro-blue hover:text-white shadow-none transform hover:-translate-y-0.5'
 };
 
 const sizeClasses = {
@@ -28,9 +34,9 @@ const sizeClasses = {
   icon: 'p-2'
 };
 
-export default function Button({ 
-  children, 
-  onClick, 
+export default function Button({
+  children,
+  onClick,
   type = 'button',
   variant = 'primary',
   size = 'md',
@@ -39,20 +45,25 @@ export default function Button({
   fullWidth = false,
   effect = 'shimmer'
 }: ButtonProps) {
-  
   const getEffectClasses = () => {
     if (disabled) return '';
     switch (effect) {
-      case 'shimmer': return 'btn-shimmer';
-      case 'float': return 'btn-float';
-      case 'pulse-glow': return 'btn-pulse-glow';
-      case 'ripple': return 'btn-ripple';
-      default: return '';
+      case 'shimmer':
+        return 'btn-shimmer';
+      case 'float':
+        return 'btn-float';
+      case 'pulse-glow':
+        return 'btn-pulse-glow';
+      case 'ripple':
+        return 'btn-ripple';
+      default:
+        return '';
     }
   };
 
-  const baseClasses = 'relative inline-flex items-center justify-center font-bold tracking-tight rounded-2xl border transition-all duration-300 ease-out focus:outline-none focus:ring-4 focus:ring-totoro-blue/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none select-none';
-  
+  const baseClasses =
+    'relative inline-flex items-center justify-center font-bold tracking-tight rounded-2xl border transition-all duration-300 ease-out focus:outline-none focus:ring-4 focus:ring-totoro-blue/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none select-none';
+
   return (
     <button
       type={type}
@@ -81,9 +92,7 @@ export default function Button({
         </div>
       )}
 
-      <span className="relative z-10 flex items-center gap-2">
-        {children}
-      </span>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
     </button>
   );
 }

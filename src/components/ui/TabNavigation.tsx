@@ -13,14 +13,16 @@ interface TabNavigationProps<T = string> {
   className?: string;
 }
 
-export default function TabNavigation<T = string>({ 
-  tabs, 
-  activeTab, 
-  onTabChange, 
-  className = '' 
+export default function TabNavigation<T = string>({
+  tabs,
+  activeTab,
+  onTabChange,
+  className = ''
 }: TabNavigationProps<T>) {
   return (
-    <div className={`bg-white backdrop-blur-md border-b border-totoro-blue/20 sticky top-16 z-40 shadow-sm ${className}`}>
+    <div
+      className={`bg-white backdrop-blur-md border-b border-totoro-blue/20 sticky top-16 z-40 shadow-sm ${className}`}
+    >
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex">
           {tabs.map((tab, index) => (

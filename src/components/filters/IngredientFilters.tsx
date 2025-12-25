@@ -12,7 +12,10 @@ interface IngredientFiltersProps {
   onFilteredIngredients: (ingredients: CollectedIngredient[]) => void;
 }
 
-export default function IngredientFilters({ ingredients, onFilteredIngredients }: IngredientFiltersProps) {
+export default function IngredientFilters({
+  ingredients,
+  onFilteredIngredients
+}: IngredientFiltersProps) {
   const {
     filter,
     setFilter,
@@ -29,8 +32,6 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
     onFilteredIngredients(filteredIngredients);
   }, [filteredIngredients, onFilteredIngredients]);
 
-
-
   return (
     <FilterSection className="mb-8">
       <div className="space-y-4">
@@ -46,7 +47,7 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
 
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="flex flex-wrap gap-2">
-            {FILTER_OPTIONS.map(option => (
+            {FILTER_OPTIONS.map((option) => (
               <Button
                 key={option.value}
                 onClick={() => setFilter(option.value as 'all' | 'available' | 'used')}
@@ -62,11 +63,13 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
           <div className="flex gap-2">
             <Select
               value={rarityFilter}
-              onChange={(value) => setRarityFilter(value as 'all' | 'comum' | 'incomum' | 'raro' | 'unico')}
+              onChange={(value) =>
+                setRarityFilter(value as 'all' | 'comum' | 'incomum' | 'raro' | 'unico')
+              }
               options={RARITY_OPTIONS}
               className="w-auto"
             />
-            
+
             <Select
               value={sortBy}
               onChange={(value) => setSortBy(value as 'date' | 'name' | 'rarity')}

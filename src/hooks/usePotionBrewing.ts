@@ -11,15 +11,14 @@ interface UsePotionBrewingProps {
   onIngredientsUsed?: (ingredientIds: number[]) => void;
 }
 
-export function usePotionBrewing({
-  onPotionCreated,
-  onIngredientsUsed
-}: UsePotionBrewingProps) {
+export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePotionBrewingProps) {
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
   const [brewingResult, setBrewingResult] = useState<PotionBrewingResult | null>(null);
   const [isBrewing, setIsBrewing] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
-  const [chosenAttribute, setChosenAttribute] = useState<'combat' | 'utility' | 'whimsy' | null>(null);
+  const [chosenAttribute, setChosenAttribute] = useState<'combat' | 'utility' | 'whimsy' | null>(
+    null
+  );
   const [showScoreChoice, setShowScoreChoice] = useState(false);
   const { settings } = useSettings();
 
@@ -35,7 +34,10 @@ export function usePotionBrewing({
   const availableScores = useMemo(() => {
     if (selectedIngredients.length !== 3) return null;
     try {
-      return potionService.calculateAvailableScores(selectedIngredients, settings.potionBrewerTalent);
+      return potionService.calculateAvailableScores(
+        selectedIngredients,
+        settings.potionBrewerTalent
+      );
     } catch {
       return null;
     }
@@ -49,8 +51,8 @@ export function usePotionBrewing({
   }, [selectedIngredients.length]);
 
   const handleIngredientSelect = useCallback((ingredient: Ingredient) => {
-    setSelectedIngredients(prev => {
-      if (prev.length >= 3 || prev.some(ing => ing.id === ingredient.id)) {
+    setSelectedIngredients((prev) => {
+      if (prev.length >= 3 || prev.some((ing) => ing.id === ingredient.id)) {
         return prev;
       }
       return [...prev, ingredient];
@@ -58,7 +60,7 @@ export function usePotionBrewing({
   }, []);
 
   const handleIngredientRemove = useCallback((ingredientId: number) => {
-    setSelectedIngredients(prev => prev.filter(ing => ing.id !== ingredientId));
+    setSelectedIngredients((prev) => prev.filter((ing) => ing.id !== ingredientId));
   }, []);
 
   const handleClearSelection = useCallback(() => {
@@ -73,31 +75,35 @@ export function usePotionBrewing({
     setShowScoreChoice(false);
   }, []);
 
-  const saveAdditionalPotion = useCallback(async (
-    baseId: string, 
-    prefix: string, 
-    potion: Potion, 
-    ingredients: Ingredient[] = [],
-    mainRecipe?: PotionRecipe
-  ) => {
-    try {
-      const additionalRecipe: PotionRecipe = {
-        id: `${prefix}_${baseId}`,
-        ingredients: ingredients,
-        combatScore: mainRecipe?.combatScore || 0,
-        utilityScore: mainRecipe?.utilityScore || 0,
-        whimsyScore: mainRecipe?.whimsyScore || 0,
-        winningAttribute: mainRecipe?.winningAttribute || (potion.raridade === 'Comum' ? 'combat' : 'utility'),
-        resultingPotion: potion,
-        createdAt: new Date()
-      };
-      
-      await firebaseRecipeService.saveRecipe(additionalRecipe);
-      await firebaseCreatedPotionService.addCreatedPotion(additionalRecipe);
-    } catch (error) {
-      console.error(`Erro ao gerar poção adicional (${prefix}):`, error);
-    }
-  }, []);
+  const saveAdditionalPotion = useCallback(
+    async (
+      baseId: string,
+      prefix: string,
+      potion: Potion,
+      ingredients: Ingredient[] = [],
+      mainRecipe?: PotionRecipe
+    ) => {
+      try {
+        const additionalRecipe: PotionRecipe = {
+          id: `${prefix}_${baseId}`,
+          ingredients: ingredients,
+          combatScore: mainRecipe?.combatScore || 0,
+          utilityScore: mainRecipe?.utilityScore || 0,
+          whimsyScore: mainRecipe?.whimsyScore || 0,
+          winningAttribute:
+            mainRecipe?.winningAttribute || (potion.raridade === 'Comum' ? 'combat' : 'utility'),
+          resultingPotion: potion,
+          createdAt: new Date()
+        };
+
+        await firebaseRecipeService.saveRecipe(additionalRecipe);
+        await firebaseCreatedPotionService.addCreatedPotion(additionalRecipe);
+      } catch (error) {
+        console.error(`Erro ao gerar poção adicional (${prefix}):`, error);
+      }
+    },
+    []
+  );
 
   const handleBrewPotion = useCallback(async () => {
     if (selectedIngredients.length !== 3) return;
@@ -109,29 +115,43 @@ export function usePotionBrewing({
 
     setIsBrewing(true);
     try {
-      const result = await potionService.brewPotion(selectedIngredients, chosenAttribute || undefined);
+      const result = await potionService.brewPotion(
+        selectedIngredients,
+        chosenAttribute || undefined
+      );
       setBrewingResult(result);
       setShowResultModal(true);
-      
+
       if (!result.success) return;
 
       await firebaseRecipeService.saveRecipe(result.recipe);
       await firebaseCreatedPotionService.addCreatedPotion(result.recipe);
-      
+
       if (result.cauldronBonus && result.remainsPotion) {
-        await saveAdditionalPotion(result.recipe.id, 'remains', result.remainsPotion, [], result.recipe);
+        await saveAdditionalPotion(
+          result.recipe.id,
+          'remains',
+          result.remainsPotion,
+          [],
+          result.recipe
+        );
       }
 
       if (result.potionBrewerSuccess && result.secondPotion) {
-        await saveAdditionalPotion(result.recipe.id, 'second', result.secondPotion, [...selectedIngredients], result.recipe);
+        await saveAdditionalPotion(
+          result.recipe.id,
+          'second',
+          result.secondPotion,
+          [...selectedIngredients],
+          result.recipe
+        );
       }
-      
-      const ingredientIds = selectedIngredients.map(ing => ing.id);
+
+      const ingredientIds = selectedIngredients.map((ing) => ing.id);
       onIngredientsUsed?.(ingredientIds);
-      
+
       setSelectedIngredients([]);
       onPotionCreated?.(result.recipe);
-
     } catch (error) {
       console.error('Erro ao criar poção:', error);
       setBrewingResult({
@@ -142,7 +162,13 @@ export function usePotionBrewing({
           utilityScore: 0,
           whimsyScore: 0,
           winningAttribute: 'combat',
-          resultingPotion: { id: 0, nome_ingles: '', nome_portugues: '', raridade: '', descricao: '' },
+          resultingPotion: {
+            id: 0,
+            nome_ingles: '',
+            nome_portugues: '',
+            raridade: '',
+            descricao: ''
+          },
           createdAt: new Date()
         },
         success: false,
@@ -152,7 +178,14 @@ export function usePotionBrewing({
     } finally {
       setIsBrewing(false);
     }
-  }, [selectedIngredients, chosenAttribute, availableScores, onIngredientsUsed, onPotionCreated, saveAdditionalPotion]);
+  }, [
+    selectedIngredients,
+    chosenAttribute,
+    availableScores,
+    onIngredientsUsed,
+    onPotionCreated,
+    saveAdditionalPotion
+  ]);
 
   const closeResultModal = useCallback(() => setShowResultModal(false), []);
   const closeScoreChoiceModal = useCallback(() => setShowScoreChoice(false), []);

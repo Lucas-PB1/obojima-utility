@@ -1,11 +1,11 @@
-import { 
-  collection, 
-  doc, 
-  getDocs, 
+import {
+  collection,
+  doc,
+  getDocs,
   getDoc,
-  addDoc, 
-  deleteDoc, 
-  query, 
+  addDoc,
+  deleteDoc,
+  query,
   orderBy,
   where,
   onSnapshot,
@@ -55,7 +55,7 @@ class FirebaseRecipeService {
 
   async saveRecipe(recipe: PotionRecipe): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
-    
+
     try {
       const recipesRef = collection(db, this.getRecipesPath());
       await addDoc(recipesRef, {
@@ -70,12 +70,12 @@ class FirebaseRecipeService {
 
   async getAllRecipes(): Promise<PotionRecipe[]> {
     if (!this.isClient() || !this.getUserId()) return [];
-    
+
     try {
       const recipesRef = collection(db, this.getRecipesPath());
       const snapshot = await getDocs(recipesRef);
-      
-      return snapshot.docs.map(doc => {
+
+      return snapshot.docs.map((doc) => {
         const data = doc.data();
         return {
           ...data,
@@ -98,21 +98,25 @@ class FirebaseRecipeService {
     try {
       const recipesRef = collection(db, this.getRecipesPath());
       const q = query(recipesRef, orderBy('createdAt', 'desc'));
-      
-      this.recipesUnsubscribe = onSnapshot(q, (snapshot) => {
-        const recipes = snapshot.docs.map(doc => {
-          const data = doc.data();
-          return {
-            ...data,
-            id: doc.id,
-            createdAt: this.convertTimestampToDate(data.createdAt)
-          } as PotionRecipe;
-        });
-        callback(recipes);
-      }, (error) => {
-        console.error('Erro ao observar receitas:', error);
-        callback([]);
-      });
+
+      this.recipesUnsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          const recipes = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+              ...data,
+              id: doc.id,
+              createdAt: this.convertTimestampToDate(data.createdAt)
+            } as PotionRecipe;
+          });
+          callback(recipes);
+        },
+        (error) => {
+          console.error('Erro ao observar receitas:', error);
+          callback([]);
+        }
+      );
 
       return () => {
         if (this.recipesUnsubscribe) {
@@ -129,7 +133,7 @@ class FirebaseRecipeService {
 
   async removeRecipe(recipeId: string): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
-    
+
     try {
       const recipeRef = doc(db, this.getRecipesPath(), recipeId);
       await deleteDoc(recipeRef);
@@ -141,11 +145,11 @@ class FirebaseRecipeService {
 
   async getRecipeById(recipeId: string): Promise<PotionRecipe | null> {
     if (!this.isClient() || !this.getUserId()) return null;
-    
+
     try {
       const recipeRef = doc(db, this.getRecipesPath(), recipeId);
       const snapshot = await getDoc(recipeRef);
-      
+
       if (snapshot.exists()) {
         const data = snapshot.data();
         return {
@@ -154,7 +158,7 @@ class FirebaseRecipeService {
           createdAt: this.convertTimestampToDate(data.createdAt)
         } as PotionRecipe;
       }
-      
+
       return null;
     } catch (error) {
       console.error('Erro ao buscar receita:', error);
@@ -164,13 +168,17 @@ class FirebaseRecipeService {
 
   async getRecipesByCategory(category: 'combat' | 'utility' | 'whimsy'): Promise<PotionRecipe[]> {
     if (!this.isClient() || !this.getUserId()) return [];
-    
+
     try {
       const recipesRef = collection(db, this.getRecipesPath());
-      const q = query(recipesRef, where('winningAttribute', '==', category), orderBy('createdAt', 'desc'));
+      const q = query(
+        recipesRef,
+        where('winningAttribute', '==', category),
+        orderBy('createdAt', 'desc')
+      );
       const snapshot = await getDocs(q);
-      
-      return snapshot.docs.map(doc => {
+
+      return snapshot.docs.map((doc) => {
         const data = doc.data();
         return {
           ...data,
@@ -200,11 +208,11 @@ class FirebaseRecipeService {
     return {
       total: recipes.length,
       byCategory: {
-        combat: recipes.filter(r => r.winningAttribute === 'combat').length,
-        utility: recipes.filter(r => r.winningAttribute === 'utility').length,
-        whimsy: recipes.filter(r => r.winningAttribute === 'whimsy').length,
+        combat: recipes.filter((r) => r.winningAttribute === 'combat').length,
+        utility: recipes.filter((r) => r.winningAttribute === 'utility').length,
+        whimsy: recipes.filter((r) => r.winningAttribute === 'whimsy').length
       },
-      recent: recipes.filter(r => r.createdAt >= sevenDaysAgo).length
+      recent: recipes.filter((r) => r.createdAt >= sevenDaysAgo).length
     };
   }
 
@@ -217,4 +225,3 @@ class FirebaseRecipeService {
 }
 
 export const firebaseRecipeService = new FirebaseRecipeService();
-

@@ -9,22 +9,23 @@ export type ResultFilterType = 'all' | 'success' | 'failure';
 export type DateFilterType = 'all' | 'today' | 'week' | 'month';
 
 const filterIngredients = (ingredients: CollectedIngredient[], filter: FilterType) => {
-  if (filter === 'available') return ingredients.filter(ing => !ing.used);
-  if (filter === 'used') return ingredients.filter(ing => ing.used);
+  if (filter === 'available') return ingredients.filter((ing) => !ing.used);
+  if (filter === 'used') return ingredients.filter((ing) => ing.used);
   return ingredients;
 };
 
 const filterByRarity = (ingredients: CollectedIngredient[], rarityFilter: RarityFilterType) => {
   if (rarityFilter === 'all') return ingredients;
-  return ingredients.filter(ing => ing.ingredient.raridade === rarityFilter);
+  return ingredients.filter((ing) => ing.ingredient.raridade === rarityFilter);
 };
 
 const searchIngredients = (ingredients: CollectedIngredient[], searchTerm: string) => {
   if (!searchTerm) return ingredients;
   const term = searchTerm.toLowerCase();
-  return ingredients.filter(ing => 
-    ing.ingredient.nome_portugues.toLowerCase().includes(term) ||
-    ing.ingredient.nome_ingles.toLowerCase().includes(term)
+  return ingredients.filter(
+    (ing) =>
+      ing.ingredient.nome_portugues.toLowerCase().includes(term) ||
+      ing.ingredient.nome_ingles.toLowerCase().includes(term)
   );
 };
 
@@ -34,7 +35,7 @@ const sortIngredients = (ingredients: CollectedIngredient[], sortBy: SortType) =
       case 'name':
         return a.ingredient.nome_portugues.localeCompare(b.ingredient.nome_portugues);
       case 'rarity':
-        const rarityOrder = { 'unico': 4, 'raro': 3, 'incomum': 2, 'comum': 1 };
+        const rarityOrder = { unico: 4, raro: 3, incomum: 2, comum: 1 };
         const aRarity = a.ingredient.raridade || 'comum';
         const bRarity = b.ingredient.raridade || 'comum';
         return rarityOrder[bRarity] - rarityOrder[aRarity];
@@ -80,32 +81,32 @@ export function useIngredientFilters(ingredients: CollectedIngredient[]) {
 }
 
 const filterByResult = (attempts: ForageAttempt[], filter: ResultFilterType) => {
-  if (filter === 'success') return attempts.filter(a => a.success);
-  if (filter === 'failure') return attempts.filter(a => !a.success);
+  if (filter === 'success') return attempts.filter((a) => a.success);
+  if (filter === 'failure') return attempts.filter((a) => !a.success);
   return attempts;
 };
 
 const filterByRegion = (attempts: ForageAttempt[], regionFilter: string) => {
   if (regionFilter === 'all') return attempts;
-  return attempts.filter(a => a.region === regionFilter);
+  return attempts.filter((a) => a.region === regionFilter);
 };
 
 const filterByDate = (attempts: ForageAttempt[], dateFilter: DateFilterType) => {
   if (dateFilter === 'all') return attempts;
-  
+
   const now = new Date();
   const attemptDate = attempts[0]?.timestamp;
   if (!attemptDate) return attempts;
-  
+
   switch (dateFilter) {
     case 'today':
-      return attempts.filter(a => a.timestamp.toDateString() === now.toDateString());
+      return attempts.filter((a) => a.timestamp.toDateString() === now.toDateString());
     case 'week':
       const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      return attempts.filter(a => a.timestamp >= weekAgo);
+      return attempts.filter((a) => a.timestamp >= weekAgo);
     case 'month':
       const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-      return attempts.filter(a => a.timestamp >= monthAgo);
+      return attempts.filter((a) => a.timestamp >= monthAgo);
     default:
       return attempts;
   }
@@ -128,8 +129,8 @@ export function useActivityFilters(attempts: ForageAttempt[]) {
   }, [attempts, filter, regionFilter, dateFilter]);
 
   const getRegionOptions = useCallback(() => {
-    const regions = [...new Set(attempts.map(a => a.region))];
-    return regions.map(region => ({
+    const regions = [...new Set(attempts.map((a) => a.region))];
+    return regions.map((region) => ({
       value: region,
       label: ingredientsService.getRegionDisplayName(region)
     }));

@@ -9,36 +9,34 @@ interface ForageResultProps {
 }
 
 export default function ForageResult({ result }: ForageResultProps) {
-  const { 
-    regionDisplayName, 
-    particles, 
-    showDoubleForage 
-  } = useForageResult(result);
-  
+  const { regionDisplayName, particles, showDoubleForage } = useForageResult(result);
+
   if (!result) return null;
 
   return (
     <ContentCard className="!p-0 border-none overflow-hidden shadow-2xl">
-      <div className={`relative min-h-[400px] flex flex-col justify-center transition-all duration-700 ${
-        result.success 
-          ? 'bg-gradient-to-br from-[#10B981] via-[#3B82F6] to-[#F59E0B]' 
-          : 'bg-gradient-to-br from-[#4B5563] via-[#1F2937] to-[#111827]'
-      }`}>
+      <div
+        className={`relative min-h-[400px] flex flex-col justify-center transition-all duration-700 ${
+          result.success
+            ? 'bg-gradient-to-br from-[#10B981] via-[#3B82F6] to-[#F59E0B]'
+            : 'bg-gradient-to-br from-[#4B5563] via-[#1F2937] to-[#111827]'
+        }`}
+      >
         <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]"></div>
-        
-        {particles.map(particle => (
-          <div 
-            key={particle.id}
-            className="magic-particle bg-white"
-            style={particle.style}
-          />
+
+        {particles.map((particle) => (
+          <div key={particle.id} className="magic-particle bg-white" style={particle.style} />
         ))}
 
         <div className="relative z-10 p-8 text-white">
           <div className="text-center mb-10">
-            <div className={`text-7xl mb-4 animate-bounce ${
-              result.success ? 'drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]' : 'grayscale opacity-50'
-            }`}>
+            <div
+              className={`text-7xl mb-4 animate-bounce ${
+                result.success
+                  ? 'drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]'
+                  : 'grayscale opacity-50'
+              }`}
+            >
               {result.success ? '✨' : '🌙'}
             </div>
             <h3 className="text-4xl font-black uppercase tracking-tighter mb-2 italic">
@@ -53,7 +51,9 @@ export default function ForageResult({ result }: ForageResultProps) {
             <div className="flex items-center justify-center gap-8 bg-black/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 w-full max-w-sm shadow-2xl">
               <div className="text-center">
                 <p className="text-[10px] font-black uppercase opacity-60 mb-1">Seu Destino</p>
-                <p className={`text-5xl font-black ${result.success ? 'text-white' : 'text-totoro-orange'}`}>
+                <p
+                  className={`text-5xl font-black ${result.success ? 'text-white' : 'text-totoro-orange'}`}
+                >
                   {result.roll}
                 </p>
               </div>
@@ -75,7 +75,7 @@ export default function ForageResult({ result }: ForageResultProps) {
           </div>
         </div>
       </div>
-      
+
       {result.success && result.ingredient && (
         <div className="p-8 bg-white">
           <div className="text-center mb-6">
@@ -90,11 +90,13 @@ export default function ForageResult({ result }: ForageResultProps) {
                   FORRAGEAMENTO DUPLO ATIVADO!
                   <span>✨</span>
                 </div>
-                <p className="text-purple-500 text-[10px] font-bold mt-1 uppercase">Você coletou 2x este ingrediente!</p>
+                <p className="text-purple-500 text-[10px] font-bold mt-1 uppercase">
+                  Você coletou 2x este ingrediente!
+                </p>
               </div>
             )}
           </div>
-          
+
           <div className="bg-totoro-blue/5 rounded-2xl p-6 mb-6 border border-totoro-blue/10 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 text-4xl opacity-10 font-black italic">
               {result.rarity}
@@ -106,19 +108,31 @@ export default function ForageResult({ result }: ForageResultProps) {
               &quot;{result.ingredient.descricao}&quot;
             </p>
           </div>
-          
+
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-totoro-orange/10 border border-totoro-orange/20 rounded-2xl p-4 text-center">
-              <div className="text-totoro-orange text-[10px] font-black uppercase mb-1 tracking-widest">Combat</div>
-              <div className="text-totoro-orange font-black text-2xl">{result.ingredient.combat}</div>
+              <div className="text-totoro-orange text-[10px] font-black uppercase mb-1 tracking-widest">
+                Combat
+              </div>
+              <div className="text-totoro-orange font-black text-2xl">
+                {result.ingredient.combat}
+              </div>
             </div>
             <div className="bg-totoro-blue/10 border border-totoro-blue/20 rounded-2xl p-4 text-center">
-              <div className="text-totoro-blue text-[10px] font-black uppercase mb-1 tracking-widest">Utility</div>
-              <div className="text-totoro-blue font-black text-2xl">{result.ingredient.utility}</div>
+              <div className="text-totoro-blue text-[10px] font-black uppercase mb-1 tracking-widest">
+                Utility
+              </div>
+              <div className="text-totoro-blue font-black text-2xl">
+                {result.ingredient.utility}
+              </div>
             </div>
             <div className="bg-totoro-yellow/10 border border-totoro-yellow/20 rounded-2xl p-4 text-center">
-              <div className="text-totoro-yellow text-[10px] font-black uppercase mb-1 tracking-widest">Whimsy</div>
-              <div className="text-totoro-yellow font-black text-2xl">{result.ingredient.whimsy}</div>
+              <div className="text-totoro-yellow text-[10px] font-black uppercase mb-1 tracking-widest">
+                Whimsy
+              </div>
+              <div className="text-totoro-yellow font-black text-2xl">
+                {result.ingredient.whimsy}
+              </div>
             </div>
           </div>
         </div>
@@ -126,4 +140,3 @@ export default function ForageResult({ result }: ForageResultProps) {
     </ContentCard>
   );
 }
-

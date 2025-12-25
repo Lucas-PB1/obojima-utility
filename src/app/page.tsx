@@ -34,8 +34,12 @@ export default function Home() {
       <div className="min-h-screen bg-mesh flex items-center justify-center p-4">
         <main className="text-center">
           <div className="text-6xl mb-6 animate-float">🌿</div>
-          <h2 className="text-3xl font-serif font-bold text-totoro-gray mb-3 pb-2 border-b-2 border-totoro-blue/10 inline-block">Carregando Obojima...</h2>
-          <p className="text-totoro-blue/70 font-semibold uppercase tracking-[0.2em] text-[10px] font-sans">Preparando o sistema arcano</p>
+          <h2 className="text-3xl font-serif font-bold text-totoro-gray mb-3 pb-2 border-b-2 border-totoro-blue/10 inline-block">
+            Carregando Obojima...
+          </h2>
+          <p className="text-totoro-blue/70 font-semibold uppercase tracking-[0.2em] text-[10px] font-sans">
+            Preparando o sistema arcano
+          </p>
         </main>
       </div>
     );
@@ -54,7 +58,7 @@ export default function Home() {
                 Arcana & Foraging System
               </p>
             </div>
-            
+
             <div className="flex items-center gap-4">
               {recentlyCollected.length > 0 && (
                 <div className="hidden lg:flex items-center bg-gradient-to-r from-totoro-yellow/20 to-totoro-orange/20 border border-totoro-yellow/30 px-4 py-2 rounded-2xl gap-3 animate-bounce-in shadow-sm shadow-totoro-yellow/10">
@@ -68,8 +72,8 @@ export default function Home() {
                     <span className="text-xs font-bold text-totoro-orange uppercase tracking-wider leading-none mb-1">
                       Novos Itens!
                     </span>
-                    <button 
-                      onClick={handleViewCollection} 
+                    <button
+                      onClick={handleViewCollection}
                       className="text-[10px] text-totoro-gray/70 hover:text-totoro-blue font-bold text-left transition-colors"
                     >
                       VER COLEÇÃO →
@@ -77,7 +81,7 @@ export default function Home() {
                   </div>
                 </div>
               )}
-              
+
               {user && (
                 <div className="flex items-center bg-totoro-blue/5 rounded-2xl border border-totoro-blue/10 pl-4 pr-2 py-1.5 gap-3 shadow-sm transition-all hover:bg-white hover:shadow-md hover:border-totoro-blue/20">
                   <div className="flex items-center gap-2">
@@ -90,10 +94,10 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                  <Button 
-                    onClick={logout} 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    onClick={logout}
+                    variant="ghost"
+                    size="sm"
                     className="!px-3 !py-1.5 !rounded-xl !text-[10px] !font-black hover:!bg-totoro-orange/10 hover:!text-totoro-orange transition-all"
                   >
                     SAIR
@@ -111,9 +115,10 @@ export default function Home() {
                   onClick={() => handleTabChange(tab.id)}
                   className={`
                     relative px-6 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-500 select-none font-sans
-                    ${activeTab === tab.id 
-                      ? 'text-white shadow-md' 
-                      : 'text-totoro-gray/50 hover:text-totoro-blue hover:bg-white/50'
+                    ${
+                      activeTab === tab.id
+                        ? 'text-white shadow-md'
+                        : 'text-totoro-gray/50 hover:text-totoro-blue hover:bg-white/50'
                     }
                   `}
                 >
@@ -134,13 +139,11 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-6">
         <PageLayout variant="simple" className="!py-4">
           {activeTab === 'forage' && (
-            <ForageSystem 
-              onIngredientCollected={handleIngredientCollected}
-            />
+            <ForageSystem onIngredientCollected={handleIngredientCollected} />
           )}
           {activeTab === 'collection' && <IngredientCollection />}
           {activeTab === 'potions' && (
-            <PotionBrewing 
+            <PotionBrewing
               availableIngredients={availableIngredients}
               onPotionCreated={(recipe) => {
                 console.log('Poção criada:', recipe);

@@ -31,7 +31,7 @@ export function useApp() {
   }, []);
 
   const handleIngredientCollected = useCallback((ingredient: CollectedIngredient) => {
-    setRecentlyCollected(prev => [ingredient, ...prev.slice(0, MAX_RECENT_ITEMS - 1)]);
+    setRecentlyCollected((prev) => [ingredient, ...prev.slice(0, MAX_RECENT_ITEMS - 1)]);
   }, []);
 
   const handleTabChange = useCallback((tabId: TabType) => {
@@ -49,6 +49,6 @@ export function useApp() {
     tabs: TABS,
     handleIngredientCollected,
     handleTabChange,
-    handleViewCollection,
+    handleViewCollection
   };
 }
