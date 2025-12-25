@@ -9,9 +9,6 @@ import {
 import { auth } from '@/config/firebase';
 
 class AuthService {
-  /**
-   * Registra um novo usuário com email e senha
-   */
   async register(email: string, password: string): Promise<UserCredential> {
     if (typeof window === 'undefined') {
       throw new Error('Autenticação só pode ser feita no cliente');
@@ -26,9 +23,6 @@ class AuthService {
     }
   }
 
-  /**
-   * Faz login com email e senha
-   */
   async login(email: string, password: string): Promise<UserCredential> {
     if (typeof window === 'undefined') {
       throw new Error('Autenticação só pode ser feita no cliente');
@@ -43,9 +37,6 @@ class AuthService {
     }
   }
 
-  /**
-   * Faz logout do usuário atual
-   */
   async logout(): Promise<void> {
     if (typeof window === 'undefined') return;
     
@@ -57,17 +48,11 @@ class AuthService {
     }
   }
 
-  /**
-   * Obtém o usuário atual
-   */
   getCurrentUser(): User | null {
     if (typeof window === 'undefined') return null;
     return auth.currentUser;
   }
 
-  /**
-   * Observa mudanças no estado de autenticação
-   */
   onAuthStateChange(callback: (user: User | null) => void): () => void {
     if (typeof window === 'undefined') {
       callback(null);
@@ -77,24 +62,15 @@ class AuthService {
     return onAuthStateChanged(auth, callback);
   }
 
-  /**
-   * Verifica se o usuário está autenticado
-   */
   isAuthenticated(): boolean {
     return this.getCurrentUser() !== null;
   }
 
-  /**
-   * Obtém o ID do usuário atual
-   */
   getUserId(): string | null {
     const user = this.getCurrentUser();
     return user?.uid || null;
   }
 
-  /**
-   * Trata erros de autenticação e retorna mensagens amigáveis
-   */
   private handleAuthError(error: unknown): Error {
     let message = 'Erro desconhecido ao autenticar';
     

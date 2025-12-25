@@ -1,38 +1,21 @@
+'use client';
 import React from 'react';
 import { ForageAttempt } from '@/types/ingredients';
-import { ingredientsService } from '@/services/ingredientsService';
-import { useSettings } from '@/hooks/useSettings';
-import ContentCard from '../ui/ContentCard';
+import ContentCard from '@/components/ui/ContentCard';
+import { useForageResult } from '@/hooks/useForageResult';
 
 interface ForageResultProps {
   result: ForageAttempt | null;
 }
 
-/**
- * Componente para exibir resultados de forrageamento
- */
 export default function ForageResult({ result }: ForageResultProps) {
-  const { settings } = useSettings();
+  const { 
+    regionDisplayName, 
+    particles, 
+    showDoubleForage 
+  } = useForageResult(result);
   
   if (!result) return null;
-
-  const renderParticles = () => {
-    if (!result.success) return null;
-    return Array.from({ length: 12 }).map((_, i) => (
-      <div 
-        key={i}
-        className="magic-particle bg-white"
-        style={{
-          width: Math.random() * 4 + 2 + 'px',
-          height: Math.random() * 4 + 2 + 'px',
-          left: Math.random() * 100 + '%',
-          top: Math.random() * 100 + '%',
-          animationDelay: Math.random() * 2 + 's',
-          opacity: Math.random() * 0.5 + 0.3
-        } as React.CSSProperties}
-      />
-    ));
-  };
 
   return (
     <ContentCard className="!p-0 border-none overflow-hidden shadow-2xl">
@@ -41,11 +24,15 @@ export default function ForageResult({ result }: ForageResultProps) {
           ? 'bg-gradient-to-br from-[#10B981] via-[#3B82F6] to-[#F59E0B]' 
           : 'bg-gradient-to-br from-[#4B5563] via-[#1F2937] to-[#111827]'
       }`}>
-        {/* Background Overlay */}
         <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]"></div>
         
-        {/* Magical Elements */}
-        {renderParticles()}
+        {particles.map(particle => (
+          <div 
+            key={particle.id}
+            className="magic-particle bg-white"
+            style={particle.style}
+          />
+        ))}
 
         <div className="relative z-10 p-8 text-white">
           <div className="text-center mb-10">
@@ -82,7 +69,7 @@ export default function ForageResult({ result }: ForageResultProps) {
                 DC {result.dcRange} • {result.rarity}
               </span>
               <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
-                Região: {ingredientsService.getRegionDisplayName(result.region)}
+                Região: {regionDisplayName}
               </span>
             </div>
           </div>
@@ -96,7 +83,7 @@ export default function ForageResult({ result }: ForageResultProps) {
             <h4 className="font-black text-totoro-gray text-xl uppercase tracking-tight">
               Ingrediente Coletado!
             </h4>
-            {settings.doubleForageTalent && (result.rarity === 'comum' || result.rarity === 'incomum') && (
+            {showDoubleForage && (
               <div className="mt-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-200 rounded-2xl px-4 py-3">
                 <div className="text-purple-600 text-sm font-black flex items-center justify-center gap-2">
                   <span>✨</span>
@@ -116,7 +103,7 @@ export default function ForageResult({ result }: ForageResultProps) {
               {result.ingredient.nome_portugues}
             </h5>
             <p className="text-totoro-gray/60 leading-relaxed italic relative z-10">
-              "{result.ingredient.descricao}"
+              &quot;{result.ingredient.descricao}&quot;
             </p>
           </div>
           
@@ -139,3 +126,4 @@ export default function ForageResult({ result }: ForageResultProps) {
     </ContentCard>
   );
 }
+

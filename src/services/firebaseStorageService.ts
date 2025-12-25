@@ -9,13 +9,12 @@ import {
   orderBy,
   onSnapshot,
   where,
-  limit,
   Timestamp,
   Unsubscribe
 } from 'firebase/firestore';
 import { GAME_CONFIG } from '@/config/gameConfig';
 import { db } from '@/config/firebase';
-import { authService } from './authService';
+import { authService } from '@/services/authService';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 
 class FirebaseStorageService {

@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc, onSnapshot, Unsubscribe } from 'firebase/firestore';
 import { db } from '@/config/firebase';
-import { authService } from './authService';
+import { authService } from '@/services/authService';
 
 interface Settings {
   defaultModifier: number | '';

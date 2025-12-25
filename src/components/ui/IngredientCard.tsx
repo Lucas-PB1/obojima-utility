@@ -1,6 +1,6 @@
 import React from 'react';
+import Button from '@/components/ui/Button';
 import { CollectedIngredient } from '@/types/ingredients';
-import Button from './Button';
 
 interface IngredientCardProps {
   ingredient: CollectedIngredient;
@@ -9,18 +9,6 @@ interface IngredientCardProps {
   showActions?: boolean;
 }
 
-/**
- * Componente de card de ingrediente coletado
- * 
- * @description
- * Card completo para exibir ingredientes coletados com informações detalhadas,
- * atributos, status de uso e ações (marcar como usado, remover).
- * 
- * @param ingredient - Ingrediente coletado a ser exibido
- * @param onMarkAsUsed - Função executada ao marcar como usado
- * @param onRemove - Função executada ao remover o ingrediente
- * @param showActions - Se deve exibir os botões de ação
- */
 export default function IngredientCard({ 
   ingredient, 
   onMarkAsUsed, 
@@ -57,7 +45,7 @@ export default function IngredientCard({
         </p>
 
         <p className="text-sm text-totoro-gray/70 mb-6 line-clamp-3 leading-relaxed italic">
-          "{ingredient.ingredient.descricao}"
+          &quot;{ingredient.ingredient.descricao}&quot;
         </p>
 
         <div className="grid grid-cols-3 gap-2 mb-6">
@@ -105,7 +93,6 @@ export default function IngredientCard({
         </div>
       </div>
       
-      {/* Dynamic decorative element */}
       <div className={`absolute -bottom-10 -left-10 w-40 h-40 opacity-5 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150 ${
         ingredient.used ? 'bg-totoro-gray' :
         ingredient.ingredient.combat === maxAttr ? 'bg-totoro-orange' : 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Bitter, Quicksand } from "next/font/google";
-import "./globals.css";
+import "@/globals.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",

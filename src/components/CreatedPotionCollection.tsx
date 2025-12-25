@@ -1,101 +1,25 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { CreatedPotion } from '../types/ingredients';
-import { firebaseCreatedPotionService } from '../services/firebaseCreatedPotionService';
-import ContentCard from './ui/ContentCard';
-import Button from './ui/Button';
-import Modal from './ui/Modal';
+import React from 'react';
+import { useCreatedPotionCollection } from '@/hooks/useCreatedPotionCollection';
+import { POTION_CATEGORY_CONFIG, POTION_FILTER_OPTIONS } from '@/constants/potions';
+import ContentCard from '@/components/ui/ContentCard';
+import Button from '@/components/ui/Button';
+import Modal from '@/components/ui/Modal';
 
-/**
- * Componente para gerenciar a coleção de poções criadas
- * 
- * @description
- * Este componente exibe todas as poções criadas no inventário,
- * incluindo filtros, estatísticas e opções de exportação/importação.
- */
 export const CreatedPotionCollection: React.FC = () => {
-  const [potions, setPotions] = useState<CreatedPotion[]>([]);
-  const [selectedPotion, setSelectedPotion] = useState<CreatedPotion | null>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'available' | 'used'>('all');
-
-  useEffect(() => {
-    const unsubscribe = firebaseCreatedPotionService.subscribeToCreatedPotions((potions) => {
-      setPotions(potions);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  /**
-   * Carrega todas as poções criadas do serviço (mantido para compatibilidade)
-   */
-  const loadPotions = async () => {
-    const allPotions = await firebaseCreatedPotionService.getAllCreatedPotions();
-    setPotions(allPotions);
-  };
-
-
-
-  const filteredPotions = potions.filter(potion => {
-    if (filter === 'all') return true;
-    if (filter === 'available') return potion.quantity > 0;
-    if (filter === 'used') return potion.used;
-    return true;
-  });
-
-  const [stats, setStats] = useState({ total: 0, available: 0, used: 0, byCategory: { combat: 0, utility: 0, whimsy: 0 }, recent: 0 });
-
-  useEffect(() => {
-    const loadStats = async () => {
-      const statsData = await firebaseCreatedPotionService.getPotionStats();
-      setStats(statsData);
-    };
-    loadStats();
-  }, [potions]);
-
-  const getAttributeColor = (attribute: 'combat' | 'utility' | 'whimsy') => {
-    switch (attribute) {
-      case 'combat':
-        return 'text-red-600 bg-red-50 border-red-200';
-      case 'utility':
-        return 'text-blue-600 bg-blue-50 border-blue-200';
-      case 'whimsy':
-        return 'text-purple-600 bg-purple-50 border-purple-200';
-    }
-  };
-
-  const getAttributeLabel = (attribute: 'combat' | 'utility' | 'whimsy') => {
-    switch (attribute) {
-      case 'combat':
-        return 'Combate';
-      case 'utility':
-        return 'Utilidade';
-      case 'whimsy':
-        return 'Caprichoso';
-    }
-  };
-
-  const handlePotionClick = (potion: CreatedPotion) => {
-    setSelectedPotion(potion);
-    setShowModal(true);
-  };
-
-  const handleUsePotion = async (potionId: string) => {
-    const success = await firebaseCreatedPotionService.usePotion(potionId);
-    if (success) {
-      loadPotions();
-    }
-  };
-
-  const handleDeletePotion = async (potionId: string) => {
-    if (confirm('Tem certeza que deseja excluir esta poção?')) {
-      await firebaseCreatedPotionService.removePotion(potionId);
-      loadPotions();
-    }
-  };
-
+  const {
+    filteredPotions,
+    selectedPotion,
+    showModal,
+    closeModal,
+    filter,
+    setFilter,
+    stats,
+    handlePotionClick,
+    handleUsePotion,
+    handleDeletePotion
+  } = useCreatedPotionCollection();
 
   return (
     <div className="space-y-6">
@@ -110,7 +34,6 @@ export const CreatedPotionCollection: React.FC = () => {
             </p>
           </div>
 
-          {/* Estatísticas */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-gray-50 p-3 rounded-lg text-center">
               <div className="text-lg font-bold text-gray-900">{stats.total}</div>
@@ -130,36 +53,25 @@ export const CreatedPotionCollection: React.FC = () => {
             </div>
           </div>
 
-          {/* Filtros */}
           <div className="flex flex-wrap gap-2">
-            <Button
-              onClick={() => setFilter('all')}
-              variant={filter === 'all' ? 'primary' : 'secondary'}
-              size="sm"
-            >
-              Todas ({stats.total})
-            </Button>
-            <Button
-              onClick={() => setFilter('available')}
-              variant={filter === 'available' ? 'primary' : 'secondary'}
-              size="sm"
-            >
-              Disponíveis ({stats.available})
-            </Button>
-            <Button
-              onClick={() => setFilter('used')}
-              variant={filter === 'used' ? 'primary' : 'secondary'}
-              size="sm"
-            >
-              Usadas ({stats.used})
-            </Button>
+            {POTION_FILTER_OPTIONS.map((option) => (
+              <Button
+                key={option.value}
+                onClick={() => setFilter(option.value)}
+                variant={filter === option.value ? 'primary' : 'secondary'}
+                size="sm"
+              >
+                {option.label} (
+                {option.value === 'all' ? stats.total : 
+                 option.value === 'available' ? stats.available : 
+                 stats.used}
+                )
+              </Button>
+            ))}
           </div>
-
-
         </div>
       </ContentCard>
 
-      {/* Lista de Poções */}
       <ContentCard>
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">
@@ -184,7 +96,6 @@ export const CreatedPotionCollection: React.FC = () => {
                   onClick={() => handlePotionClick(potion)}
                 >
                   <div className="space-y-3">
-                    {/* Cabeçalho */}
                     <div>
                       <h4 className="font-bold text-gray-900 text-sm">
                         {potion.potion.nome_portugues}
@@ -194,10 +105,9 @@ export const CreatedPotionCollection: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Categoria e Raridade */}
                     <div className="flex gap-2">
-                      <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getAttributeColor(potion.recipe.winningAttribute)}`}>
-                        {getAttributeLabel(potion.recipe.winningAttribute)}
+                      <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].classes}`}>
+                        {POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].label}
                       </div>
                       <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                         potion.potion.raridade === 'Comum' ? 'bg-green-100 text-green-800' :
@@ -208,7 +118,6 @@ export const CreatedPotionCollection: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Quantidade e Status */}
                     <div className="flex items-center justify-between">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                         potion.quantity > 0
@@ -233,7 +142,6 @@ export const CreatedPotionCollection: React.FC = () => {
                       )}
                     </div>
 
-                    {/* Data */}
                     <div className="text-xs text-gray-500">
                       Criada em {potion.createdAt.toLocaleDateString('pt-BR')}
                     </div>
@@ -245,15 +153,13 @@ export const CreatedPotionCollection: React.FC = () => {
         </div>
       </ContentCard>
 
-      {/* Modal de Detalhes */}
       {selectedPotion && (
         <Modal
           isOpen={showModal}
-          onClose={() => setShowModal(false)}
+          onClose={closeModal}
           title="Detalhes da Poção"
         >
           <div className="space-y-4">
-            {/* Poção */}
             <div className="text-center">
               <div className="text-xl font-bold text-gray-900 mb-1">
                 {selectedPotion.potion.nome_portugues}
@@ -269,13 +175,12 @@ export const CreatedPotionCollection: React.FC = () => {
                 }`}>
                   {selectedPotion.potion.raridade}
                 </div>
-                <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getAttributeColor(selectedPotion.recipe.winningAttribute)}`}>
-                  {getAttributeLabel(selectedPotion.recipe.winningAttribute)}
+                <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${POTION_CATEGORY_CONFIG[selectedPotion.recipe.winningAttribute].classes}`}>
+                  {POTION_CATEGORY_CONFIG[selectedPotion.recipe.winningAttribute].label}
                 </div>
               </div>
             </div>
 
-            {/* Descrição */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-900 mb-2">Descrição:</h4>
               <p className="text-sm text-gray-700">
@@ -283,7 +188,6 @@ export const CreatedPotionCollection: React.FC = () => {
               </p>
             </div>
 
-            {/* Quantidade e Status */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-900 mb-2">Status:</h4>
               <div className="flex items-center justify-between">
@@ -299,7 +203,7 @@ export const CreatedPotionCollection: React.FC = () => {
                   <Button
                     onClick={() => {
                       handleUsePotion(selectedPotion.id);
-                      setShowModal(false);
+                      closeModal();
                     }}
                     variant="primary"
                     size="sm"
@@ -316,7 +220,6 @@ export const CreatedPotionCollection: React.FC = () => {
               )}
             </div>
 
-            {/* Scores da Receita */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-900 mb-3">Scores da Receita:</h4>
               <div className="grid grid-cols-3 gap-4">
@@ -335,7 +238,6 @@ export const CreatedPotionCollection: React.FC = () => {
               </div>
             </div>
 
-            {/* Ações */}
             <div className="flex justify-between">
               <Button
                 onClick={() => handleDeletePotion(selectedPotion.id)}
@@ -344,7 +246,7 @@ export const CreatedPotionCollection: React.FC = () => {
               >
                 🗑️ Excluir Poção
               </Button>
-              <Button onClick={() => setShowModal(false)}>
+              <Button onClick={closeModal}>
                 Fechar
               </Button>
             </div>
@@ -354,3 +256,4 @@ export const CreatedPotionCollection: React.FC = () => {
     </div>
   );
 };
+

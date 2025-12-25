@@ -1,68 +1,24 @@
 'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
+import Button from '@/components/ui/Button';
+import StatsGrid from '@/components/ui/StatsGrid';
+import PageHeader from '@/components/ui/PageHeader';
 import { CollectedIngredient } from '@/types/ingredients';
-import { useIngredients } from '@/hooks/useIngredients';
-import { StatsService } from '@/services/statsService';
+import IngredientModal from '@/components/IngredientModal';
+import DataTable, { Column } from '@/components/ui/DataTable';
+import { INGREDIENT_COLLECTION_FILTERS } from '@/constants/ingredients';
+import { useIngredientCollection } from '@/hooks/useIngredientCollection';
 
-import PageHeader from './ui/PageHeader';
-import StatsGrid from './ui/StatsGrid';
-import DataTable, { Column, Filter } from './ui/DataTable';
-import Button from './ui/Button';
-import IngredientModal from './IngredientModal';
-
-/**
- * Componente para gerenciar a coleção de ingredientes
- * 
- * @description
- * Este componente exibe e gerencia todos os ingredientes coletados,
- * incluindo filtros, estatísticas e operações de exportação/importação.
- */
 export default function IngredientCollection() {
-  const { ingredients, attempts, markAsUsed, getStats, refreshData } = useIngredients();
-  
-  const displayIngredients = ingredients.filter(ing => ing.quantity > 0);
-  const [selectedIngredient, setSelectedIngredient] = useState<CollectedIngredient['ingredient'] | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  /**
-   * Marca um ingrediente como usado
-   * 
-   * @param id - ID do ingrediente a ser marcado como usado
-   */
-  const handleMarkAsUsed = (id: string) => {
-    markAsUsed(id);
-  };
-
-  /**
-   * Abre o modal de detalhes do ingrediente
-   * 
-   * @param ingredient - Ingrediente selecionado
-   */
-  const handleIngredientClick = (ingredient: CollectedIngredient['ingredient']) => {
-    setSelectedIngredient(ingredient);
-    setIsModalOpen(true);
-  };
-
-  /**
-   * Fecha o modal de detalhes do ingrediente
-   */
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedIngredient(null);
-  };
-
-
-
-
-
-  const collectionStats = StatsService.calculateCollectionStats(displayIngredients, attempts);
-  const statsData = [
-    { value: collectionStats.totalCollected, label: 'Total Coletados', color: 'totoro-green' as const },
-    { value: collectionStats.totalUsed, label: 'Usados', color: 'totoro-blue' as const },
-    { value: collectionStats.totalAttempts, label: 'Tentativas', color: 'totoro-yellow' as const },
-    { value: `${collectionStats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'totoro-orange' as const }
-  ];
+  const {
+    displayIngredients,
+    selectedIngredient,
+    isModalOpen,
+    statsData,
+    handleMarkAsUsed,
+    handleIngredientClick,
+    handleCloseModal
+  } = useIngredientCollection();
 
   const columns: Column<CollectedIngredient>[] = [
     {
@@ -169,58 +125,6 @@ export default function IngredientCollection() {
     }
   ];
 
-  const filters: Filter[] = [
-    {
-      key: 'used',
-      label: 'Status',
-      type: 'select',
-      options: [
-        { value: 'false', label: 'Disponível' },
-        { value: 'true', label: 'Usado' }
-      ],
-      placeholder: 'Todos os status'
-    },
-    {
-      key: 'ingredient.combat',
-      label: 'Combat',
-      type: 'select',
-      options: [
-        { value: '1', label: '1' },
-        { value: '2', label: '2' },
-        { value: '3', label: '3' },
-        { value: '4', label: '4' },
-        { value: '5', label: '5' }
-      ],
-      placeholder: 'Todos os valores'
-    },
-    {
-      key: 'ingredient.utility',
-      label: 'Utility',
-      type: 'select',
-      options: [
-        { value: '1', label: '1' },
-        { value: '2', label: '2' },
-        { value: '3', label: '3' },
-        { value: '4', label: '4' },
-        { value: '5', label: '5' }
-      ],
-      placeholder: 'Todos os valores'
-    },
-    {
-      key: 'ingredient.whimsy',
-      label: 'Whimsy',
-      type: 'select',
-      options: [
-        { value: '1', label: '1' },
-        { value: '2', label: '2' },
-        { value: '3', label: '3' },
-        { value: '4', label: '4' },
-        { value: '5', label: '5' }
-      ],
-      placeholder: 'Todos os valores'
-    }
-  ];
-
   return (
     <div className="space-y-6">
       <PageHeader
@@ -234,7 +138,7 @@ export default function IngredientCollection() {
       <DataTable<CollectedIngredient>
         data={displayIngredients}
         columns={columns}
-        filters={filters}
+        filters={INGREDIENT_COLLECTION_FILTERS}
         searchKey="ingredient.nome_portugues"
         searchPlaceholder="Buscar ingrediente..."
         itemsPerPage={15}

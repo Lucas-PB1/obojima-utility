@@ -6,16 +6,6 @@ interface SimpleIngredientCardProps {
   className?: string;
 }
 
-/**
- * Componente de card simples de ingrediente
- * 
- * @description
- * Card simplificado para exibir ingredientes básicos com informações
- * essenciais como nome, descrição e atributos, sem ações.
- * 
- * @param ingredient - Ingrediente a ser exibido
- * @param className - Classes CSS adicionais
- */
 export default function SimpleIngredientCard({ 
   ingredient, 
   className = ''
@@ -42,7 +32,7 @@ export default function SimpleIngredientCard({
         </p>
 
         <p className="text-xs text-totoro-gray/70 mb-5 line-clamp-2 leading-relaxed italic">
-          "{ingredient.descricao}"
+          &quot;{ingredient.descricao}&quot;
         </p>
 
         <div className="flex justify-center items-center gap-1.5 pt-2 border-t border-black/5">
@@ -61,7 +51,6 @@ export default function SimpleIngredientCard({
         </div>
       </div>
       
-      {/* Decorative accent for the dominant attribute */}
       <div className={`absolute -bottom-4 -right-4 w-12 h-12 opacity-5 rounded-full blur-xl ${
         ingredient.combat === maxAttr ? 'bg-totoro-orange' : 
         ingredient.utility === maxAttr ? 'bg-totoro-blue' : 'bg-totoro-yellow'

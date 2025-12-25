@@ -28,9 +28,6 @@ const sizeClasses = {
   icon: 'p-2'
 };
 
-/**
- * Componente de botão reutilizável com estética premium e efeitos visuais
- */
 export default function Button({ 
   children, 
   onClick, 
@@ -70,7 +67,6 @@ export default function Button({
         ${className}
       `}
     >
-      {/* Decorative inner borders and highlights for premium feel */}
       {!disabled && (variant === 'primary' || variant === 'success' || variant === 'danger') && (
         <>
           <div className="absolute inset-0 rounded-2xl opacity-40 group-hover:opacity-60 transition-opacity bg-[radial-gradient(circle_at_50%_-20%,rgba(255,255,255,0.5),transparent_70%)]"></div>
@@ -78,7 +74,6 @@ export default function Button({
         </>
       )}
 
-      {/* Micro-particle animations for specific variants */}
       {!disabled && variant === 'primary' && (
         <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
           <div className="absolute top-1 left-4 w-1 h-1 bg-white/40 rounded-full animate-ping"></div>

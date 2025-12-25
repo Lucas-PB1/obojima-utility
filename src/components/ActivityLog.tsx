@@ -1,42 +1,22 @@
 'use client';
 
-import React, { useState } from 'react';
-import { ForageAttempt } from '@/types/ingredients';
-import { useIngredients } from '@/hooks/useIngredients';
-import { StatsService } from '@/services/statsService';
-
-import PageHeader from './ui/PageHeader';
-import StatsGrid from './ui/StatsGrid';
-import ActivityFilters from './filters/ActivityFilters';
-import EmptyState from './ui/EmptyState';
-import ContentCard from './ui/ContentCard';
+import React from 'react';
 import { ingredientsService } from '@/services/ingredientsService';
+import { useActivityLog } from '@/hooks/useActivityLog';
 
+import PageHeader from '@/components/ui/PageHeader';
+import StatsGrid from '@/components/ui/StatsGrid';
+import ActivityFilters from '@/components/filters/ActivityFilters';
+import EmptyState from '@/components/ui/EmptyState';
+import ContentCard from '@/components/ui/ContentCard';
 
-/**
- * Componente para exibir o log de atividades de forrageamento
- * 
- * @description
- * Este componente exibe o histórico completo de tentativas de forrageamento,
- * incluindo estatísticas, filtros e opções de exportação/importação.
- */
 export default function ActivityLog() {
-  const { attempts, refreshData } = useIngredients();
-  const [filteredAttempts, setFilteredAttempts] = useState<ForageAttempt[]>([]);
-
-  const activityStats = StatsService.calculateActivityStats(filteredAttempts);
-
-  /**
-   * Limpa todos os logs de forrageamento após confirmação
-   */
-
-  
-  const statsData = [
-    { value: activityStats.totalAttempts, label: 'Total de Tentativas', color: 'totoro-green' as const },
-    { value: `${activityStats.successRate.toFixed(1)}%`, label: 'Taxa de Sucesso', color: 'totoro-blue' as const },
-    { value: activityStats.averageRoll.toFixed(1), label: 'Rolagem Média', color: 'totoro-yellow' as const },
-    { value: activityStats.ingredientsCollected, label: 'Ingredientes Coletados', color: 'totoro-gray' as const }
-  ];
+  const {
+    attempts,
+    filteredAttempts,
+    setFilteredAttempts,
+    statsData
+  } = useActivityLog();
 
   return (
     <div className="space-y-6">
@@ -169,8 +149,6 @@ export default function ActivityLog() {
         </div>
       )}
       </ContentCard>
-
-
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import { RegionKey, TestType, DiceType, AdvantageType } from '@/types/ingredients';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import Select from '@/components/ui/Select';
+import RadioGroup from '@/components/ui/RadioGroup';
+import ContentCard from '@/components/ui/ContentCard';
 import { ingredientsService } from '@/services/ingredientsService';
-import ContentCard from '../ui/ContentCard';
-import Select from '../ui/Select';
-import Input from '../ui/Input';
-import RadioGroup from '../ui/RadioGroup';
-import Button from '../ui/Button';
+import { RegionKey, TestType, DiceType, AdvantageType } from '@/types/ingredients';
+import { DICE_OPTIONS, TEST_TYPE_OPTIONS, ADVANTAGE_OPTIONS } from '@/constants/forage';
 
 interface ForageFormProps {
   region: RegionKey;
@@ -23,27 +24,6 @@ interface ForageFormProps {
   remainingAttempts: number;
 }
 
-/**
- * Formulário de configuração para forrageamento
- * 
- * @description
- * Formulário completo para configurar parâmetros de forrageamento incluindo
- * região, tipo de teste, modificadores, dados bônus e vantagem/desvantagem.
- * 
- * @param region - Região selecionada para forrageamento
- * @param setRegion - Função para alterar a região
- * @param testType - Tipo de teste selecionado
- * @param setTestType - Função para alterar o tipo de teste
- * @param modifier - Modificador numérico
- * @param setModifier - Função para alterar o modificador
- * @param bonusDice - Dados bônus configurados
- * @param setBonusDice - Função para alterar os dados bônus
- * @param advantage - Tipo de vantagem/desvantagem
- * @param setAdvantage - Função para alterar a vantagem
- * @param onForage - Função executada ao iniciar forrageamento
- * @param isLoading - Estado de carregamento
- * @param remainingAttempts - Tentativas restantes do dia
- */
 export default function ForageForm({
   region,
   setRegion,
@@ -64,24 +44,7 @@ export default function ForageForm({
     label: ingredientsService.getRegionDisplayName(key)
   }));
 
-  const diceOptions: { value: DiceType; label: string }[] = [
-    { value: 'd4', label: 'D4' },
-    { value: 'd6', label: 'D6' },
-    { value: 'd8', label: 'D8' },
-    { value: 'd10', label: 'D10' },
-    { value: 'd12', label: 'D12' }
-  ];
 
-  const testTypeOptions = [
-    { value: 'natureza', label: 'Natureza', icon: '🌱' },
-    { value: 'sobrevivencia', label: 'Sobrevivência', icon: '🏕️' }
-  ];
-
-  const advantageOptions = [
-    { value: 'normal', label: 'Normal' },
-    { value: 'vantagem', label: 'Vantagem', icon: '✨' },
-    { value: 'desvantagem', label: 'Desvantagem', icon: '⚠️' }
-  ];
 
   return (
     <ContentCard title="⚙️ Configuração do Teste">
@@ -96,7 +59,7 @@ export default function ForageForm({
         <RadioGroup
           value={testType}
           onChange={(value) => setTestType(value as TestType)}
-          options={testTypeOptions}
+          options={TEST_TYPE_OPTIONS}
           label="🎯 Tipo de Teste"
         />
 
@@ -122,7 +85,7 @@ export default function ForageForm({
                   setBonusDice(null);
                 }
               }}
-              options={[{ value: '', label: 'Nenhum' }, ...diceOptions]}
+              options={[{ value: '', label: 'Nenhum' }, ...DICE_OPTIONS]}
               className="flex-1"
             />
             {bonusDice && (
@@ -141,7 +104,7 @@ export default function ForageForm({
         <RadioGroup
           value={advantage}
           onChange={(value) => setAdvantage(value as AdvantageType)}
-          options={advantageOptions}
+          options={ADVANTAGE_OPTIONS}
           label="🎯 Vantagem/Desvantagem"
         />
 

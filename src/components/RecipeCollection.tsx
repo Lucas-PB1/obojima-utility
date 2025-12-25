@@ -1,59 +1,24 @@
-'use client';
+import React from 'react';
+import { useRecipeCollection } from '@/hooks/useRecipeCollection';
+import ContentCard from '@/components/ui/ContentCard';
+import Button from '@/components/ui/Button';
+import Modal from '@/components/ui/Modal';
+import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
+import { POTION_CATEGORY_CONFIG, RECIPE_FILTER_OPTIONS } from '@/constants/potions';
 
-import React, { useState, useEffect } from 'react';
-import { PotionRecipe } from '../types/ingredients';
-import { firebaseRecipeService } from '../services/firebaseRecipeService';
-import ContentCard from './ui/ContentCard';
-import Button from './ui/Button';
-import Modal from './ui/Modal';
-import SimpleIngredientCard from './ui/SimpleIngredientCard';
-import PageHeader from './ui/PageHeader';
-import StatsGrid from './ui/StatsGrid';
-
-/**
- * Componente para gerenciar a coleção de receitas de poções
- * 
- * @description
- * Este componente exibe todas as receitas de poções criadas,
- * incluindo filtros, estatísticas e opções de exportação/importação.
- */
 export const RecipeCollection: React.FC = () => {
-  const [recipes, setRecipes] = useState<PotionRecipe[]>([]);
-  const [selectedRecipe, setSelectedRecipe] = useState<PotionRecipe | null>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'combat' | 'utility' | 'whimsy'>('all');
-
-  useEffect(() => {
-    const unsubscribe = firebaseRecipeService.subscribeToRecipes((recipes) => {
-      setRecipes(recipes);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  /**
-   * Carrega todas as receitas do serviço (mantido para compatibilidade)
-   */
-  const loadRecipes = async () => {
-    const allRecipes = await firebaseRecipeService.getAllRecipes();
-    setRecipes(allRecipes);
-  };
-
-
-  const filteredRecipes = recipes.filter(recipe => {
-    if (filter === 'all') return true;
-    return recipe.winningAttribute === filter;
-  });
-
-  const [stats, setStats] = useState({ total: 0, byCategory: { combat: 0, utility: 0, whimsy: 0 }, recent: 0 });
-
-  useEffect(() => {
-    const loadStats = async () => {
-      const statsData = await firebaseRecipeService.getRecipeStats();
-      setStats(statsData);
-    };
-    loadStats();
-  }, [recipes]);
+  const {
+    filteredRecipes,
+    selectedRecipe,
+    showModal,
+    setShowModal,
+    closeModal,
+    filter,
+    setFilter,
+    stats,
+    handleRecipeClick,
+    handleDeleteRecipe
+  } = useRecipeCollection();
 
   const getAttributeColor = (attribute: 'combat' | 'utility' | 'whimsy') => {
     switch (attribute) {
@@ -77,18 +42,6 @@ export const RecipeCollection: React.FC = () => {
     }
   };
 
-  const handleRecipeClick = (recipe: PotionRecipe) => {
-    setSelectedRecipe(recipe);
-    setShowModal(true);
-  };
-
-  const handleDeleteRecipe = async (recipeId: string) => {
-    if (confirm('Tem certeza que deseja excluir esta receita?')) {
-      await firebaseRecipeService.removeRecipe(recipeId);
-      loadRecipes();
-    }
-  };
-
 
 
   return (
@@ -104,7 +57,6 @@ export const RecipeCollection: React.FC = () => {
             </p>
           </div>
 
-          {/* Estatísticas */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-gray-50 p-3 rounded-lg text-center">
               <div className="text-lg font-bold text-gray-900">{stats.total}</div>
@@ -124,7 +76,6 @@ export const RecipeCollection: React.FC = () => {
             </div>
           </div>
 
-          {/* Filtros */}
           <div className="flex flex-wrap gap-2">
             <Button
               onClick={() => setFilter('all')}
@@ -160,7 +111,6 @@ export const RecipeCollection: React.FC = () => {
         </div>
       </ContentCard>
 
-      {/* Lista de Receitas */}
       <ContentCard>
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">
@@ -183,7 +133,6 @@ export const RecipeCollection: React.FC = () => {
                   onClick={() => handleRecipeClick(recipe)}
                 >
                   <div className="space-y-3">
-                    {/* Cabeçalho */}
                     <div>
                       <h4 className="font-bold text-gray-900 text-sm">
                         {recipe.resultingPotion.nome_portugues}
@@ -193,12 +142,9 @@ export const RecipeCollection: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Categoria */}
                     <div className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getAttributeColor(recipe.winningAttribute)}`}>
                       {getAttributeLabel(recipe.winningAttribute)}
                     </div>
-
-                    {/* Scores */}
                     <div className="grid grid-cols-3 gap-2 text-xs">
                       <div className="text-center">
                         <div className="font-medium text-red-600">Combate</div>
@@ -214,7 +160,6 @@ export const RecipeCollection: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Data */}
                     <div className="text-xs text-gray-500">
                       Criada em {recipe.createdAt.toLocaleDateString('pt-BR')}
                     </div>
@@ -226,15 +171,13 @@ export const RecipeCollection: React.FC = () => {
         </div>
       </ContentCard>
 
-      {/* Modal de Detalhes */}
       {selectedRecipe && (
         <Modal
           isOpen={showModal}
-          onClose={() => setShowModal(false)}
+          onClose={closeModal}
           title="Detalhes da Receita"
         >
           <div className="space-y-4">
-            {/* Poção Resultante */}
             <div className="text-center">
               <div className="text-xl font-bold text-gray-900 mb-1">
                 {selectedRecipe.resultingPotion.nome_portugues}
@@ -251,7 +194,6 @@ export const RecipeCollection: React.FC = () => {
               </div>
             </div>
 
-            {/* Descrição */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-900 mb-2">Descrição:</h4>
               <p className="text-sm text-gray-700">
@@ -259,7 +201,6 @@ export const RecipeCollection: React.FC = () => {
               </p>
             </div>
 
-            {/* Ingredientes */}
             <div>
               <h4 className="font-medium text-gray-900 mb-3">Ingredientes Utilizados:</h4>
               <div className="grid grid-cols-1 gap-3">
@@ -269,7 +210,6 @@ export const RecipeCollection: React.FC = () => {
               </div>
             </div>
 
-            {/* Scores */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-900 mb-3">Scores da Receita:</h4>
               <div className="grid grid-cols-3 gap-4">
@@ -287,11 +227,10 @@ export const RecipeCollection: React.FC = () => {
                 </div>
               </div>
               <div className="mt-3 text-sm text-gray-600 text-center">
-                Categoria vencedora: <span className="font-medium">{getAttributeLabel(selectedRecipe.winningAttribute)}</span>
+                Categoria vencedora: <span className="font-medium">{POTION_CATEGORY_CONFIG[selectedRecipe.winningAttribute].label}</span>
               </div>
             </div>
 
-            {/* Ações */}
             <div className="flex justify-between">
               <Button
                 onClick={() => handleDeleteRecipe(selectedRecipe.id)}
@@ -300,7 +239,7 @@ export const RecipeCollection: React.FC = () => {
               >
                 🗑️ Excluir Receita
               </Button>
-              <Button onClick={() => setShowModal(false)}>
+              <Button onClick={closeModal}>
                 Fechar
               </Button>
             </div>

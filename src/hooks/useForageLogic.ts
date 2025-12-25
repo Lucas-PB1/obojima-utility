@@ -9,20 +9,11 @@ import {
 } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
 import { diceService } from '@/services/diceService';
+import { useSettings } from '@/components/SettingsModal';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
 import { GAME_CONFIG } from '@/config/gameConfig';
 
-/**
- * Hook para gerenciar a lógica de forrageamento no sistema Obojima
- * 
- * @description
- * Este hook encapsula toda a lógica complexa de forrageamento, incluindo:
- * - Cálculo de DC e determinação de raridade baseada na rolagem
- * - Sistema de rolagem com vantagem/desvantagem
- * - Gerenciamento de configurações padrão
- * - Aplicação de talentos especiais
- */
 export function useForageLogic() {
   const [region, setRegion] = useState<RegionKey>('Gale Fields');
   const [testType, setTestType] = useState<TestType>('natureza');
@@ -33,25 +24,22 @@ export function useForageLogic() {
   const [lastResult, setLastResult] = useState<ForageAttempt | null>(null);
   const [remainingAttempts, setRemainingAttempts] = useState<number>(GAME_CONFIG.DAILY_FORAGE_LIMIT);
 
-  useEffect(() => {
-    const loadDefaults = async () => {
-      const defaultModifier = await firebaseSettingsService.getDefaultModifier();
-      const defaultBonusDice = await firebaseSettingsService.getDefaultBonusDice();
-      
-      if (defaultModifier !== '') {
-        setModifier(defaultModifier);
-      }
-      
-      if (defaultBonusDice) {
-        setBonusDice({
-          type: defaultBonusDice.type as DiceType,
-          value: defaultBonusDice.value
-        });
-      }
-    };
-    
-    loadDefaults();
+  const { settings } = useSettings();
 
+  useEffect(() => {
+    if (settings.defaultModifier !== '') {
+      setModifier(settings.defaultModifier);
+    }
+    
+    if (settings.defaultBonusType && settings.defaultBonusValue > 0) {
+      setBonusDice({
+        type: settings.defaultBonusType as DiceType,
+        value: settings.defaultBonusValue
+      });
+    }
+  }, [settings.defaultModifier, settings.defaultBonusType, settings.defaultBonusValue]);
+
+  useEffect(() => {
     const loadRemainingAttempts = async () => {
       const remaining = await firebaseStorageService.getRemainingAttemptsToday();
       setRemainingAttempts(remaining);
@@ -60,9 +48,6 @@ export function useForageLogic() {
     loadRemainingAttempts();
   }, []);
 
-  /**
-   * Determina a raridade e sucesso baseado na rolagem total
-   */
   const determineRarityAndSuccess = (totalRoll: number) => {
     const rollRanges = [
       { min: 10, max: 15, rarity: 'comum' as const, isNative: true, dc: 10 },
@@ -102,9 +87,6 @@ export function useForageLogic() {
     return { rarity: 'comum' as const, success: false, dcResult: { dc: 10, range: '10-15' } };
   };
 
-  /**
-   * Obtém ingrediente baseado na raridade e região
-   */
   const getIngredientByRarity = useCallback(async (rarity: 'comum' | 'incomum' | 'raro' | 'unico', totalRoll: number) => {
     const ingredientGetters = {
       raro: () => ingredientsService.getRandomRareIngredient(),
@@ -118,9 +100,6 @@ export function useForageLogic() {
     return await ingredientGetters[rarity]?.() || null;
   }, [region]);
 
-  /**
-   * Executa uma tentativa de forrageamento com base nos parâmetros configurados
-   */
   const executeForage = useCallback(async (
     onIngredientCollected?: (ingredient: CollectedIngredient) => void,
     addIngredient?: (ingredient: CollectedIngredient) => void,
@@ -191,24 +170,6 @@ export function useForageLogic() {
     }
   }, [region, testType, modifier, bonusDice, advantage, getIngredientByRarity]);
 
-  /**
-   * Atualiza as configurações do forrageamento com os valores padrão salvos
-   */
-  const updateSettings = useCallback(async () => {
-    const defaultModifier = await firebaseSettingsService.getDefaultModifier();
-    const defaultBonusDice = await firebaseSettingsService.getDefaultBonusDice();
-    
-    if (defaultModifier !== '') {
-      setModifier(defaultModifier);
-    }
-    
-    if (defaultBonusDice) {
-      setBonusDice({
-        type: defaultBonusDice.type as DiceType,
-        value: defaultBonusDice.value
-      });
-    }
-  }, []);
 
   return {
     region,
@@ -224,7 +185,6 @@ export function useForageLogic() {
     isLoading,
     lastResult,
     remainingAttempts,
-    executeForage,
-    updateSettings
+    executeForage
   };
 }

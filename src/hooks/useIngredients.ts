@@ -1,31 +1,14 @@
+import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
-import { useAuth } from './useAuth';
 
-/**
- * Hook para gerenciar ingredientes coletados e tentativas de forrageamento
- * 
- * @description
- * Este hook encapsula toda a lógica de gerenciamento de ingredientes e tentativas,
- * incluindo:
- * - Carregamento de dados do Firestore
- * - Adição e remoção de ingredientes
- * - Marcação de ingredientes como usados
- * - Gerenciamento de tentativas de forrageamento
- * - Operações de limpeza de dados
- * - Sincronização em tempo real
- * 
- */
 export function useIngredients() {
   const { isAuthenticated, loading: authLoading } = useAuth();
   const [ingredients, setIngredients] = useState<CollectedIngredient[]>([]);
   const [attempts, setAttempts] = useState<ForageAttempt[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * Carrega todos os dados do Firestore
-   */
   const refreshData = useCallback(async () => {
     if (!isAuthenticated) {
       setIngredients([]);
@@ -72,11 +55,6 @@ export function useIngredients() {
     };
   }, [isAuthenticated, authLoading]);
 
-  /**
-   * Marca um ingrediente como usado
-   * 
-   * @param id - ID do ingrediente a ser marcado como usado
-   */
   const markAsUsed = useCallback(async (id: string) => {
     if (!isAuthenticated) return;
     try {
@@ -86,11 +64,6 @@ export function useIngredients() {
     }
   }, [isAuthenticated]);
 
-  /**
-   * Remove um ingrediente da coleção
-   * 
-   * @param id - ID do ingrediente a ser removido
-   */
   const removeIngredient = useCallback(async (id: string) => {
     if (!isAuthenticated) return;
     try {
@@ -100,11 +73,6 @@ export function useIngredients() {
     }
   }, [isAuthenticated]);
 
-  /**
-   * Adiciona um novo ingrediente à coleção
-   * 
-   * @param ingredient - Ingrediente a ser adicionado
-   */
   const addIngredient = useCallback(async (ingredient: CollectedIngredient) => {
     if (!isAuthenticated) return;
     try {
@@ -114,11 +82,6 @@ export function useIngredients() {
     }
   }, [isAuthenticated]);
 
-  /**
-   * Adiciona uma nova tentativa de forrageamento
-   * 
-   * @param attempt - Tentativa de forrageamento a ser adicionada
-   */
   const addAttempt = useCallback(async (attempt: ForageAttempt) => {
     if (!isAuthenticated) return;
     try {
@@ -128,11 +91,6 @@ export function useIngredients() {
     }
   }, [isAuthenticated]);
 
-  /**
-   * Retorna as estatísticas do sistema
-   * 
-   * @returns Estatísticas calculadas
-   */
   const getStats = useCallback(async () => {
     if (!isAuthenticated) {
       return {

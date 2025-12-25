@@ -13,7 +13,7 @@ import {
   Unsubscribe
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
-import { authService } from './authService';
+import { authService } from '@/services/authService';
 import { PotionRecipe } from '@/types/ingredients';
 
 class FirebaseRecipeService {
@@ -53,9 +53,6 @@ class FirebaseRecipeService {
     return Timestamp.fromDate(date);
   }
 
-  /**
-   * Salva uma receita no Firestore
-   */
   async saveRecipe(recipe: PotionRecipe): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
     
@@ -71,9 +68,6 @@ class FirebaseRecipeService {
     }
   }
 
-  /**
-   * Obtém todas as receitas salvas
-   */
   async getAllRecipes(): Promise<PotionRecipe[]> {
     if (!this.isClient() || !this.getUserId()) return [];
     
@@ -95,9 +89,6 @@ class FirebaseRecipeService {
     }
   }
 
-  /**
-   * Observa mudanças nas receitas em tempo real
-   */
   subscribeToRecipes(callback: (recipes: PotionRecipe[]) => void): () => void {
     if (!this.isClient() || !this.getUserId()) {
       callback([]);
@@ -136,9 +127,6 @@ class FirebaseRecipeService {
     }
   }
 
-  /**
-   * Remove uma receita pelo ID
-   */
   async removeRecipe(recipeId: string): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
     
@@ -151,9 +139,6 @@ class FirebaseRecipeService {
     }
   }
 
-  /**
-   * Obtém uma receita específica pelo ID
-   */
   async getRecipeById(recipeId: string): Promise<PotionRecipe | null> {
     if (!this.isClient() || !this.getUserId()) return null;
     
@@ -177,9 +162,6 @@ class FirebaseRecipeService {
     }
   }
 
-  /**
-   * Obtém receitas por categoria de poção
-   */
   async getRecipesByCategory(category: 'combat' | 'utility' | 'whimsy'): Promise<PotionRecipe[]> {
     if (!this.isClient() || !this.getUserId()) return [];
     
@@ -202,9 +184,6 @@ class FirebaseRecipeService {
     }
   }
 
-  /**
-   * Obtém estatísticas das receitas
-   */
   async getRecipeStats(): Promise<{
     total: number;
     byCategory: {

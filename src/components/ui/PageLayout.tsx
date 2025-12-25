@@ -6,17 +6,6 @@ interface PageLayoutProps {
   variant?: 'default' | 'simple';
 }
 
-/**
- * Layout base para páginas
- * 
- * @description
- * Layout principal que envolve o conteúdo das páginas com gradiente de fundo,
- * padding e container centralizado. Base para todas as páginas do sistema.
- * 
- * @param children - Conteúdo da página
- * @param className - Classes CSS adicionais
- * @param variant - 'default' para layout completo com fundo, 'simple' para apenas container e padding
- */
 export default function PageLayout({ children, className = '', variant = 'default' }: PageLayoutProps) {
   if (variant === 'simple') {
     return (

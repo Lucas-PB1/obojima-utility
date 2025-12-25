@@ -1,36 +1,20 @@
 'use client';
-
-import React, { useState } from 'react';
-import { CollectedIngredient, DiceType } from '@/types/ingredients';
-import { useIngredients } from '@/hooks/useIngredients';
-import { useForageLogic } from '@/hooks/useForageLogic';
-
-
-import PageHeader from './ui/PageHeader';
-import ForageForm from './forage/ForageForm';
-import ForageResult from './forage/ForageResult';
-import IngredientCard from './ui/IngredientCard';
-import SettingsModal from './SettingsModal';
-import ContentCard from './ui/ContentCard';
-import Button from './ui/Button';
+import React from 'react';
+import Button from '@/components/ui/Button';
+import PageHeader from '@/components/ui/PageHeader';
+import ContentCard from '@/components/ui/ContentCard';
+import SettingsModal from '@/components/SettingsModal';
+import ForageForm from '@/components/forage/ForageForm';
+import { CollectedIngredient } from '@/types/ingredients';
+import { useForageSystem } from '@/hooks/useForageSystem';
+import ForageResult from '@/components/forage/ForageResult';
+import IngredientCard from '@/components/ui/IngredientCard';
 
 interface ForageSystemProps {
   onIngredientCollected?: (ingredient: CollectedIngredient) => void;
 }
 
-/**
- * Componente principal do sistema de forrageamento
- * 
- * @description
- * Este componente gerencia todo o sistema de forrageamento, incluindo
- * configuração de parâmetros, execução de tentativas e exibição de resultados.
- * 
- * @param onIngredientCollected - Callback executado quando um ingrediente é coletado
- */
 export default function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  
-  const { ingredients, addIngredient, addAttempt } = useIngredients();
   const {
     region,
     setRegion,
@@ -45,16 +29,11 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
     isLoading,
     lastResult,
     remainingAttempts,
-    executeForage,
-    updateSettings
-  } = useForageLogic();
-
-  /**
-   * Executa uma tentativa de forrageamento
-   */
-  const handleForage = async () => {
-    await executeForage(onIngredientCollected, addIngredient, addAttempt);
-  };
+    ingredients,    isSettingsOpen,
+    openSettings,
+    closeSettings,
+    handleForage
+  } = useForageSystem(onIngredientCollected);
 
   return (
     <div className="space-y-6">
@@ -83,7 +62,7 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
             </div>
             
             <Button
-              onClick={() => setIsSettingsOpen(true)}
+              onClick={openSettings}
               variant="ghost"
               size="md"
               className="!bg-white/60 !rounded-2xl !px-5 !border-white group"
@@ -133,11 +112,9 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
 
       <SettingsModal
         isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        onSettingsChange={() => {
-          updateSettings();
-        }}
+        onClose={closeSettings}
       />
     </div>
   );
 }
+

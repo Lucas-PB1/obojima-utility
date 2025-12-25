@@ -1,26 +1,17 @@
 import React from 'react';
+import Input from '@/components/ui/Input';
+import Select from '@/components/ui/Select';
+import Button from '@/components/ui/Button';
 import { useIngredientFilters } from '@/hooks/useFilters';
+import FilterSection from '@/components/ui/FilterSection';
 import { CollectedIngredient } from '@/types/ingredients';
-import FilterSection from '../ui/FilterSection';
-import Input from '../ui/Input';
-import Select from '../ui/Select';
-import Button from '../ui/Button';
+import { FILTER_OPTIONS, RARITY_OPTIONS, SORT_OPTIONS } from '@/constants/filters/ingredients';
 
 interface IngredientFiltersProps {
   ingredients: CollectedIngredient[];
   onFilteredIngredients: (ingredients: CollectedIngredient[]) => void;
 }
 
-/**
- * Componente de filtros para ingredientes
- * 
- * @description
- * Filtros completos para ingredientes coletados incluindo busca por texto,
- * filtros por raridade, status de uso e ordenação por diferentes critérios.
- * 
- * @param ingredients - Lista de ingredientes a ser filtrada
- * @param onFilteredIngredients - Callback executado quando os filtros mudam
- */
 export default function IngredientFilters({ ingredients, onFilteredIngredients }: IngredientFiltersProps) {
   const {
     filter,
@@ -38,30 +29,11 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
     onFilteredIngredients(filteredIngredients);
   }, [filteredIngredients, onFilteredIngredients]);
 
-  const filterOptions = [
-    { value: 'all', label: 'Todos' },
-    { value: 'available', label: 'Disponíveis' },
-    { value: 'used', label: 'Usados' }
-  ];
 
-  const rarityOptions = [
-    { value: 'all', label: 'Todas as Raridades' },
-    { value: 'comum', label: '🟢 Comum' },
-    { value: 'incomum', label: '🔵 Incomum' },
-    { value: 'raro', label: '🟣 Raro' },
-    { value: 'unico', label: '🟡 Único' }
-  ];
-
-  const sortOptions = [
-    { value: 'date', label: '📅 Data' },
-    { value: 'name', label: '🔤 Nome' },
-    { value: 'rarity', label: '⭐ Raridade' }
-  ];
 
   return (
     <FilterSection className="mb-8">
       <div className="space-y-4">
-        {/* Primeira linha: Busca */}
         <div className="flex-1">
           <Input
             type="text"
@@ -72,10 +44,9 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
           />
         </div>
 
-        {/* Segunda linha: Filtros */}
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="flex flex-wrap gap-2">
-            {filterOptions.map(option => (
+            {FILTER_OPTIONS.map(option => (
               <Button
                 key={option.value}
                 onClick={() => setFilter(option.value as 'all' | 'available' | 'used')}
@@ -92,14 +63,14 @@ export default function IngredientFilters({ ingredients, onFilteredIngredients }
             <Select
               value={rarityFilter}
               onChange={(value) => setRarityFilter(value as 'all' | 'comum' | 'incomum' | 'raro' | 'unico')}
-              options={rarityOptions}
+              options={RARITY_OPTIONS}
               className="w-auto"
             />
             
             <Select
               value={sortBy}
               onChange={(value) => setSortBy(value as 'date' | 'name' | 'rarity')}
-              options={sortOptions}
+              options={SORT_OPTIONS}
               className="w-auto"
             />
           </div>

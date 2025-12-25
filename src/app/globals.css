@@ -5,14 +5,12 @@
   --font-serif: var(--font-bitter);
   --font-mono: var(--font-quicksand);
   
-  /* Paleta Totoro - Cores principais */
   --totoro-blue: #4A90E2;
   --totoro-green: #7ED321;
   --totoro-yellow: #F5A623;
   --totoro-gray: #2C3E50;
   --totoro-orange: #E67E22;
   
-  /* Cores do sistema baseadas na paleta Totoro */
   --background: #f8fafc;
   --foreground: #2C3E50;
   --primary: #4A90E2;
@@ -21,7 +19,6 @@
   --muted: #e2e8f0;
   --border: #cbd5e1;
   
-  /* Cores para estados */
   --success: #7ED321;
   --warning: #F5A623;
   --error: #E67E22;
@@ -43,7 +40,6 @@ body {
   color: var(--foreground);
 }
 
-/* Classes utilitárias para a paleta Totoro */
 .bg-totoro-blue { background-color: var(--totoro-blue); }
 .bg-totoro-green { background-color: var(--totoro-green); }
 .bg-totoro-yellow { background-color: var(--totoro-yellow); }
@@ -62,7 +58,6 @@ body {
 .border-totoro-gray { border-color: var(--totoro-gray); }
 .border-totoro-orange { border-color: var(--totoro-orange); }
 
-/* Animations */
 @keyframes shimmer-premium {
   0% { transform: translate(-100%, -100%) rotate(30deg); }
   100% { transform: translate(100%, 100%) rotate(30deg); }
@@ -96,7 +91,6 @@ body {
   50% { transform: translateY(-20px) translateX(10px) scale(1.2); opacity: 0.8; }
 }
 
-/* Glassmorphism Classes */
 .glass-panel {
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(10px) saturate(160%);
@@ -112,7 +106,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Premium Button Effects */
 .btn-shimmer {
   position: relative;
   overflow: hidden;
@@ -167,7 +160,6 @@ body {
   transition: width 0.6s, height 0.6s, opacity 0.6s;
 }
 
-/* Particle effect */
 .magic-particle {
   position: absolute;
   pointer-events: none;
@@ -176,7 +168,6 @@ body {
   animation: particle-float 3s infinite ease-in-out;
 }
 
-/* Background Patterns */
 .bg-topo {
   background-color: #f8fafc;
   background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
@@ -184,7 +175,7 @@ body {
 }
 
 .bg-mesh {
-  background-color: #faf9f6; /* Warmer creme background */
+  background-color: #faf9f6;
   background-image: 
     radial-gradient(at 0% 0%, rgba(74, 144, 226, 0.02) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(126, 211, 33, 0.02) 0px, transparent 50%),

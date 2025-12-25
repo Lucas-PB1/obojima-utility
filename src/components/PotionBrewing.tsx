@@ -1,15 +1,12 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
-import { Ingredient, PotionRecipe, PotionBrewingResult } from '../types/ingredients';
-import { potionService } from '../services/potionService';
-import { firebaseRecipeService } from '../services/firebaseRecipeService';
-import { firebaseCreatedPotionService } from '../services/firebaseCreatedPotionService';
-import Button from './ui/Button';
-import ContentCard from './ui/ContentCard';
-import SimpleIngredientCard from './ui/SimpleIngredientCard';
-import Modal from './ui/Modal';
-import { useSettings } from '../hooks/useSettings';
+import React from 'react';
+import Modal from '@/components/ui/Modal';
+import Button from '@/components/ui/Button';
+import ContentCard from '@/components/ui/ContentCard';
+import { usePotionBrewing } from '@/hooks/usePotionBrewing';
+import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
+import { Ingredient, PotionRecipe } from '@/types/ingredients';
+import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
 
 interface PotionBrewingProps {
   availableIngredients: Ingredient[];
@@ -17,211 +14,28 @@ interface PotionBrewingProps {
   onIngredientsUsed?: (ingredientIds: number[]) => void;
 }
 
-/**
- * Componente para criação de poções
- * 
- * @description
- * Este componente permite selecionar ingredientes e criar poções,
- * incluindo sistema de scores, escolha de atributos e aplicação de talentos.
- * 
- * @param availableIngredients - Lista de ingredientes disponíveis
- * @param onPotionCreated - Callback executado quando uma poção é criada
- * @param onIngredientsUsed - Callback executado quando ingredientes são usados
- */
 export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   availableIngredients,
   onPotionCreated,
   onIngredientsUsed
 }) => {
-  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
-  const [brewingResult, setBrewingResult] = useState<PotionBrewingResult | null>(null);
-  const [isBrewing, setIsBrewing] = useState(false);
-  const [showResultModal, setShowResultModal] = useState(false);
-  const [previewScores, setPreviewScores] = useState<{
-    combatScore: number;
-    utilityScore: number;
-    whimsyScore: number;
-    winningAttribute: 'combat' | 'utility' | 'whimsy';
-  } | null>(null);
-  const [availableScores, setAvailableScores] = useState<{
-    scores: Array<{ attribute: 'combat' | 'utility' | 'whimsy'; value: number; label: string }>;
-    canChoose: boolean;
-  } | null>(null);
-  const [chosenAttribute, setChosenAttribute] = useState<'combat' | 'utility' | 'whimsy' | null>(null);
-  const [showScoreChoice, setShowScoreChoice] = useState(false);
-  const { settings } = useSettings();
-
-  useEffect(() => {
-    if (selectedIngredients.length === 3) {
-      try {
-        const scores = potionService.calculateScores(selectedIngredients);
-        setPreviewScores(scores);
-        
-        const available = potionService.calculateAvailableScores(selectedIngredients, settings.potionBrewerTalent);
-        setAvailableScores(available);
-      } catch {
-        setPreviewScores(null);
-        setAvailableScores(null);
-      }
-    } else {
-      setPreviewScores(null);
-      setAvailableScores(null);
-      setChosenAttribute(null);
-      setShowScoreChoice(false);
-    }
-  }, [selectedIngredients, settings.potionBrewerTalent]);
-
-  const handleIngredientSelect = (ingredient: Ingredient) => {
-    if (selectedIngredients.length >= 3) {
-      return;
-    }
-
-    if (selectedIngredients.some(ing => ing.id === ingredient.id)) {
-      return;
-    }
-
-    setSelectedIngredients(prev => [...prev, ingredient]);
-  };
-
-  const handleIngredientRemove = (ingredientId: number) => {
-    setSelectedIngredients(prev => prev.filter(ing => ing.id !== ingredientId));
-  };
-
-  const handleBrewPotion = async () => {
-    if (selectedIngredients.length !== 3) {
-      return;
-    }
-
-    if (availableScores?.canChoose && !chosenAttribute) {
-      setShowScoreChoice(true);
-      return;
-    }
-
-    setIsBrewing(true);
-    try {
-      const result = await potionService.brewPotion(selectedIngredients, chosenAttribute || undefined);
-      setBrewingResult(result);
-      setShowResultModal(true);
-      
-      if (result.success) {
-        await firebaseRecipeService.saveRecipe(result.recipe);
-        
-        await firebaseCreatedPotionService.addCreatedPotion(result.recipe);
-        
-        if (result.cauldronBonus && result.remainsPotion) {
-          try {
-            const remainsRecipe: PotionRecipe = {
-              id: `remains_${result.recipe.id}`,
-              ingredients: [],
-              combatScore: 0,
-              utilityScore: 0,
-              whimsyScore: 0,
-              winningAttribute: result.recipe.winningAttribute,
-              resultingPotion: result.remainsPotion,
-              createdAt: new Date()
-            };
-            
-            await firebaseRecipeService.saveRecipe(remainsRecipe);
-            await firebaseCreatedPotionService.addCreatedPotion(remainsRecipe);
-          } catch (error) {
-            console.error('Erro ao gerar poção dos restos:', error);
-          }
-        }
-
-        if (result.potionBrewerSuccess && result.secondPotion) {
-          try {
-            const secondRecipe: PotionRecipe = {
-              id: `second_${result.recipe.id}`,
-              ingredients: [...selectedIngredients],
-              combatScore: result.recipe.combatScore,
-              utilityScore: result.recipe.utilityScore,
-              whimsyScore: result.recipe.whimsyScore,
-              winningAttribute: result.recipe.winningAttribute,
-              resultingPotion: result.secondPotion,
-              createdAt: new Date()
-            };
-            
-            await firebaseRecipeService.saveRecipe(secondRecipe);
-            await firebaseCreatedPotionService.addCreatedPotion(secondRecipe);
-          } catch (error) {
-            console.error('Erro ao gerar segunda poção:', error);
-          }
-        }
-        
-        const ingredientIds = selectedIngredients.map(ing => ing.id);
-        if (onIngredientsUsed) {
-          onIngredientsUsed(ingredientIds);
-        }
-        
-        setSelectedIngredients([]);
-        
-        if (onPotionCreated) {
-          onPotionCreated(result.recipe);
-        }
-      }
-    } catch (error) {
-      console.error('Erro ao criar poção:', error);
-      setBrewingResult({
-        recipe: {
-          id: '',
-          ingredients: [],
-          combatScore: 0,
-          utilityScore: 0,
-          whimsyScore: 0,
-          winningAttribute: 'combat',
-          resultingPotion: {
-            id: 0,
-            nome_ingles: '',
-            nome_portugues: '',
-            raridade: '',
-            descricao: ''
-          },
-          createdAt: new Date()
-        },
-        success: false,
-        message: 'Erro inesperado ao criar a poção.'
-      });
-      setShowResultModal(true);
-    } finally {
-      setIsBrewing(false);
-    }
-  };
-
-  const handleClearSelection = () => {
-    setSelectedIngredients([]);
-    setBrewingResult(null);
-    setPreviewScores(null);
-    setAvailableScores(null);
-    setChosenAttribute(null);
-    setShowScoreChoice(false);
-  };
-
-  const handleScoreChoice = (attribute: 'combat' | 'utility' | 'whimsy') => {
-    setChosenAttribute(attribute);
-    setShowScoreChoice(false);
-  };
-
-  const getAttributeColor = (attribute: 'combat' | 'utility' | 'whimsy') => {
-    switch (attribute) {
-      case 'combat':
-        return 'text-red-600 bg-red-50 border-red-200';
-      case 'utility':
-        return 'text-blue-600 bg-blue-50 border-blue-200';
-      case 'whimsy':
-        return 'text-purple-600 bg-purple-50 border-purple-200';
-    }
-  };
-
-  const getAttributeLabel = (attribute: 'combat' | 'utility' | 'whimsy') => {
-    switch (attribute) {
-      case 'combat':
-        return 'Combate';
-      case 'utility':
-        return 'Utilidade';
-      case 'whimsy':
-        return 'Caprichoso';
-    }
-  };
+  const {
+    selectedIngredients,
+    brewingResult,
+    isBrewing,
+    showResultModal,
+    previewScores,
+    availableScores,
+    chosenAttribute,
+    showScoreChoice,
+    handleIngredientSelect,
+    handleIngredientRemove,
+    handleClearSelection,
+    handleScoreChoice,
+    handleBrewPotion,
+    closeResultModal,
+    closeScoreChoiceModal
+  } = usePotionBrewing({ onPotionCreated, onIngredientsUsed });
 
   return (
     <div className="space-y-6">
@@ -237,7 +51,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             </p>
           </div>
 
-          {/* Ingredientes Selecionados */}
           <div>
             <h3 className="text-lg font-medium text-gray-900 mb-3">
               Ingredientes Selecionados ({selectedIngredients.length}/3)
@@ -264,31 +77,27 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             )}
           </div>
 
-          {/* Preview dos Scores */}
           {previewScores && (
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="text-sm font-medium text-gray-900 mb-3">
                 Preview da Receita
               </h4>
               <div className="grid grid-cols-3 gap-4">
-                <div className={`p-3 rounded-lg border ${getAttributeColor('combat')} ${previewScores.winningAttribute === 'combat' ? 'ring-2 ring-red-300' : ''}`}>
-                  <div className="text-xs font-medium">Combate</div>
-                  <div className="text-lg font-bold">{previewScores.combatScore}</div>
-                </div>
-                <div className={`p-3 rounded-lg border ${getAttributeColor('utility')} ${previewScores.winningAttribute === 'utility' ? 'ring-2 ring-blue-300' : ''}`}>
-                  <div className="text-xs font-medium">Utilidade</div>
-                  <div className="text-lg font-bold">{previewScores.utilityScore}</div>
-                </div>
-                <div className={`p-3 rounded-lg border ${getAttributeColor('whimsy')} ${previewScores.winningAttribute === 'whimsy' ? 'ring-2 ring-purple-300' : ''}`}>
-                  <div className="text-xs font-medium">Caprichoso</div>
-                  <div className="text-lg font-bold">{previewScores.whimsyScore}</div>
-                </div>
+                {(['combat', 'utility', 'whimsy'] as const).map((attr) => (
+                  <div key={attr} className={`p-3 rounded-lg border ${POTION_CATEGORY_CONFIG[attr].classes} ${previewScores.winningAttribute === attr ? 'ring-2 ring-opacity-50 ring-current' : ''}`}>
+                    <div className="text-xs font-medium">{POTION_CATEGORY_CONFIG[attr].label}</div>
+                    <div className="text-lg font-bold">
+                      {attr === 'combat' ? previewScores.combatScore : 
+                       attr === 'utility' ? previewScores.utilityScore : 
+                       previewScores.whimsyScore}
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="mt-3 text-sm text-gray-600">
-                Categoria vencedora: <span className="font-medium">{getAttributeLabel(previewScores.winningAttribute)}</span>
+                Categoria vencedora: <span className="font-medium">{POTION_CATEGORY_CONFIG[previewScores.winningAttribute].label}</span>
               </div>
               
-              {/* Indicação do Potion Brewer */}
               {availableScores?.canChoose && (
                 <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
                   <div className="flex items-center text-purple-700 text-sm">
@@ -300,7 +109,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   </p>
                   {chosenAttribute && (
                     <p className="text-xs text-purple-800 mt-1 font-medium">
-                      Escolhido: {getAttributeLabel(chosenAttribute)}
+                      Escolhido: {POTION_CATEGORY_CONFIG[chosenAttribute].label}
                     </p>
                   )}
                 </div>
@@ -308,7 +117,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             </div>
           )}
 
-          {/* Botões de Ação */}
           <div className="flex gap-3">
             <Button
               onClick={handleBrewPotion}
@@ -330,7 +138,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         </div>
       </ContentCard>
 
-      {/* Lista de Ingredientes Disponíveis */}
       <ContentCard>
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">
@@ -367,11 +174,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         </div>
       </ContentCard>
 
-      {/* Modal de Resultado */}
       {brewingResult && (
         <Modal
           isOpen={showResultModal}
-          onClose={() => setShowResultModal(false)}
+          onClose={closeResultModal}
           title={brewingResult.success ? "Poção Criada!" : "Erro na Criação"}
         >
           <div className="space-y-4">
@@ -393,7 +199,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   </div>
                 </div>
 
-                {/* Poção dos Restos */}
                 {brewingResult.cauldronBonus && brewingResult.remainsPotion && (
                   <div className="mt-6 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
                     <div className="text-center mb-3">
@@ -425,7 +230,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   </div>
                 )}
 
-                {/* Segunda Poção do Potion Brewer */}
                 {brewingResult.potionBrewerSuccess && brewingResult.secondPotion && (
                   <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
                     <div className="text-center mb-3">
@@ -461,7 +265,6 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   </div>
                 )}
 
-                {/* Resultado do Potion Brewer (falha) */}
                 {brewingResult.potionBrewerSuccess === false && (
                   <div className="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-4">
                     <div className="text-center">
@@ -486,18 +289,16 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h4 className="font-medium text-gray-900 mb-2">Scores da Receita:</h4>
                   <div className="grid grid-cols-3 gap-3 text-sm">
-                    <div className="text-center">
-                      <div className="font-medium text-red-600">Combate</div>
-                      <div className="text-lg font-bold">{brewingResult.recipe.combatScore}</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-medium text-blue-600">Utilidade</div>
-                      <div className="text-lg font-bold">{brewingResult.recipe.utilityScore}</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-medium text-purple-600">Caprichoso</div>
-                      <div className="text-lg font-bold">{brewingResult.recipe.whimsyScore}</div>
-                    </div>
+                    {(['combat', 'utility', 'whimsy'] as const).map((attr) => (
+                      <div key={attr} className="text-center">
+                        <div className={`font-medium ${POTION_CATEGORY_CONFIG[attr].classes.split(' ')[0]}`}>{POTION_CATEGORY_CONFIG[attr].label}</div>
+                        <div className="text-lg font-bold">
+                          {attr === 'combat' ? brewingResult.recipe.combatScore : 
+                           attr === 'utility' ? brewingResult.recipe.utilityScore : 
+                           brewingResult.recipe.whimsyScore}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -510,7 +311,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             )}
 
             <div className="flex justify-end">
-              <Button onClick={() => setShowResultModal(false)}>
+              <Button onClick={closeResultModal}>
                 Fechar
               </Button>
             </div>
@@ -518,11 +319,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         </Modal>
       )}
 
-      {/* Modal de Escolha de Score */}
       {showScoreChoice && availableScores && (
         <Modal
           isOpen={showScoreChoice}
-          onClose={() => setShowScoreChoice(false)}
+          onClose={closeScoreChoiceModal}
           title="🧪 Escolher Tipo de Poção"
         >
           <div className="space-y-4">
@@ -539,12 +339,12 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   key={score.attribute}
                   onClick={() => handleScoreChoice(score.attribute)}
                   className={`w-full p-4 rounded-lg border-2 transition-all ${
-                    getAttributeColor(score.attribute)
+                    POTION_CATEGORY_CONFIG[score.attribute].classes
                   } hover:shadow-md hover:scale-105`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="text-left">
-                      <div className="font-bold text-lg">{score.label}</div>
+                      <div className="font-bold text-lg">{POTION_CATEGORY_CONFIG[score.attribute].label}</div>
                       <div className="text-sm opacity-80">Score: {score.value}</div>
                     </div>
                     <div className="text-right">
@@ -567,7 +367,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
             <div className="flex justify-end pt-4 border-t border-gray-200">
               <Button
-                onClick={() => setShowScoreChoice(false)}
+                onClick={closeScoreChoiceModal}
                 variant="secondary"
               >
                 Cancelar
@@ -579,3 +379,4 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
     </div>
   );
 };
+

@@ -8,14 +8,13 @@ import {
   deleteDoc, 
   query, 
   orderBy,
-  where,
   onSnapshot,
   Timestamp,
   Unsubscribe
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
-import { authService } from './authService';
-import { CreatedPotion, PotionRecipe, Potion } from '@/types/ingredients';
+import { authService } from '@/services/authService';
+import { CreatedPotion, PotionRecipe } from '@/types/ingredients';
 
 class FirebaseCreatedPotionService {
   private potionsUnsubscribe: Unsubscribe | null = null;
@@ -54,9 +53,6 @@ class FirebaseCreatedPotionService {
     return Timestamp.fromDate(date);
   }
 
-  /**
-   * Adiciona uma nova poção criada
-   */
   async addCreatedPotion(recipe: PotionRecipe): Promise<CreatedPotion> {
     if (!this.isClient() || !this.getUserId()) {
       throw new Error('Usuário não autenticado');
@@ -94,9 +90,6 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  /**
-   * Obtém todas as poções criadas
-   */
   async getAllCreatedPotions(): Promise<CreatedPotion[]> {
     if (!this.isClient() || !this.getUserId()) return [];
     
@@ -123,9 +116,6 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  /**
-   * Observa mudanças nas poções criadas em tempo real
-   */
   subscribeToCreatedPotions(callback: (potions: CreatedPotion[]) => void): () => void {
     if (!this.isClient() || !this.getUserId()) {
       callback([]);
@@ -169,17 +159,11 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  /**
-   * Obtém poções com quantidade > 0
-   */
   async getAvailablePotions(): Promise<CreatedPotion[]> {
     const potions = await this.getAllCreatedPotions();
     return potions.filter(potion => potion.quantity > 0);
   }
 
-  /**
-   * Usa uma poção (diminui a quantidade)
-   */
   async usePotion(potionId: string): Promise<boolean> {
     if (!this.isClient() || !this.getUserId()) return false;
     
@@ -212,9 +196,6 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  /**
-   * Remove uma poção completamente
-   */
   async removePotion(potionId: string): Promise<void> {
     if (!this.isClient() || !this.getUserId()) return;
     
@@ -227,9 +208,6 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  /**
-   * Obtém uma poção específica por ID
-   */
   async getPotionById(potionId: string): Promise<CreatedPotion | null> {
     if (!this.isClient() || !this.getUserId()) return null;
     
@@ -258,17 +236,10 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  /**
-   * Obtém poções por categoria
-   */
   async getPotionsByCategory(category: 'combat' | 'utility' | 'whimsy'): Promise<CreatedPotion[]> {
     const potions = await this.getAllCreatedPotions();
     return potions.filter(potion => potion.recipe.winningAttribute === category);
   }
-
-  /**
-   * Obtém estatísticas das poções criadas
-   */
   async getPotionStats(): Promise<{
     total: number;
     available: number;

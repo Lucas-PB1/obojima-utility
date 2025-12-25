@@ -14,20 +14,6 @@ interface SelectProps {
   label?: string;
 }
 
-/**
- * Componente de select reutilizável
- * 
- * @description
- * Select customizado com estilização consistente e suporte a placeholder,
- * incluindo ícone de dropdown e estados de hover/focus.
- * 
- * @param value - Valor atualmente selecionado
- * @param onChange - Função executada ao alterar a seleção
- * @param options - Lista de opções disponíveis
- * @param placeholder - Texto placeholder
- * @param className - Classes CSS adicionais
- * @param label - Label do select
- */
 export default function Select({ 
   value, 
   onChange, 

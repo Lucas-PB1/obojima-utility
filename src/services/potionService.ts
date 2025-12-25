@@ -4,8 +4,8 @@ import {
   PotionCategory, 
   PotionRecipe, 
   PotionBrewingResult 
-} from '../types/ingredients';
-import { firebaseSettingsService } from './firebaseSettingsService';
+} from '@/types/ingredients';
+import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 
 class PotionService {
   private combatPotions: PotionCategory | null = null;
@@ -34,9 +34,6 @@ class PotionService {
     }
   }
 
-  /**
-   * Calcula os scores disponíveis para escolha (usado quando Potion Brewer está ativo)
-   */
   public calculateAvailableScores(ingredients: Ingredient[], potionBrewerTalent: boolean = false): {
     scores: Array<{ attribute: 'combat' | 'utility' | 'whimsy'; value: number; label: string }>;
     canChoose: boolean;
@@ -63,9 +60,6 @@ class PotionService {
     return { scores: topTwoScores, canChoose };
   }
 
-  /**
-   * Cria uma poção baseada em três ingredientes únicos
-   */
   public async brewPotion(ingredients: Ingredient[], chosenAttribute?: 'combat' | 'utility' | 'whimsy'): Promise<PotionBrewingResult> {
     if (ingredients.length !== 3) {
       return {
@@ -186,9 +180,6 @@ class PotionService {
     return result;
   }
 
-  /**
-   * Seleciona uma poção baseada no atributo vencedor e score
-   */
   private selectPotion(attribute: 'combat' | 'utility' | 'whimsy', score: number): Potion | null {
     let potionCategory: PotionCategory | null = null;
 
@@ -212,16 +203,10 @@ class PotionService {
     return potionCategory.pocoes[potionIndex];
   }
 
-  /**
-   * Gera um ID único para a receita
-   */
   private generateRecipeId(): string {
     return `recipe_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  /**
-   * Cria uma receita vazia para casos de erro
-   */
   private createEmptyRecipe(): PotionRecipe {
     return {
       id: '',
@@ -241,9 +226,6 @@ class PotionService {
     };
   }
 
-  /**
-   * Obtém todas as poções de uma categoria específica
-   */
   public async getPotionsByCategory(category: 'combat' | 'utility' | 'whimsy'): Promise<Potion[]> {
     if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
       await this.loadPotionData();
@@ -261,17 +243,11 @@ class PotionService {
     }
   }
 
-  /**
-   * Obtém uma poção específica por ID e categoria
-   */
   public async getPotionById(category: 'combat' | 'utility' | 'whimsy', id: number): Promise<Potion | null> {
     const potions = await this.getPotionsByCategory(category);
     return potions.find(potion => potion.id === id) || null;
   }
 
-  /**
-   * Calcula os scores de uma combinação de ingredientes sem criar a poção
-   */
   public calculateScores(ingredients: Ingredient[]): {
     combatScore: number;
     utilityScore: number;
@@ -302,9 +278,6 @@ class PotionService {
     };
   }
 
-  /**
-   * Gera uma poção comum do mesmo tipo baseada no atributo vencedor
-   */
   public async generateCommonPotionFromRemains(winningAttribute: 'combat' | 'utility' | 'whimsy'): Promise<Potion | null> {
     if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
       await this.loadPotionData();

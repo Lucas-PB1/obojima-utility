@@ -2,28 +2,11 @@ import { useState, useCallback } from 'react';
 import { ForageAttempt } from '@/types/ingredients';
 import { StatsService } from '@/services/statsService';
 
-/**
- * Hook para gerenciar estatísticas e filtros de atividades de forrageamento
- * 
- * @description
- * Este hook encapsula a lógica de cálculo de estatísticas e filtros para o log de atividades,
- * incluindo:
- * - Cálculo de estatísticas baseadas em tentativas filtradas
- * - Gerenciamento de tentativas filtradas
- * - Operações de limpeza de logs
- * 
- * @param attempts - Array de tentativas de forrageamento
- */
-export function useActivityStats(attempts: ForageAttempt[]) {
+export function useActivityStats() {
   const [filteredAttempts, setFilteredAttempts] = useState<ForageAttempt[]>([]);
 
   const activityStats = StatsService.calculateActivityStats(filteredAttempts);
 
-  /**
-   * Limpa todos os logs de forrageamento após confirmação do usuário
-   * 
-   * @param clearAttempts - Função para limpar as tentativas
-   */
   const handleClearLogs = useCallback((clearAttempts: () => void) => {
     if (confirm('Isso irá limpar todos os logs de forrageamento. Tem certeza?')) {
       clearAttempts();

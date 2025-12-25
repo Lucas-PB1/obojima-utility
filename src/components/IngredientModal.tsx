@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ingredient } from '@/types/ingredients';
-import Modal from './ui/Modal';
+import Modal from '@/components/ui/Modal';
 
 interface IngredientModalProps {
   ingredient: Ingredient | null;
@@ -8,17 +8,6 @@ interface IngredientModalProps {
   onClose: () => void;
 }
 
-/**
- * Modal para exibir detalhes de um ingrediente
- * 
- * @description
- * Este modal exibe informações detalhadas sobre um ingrediente,
- * incluindo atributos, descrição e estatísticas.
- * 
- * @param ingredient - Ingrediente a ser exibido
- * @param isOpen - Estado de abertura do modal
- * @param onClose - Função para fechar o modal
- */
 export default function IngredientModal({ ingredient, isOpen, onClose }: IngredientModalProps) {
   if (!ingredient) return null;
 

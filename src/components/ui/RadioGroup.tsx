@@ -14,19 +14,6 @@ interface RadioGroupProps {
   className?: string;
 }
 
-/**
- * Componente de grupo de radio buttons
- * 
- * @description
- * Grupo de radio buttons customizado com suporte a ícones e estilização
- * consistente. Permite seleção única entre múltiplas opções.
- * 
- * @param value - Valor atualmente selecionado
- * @param onChange - Função executada ao alterar a seleção
- * @param options - Lista de opções disponíveis
- * @param label - Label do grupo de radio buttons
- * @param className - Classes CSS adicionais
- */
 export default function RadioGroup({ 
   value, 
   onChange, 

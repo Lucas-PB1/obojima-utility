@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React from 'react';
 import ForageSystem from '@/components/ForageSystem';
 import IngredientCollection from '@/components/IngredientCollection';
 import { PotionBrewing } from '@/components/PotionBrewing';
@@ -11,14 +10,14 @@ import ActivityLog from '@/components/ActivityLog';
 
 import PageLayout from '@/components/ui/PageLayout';
 import Button from '@/components/ui/Button';
-import { useApp } from '@/hooks/useApp';
-import { useIngredients } from '@/hooks/useIngredients';
-import { useAuth } from '@/hooks/useAuth';
+import { useHome } from '@/hooks/useHome';
 
 export default function Home() {
-  const router = useRouter();
-  const { user, loading: authLoading, isAuthenticated, logout } = useAuth();
   const {
+    user,
+    authLoading,
+    isAuthenticated,
+    logout,
     activeTab,
     recentlyCollected,
     isClient,
@@ -26,25 +25,9 @@ export default function Home() {
     handleIngredientCollected,
     handleTabChange,
     handleViewCollection,
-  } = useApp();
-
-  const { ingredients, markAsUsed } = useIngredients();
-
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [authLoading, isAuthenticated, router]);
-
-  const availableIngredients = ingredients
-    .filter(ing => !ing.used && ing.quantity > 0)
-    .map(ing => ing.ingredient);
-
-  const handleIngredientsUsed = (ingredientIds: number[]) => {
-    ingredients
-      .filter(ing => ingredientIds.includes(ing.ingredient.id) && !ing.used)
-      .forEach(ing => markAsUsed(ing.id));
-  };
+    availableIngredients,
+    handleIngredientsUsed
+  } = useHome();
 
   if (!isClient || authLoading || !isAuthenticated) {
     return (
