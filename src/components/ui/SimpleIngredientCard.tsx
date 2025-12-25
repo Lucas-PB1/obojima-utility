@@ -22,8 +22,9 @@ export default function SimpleIngredientCard({
 
   return (
     <div
-      className={`group bg-white/95 p-5 rounded-2xl border border-white shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-2 relative overflow-hidden ${className} ${getBadgeClass()}`}
+      className={`group glass-panel p-5 rounded-3xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-xl hover:-translate-y-2 relative overflow-hidden ${className} ${getBadgeClass()}`}
     >
+      <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-1">
           <h3 className="font-serif font-bold text-totoro-gray text-base leading-tight group-hover:text-totoro-blue transition-colors">

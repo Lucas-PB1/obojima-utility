@@ -59,8 +59,8 @@ export default function DataTable<T extends Record<string, unknown>>({
   });
 
   return (
-    <div className={`bg-white rounded-xl shadow-lg border border-totoro-blue/20 ${className}`}>
-      <div className="p-6 border-b border-totoro-blue/20">
+    <div className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/40 overflow-hidden ${className}`}>
+      <div className="p-6 border-b border-white/20">
         <div className="flex flex-col lg:flex-row gap-4">
           {searchKey && (
             <div className="flex-1">
@@ -108,7 +108,7 @@ export default function DataTable<T extends Record<string, unknown>>({
 
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-totoro-blue/5">
+          <thead className="bg-white/20">
             <tr>
               {columns.map((column) => (
                 <th
@@ -148,7 +148,7 @@ export default function DataTable<T extends Record<string, unknown>>({
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-totoro-blue/10">
+          <tbody className="bg-white/5 divide-y divide-white/10">
             {paginatedData.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="px-6 py-12 text-center text-totoro-gray/60">
@@ -161,7 +161,7 @@ export default function DataTable<T extends Record<string, unknown>>({
               </tr>
             ) : (
               paginatedData.map((item, index) => (
-                <tr key={index} className="hover:bg-totoro-blue/5">
+                <tr key={index} className="hover:bg-white/10 transition-colors">
                   {columns.map((column) => (
                     <td
                       key={String(column.key)}
@@ -180,7 +180,7 @@ export default function DataTable<T extends Record<string, unknown>>({
       </div>
 
       {totalPages > 1 && (
-        <div className="px-6 py-4 border-t border-totoro-blue/20">
+        <div className="px-6 py-4 border-t border-white/20">
           <div className="flex items-center justify-between">
             <div className="text-sm text-totoro-gray">
               Página {currentPage} de {totalPages}

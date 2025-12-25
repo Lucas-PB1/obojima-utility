@@ -21,7 +21,7 @@ export default function TabNavigation<T = string>({
 }: TabNavigationProps<T>) {
   return (
     <div
-      className={`bg-white backdrop-blur-md border-b border-totoro-blue/20 sticky top-16 z-40 shadow-sm ${className}`}
+      className={`glass-panel border-b border-white/20 sticky top-16 z-40 shadow-sm transition-all duration-300 ${className}`}
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex">

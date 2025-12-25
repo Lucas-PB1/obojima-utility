@@ -24,16 +24,17 @@ export default function IngredientCard({
   const getBadgeClass = () => {
     if (ingredient.used) return 'bg-totoro-gray/5 border-totoro-gray/10';
     if (ingredient.ingredient.combat === maxAttr)
-      return 'bg-totoro-orange/5 border-totoro-orange/20 shadow-[0_0_15px_rgba(230,126,34,0.05)]';
+      return 'bg-totoro-orange/5 border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
     if (ingredient.ingredient.utility === maxAttr)
-      return 'bg-totoro-blue/5 border-totoro-blue/20 shadow-[0_0_15px_rgba(74,144,226,0.05)]';
-    return 'bg-totoro-yellow/5 border-totoro-yellow/20 shadow-[0_0_15px_rgba(245,166,35,0.05)]';
+      return 'bg-totoro-blue/5 border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
+    return 'bg-totoro-yellow/5 border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
   };
 
   return (
     <div
       className={`glass-panel p-6 rounded-3xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden group ${getBadgeClass()}`}
     >
+      <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-serif font-bold text-totoro-gray text-xl leading-tight group-hover:text-totoro-blue transition-colors">

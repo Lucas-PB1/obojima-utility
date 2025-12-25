@@ -1,4 +1,6 @@
 import React from 'react';
+import PageHeader from '@/components/ui/PageHeader';
+import StatsGrid from '@/components/ui/StatsGrid';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
 import ContentCard from '@/components/ui/ContentCard';
@@ -19,145 +21,154 @@ export const RecipeCollection: React.FC = () => {
     handleDeleteRecipe
   } = useRecipeCollection();
 
+  const statsData = [
+    { value: stats.total, label: 'Total', color: 'totoro-gray' as const },
+    ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => ({
+      value: stats.byCategory[key as keyof typeof stats.byCategory],
+      label: config.label,
+      color: (key === 'combat'
+        ? 'totoro-orange'
+        : key === 'utility'
+          ? 'totoro-blue'
+          : 'totoro-yellow') as 'totoro-orange' | 'totoro-blue' | 'totoro-yellow'
+    }))
+  ];
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      <PageHeader
+        title="Coleção de Receitas"
+        subtitle="Visualize e gerencie suas receitas de poções criadas"
+        icon="📜"
+      />
+
+      <StatsGrid title="📊 Visão Geral" stats={statsData} />
+
       <ContentCard>
-        <div className="space-y-4">
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Coleção de Receitas</h2>
-            <p className="text-gray-600 text-sm">
-              Visualize e gerencie suas receitas de poções criadas.
-            </p>
-          </div>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <h3 className="text-lg font-black text-totoro-gray tracking-tight flex items-center gap-2">
+            <span className="w-1 h-5 bg-totoro-blue rounded-full"></span>
+            Minhas Receitas ({filteredRecipes.length})
+          </h3>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-gray-50 p-3 rounded-lg text-center">
-              <div className="text-lg font-bold text-gray-900">{stats.total}</div>
-              <div className="text-xs text-gray-600">Total</div>
-            </div>
-            {Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => (
-              <div
-                key={key}
-                className={`${config.classes.split(' ').slice(1).join(' ')} p-3 rounded-lg text-center`}
-              >
-                <div className={`text-lg font-bold ${config.classes.split(' ')[0]}`}>
-                  {stats.byCategory[key as keyof typeof stats.byCategory]}
-                </div>
-                <div className="text-xs text-gray-600">{config.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 p-1 bg-totoro-blue/5 rounded-2xl border border-white/40 backdrop-blur-sm">
             {RECIPE_FILTER_OPTIONS.map((option) => (
-              <Button
+              <button
                 key={option.value}
                 onClick={() => setFilter(option.value)}
-                variant={filter === option.value ? 'primary' : 'secondary'}
-                size="sm"
+                className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
+                  filter === option.value
+                    ? 'bg-totoro-blue text-white shadow-lg shadow-totoro-blue/20'
+                    : 'text-totoro-gray/50 hover:text-totoro-blue hover:bg-white/50'
+                }`}
               >
-                {option.label} (
-                {option.value === 'all'
-                  ? stats.total
-                  : stats.byCategory[option.value as keyof typeof stats.byCategory]}
-                )
-              </Button>
+                {option.label}
+              </button>
             ))}
           </div>
         </div>
-      </ContentCard>
-
-      <ContentCard>
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">
-            Receitas ({filteredRecipes.length})
-          </h3>
-
-          {filteredRecipes.length === 0 ? (
-            <div className="text-gray-500 text-center py-8">
+        {filteredRecipes.length === 0 ? (
+          <div className="glass-panel text-totoro-gray/50 text-center py-12 rounded-3xl border border-dashed border-totoro-blue/20">
+            <div className="text-4xl mb-3">📜</div>
+            <p className="text-sm font-medium">
               {filter === 'all'
                 ? 'Nenhuma receita criada ainda. Vá para a aba Poções para criar sua primeira receita!'
                 : `Nenhuma receita de ${POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG].label} encontrada.`}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredRecipes.map((recipe) => (
-                <div
-                  key={recipe.id}
-                  className="bg-white p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 transition-colors cursor-pointer"
-                  onClick={() => handleRecipeClick(recipe)}
-                >
-                  <div className="space-y-3">
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-sm">
-                        {recipe.resultingPotion.nome_portugues}
-                      </h4>
-                      <p className="text-xs text-gray-600 italic">
-                        {recipe.resultingPotion.nome_ingles}
-                      </p>
-                    </div>
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredRecipes.map((recipe) => (
+              <div
+                key={recipe.id}
+                className="glass-panel p-6 rounded-3xl border border-white/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer relative overflow-hidden group"
+                onClick={() => handleRecipeClick(recipe)}
+              >
+                <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+                <div className="relative z-10 space-y-4">
+                  <div>
+                    <h4 className="font-serif font-bold text-totoro-gray text-lg leading-tight group-hover:text-totoro-blue transition-colors">
+                      {recipe.resultingPotion.nome_portugues}
+                    </h4>
+                    <p className="text-[10px] text-totoro-blue/60 font-semibold uppercase tracking-widest font-sans">
+                      {recipe.resultingPotion.nome_ingles}
+                    </p>
+                  </div>
 
-                    <div
-                      className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${POTION_CATEGORY_CONFIG[recipe.winningAttribute].classes}`}
-                    >
-                      {POTION_CATEGORY_CONFIG[recipe.winningAttribute].label}
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 text-xs">
-                      <div className="text-center">
-                        <div className="font-medium text-red-600">Combate</div>
-                        <div className="font-bold">{recipe.combatScore}</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="font-medium text-blue-600">Utilidade</div>
-                        <div className="font-bold">{recipe.utilityScore}</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="font-medium text-purple-600">Caprichoso</div>
-                        <div className="font-bold">{recipe.whimsyScore}</div>
-                      </div>
-                    </div>
+                  <div
+                    className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${POTION_CATEGORY_CONFIG[recipe.winningAttribute].classes}`}
+                  >
+                    {POTION_CATEGORY_CONFIG[recipe.winningAttribute].label}
+                  </div>
 
-                    <div className="text-xs text-gray-500">
-                      Criada em {recipe.createdAt.toLocaleDateString('pt-BR')}
+                  <div className="grid grid-cols-3 gap-3 py-3 border-y border-totoro-blue/5">
+                    <div className="text-center">
+                      <div className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</div>
+                      <div className="text-lg font-black text-totoro-orange font-mono">
+                        {recipe.combatScore}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-[9px] font-bold text-totoro-blue/60 uppercase">Utl</div>
+                      <div className="text-lg font-black text-totoro-blue font-mono">
+                        {recipe.utilityScore}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-[9px] font-bold text-totoro-yellow/60 uppercase">Why</div>
+                      <div className="text-lg font-black text-totoro-yellow font-mono">
+                        {recipe.whimsyScore}
+                      </div>
                     </div>
                   </div>
+
+                  <div className="text-[9px] font-bold text-totoro-gray/30 uppercase tracking-[0.2em]">
+                    Criada em {recipe.createdAt.toLocaleDateString('pt-BR')}
+                  </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </ContentCard>
 
       {selectedRecipe && (
         <Modal isOpen={showModal} onClose={closeModal} title="Detalhes da Receita">
-          <div className="space-y-4">
+          <div className="space-y-6 pt-2">
             <div className="text-center">
-              <div className="text-xl font-bold text-gray-900 mb-1">
+              <h1 className="text-3xl font-serif font-bold text-totoro-gray mb-1">
                 {selectedRecipe.resultingPotion.nome_portugues}
-              </div>
-              <div className="text-sm text-gray-600 mb-2">
+              </h1>
+              <p className="text-xs text-totoro-blue/60 font-semibold uppercase tracking-[0.2em] mb-4">
                 {selectedRecipe.resultingPotion.nome_ingles}
-              </div>
+              </p>
               <div
-                className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-white/40 shadow-sm ${
                   selectedRecipe.resultingPotion.raridade === 'Comum'
-                    ? 'bg-green-100 text-green-800'
+                    ? 'bg-totoro-green/20 text-totoro-green'
                     : selectedRecipe.resultingPotion.raridade === 'Incomum'
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'bg-purple-100 text-purple-800'
+                      ? 'bg-totoro-blue/20 text-totoro-blue'
+                      : 'bg-totoro-orange/20 text-totoro-orange'
                 }`}
               >
                 {selectedRecipe.resultingPotion.raridade}
               </div>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="font-medium text-gray-900 mb-2">Descrição:</h4>
-              <p className="text-sm text-gray-700">{selectedRecipe.resultingPotion.descricao}</p>
+            <div className="glass-panel p-6 rounded-3xl border border-white/40 relative overflow-hidden">
+              <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+              <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] mb-3 relative z-10">
+                Efeito da Poção
+              </h4>
+              <p className="text-sm text-totoro-gray leading-relaxed italic relative z-10">
+                &quot;{selectedRecipe.resultingPotion.descricao}&quot;
+              </p>
             </div>
 
-            <div>
-              <h4 className="font-medium text-gray-900 mb-3">Ingredientes Utilizados:</h4>
+            <div className="space-y-4">
+              <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] pl-1">
+                Ingredientes Utilizados
+              </h4>
               <div className="grid grid-cols-1 gap-3">
                 {selectedRecipe.ingredients.map((ingredient) => (
                   <SimpleIngredientCard key={ingredient.id} ingredient={ingredient} />
@@ -165,39 +176,56 @@ export const RecipeCollection: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="font-medium text-gray-900 mb-3">Scores da Receita:</h4>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center">
-                  <div className="font-medium text-red-600">Combate</div>
-                  <div className="text-2xl font-bold">{selectedRecipe.combatScore}</div>
+            <div className="glass-panel p-6 rounded-3xl border border-white/40 shadow-sm relative overflow-hidden">
+              <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+              <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] mb-4 relative z-10 text-center">
+                Potencial Místico
+              </h4>
+              <div className="grid grid-cols-3 gap-6 relative z-10">
+                <div className="text-center group">
+                  <div className="text-[9px] font-bold text-totoro-orange/60 uppercase tracking-widest mb-1">
+                    Cbt
+                  </div>
+                  <div className="text-3xl font-black text-totoro-orange font-mono">
+                    {selectedRecipe.combatScore}
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="font-medium text-blue-600">Utilidade</div>
-                  <div className="text-2xl font-bold">{selectedRecipe.utilityScore}</div>
+                <div className="text-center group">
+                  <h4 className="text-[9px] font-bold text-totoro-blue/60 uppercase tracking-widest mb-1">
+                    Utl
+                  </h4>
+                  <div className="text-3xl font-black text-totoro-blue font-mono">
+                    {selectedRecipe.utilityScore}
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="font-medium text-purple-600">Caprichoso</div>
-                  <div className="text-2xl font-bold">{selectedRecipe.whimsyScore}</div>
+                <div className="text-center group">
+                  <h4 className="text-[9px] font-bold text-totoro-yellow/60 uppercase tracking-widest mb-1">
+                    Why
+                  </h4>
+                  <div className="text-3xl font-black text-totoro-yellow font-mono">
+                    {selectedRecipe.whimsyScore}
+                  </div>
                 </div>
               </div>
-              <div className="mt-3 text-sm text-gray-600 text-center">
-                Categoria vencedora:{' '}
-                <span className="font-medium">
+              <div className="mt-4 pt-4 border-t border-totoro-blue/5 text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">
+                Domínio Previsto:{' '}
+                <span className="text-totoro-blue">
                   {POTION_CATEGORY_CONFIG[selectedRecipe.winningAttribute].label}
                 </span>
               </div>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
                 onClick={() => handleDeleteRecipe(selectedRecipe.id)}
-                variant="danger"
-                size="sm"
+                variant="ghost"
+                className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-2xl !font-bold"
               >
                 🗑️ Excluir Receita
               </Button>
-              <Button onClick={closeModal}>Fechar</Button>
+              <Button onClick={closeModal} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
+                Fechar
+              </Button>
             </div>
           </div>
         </Modal>

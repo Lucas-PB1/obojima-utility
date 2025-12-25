@@ -11,7 +11,7 @@
   --totoro-gray: #2c3e50;
   --totoro-orange: #e67e22;
 
-  --background: #f8fafc;
+  --background: #b8d6d6;
   --foreground: #2c3e50;
   --primary: #4a90e2;
   --secondary: #7ed321;
@@ -237,13 +237,13 @@ body {
 }
 
 .bg-topo {
-  background-color: #f8fafc;
+  background-color: var(--background);
   background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
   background-size: 24px 24px;
 }
 
 .bg-mesh {
-  background-color: #faf9f6;
+  background-color: var(--background);
   background-image:
     radial-gradient(at 0% 0%, rgba(74, 144, 226, 0.02) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(126, 211, 33, 0.02) 0px, transparent 50%),

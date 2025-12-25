@@ -31,10 +31,14 @@ const textColorClasses = {
 export default function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
   return (
     <div
-      className={`bg-white backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-totoro-blue/20 ${className}`}
+      className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-8 border border-white/40 relative overflow-hidden group ${className}`}
     >
-      <h2 className="text-2xl font-semibold text-totoro-gray mb-4">{title}</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+      <h2 className="text-xl font-black text-totoro-gray mb-8 tracking-tight flex items-center gap-3 relative z-10">
+        <span className="w-1.5 h-6 bg-totoro-blue rounded-full"></span>
+        {title}
+      </h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
         {stats.map((stat, index) => (
           <div key={index} className={`text-center p-4 ${colorClasses[stat.color]} rounded-lg`}>
             <div className={`text-2xl font-bold ${colorClasses[stat.color].split(' ')[1]}`}>
