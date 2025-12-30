@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Modal from '@/components/ui/Modal';
 import { Ingredient } from '@/types/ingredients';
 import { useTranslation } from '@/hooks/useTranslation';
-import { ingredientsService } from '@/services/ingredientsService';
+import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 
 interface IngredientModalProps {
   ingredient: Ingredient | null;
@@ -11,35 +11,10 @@ interface IngredientModalProps {
 }
 
 export default function IngredientModal({ ingredient, isOpen, onClose }: IngredientModalProps) {
-  const { t, language } = useTranslation();
-  const [localizedIngredient, setLocalizedIngredient] = useState<Ingredient | null>(null);
-
-  useEffect(() => {
-    async function loadIngredient() {
-      if (ingredient) {
-        setLocalizedIngredient(ingredient);
-
-        try {
-          const freshData = await ingredientsService.getIngredientById(
-            ingredient.id,
-            language,
-            ingredient.raridade
-          );
-          if (freshData) {
-            setLocalizedIngredient(freshData);
-          }
-        } catch (error) {
-          console.error('Error loading localized ingredient:', error);
-        }
-      } else {
-        setLocalizedIngredient(null);
-      }
-    }
-
-    if (isOpen) {
-      loadIngredient();
-    }
-  }, [ingredient, isOpen, language]);
+  const { t } = useTranslation();
+  const { localizeIngredient } = useLocalizedIngredients();
+  
+  const localizedIngredient = ingredient ? localizeIngredient(ingredient) : null;
 
   if (!localizedIngredient) return null;
 

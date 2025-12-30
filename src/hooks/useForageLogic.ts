@@ -102,7 +102,7 @@ export function useForageLogic() {
 
   const getIngredientByRarity = useCallback(
     async (rarity: 'comum' | 'incomum' | 'raro' | 'unico', totalRoll: number) => {
-      const language = settings.language || 'pt'; // Default to pt if undefined
+      const language = settings.language || 'pt';
       const ingredientGetters = {
         raro: () => ingredientsService.getRandomRareIngredient(language),
         unico: () => ingredientsService.getRandomUniqueIngredient(language),

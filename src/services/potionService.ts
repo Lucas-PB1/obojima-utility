@@ -7,13 +7,15 @@ import {
 } from '@/types/ingredients';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 
-class PotionService {
+import { BaseDataService } from './baseDataService';
+
+class PotionService extends BaseDataService {
   private combatPotions: Record<string, PotionCategory> = {};
   private utilityPotions: Record<string, PotionCategory> = {};
   private whimsicalPotions: Record<string, PotionCategory> = {};
 
   constructor() {
-    // Constructor no longer auto-loads default, components should trigger load or we load lazily
+    super(); 
   }
 
   private async loadPotionData(language: string = 'pt'): Promise<void> {
@@ -22,28 +24,11 @@ class PotionService {
     }
 
     try {
-      const load = async (url: string) => {
-          const res = await fetch(url);
-          if (!res.ok) {
-              if (language !== 'pt') {
-                  const fallback = url.replace(`/data/${language}/`, '/data/pt/');
-                  const rb = await fetch(fallback);
-                  if (rb.ok) return rb.json();
-              }
-              throw new Error(`Failed to load ${url}`);
-          }
-          return res.json();
-      }
-
       const [combatResponse, utilityResponse, whimsicalResponse] = await Promise.all([
-        load(`/data/${language}/potions/combat/combat-potions.json`),
-        load(`/data/${language}/potions/utility/utility-potions.json`),
-        load(`/data/${language}/potions/whimsical/whimsical-potions.json`)
+        this.loadData(`/data/${language}/potions/combat/combat-potions.json`, this.combatPotions, language),
+        this.loadData(`/data/${language}/potions/utility/utility-potions.json`, this.utilityPotions, language),
+        this.loadData(`/data/${language}/potions/whimsical/whimsical-potions.json`, this.whimsicalPotions, language)
       ]);
-
-      this.combatPotions[language] = combatResponse;
-      this.utilityPotions[language] = utilityResponse;
-      this.whimsicalPotions[language] = whimsicalResponse;
     } catch (error) {
       console.error('Erro ao carregar dados das poções:', error);
     }
@@ -204,7 +189,6 @@ class PotionService {
   private selectPotion(attribute: 'combat' | 'utility' | 'whimsy', score: number, language: string): Potion | null {
     let potionCategory: PotionCategory | null = null;
     
-    // Ensure loaded
     if (!this.combatPotions[language]) return null;
 
     switch (attribute) {
@@ -311,7 +295,6 @@ class PotionService {
 
     let potionCategory: PotionCategory | null = null;
     
-    // Ensure loaded
     if (!this.combatPotions[language]) return null;
 
     switch (winningAttribute) {

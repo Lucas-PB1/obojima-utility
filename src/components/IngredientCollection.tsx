@@ -8,38 +8,13 @@ import IngredientModal from '@/components/IngredientModal';
 import DataTable, { Column } from '@/components/ui/DataTable';
 import { INGREDIENT_COLLECTION_FILTERS } from '@/constants/ingredients';
 import { useIngredientCollection } from '@/hooks/useIngredientCollection';
-
 import { useTranslation } from '@/hooks/useTranslation';
+import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
+
 
 export default function IngredientCollection() {
-  const { t, language } = useTranslation();
-  const [ingredientsMap, setIngredientsMap] = React.useState<Record<number, { nome: string; descricao: string }>>({});
-  
-  React.useEffect(() => {
-    const loadIngredientsMap = async () => {
-      try {
-        const { ingredientsService } = await import('@/services/ingredientsService');
-        const lang = language;
-        
-        const [common, uncommon, rare] = await Promise.all([
-          ingredientsService.loadCommonIngredients(lang),
-          ingredientsService.loadUncommonIngredients(lang),
-          ingredientsService.loadRareIngredients(lang)
-        ]);
-
-        const map: Record<number, { nome: string; descricao: string }> = {};
-        common.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
-        uncommon.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
-        rare.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
-        
-        setIngredientsMap(map);
-      } catch (error) {
-        console.error('Failed to load ingredients map', error);
-      }
-    };
-    
-    loadIngredientsMap();
-  }, [language]);
+  const { t } = useTranslation();
+  const { localizeIngredient } = useLocalizedIngredients();
 
   const {
     displayIngredients,
@@ -58,11 +33,7 @@ export default function IngredientCollection() {
       sortable: true,
       width: '30%',
       render: (_, item) => {
-        const mappedIngredient = {
-          ...item.ingredient,
-          nome: ingredientsMap[item.ingredient.id]?.nome || item.ingredient.nome,
-          descricao: ingredientsMap[item.ingredient.id]?.descricao || item.ingredient.descricao
-        };
+        const mappedIngredient = localizeIngredient(item.ingredient);
 
         return (
           <div

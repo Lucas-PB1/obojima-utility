@@ -8,6 +8,7 @@ import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 import { Ingredient, PotionRecipe } from '@/types/ingredients';
 import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
 
+import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 import { useTranslation } from '@/hooks/useTranslation';
 
 interface PotionBrewingProps {
@@ -21,34 +22,8 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   onPotionCreated,
   onIngredientsUsed
 }) => {
-  const { t, language } = useTranslation();
-  const [ingredientsMap, setIngredientsMap] = React.useState<Record<number, { nome: string; descricao: string }>>({});
-
-  React.useEffect(() => {
-    const loadIngredientsMap = async () => {
-      try {
-        const { ingredientsService } = await import('@/services/ingredientsService');
-        const lang = language;
-        
-        const [common, uncommon, rare] = await Promise.all([
-          ingredientsService.loadCommonIngredients(lang),
-          ingredientsService.loadUncommonIngredients(lang),
-          ingredientsService.loadRareIngredients(lang)
-        ]);
-
-        const map: Record<number, { nome: string; descricao: string }> = {};
-        common.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
-        uncommon.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
-        rare.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
-        
-        setIngredientsMap(map);
-      } catch (error) {
-        console.error('Failed to load ingredients map', error);
-      }
-    };
-    
-    loadIngredientsMap();
-  }, [language]);
+  const { t } = useTranslation();
+  const { localizeIngredient } = useLocalizedIngredients();
 
   const {
     selectedIngredients,
@@ -69,20 +44,12 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   } = usePotionBrewing({ onPotionCreated, onIngredientsUsed });
 
   const mappedSelectedIngredients = React.useMemo(() => {
-    return selectedIngredients.map(ing => ({
-      ...ing,
-      nome: ingredientsMap[ing.id]?.nome || ing.nome,
-      descricao: ingredientsMap[ing.id]?.descricao || ing.descricao
-    }));
-  }, [selectedIngredients, ingredientsMap]);
+    return selectedIngredients.map(ing => localizeIngredient(ing));
+  }, [selectedIngredients, localizeIngredient]);
 
   const mappedAvailableIngredients = React.useMemo(() => {
-    return availableIngredients.map(ing => ({
-      ...ing,
-      nome: ingredientsMap[ing.id]?.nome || ing.nome,
-      descricao: ingredientsMap[ing.id]?.descricao || ing.descricao
-    }));
-  }, [availableIngredients, ingredientsMap]);
+    return availableIngredients.map(ing => localizeIngredient(ing));
+  }, [availableIngredients, localizeIngredient]);
 
   return (
     <div className="space-y-6">

@@ -9,38 +9,15 @@ import {
   RegionData
 } from '@/types/ingredients';
 
-class IngredientsService {
+import { BaseDataService } from './baseDataService';
+
+class IngredientsService extends BaseDataService {
   private ingredientsData: Record<string, IngredientsData> = {};
   private commonIngredients: Record<string, CommonIngredientsData> = {};
   private uncommonIngredients: Record<string, UncommonIngredientsData> = {};
   private rareIngredients: Record<string, { ingredients: RareIngredient[] }> = {};
   private uniqueIngredients: Record<string, { ingredients: UniqueIngredientData[] }> = {};
 
-  private async loadData<T>(url: string, cache: Record<string, T>, language: string): Promise<T> {
-    if (cache[language]) return cache[language];
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            // Fallback to 'pt' if specific lang fails, or throw
-            if (language !== 'pt') {
-                const fallbackUrl = url.replace(`/data/${language}/`, '/data/pt/');
-                const fallbackResponse = await fetch(fallbackUrl);
-                if (fallbackResponse.ok) {
-                    const data = await fallbackResponse.json();
-                    cache[language] = data; // Cache fallback as current lang to avoid refetch
-                    return data;
-                }
-            }
-            throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
-        }
-        const data = await response.json();
-        cache[language] = data;
-        return data;
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-  }
 
   async loadIngredientsData(language: string = 'pt'): Promise<IngredientsData> {
     return this.loadData(
@@ -76,8 +53,6 @@ class IngredientsService {
 
   async loadUniqueIngredients(language: string = 'pt'): Promise<{ ingredients: UniqueIngredientData[] }> {
     const data = await this.loadIngredientsData(language);
-    // Note: Assuming unique_rare_ingredients exists in the JSON structure. 
-    // If not present in JSON, this will fail. Usage of safe navigation or partial implementation might be safer if unsure.
     this.uniqueIngredients[language] = { ingredients: data.unique_rare_ingredients?.ingredients || [] };
     return this.uniqueIngredients[language];
   }
