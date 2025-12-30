@@ -15,7 +15,7 @@ export interface Column<T> {
 export interface Filter {
   key: string;
   label: string;
-  type: 'select' | 'text' | 'date';
+  type: 'select' | 'text' | 'date' | 'number';
   options?: { value: string; label: string }[];
   placeholder?: string;
 }
@@ -26,7 +26,7 @@ interface DataTableProps<T> {
   data: T[];
   columns: Column<T>[];
   filters?: Filter[];
-  searchKey?: string;
+  searchKeys?: string[];
   searchPlaceholder?: string;
   itemsPerPage?: number;
   className?: string;
@@ -36,7 +36,7 @@ export default function DataTable<T extends Record<string, unknown>>({
   data,
   columns,
   filters = [],
-  searchKey,
+  searchKeys,
   searchPlaceholder,
   itemsPerPage = 10,
   className = ''
@@ -57,31 +57,57 @@ export default function DataTable<T extends Record<string, unknown>>({
     setSearch
   } = useDataTable({
     data,
-    searchKey,
+    searchKeys,
     itemsPerPage
   });
 
   const effectiveSearchPlaceholder = searchPlaceholder || t('ui.datatable.searchPlaceholder');
 
+  const removeFilter = (key: string) => {
+    handleFilterChange(key, '');
+  };
+
+  const getFilterLabel = (key: string, value: string) => {
+    const filterDef = filters.find((f) => f.key === key);
+    if (!filterDef) return value;
+    
+    if (filterDef.type === 'select' && filterDef.options) {
+      const option = filterDef.options.find((opt) => opt.value === value);
+      return option ? t(option.label) : value;
+    }
+    
+    return value;
+  };
+
   return (
     <div className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-border/40 overflow-hidden ${className}`}>
       <div className="p-6 border-b border-border/20">
-        <div className="flex flex-col lg:flex-row gap-4">
-          {searchKey && (
-            <div className="flex-1">
-              <Input
-                type="text"
-                placeholder={effectiveSearchPlaceholder}
-                value={searchTerm}
-                onChange={(value) => setSearch(value as string)}
-              />
+        <div className="flex flex-wrap items-end gap-4 mb-4">
+          {searchKeys && searchKeys.length > 0 && (
+            <div className="w-full sm:w-[400px] relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10 bottom-0 top-auto h-[48px]">
+                <span className="text-foreground/40">🔍</span>
+              </div>
+              <div className="[&_input]:pl-10">
+                <Input
+                  label={t('ui.datatable.search')}
+                  type="text"
+                  placeholder={effectiveSearchPlaceholder}
+                  value={searchTerm}
+                  onChange={(value) => setSearch(value as string)}
+                />
+              </div>
             </div>
           )}
 
           {filters.map((filter) => (
-            <div key={filter.key} className="min-w-48">
+            <div 
+              key={filter.key} 
+              className={filter.type === 'number' ? "flex-1 min-w-[80px]" : "flex-1 min-w-[150px]"}
+            >
               {filter.type === 'select' ? (
                 <Select
+                  label={t(filter.label)}
                   value={activeFilters[filter.key] || ''}
                   onChange={(value) => handleFilterChange(filter.key, value)}
                   options={
@@ -96,6 +122,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 />
               ) : (
                 <Input
+                  label={t(filter.label)}
                   type={filter.type === 'date' ? 'text' : filter.type}
                   placeholder={
                     filter.placeholder ? t(filter.placeholder) : t(filter.label)
@@ -108,11 +135,37 @@ export default function DataTable<T extends Record<string, unknown>>({
           ))}
 
           {(Object.keys(activeFilters).length > 0 || searchTerm) && (
-            <Button onClick={clearFilters} variant="secondary" size="md">
-              {t('ui.datatable.clear')}
-            </Button>
+            <div className="mb-[2px]">
+              <Button onClick={clearFilters} variant="secondary" size="md">
+                {t('ui.datatable.clear')}
+              </Button>
+            </div>
           )}
         </div>
+
+        {Object.keys(activeFilters).length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-border/10">
+            {Object.entries(activeFilters).map(([key, value]) => {
+              if (!value) return null;
+              const filterDef = filters.find((f) => f.key === key);
+              return (
+                <div
+                  key={key}
+                  className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-medium text-primary"
+                >
+                  <span className="opacity-70">{filterDef ? t(filterDef.label) : key}:</span>
+                  <span className="font-bold">{getFilterLabel(key, value)}</span>
+                  <button
+                    onClick={() => removeFilter(key)}
+                    className="ml-1 hover:text-red-500 transition-colors"
+                  >
+                    ×
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         <div className="mt-4 text-sm text-foreground/60">
           {t(

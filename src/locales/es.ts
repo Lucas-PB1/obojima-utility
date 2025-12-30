@@ -47,14 +47,15 @@ export const es = {
   'constants.ingredients.filters.combat': 'Combate',
   'constants.ingredients.filters.utility': 'Utilidad',
   'constants.ingredients.filters.whimsy': 'Capricho',
-  'constants.ingredients.filters.placeholder.status': 'Todos los estados',
-  'constants.ingredients.filters.placeholder.values': 'Todos los valores',
+  'constants.ingredients.filters.placeholder.status': 'Todos',
+  'constants.ingredients.filters.placeholder.values': '0',
 
   // Shared UI
   'ui.theme.light': 'Claro',
   'ui.theme.dark': 'Oscuro',
   'ui.theme.toggle': 'Alternar tema',
   'ui.datatable.searchPlaceholder': 'Buscar...',
+  'ui.datatable.search': 'Buscar',
   'ui.datatable.showing': 'Mostrando {0}-{1} de {2} resultados',
   'ui.datatable.noItems': 'Ningún elemento encontrado',
   'ui.datatable.totalData': 'Total de datos: {0}',
@@ -178,6 +179,7 @@ export const es = {
   'ingredients.modal.id': 'ID del Ingrediente',
   'ingredients.modal.totalPoints': 'Puntos Totales',
   'ingredients.modal.close': 'Cerrar',
+  'ingredients.search.placeholder': 'Buscar por nombre, descripción o rareza...',
 
   // Recipes Collection
   'recipes.collection.title': 'Colección de Recetas',

@@ -44,17 +44,18 @@ export const pt = {
   'constants.ingredients.status.available': 'Disponível',
   'constants.ingredients.status.used': 'Usado',
   'constants.ingredients.filters.status': 'Status',
-  'constants.ingredients.filters.combat': 'Combat',
-  'constants.ingredients.filters.utility': 'Utility',
-  'constants.ingredients.filters.whimsy': 'Whimsy',
-  'constants.ingredients.filters.placeholder.status': 'Todos os status',
-  'constants.ingredients.filters.placeholder.values': 'Todos os valores',
+  'constants.ingredients.filters.combat': 'Combate',
+  'constants.ingredients.filters.utility': 'Utilidade',
+  'constants.ingredients.filters.whimsy': 'Capricho',
+  'constants.ingredients.filters.placeholder.status': 'Todos',
+  'constants.ingredients.filters.placeholder.values': '0',
 
   // Shared UI
   'ui.theme.light': 'Claro',
   'ui.theme.dark': 'Escuro',
   'ui.theme.toggle': 'Alternar tema',
   'ui.datatable.searchPlaceholder': 'Buscar...',
+  'ui.datatable.search': 'Buscar',
   'ui.datatable.showing': 'Mostrando {0}-{1} de {2} resultados',
   'ui.datatable.noItems': 'Nenhum item encontrado',
   'ui.datatable.totalData': 'Total de dados: {0}',
@@ -178,6 +179,7 @@ export const pt = {
   'ingredients.modal.id': 'ID do Ingrediente',
   'ingredients.modal.totalPoints': 'Total de Pontos',
   'ingredients.modal.close': 'Fechar',
+  'ingredients.search.placeholder': 'Buscar por nome, descrição ou raridade...',
 
   // Recipes Collection
   'recipes.collection.title': 'Coleção de Receitas',

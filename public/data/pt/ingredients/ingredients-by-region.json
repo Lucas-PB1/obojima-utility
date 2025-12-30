@@ -7,91 +7,91 @@
         "dice": "d22",
         "ingredients": [
           {
-            "nome": "Blue Back Salmon",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Boom Beri",
+            "nome": "Presa de Dragão de Yutro",
             "id": 6
           },
           {
-            "nome": "Bora Bug",
+            "nome": "Salgueiro das Fadas",
             "id": 7
           },
           {
-            "nome": "Bundle of Driko Twigs",
+            "nome": "Raiz Dourada",
             "id": 9
           },
           {
-            "nome": "Chicken Egg",
+            "nome": "Crisálida de Irimbi",
             "id": 11
           },
           {
-            "nome": "Creeping Bolete",
+            "nome": "Plumagem de um Kirio Corredor",
             "id": 15
           },
           {
-            "nome": "Earwax",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Fish Head",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Flash Paper",
+            "nome": "Uísque Wufu",
             "id": 21
           },
           {
-            "nome": "Green Slime",
+            "nome": "Vinho de Arroz do Monge Mágico",
             "id": 22
           },
           {
-            "nome": "Jumping Bonfire",
+            "nome": "Cardo Noturno",
             "id": 28
           },
           {
-            "nome": "Jack-O'-Lantern Bits",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Kojo Root",
+            "nome": "Jacaré Petrificado",
             "id": 32
           },
           {
-            "nome": "Mountain Ox Dung",
+            "nome": "Vela de Ignição",
             "id": 37
           },
           {
-            "nome": "Mouse Tree Nut",
+            "nome": "Chá de Espírito",
             "id": 38
           },
           {
-            "nome": "Pink Candle Wax",
+            "nome": "Wolfenita",
             "id": 43
           },
           {
-            "nome": "Poison",
+            "nome": "Lodo Amarelo",
             "id": 45
           },
           {
-            "nome": "Sheep Dragon Wool",
+            "nome": "Lã de Dragão Ovelha",
             "id": 56
           },
           {
-            "nome": "Spindle Leg Spider Webs",
+            "nome": "Teias de Aranha de Perna Fuso",
             "id": 58
           },
           {
-            "nome": "Snap Vine Sap",
+            "nome": "Seiva de Vinha Estalante",
             "id": 57
           },
           {
-            "nome": "Venus Fly Rat",
+            "nome": "Rato Mosca de Vênus",
             "id": 64
           },
           {
-            "nome": "Yuma Shrub",
+            "nome": "Arbusto Yuma",
             "id": 69
           }
         ]
@@ -100,43 +100,43 @@
         "dice": "d10",
         "ingredients": [
           {
-            "nome": "Bottle Cap (Supa-Fizz!)",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Essence of Glumbug",
+            "nome": "Crisálida de Irimbi",
             "id": 11
           },
           {
-            "nome": "Kojobi Fruit",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Lions Blume",
+            "nome": "Uísque Wufu",
             "id": 21
           },
           {
-            "nome": "Nakudama Spice",
+            "nome": "Tempero Nakudama",
             "id": 27
           },
           {
-            "nome": "Noodle Eel",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Petrified Alligator",
+            "nome": "Jacaré Petrificado",
             "id": 32
           },
           {
-            "nome": "Spark Plug",
+            "nome": "Vela de Ignição",
             "id": 37
           },
           {
-            "nome": "Spring",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Vinyl Record",
+            "nome": "Disco de Vinil",
             "id": 42
           }
         ]
@@ -148,99 +148,99 @@
         "dice": "d28",
         "ingredients": [
           {
-            "nome": "Apper Carrot",
+            "nome": "Raio Engarrafado",
             "id": 2
           },
           {
-            "nome": "Blue Back Salmon",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Bora Bug",
+            "nome": "Salgueiro das Fadas",
             "id": 7
           },
           {
-            "nome": "Bundle of Driko Twigs",
+            "nome": "Raiz Dourada",
             "id": 9
           },
           {
-            "nome": "Camp Mite",
+            "nome": "Mão de Eryo",
             "id": 10
           },
           {
-            "nome": "Chicken Egg",
+            "nome": "Crisálida de Irimbi",
             "id": 11
           },
           {
-            "nome": "Clay Snake Tail",
+            "nome": "Lodo Laranja",
             "id": 13
           },
           {
-            "nome": "Cloud Horn",
+            "nome": "Óleo da Lanterna de Ota",
             "id": 14
           },
           {
-            "nome": "Earwax",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Fish Head",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Green Slime",
+            "nome": "Vinho de Arroz do Monge Mágico",
             "id": 22
           },
           {
-            "nome": "Hakuma Sapwood",
+            "nome": "Caracol da Montanha",
             "id": 24
           },
           {
-            "nome": "Hill Dragon Egg",
+            "nome": "Sombra de Luto",
             "id": 25
           },
           {
-            "nome": "Howler Fur",
+            "nome": "Raiz de Munchanka",
             "id": 26
           },
           {
-            "nome": "Itchi Beri",
+            "nome": "Tempero Nakudama",
             "id": 27
           },
           {
-            "nome": "Jumping Bonfire",
+            "nome": "Cardo Noturno",
             "id": 28
           },
           {
-            "nome": "Jack-O'-Lantern Bits",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Nobblewort",
+            "nome": "Cogumelo do Sol",
             "id": 40
           },
           {
-            "nome": "Monkey's Coil",
+            "nome": "Mercador Adormecido",
             "id": 36
           },
           {
-            "nome": "Poison",
+            "nome": "Lodo Amarelo",
             "id": 45
           },
           {
-            "nome": "Pyramid Melon",
+            "nome": "Melão Pirâmide",
             "id": 47
           },
           {
-            "nome": "Rattle Shoot",
+            "nome": "Disparo de Chocalho",
             "id": 50
           },
           {
-            "nome": "Sheep Dragon Wool",
+            "nome": "Lã de Dragão Ovelha",
             "id": 56
           },
           {
-            "nome": "Spindle Leg Spider Webs",
+            "nome": "Teias de Aranha de Perna Fuso",
             "id": 58
           },
           {
@@ -248,15 +248,15 @@
             "id": 62
           },
           {
-            "nome": "Windbloom",
+            "nome": "Flor do Vento",
             "id": 65
           },
           {
-            "nome": "Witch's Broom",
+            "nome": "Vassoura da Bruxa",
             "id": 66
           },
           {
-            "nome": "Yugi Sap",
+            "nome": "Seiva de Yugi",
             "id": 68
           }
         ]
@@ -265,55 +265,55 @@
         "dice": "d13",
         "ingredients": [
           {
-            "nome": "Bottle Cap (Supa-Fizz!)",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Dragon Root",
+            "nome": "Raiz Dourada",
             "id": 9
           },
           {
-            "nome": "Feather Rock",
+            "nome": "Veneno de Peixe-Leão",
             "id": 12
           },
           {
-            "nome": "Glow Worms of the Vale",
+            "nome": "Estatueta de Neko Ronin",
             "id": 16
           },
           {
-            "nome": "Kojobi Fruit",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Living Spud",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Noodle Eel",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Petrified Alligator",
+            "nome": "Jacaré Petrificado",
             "id": 32
           },
           {
-            "nome": "Spark Plug",
+            "nome": "Vela de Ignição",
             "id": 37
           },
           {
-            "nome": "Spring",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Sun Shroom",
+            "nome": "Cogumelo do Sol",
             "id": 40
           },
           {
-            "nome": "Vinyl Record",
+            "nome": "Disco de Vinil",
             "id": 42
           },
           {
-            "nome": "Wolfenite",
+            "nome": "Wolfenita",
             "id": 43
           }
         ]
@@ -325,123 +325,123 @@
         "dice": "d32",
         "ingredients": [
           {
-            "nome": "Apper Carrot",
+            "nome": "Raio Engarrafado",
             "id": 2
           },
           {
-            "nome": "Bamboo",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Bashu Powder",
+            "nome": "Carvão da Linha Errante",
             "id": 4
           },
           {
-            "nome": "Blue Back Salmon",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Boom Beri",
+            "nome": "Presa de Dragão de Yutro",
             "id": 6
           },
           {
-            "nome": "Bora Bug",
+            "nome": "Salgueiro das Fadas",
             "id": 7
           },
           {
-            "nome": "Bundle of Driko Twigs",
+            "nome": "Raiz Dourada",
             "id": 9
           },
           {
-            "nome": "Camp Mite",
+            "nome": "Mão de Eryo",
             "id": 10
           },
           {
-            "nome": "Chicken Egg",
+            "nome": "Crisálida de Irimbi",
             "id": 11
           },
           {
-            "nome": "Cloud Horn",
+            "nome": "Óleo da Lanterna de Ota",
             "id": 14
           },
           {
-            "nome": "Creeping Bolete",
+            "nome": "Plumagem de um Kirio Corredor",
             "id": 15
           },
           {
-            "nome": "Earwax",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Fish Folk Tooth",
+            "nome": "Sopro Congelado de Nokumai",
             "id": 19
           },
           {
-            "nome": "Fish Head",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Flash Paper",
+            "nome": "Uísque Wufu",
             "id": 21
           },
           {
-            "nome": "Green Slime",
+            "nome": "Vinho de Arroz do Monge Mágico",
             "id": 22
           },
           {
-            "nome": "Hakuma Sapwood",
+            "nome": "Caracol da Montanha",
             "id": 24
           },
           {
-            "nome": "Jumping Bonfire",
+            "nome": "Cardo Noturno",
             "id": 28
           },
           {
-            "nome": "Jack-O'-Lantern Bits",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Knobble Leaf Seaweed",
+            "nome": "Flocos Pok Pok",
             "id": 31
           },
           {
-            "nome": "Lovers Vine",
+            "nome": "Entulho de um Golem de Entulho",
             "id": 33
           },
           {
-            "nome": "Mellowort",
+            "nome": "Erva de Escória",
             "id": 35
           },
           {
-            "nome": "Nobblewort",
+            "nome": "Cogumelo do Sol",
             "id": 40
           },
           {
-            "nome": "Narutomaki",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Pink Candle Wax",
+            "nome": "Wolfenita",
             "id": 43
           },
           {
-            "nome": "Queen's Dilemma",
+            "nome": "Dilema da Rainha",
             "id": 48
           },
           {
-            "nome": "Scalefruit Rind",
+            "nome": "Casca de Fruta Escamosa",
             "id": 53
           },
           {
-            "nome": "Seashell",
+            "nome": "Concha do Mar",
             "id": 54
           },
           {
-            "nome": "Sea Water",
+            "nome": "Água do Mar",
             "id": 55
           },
           {
-            "nome": "Spindle Leg Spider Webs",
+            "nome": "Teias de Aranha de Perna Fuso",
             "id": 58
           },
           {
@@ -449,7 +449,7 @@
             "id": 63
           },
           {
-            "nome": "Yugi Sap",
+            "nome": "Seiva de Yugi",
             "id": 68
           }
         ]
@@ -458,67 +458,67 @@
         "dice": "d16",
         "ingredients": [
           {
-            "nome": "Bottle Cap (Supa-Fizz!)",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Dawn Petal",
+            "nome": "Escama de Carpa Koi Gigante",
             "id": 8
           },
           {
-            "nome": "Fizzing Green",
+            "nome": "Lodo Laranja",
             "id": 13
           },
           {
-            "nome": "Happy Joy Cake",
+            "nome": "Pedra Estrela",
             "id": 17
           },
           {
-            "nome": "Kojobi Fruit",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Laughing Moss",
+            "nome": "Sopro Congelado de Nokumai",
             "id": 19
           },
           {
-            "nome": "Munchanka Root",
+            "nome": "Raiz de Munchanka",
             "id": 26
           },
           {
-            "nome": "Nakudama Spice",
+            "nome": "Tempero Nakudama",
             "id": 27
           },
           {
-            "nome": "Noodle Eel",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Petrified Alligator",
+            "nome": "Jacaré Petrificado",
             "id": 32
           },
           {
-            "nome": "Shadowroot",
+            "nome": "Raiz de Sombra",
             "id": 34
           },
           {
-            "nome": "Spark Plug",
+            "nome": "Vela de Ignição",
             "id": 37
           },
           {
-            "nome": "Spring",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Toka Truffle",
+            "nome": "Trufa Toka",
             "id": 41
           },
           {
-            "nome": "Vinyl Record",
+            "nome": "Disco de Vinil",
             "id": 42
           },
           {
-            "nome": "Wychwood",
+            "nome": "Madeira de Bruxa",
             "id": 44
           }
         ]
@@ -530,91 +530,91 @@
         "dice": "d25",
         "ingredients": [
           {
-            "nome": "Amber",
+            "nome": "Flor da Vinha do Espírito",
             "id": 1
           },
           {
-            "nome": "Bamboo",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Bashu Powder",
+            "nome": "Carvão da Linha Errante",
             "id": 4
           },
           {
-            "nome": "Blue Back Salmon",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Boom Beri",
+            "nome": "Presa de Dragão de Yutro",
             "id": 6
           },
           {
-            "nome": "Brush Reed",
+            "nome": "Escama de Carpa Koi Gigante",
             "id": 8
           },
           {
-            "nome": "Bundle of Driko Twigs",
+            "nome": "Raiz Dourada",
             "id": 9
           },
           {
-            "nome": "Chicken Egg",
+            "nome": "Crisálida de Irimbi",
             "id": 11
           },
           {
-            "nome": "Clay Snake Tail",
+            "nome": "Lodo Laranja",
             "id": 13
           },
           {
-            "nome": "Earwax",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Fish Folk Tooth",
+            "nome": "Sopro Congelado de Nokumai",
             "id": 19
           },
           {
-            "nome": "Fish Head",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Flash Paper",
+            "nome": "Uísque Wufu",
             "id": 21
           },
           {
-            "nome": "Gohaku Rice",
+            "nome": "Pele de Lagarto Mudada",
             "id": 23
           },
           {
-            "nome": "Jumping Bonfire",
+            "nome": "Cardo Noturno",
             "id": 28
           },
           {
-            "nome": "Oporion Glass",
+            "nome": "Trufa Toka",
             "id": 41
           },
           {
-            "nome": "Origami Crane",
+            "nome": "Disco de Vinil",
             "id": 42
           },
           {
-            "nome": "Pink Candle Wax",
+            "nome": "Wolfenita",
             "id": 43
           },
           {
-            "nome": "Poison",
+            "nome": "Lodo Amarelo",
             "id": 45
           },
           {
-            "nome": "Raka Paste",
+            "nome": "Pasta de Raka",
             "id": 49
           },
           {
-            "nome": "Seashell",
+            "nome": "Concha do Mar",
             "id": 54
           },
           {
-            "nome": "Sea Water",
+            "nome": "Água do Mar",
             "id": 55
           },
           {
@@ -622,11 +622,11 @@
             "id": 63
           },
           {
-            "nome": "Windbloom",
+            "nome": "Flor do Vento",
             "id": 65
           },
           {
-            "nome": "Noodle Eel",
+            "nome": "Enguia de Macarrão",
             "id": 29
           }
         ]
@@ -635,47 +635,47 @@
         "dice": "d12",
         "ingredients": [
           {
-            "nome": "Bottle Cap (Supa-Fizz!)",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Crackling Jasper",
+            "nome": "Carvão da Linha Errante",
             "id": 4
           },
           {
-            "nome": "Gargoyle Powder",
+            "nome": "Plumagem de um Kirio Corredor",
             "id": 15
           },
           {
-            "nome": "Kojobi Fruit",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Molted Lizard Skin",
+            "nome": "Pele de Lagarto Mudada",
             "id": 23
           },
           {
-            "nome": "Petrified Alligator",
+            "nome": "Jacaré Petrificado",
             "id": 32
           },
           {
-            "nome": "Spark Plug",
+            "nome": "Vela de Ignição",
             "id": 37
           },
           {
-            "nome": "Spirit Tea",
+            "nome": "Chá de Espírito",
             "id": 38
           },
           {
-            "nome": "Spring",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Vinyl Record",
+            "nome": "Disco de Vinil",
             "id": 42
           },
           {
-            "nome": "Yellow Slime",
+            "nome": "Lodo Amarelo",
             "id": 45
           }
         ]
@@ -687,91 +687,91 @@
         "dice": "d22",
         "ingredients": [
           {
-            "nome": "Amber",
+            "nome": "Flor da Vinha do Espírito",
             "id": 1
           },
           {
-            "nome": "Blue Back Salmon",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Boom Beri",
+            "nome": "Presa de Dragão de Yutro",
             "id": 6
           },
           {
-            "nome": "Bora Bug",
+            "nome": "Salgueiro das Fadas",
             "id": 7
           },
           {
-            "nome": "Bundle of Driko Twigs",
+            "nome": "Raiz Dourada",
             "id": 9
           },
           {
-            "nome": "Clay Snake Tail",
+            "nome": "Lodo Laranja",
             "id": 13
           },
           {
-            "nome": "Earwax",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Fish Head",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Hakuma Sapwood",
+            "nome": "Caracol da Montanha",
             "id": 24
           },
           {
-            "nome": "Howler Fur",
+            "nome": "Raiz de Munchanka",
             "id": 26
           },
           {
-            "nome": "Mandrake Root",
+            "nome": "Raiz de Sombra",
             "id": 34
           },
           {
-            "nome": "Nobblewort",
+            "nome": "Cogumelo do Sol",
             "id": 40
           },
           {
-            "nome": "Oporion Glass",
+            "nome": "Trufa Toka",
             "id": 41
           },
           {
-            "nome": "Peeping Willow",
+            "nome": "Madeira de Bruxa",
             "id": 44
           },
           {
-            "nome": "Poison",
+            "nome": "Lodo Amarelo",
             "id": 45
           },
           {
-            "nome": "Queen's Dilemma",
+            "nome": "Dilema da Rainha",
             "id": 48
           },
           {
-            "nome": "Raka Paste",
+            "nome": "Pasta de Raka",
             "id": 49
           },
           {
-            "nome": "Spirit Root",
+            "nome": "Raiz de Espírito",
             "id": 59
           },
           {
-            "nome": "Windbloom",
+            "nome": "Flor do Vento",
             "id": 65
           },
           {
-            "nome": "Yugi Sap",
+            "nome": "Seiva de Yugi",
             "id": 68
           },
           {
-            "nome": "Yuma Shrub",
+            "nome": "Arbusto Yuma",
             "id": 69
           },
           {
-            "nome": "Noodle Eel",
+            "nome": "Enguia de Macarrão",
             "id": 29
           }
         ]
@@ -780,55 +780,55 @@
         "dice": "d13",
         "ingredients": [
           {
-            "nome": "Black Cinnamon",
+            "nome": "Raio Engarrafado",
             "id": 2
           },
           {
-            "nome": "Bottle Cap (Supa-Fizz!)",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Dawn Petal",
+            "nome": "Escama de Carpa Koi Gigante",
             "id": 8
           },
           {
-            "nome": "Essence of Glumbug",
+            "nome": "Crisálida de Irimbi",
             "id": 11
           },
           {
-            "nome": "Forge Slag",
+            "nome": "Óleo da Lanterna de Ota",
             "id": 14
           },
           {
-            "nome": "Gargoyle Powder",
+            "nome": "Plumagem de um Kirio Corredor",
             "id": 15
           },
           {
-            "nome": "Mountain Snail",
+            "nome": "Caracol da Montanha",
             "id": 24
           },
           {
-            "nome": "Opu Opu Spring Water",
+            "nome": "Água da Fonte Opu Opu",
             "id": 30
           },
           {
-            "nome": "Petrified Alligator",
+            "nome": "Jacaré Petrificado",
             "id": 32
           },
           {
-            "nome": "Spark Plug",
+            "nome": "Vela de Ignição",
             "id": 37
           },
           {
-            "nome": "Spring",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Vinyl Record",
+            "nome": "Disco de Vinil",
             "id": 42
           },
           {
-            "nome": "Wolfenite",
+            "nome": "Wolfenita",
             "id": 43
           }
         ]
@@ -840,55 +840,55 @@
         "dice": "d13",
         "ingredients": [
           {
-            "nome": "Blue Back Salmon",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Brush Reed",
+            "nome": "Escama de Carpa Koi Gigante",
             "id": 8
           },
           {
-            "nome": "Fish Folk Tooth",
+            "nome": "Sopro Congelado de Nokumai",
             "id": 19
           },
           {
-            "nome": "Fish Head",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Knobble Leaf Seaweed",
+            "nome": "Flocos Pok Pok",
             "id": 31
           },
           {
-            "nome": "Oporion Glass",
+            "nome": "Trufa Toka",
             "id": 41
           },
           {
-            "nome": "Pungent Sea Foam",
+            "nome": "Espuma do Mar Pungente",
             "id": 46
           },
           {
-            "nome": "Seashell",
+            "nome": "Concha do Mar",
             "id": 54
           },
           {
-            "nome": "Rust Crab",
+            "nome": "Caranguejo Ferrugem",
             "id": 52
           },
           {
-            "nome": "Sea Water",
+            "nome": "Água do Mar",
             "id": 55
           },
           {
-            "nome": "Squid Ink",
+            "nome": "Tinta de Lula",
             "id": 60
           },
           {
-            "nome": "Tangle Weed",
+            "nome": "Erva Emaranhada",
             "id": 61
           },
           {
-            "nome": "Witch's Eye Coral",
+            "nome": "Coral do Olho da Bruxa",
             "id": 67
           }
         ]
@@ -897,23 +897,23 @@
         "dice": "d5",
         "ingredients": [
           {
-            "nome": "Black Pearl",
+            "nome": "Flor da Vinha do Espírito",
             "id": 1
           },
           {
-            "nome": "Bottle Cap (Supa-Fizz!)",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Noodle Eel",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Pok Pok Flakes",
+            "nome": "Flocos Pok Pok",
             "id": 31
           },
           {
-            "nome": "Petrified Alligator",
+            "nome": "Jacaré Petrificado",
             "id": 32
           }
         ]
@@ -925,111 +925,111 @@
         "dice": "d28",
         "ingredients": [
           {
-            "nome": "Bamboo",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Blue Back Salmon",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Bora Bug",
+            "nome": "Salgueiro das Fadas",
             "id": 7
           },
           {
-            "nome": "Brush Reed",
+            "nome": "Escama de Carpa Koi Gigante",
             "id": 8
           },
           {
-            "nome": "Bundle of Driko Twigs",
+            "nome": "Raiz Dourada",
             "id": 9
           },
           {
-            "nome": "Camp Mite",
+            "nome": "Mão de Eryo",
             "id": 10
           },
           {
-            "nome": "Chicken Egg",
+            "nome": "Crisálida de Irimbi",
             "id": 11
           },
           {
-            "nome": "Clay Snake Tail",
+            "nome": "Lodo Laranja",
             "id": 13
           },
           {
-            "nome": "Creeping Bolete",
+            "nome": "Plumagem de um Kirio Corredor",
             "id": 15
           },
           {
-            "nome": "Earwax",
+            "nome": "Lágrimas da Lua",
             "id": 18
           },
           {
-            "nome": "Fish Folk Tooth",
+            "nome": "Sopro Congelado de Nokumai",
             "id": 19
           },
           {
-            "nome": "Fish Head",
+            "nome": "Besouro do Sábio Arol",
             "id": 20
           },
           {
-            "nome": "Green Slime",
+            "nome": "Vinho de Arroz do Monge Mágico",
             "id": 22
           },
           {
-            "nome": "Gohaku Rice",
+            "nome": "Pele de Lagarto Mudada",
             "id": 23
           },
           {
-            "nome": "Howler Fur",
+            "nome": "Raiz de Munchanka",
             "id": 26
           },
           {
-            "nome": "Kloth Leech",
+            "nome": "Água da Fonte Opu Opu",
             "id": 30
           },
           {
-            "nome": "Knobble Leaf Seaweed",
+            "nome": "Flocos Pok Pok",
             "id": 31
           },
           {
-            "nome": "Lovers Vine",
+            "nome": "Entulho de um Golem de Entulho",
             "id": 33
           },
           {
-            "nome": "Mellowort",
+            "nome": "Erva de Escória",
             "id": 35
           },
           {
-            "nome": "Narutomaki",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Poison",
+            "nome": "Lodo Amarelo",
             "id": 45
           },
           {
-            "nome": "Queen's Dilemma",
+            "nome": "Dilema da Rainha",
             "id": 48
           },
           {
-            "nome": "Raka Paste",
+            "nome": "Pasta de Raka",
             "id": 49
           },
           {
-            "nome": "Ribbon Rot",
+            "nome": "Podridão de Fita",
             "id": 51
           },
           {
-            "nome": "Scalefruit Rind",
+            "nome": "Casca de Fruta Escamosa",
             "id": 53
           },
           {
-            "nome": "Seashell",
+            "nome": "Concha do Mar",
             "id": 54
           },
           {
-            "nome": "Sea Water",
+            "nome": "Água do Mar",
             "id": 55
           },
           {
@@ -1042,63 +1042,63 @@
         "dice": "d15",
         "ingredients": [
           {
-            "nome": "Bottle Cap (Supa-Fizz!)",
+            "nome": "Chiclete",
             "id": 3
           },
           {
-            "nome": "Corrupted Seawater",
+            "nome": "Tinta de Polvo Carmesim",
             "id": 5
           },
           {
-            "nome": "Corrupted Slime",
+            "nome": "Presa de Dragão de Yutro",
             "id": 6
           },
           {
-            "nome": "Hakumon's Ramen Broth",
+            "nome": "Salgueiro das Fadas",
             "id": 7
           },
           {
-            "nome": "Laughing Moss",
+            "nome": "Sopro Congelado de Nokumai",
             "id": 19
           },
           {
-            "nome": "Mournshade",
+            "nome": "Sombra de Luto",
             "id": 25
           },
           {
-            "nome": "Night Thistle",
+            "nome": "Cardo Noturno",
             "id": 28
           },
           {
-            "nome": "Noodle Eel",
+            "nome": "Enguia de Macarrão",
             "id": 29
           },
           {
-            "nome": "Petrified Alligator",
+            "nome": "Jacaré Petrificado",
             "id": 32
           },
           {
-            "nome": "Shadowroot",
+            "nome": "Raiz de Sombra",
             "id": 34
           },
           {
-            "nome": "Scumweed",
+            "nome": "Erva de Escória",
             "id": 35
           },
           {
-            "nome": "Spark Plug",
+            "nome": "Vela de Ignição",
             "id": 37
           },
           {
-            "nome": "Spring",
+            "nome": "Mola",
             "id": 39
           },
           {
-            "nome": "Vinyl Record",
+            "nome": "Disco de Vinil",
             "id": 42
           },
           {
-            "nome": "Wulfenite",
+            "nome": "Wolfenita",
             "id": 43
           }
         ]
@@ -1114,7 +1114,7 @@
         "id": 10,
         "circunstancia": "Criada espontaneamente como feedback mágico da magia de adivinhação",
         "localizacao": "Qualquer lugar onde magia de adivinhação é praticada",
-        "nome": "Essência de Mau Presságio"
+        "nome": "Mão de Eryo"
       },
       {
         "id": 22,

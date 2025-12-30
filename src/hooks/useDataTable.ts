@@ -4,13 +4,13 @@ import { DataTableService, SortConfig } from '@/services/dataTableService';
 
 interface UseDataTableProps<T> {
   data: T[];
-  searchKey?: string;
+  searchKeys?: string[];
   itemsPerPage?: number;
 }
 
 export function useDataTable<T extends Record<string, unknown>>({
   data,
-  searchKey,
+  searchKeys,
   itemsPerPage = 10
 }: UseDataTableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,10 +19,10 @@ export function useDataTable<T extends Record<string, unknown>>({
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
 
   const processedData = useMemo(() => {
-    const filtered = DataTableService.filterData(data, searchTerm, searchKey, activeFilters);
+    const filtered = DataTableService.filterData(data, searchTerm, searchKeys, activeFilters);
     const sorted = DataTableService.sortData(filtered, sortConfig);
     return DataTableService.paginateData(sorted, currentPage, itemsPerPage);
-  }, [data, searchTerm, searchKey, activeFilters, sortConfig, currentPage, itemsPerPage]);
+  }, [data, searchTerm, searchKeys, activeFilters, sortConfig, currentPage, itemsPerPage]);
 
   const handleSort = useCallback(
     (key: keyof T) => {

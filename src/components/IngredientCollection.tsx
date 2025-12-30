@@ -12,7 +12,35 @@ import { useIngredientCollection } from '@/hooks/useIngredientCollection';
 import { useTranslation } from '@/hooks/useTranslation';
 
 export default function IngredientCollection() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  const [ingredientsMap, setIngredientsMap] = React.useState<Record<number, { nome: string; descricao: string }>>({});
+  
+  React.useEffect(() => {
+    const loadIngredientsMap = async () => {
+      try {
+        const { ingredientsService } = await import('@/services/ingredientsService');
+        const lang = language;
+        
+        const [common, uncommon, rare] = await Promise.all([
+          ingredientsService.loadCommonIngredients(lang),
+          ingredientsService.loadUncommonIngredients(lang),
+          ingredientsService.loadRareIngredients(lang)
+        ]);
+
+        const map: Record<number, { nome: string; descricao: string }> = {};
+        common.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
+        uncommon.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
+        rare.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
+        
+        setIngredientsMap(map);
+      } catch (error) {
+        console.error('Failed to load ingredients map', error);
+      }
+    };
+    
+    loadIngredientsMap();
+  }, [language]);
+
   const {
     displayIngredients,
     selectedIngredient,
@@ -29,25 +57,34 @@ export default function IngredientCollection() {
       label: t('ingredients.table.ingredient'),
       sortable: true,
       width: '30%',
-      render: (_, item) => (
-        <div
-          className="flex items-center space-x-3 cursor-pointer hover:bg-totoro-blue/5 p-2 rounded-lg transition-colors"
-          onClick={() => handleIngredientClick(item.ingredient)}
-        >
-          <div className="flex-shrink-0">
-            <div className="w-10 h-10 bg-totoro-green/20 rounded-lg flex items-center justify-center">
-              <span className="text-lg">🌿</span>
+      render: (_, item) => {
+        const mappedIngredient = {
+          ...item.ingredient,
+          nome: ingredientsMap[item.ingredient.id]?.nome || item.ingredient.nome,
+          descricao: ingredientsMap[item.ingredient.id]?.descricao || item.ingredient.descricao
+        };
+
+        return (
+          <div
+            className="flex items-center space-x-3 cursor-pointer hover:bg-totoro-blue/5 p-2 rounded-lg transition-colors"
+            onClick={() => handleIngredientClick(mappedIngredient)}
+          >
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 bg-totoro-green/20 rounded-lg flex items-center justify-center">
+                <span className="text-lg">🌿</span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <div className="font-medium text-totoro-gray hover:text-totoro-blue transition-colors">
+                {mappedIngredient.nome}
+              </div>
+              <div className="text-xs text-totoro-blue mt-1">{t('ingredients.table.clickDetails')}</div>
             </div>
           </div>
-          <div className="flex-1">
-            <div className="font-medium text-totoro-gray hover:text-totoro-blue transition-colors">
-              {item.ingredient.nome}
-            </div>
-            <div className="text-xs text-totoro-blue mt-1">{t('ingredients.table.clickDetails')}</div>
-          </div>
-        </div>
-      )
+        );
+      }
     },
+
     {
       key: 'quantity' as keyof CollectedIngredient,
       label: t('ingredients.table.quantity'),
@@ -143,8 +180,8 @@ export default function IngredientCollection() {
         data={displayIngredients}
         columns={columns}
         filters={INGREDIENT_COLLECTION_FILTERS}
-        searchKey="ingredient.nome"
-        searchPlaceholder={t('ui.datatable.searchPlaceholder')}
+        searchKeys={['ingredient.nome', 'ingredient.descricao', 'ingredient.raridade']}
+        searchPlaceholder={t('ingredients.search.placeholder')}
         itemsPerPage={15}
         className="mb-8"
       />

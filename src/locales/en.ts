@@ -47,14 +47,15 @@ export const en = {
   'constants.ingredients.filters.combat': 'Combat',
   'constants.ingredients.filters.utility': 'Utility',
   'constants.ingredients.filters.whimsy': 'Whimsy',
-  'constants.ingredients.filters.placeholder.status': 'All status',
-  'constants.ingredients.filters.placeholder.values': 'All values',
+  'constants.ingredients.filters.placeholder.status': 'All',
+  'constants.ingredients.filters.placeholder.values': '0',
 
   // Shared UI
   'ui.theme.light': 'Light',
   'ui.theme.dark': 'Dark',
   'ui.theme.toggle': 'Toggle theme',
   'ui.datatable.searchPlaceholder': 'Search...',
+  'ui.datatable.search': 'Search',
   'ui.datatable.showing': 'Showing {0}-{1} of {2} results',
   'ui.datatable.noItems': 'No items found',
   'ui.datatable.totalData': 'Total items: {0}',
@@ -178,6 +179,7 @@ export const en = {
   'ingredients.modal.id': 'Ingredient ID',
   'ingredients.modal.totalPoints': 'Total Points',
   'ingredients.modal.close': 'Close',
+  'ingredients.search.placeholder': 'Search by name, description or rarity...',
 
   // Recipes Collection
   'recipes.collection.title': 'Recipe Collection',

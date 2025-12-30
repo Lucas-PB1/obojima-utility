@@ -11,21 +11,26 @@ export class DataTableService {
   }
 
   private static matchesSearch(value: unknown, searchTerm: string): boolean {
-    return value?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ?? false;
+    if (!searchTerm) return true;
+    const term = String(searchTerm).toLowerCase();
+    const val = String(value ?? '').toLowerCase();
+    return val.includes(term);
   }
 
   static filterData<T extends Record<string, unknown>>(
     data: T[],
     searchTerm: string,
-    searchKey: string | undefined,
+    searchKeys: string[] | undefined,
     activeFilters: Record<string, string>
   ): T[] {
     let filtered = data;
 
-    if (searchTerm && searchKey) {
+    if (searchTerm && searchKeys && searchKeys.length > 0) {
       filtered = filtered.filter((item) => {
-        const value = this.getNestedValue(item, searchKey);
-        return this.matchesSearch(value, searchTerm);
+        return searchKeys.some((key) => {
+          const value = this.getNestedValue(item, key);
+          return this.matchesSearch(value, searchTerm);
+        });
       });
     }
 

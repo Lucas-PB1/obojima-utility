@@ -21,7 +21,35 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   onPotionCreated,
   onIngredientsUsed
 }) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  const [ingredientsMap, setIngredientsMap] = React.useState<Record<number, { nome: string; descricao: string }>>({});
+
+  React.useEffect(() => {
+    const loadIngredientsMap = async () => {
+      try {
+        const { ingredientsService } = await import('@/services/ingredientsService');
+        const lang = language;
+        
+        const [common, uncommon, rare] = await Promise.all([
+          ingredientsService.loadCommonIngredients(lang),
+          ingredientsService.loadUncommonIngredients(lang),
+          ingredientsService.loadRareIngredients(lang)
+        ]);
+
+        const map: Record<number, { nome: string; descricao: string }> = {};
+        common.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
+        uncommon.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
+        rare.ingredients.forEach(i => map[i.id] = { nome: i.nome, descricao: i.descricao });
+        
+        setIngredientsMap(map);
+      } catch (error) {
+        console.error('Failed to load ingredients map', error);
+      }
+    };
+    
+    loadIngredientsMap();
+  }, [language]);
+
   const {
     selectedIngredients,
     brewingResult,
@@ -40,6 +68,22 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
     closeScoreChoiceModal
   } = usePotionBrewing({ onPotionCreated, onIngredientsUsed });
 
+  const mappedSelectedIngredients = React.useMemo(() => {
+    return selectedIngredients.map(ing => ({
+      ...ing,
+      nome: ingredientsMap[ing.id]?.nome || ing.nome,
+      descricao: ingredientsMap[ing.id]?.descricao || ing.descricao
+    }));
+  }, [selectedIngredients, ingredientsMap]);
+
+  const mappedAvailableIngredients = React.useMemo(() => {
+    return availableIngredients.map(ing => ({
+      ...ing,
+      nome: ingredientsMap[ing.id]?.nome || ing.nome,
+      descricao: ingredientsMap[ing.id]?.descricao || ing.descricao
+    }));
+  }, [availableIngredients, ingredientsMap]);
+
   return (
     <div className="space-y-6">
       <ContentCard>
@@ -53,14 +97,14 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
           <div>
             <h3 className="text-lg font-medium text-foreground mb-3">
-              {t('potions.create.selected', selectedIngredients.length)}
+              {t('potions.create.selected', mappedSelectedIngredients.length)}
             </h3>
 
-            {selectedIngredients.length === 0 ? (
+            {mappedSelectedIngredients.length === 0 ? (
               <div className="text-gray-500 text-sm italic">{t('potions.create.noneSelected')}</div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                {selectedIngredients.map((ingredient) => (
+                {mappedSelectedIngredients.map((ingredient) => (
                   <div key={ingredient.id} className="relative">
                     <SimpleIngredientCard ingredient={ingredient} />
                     <button
@@ -124,13 +168,13 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
           <div className="flex gap-3">
             <Button
               onClick={handleBrewPotion}
-              disabled={selectedIngredients.length !== 3 || isBrewing}
+              disabled={mappedSelectedIngredients.length !== 3 || isBrewing}
               className="flex-1"
             >
               {isBrewing ? t('potions.create.button.brewing') : t('potions.create.button.brew')}
             </Button>
 
-            {selectedIngredients.length > 0 && (
+            {mappedSelectedIngredients.length > 0 && (
               <Button onClick={handleClearSelection} variant="secondary">
                 {t('potions.create.button.clear')}
               </Button>
@@ -143,13 +187,13 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         <div>
           <h3 className="text-lg font-medium text-foreground mb-4">{t('potions.create.available')}</h3>
 
-          {availableIngredients.length === 0 ? (
+          {mappedAvailableIngredients.length === 0 ? (
             <div className="text-gray-500 text-center py-8">
               {t('potions.create.noAvailable')}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {availableIngredients.map((ingredient, index) => {
+              {mappedAvailableIngredients.map((ingredient, index) => {
                 const isSelected = selectedIngredients.some((ing) => ing.id === ingredient.id);
                 const isDisabled = isSelected || selectedIngredients.length >= 3;
 
