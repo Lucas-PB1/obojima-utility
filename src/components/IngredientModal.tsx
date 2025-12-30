@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from '@/components/ui/Modal';
 import { Ingredient } from '@/types/ingredients';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface IngredientModalProps {
   ingredient: Ingredient | null;
@@ -9,6 +10,8 @@ interface IngredientModalProps {
 }
 
 export default function IngredientModal({ ingredient, isOpen, onClose }: IngredientModalProps) {
+  const { t } = useTranslation();
+
   if (!ingredient) return null;
 
   return (
@@ -37,18 +40,18 @@ export default function IngredientModal({ ingredient, isOpen, onClose }: Ingredi
         <div className="bg-gradient-to-r from-totoro-green/10 to-totoro-blue/10 rounded-lg p-6 border border-totoro-green/20">
           <h5 className="font-semibold text-totoro-gray mb-3 flex items-center">
             <span className="mr-2">📖</span>
-            Descrição
+            {t('ingredients.modal.description')}
           </h5>
           <p className="text-totoro-gray leading-relaxed text-justify">{ingredient.descricao}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-totoro-gray/10 rounded-lg p-4">
-            <h6 className="font-medium text-totoro-gray mb-2">🆔 ID do Ingrediente</h6>
+            <h6 className="font-medium text-totoro-gray mb-2">🆔 {t('ingredients.modal.id')}</h6>
             <p className="text-totoro-gray/70 font-mono text-sm">{ingredient.id}</p>
           </div>
           <div className="bg-totoro-gray/10 rounded-lg p-4">
-            <h6 className="font-medium text-totoro-gray mb-2">📊 Total de Pontos</h6>
+            <h6 className="font-medium text-totoro-gray mb-2">📊 {t('ingredients.modal.totalPoints')}</h6>
             <p className="text-totoro-gray font-bold text-lg">
               {ingredient.combat + ingredient.utility + ingredient.whimsy}
             </p>
@@ -60,7 +63,7 @@ export default function IngredientModal({ ingredient, isOpen, onClose }: Ingredi
             onClick={onClose}
             className="px-6 py-2 bg-totoro-green text-white rounded-lg hover:bg-totoro-green/90 transition-colors font-medium"
           >
-            Fechar
+            {t('ingredients.modal.close')}
           </button>
         </div>
       </div>

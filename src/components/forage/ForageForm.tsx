@@ -24,6 +24,8 @@ interface ForageFormProps {
   remainingAttempts: number;
 }
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 export default function ForageForm({
   region,
   setRegion,
@@ -39,39 +41,55 @@ export default function ForageForm({
   isLoading,
   remainingAttempts
 }: ForageFormProps) {
+  const { t } = useTranslation();
   const regionOptions = ingredientsService.getRegionKeys().map((key) => ({
     value: key,
     label: ingredientsService.getRegionDisplayName(key)
   }));
 
+  const translatedTestTypeOptions = TEST_TYPE_OPTIONS.map(opt => ({
+      ...opt,
+      label: t(opt.label)
+  }));
+
+  const translatedAdvantageOptions = ADVANTAGE_OPTIONS.map(opt => ({
+      ...opt,
+      label: t(opt.label)
+  }));
+  
+  const translatedDiceOptions = DICE_OPTIONS.map(opt => ({
+      ...opt,
+      label: opt.label
+  }));
+
   return (
-    <ContentCard title="⚙️ Configuração do Teste">
+    <ContentCard title={t('forage.form.title')}>
       <div className="space-y-6">
         <Select
           value={region}
           onChange={(value) => setRegion(value as RegionKey)}
           options={regionOptions}
-          label="🌍 Região"
+          label={t('forage.form.region')}
         />
 
         <RadioGroup
           value={testType}
           onChange={(value) => setTestType(value as TestType)}
-          options={TEST_TYPE_OPTIONS}
-          label="🎯 Tipo de Teste"
+          options={translatedTestTypeOptions}
+          label={t('forage.form.testType')}
         />
 
         <Input
           type="number"
           value={modifier}
           onChange={(value) => setModifier(value === '' ? '' : Number(value))}
-          label="➕ Modificador do Teste"
-          placeholder="Ex: +3"
+          label={t('forage.form.modifier')}
+          placeholder={t('forage.form.modifier.placeholder')}
         />
 
         <div>
           <label className="block text-sm font-medium text-foreground/80 mb-2">
-            🎲 Dados de Bônus
+            {t('forage.form.bonusDice')}
           </label>
           <div className="flex space-x-2">
             <Select
@@ -83,7 +101,7 @@ export default function ForageForm({
                   setBonusDice(null);
                 }
               }}
-              options={[{ value: '', label: 'Nenhum' }, ...DICE_OPTIONS]}
+              options={[{ value: '', label: t('forage.form.bonusDice.none') }, ...translatedDiceOptions]}
               className="flex-1"
             />
             {bonusDice && (
@@ -102,8 +120,8 @@ export default function ForageForm({
         <RadioGroup
           value={advantage}
           onChange={(value) => setAdvantage(value as AdvantageType)}
-          options={ADVANTAGE_OPTIONS}
-          label="🎯 Vantagem/Desvantagem"
+          options={translatedAdvantageOptions}
+          label={t('forage.form.advantage')}
         />
 
         <Button
@@ -117,12 +135,12 @@ export default function ForageForm({
           {isLoading ? (
             <span className="flex items-center justify-center">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-2"></div>
-              Forrageando...
+              {t('forage.form.button.loading')}
             </span>
           ) : remainingAttempts <= 0 ? (
-            '🚫 Limite diário atingido'
+            t('forage.form.button.limit')
           ) : (
-            '🌿 Tentar Forragear'
+            t('forage.form.button.forage')
           )}
         </Button>
       </div>

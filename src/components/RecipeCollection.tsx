@@ -8,7 +8,10 @@ import { useRecipeCollection } from '@/hooks/useRecipeCollection';
 import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
 import { POTION_CATEGORY_CONFIG, RECIPE_FILTER_OPTIONS } from '@/constants/potions';
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 export const RecipeCollection: React.FC = () => {
+  const { t } = useTranslation();
   const {
     filteredRecipes,
     selectedRecipe,
@@ -22,10 +25,10 @@ export const RecipeCollection: React.FC = () => {
   } = useRecipeCollection();
 
   const statsData = [
-    { value: stats.total, label: 'Total', color: 'totoro-gray' as const },
+    { value: stats.total, label: t('recipes.stats.total'), color: 'totoro-gray' as const },
     ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => ({
       value: stats.byCategory[key as keyof typeof stats.byCategory],
-      label: config.label,
+      label: t(config.label),
       color: (key === 'combat'
         ? 'totoro-orange'
         : key === 'utility'
@@ -37,18 +40,18 @@ export const RecipeCollection: React.FC = () => {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Coleção de Receitas"
-        subtitle="Visualize e gerencie suas receitas de poções criadas"
+        title={t('recipes.collection.title')}
+        subtitle={t('recipes.collection.subtitle')}
         icon="📜"
       />
 
-      <StatsGrid title="📊 Visão Geral" stats={statsData} />
+      <StatsGrid title={`📊 ${t('ingredients.stats.title')}`} stats={statsData} />
 
       <ContentCard>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <h3 className="text-lg font-black text-foreground tracking-tight flex items-center gap-2">
             <span className="w-1 h-5 bg-totoro-blue rounded-full"></span>
-            Minhas Receitas ({filteredRecipes.length})
+            {t('recipes.myRecipes', filteredRecipes.length)}
           </h3>
 
           <div className="flex flex-wrap gap-2 p-1 bg-primary/5 rounded-2xl border border-border/40 backdrop-blur-sm">
@@ -62,7 +65,7 @@ export const RecipeCollection: React.FC = () => {
                     : 'text-foreground/50 hover:text-totoro-blue hover:bg-muted'
                 }`}
               >
-                {option.label}
+                {t(option.label)}
               </button>
             ))}
           </div>
@@ -72,8 +75,8 @@ export const RecipeCollection: React.FC = () => {
             <div className="text-4xl mb-3">📜</div>
             <p className="text-sm font-medium">
               {filter === 'all'
-                ? 'Nenhuma receita criada ainda. Vá para a aba Poções para criar sua primeira receita!'
-                : `Nenhuma receita de ${POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG].label} encontrada.`}
+                ? t('recipes.empty.all')
+                : t('recipes.empty.filtered', POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG]?.label ? t(POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG].label) : '')}
             </p>
           </div>
         ) : (
@@ -98,7 +101,7 @@ export const RecipeCollection: React.FC = () => {
                   <div
                     className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${POTION_CATEGORY_CONFIG[recipe.winningAttribute].classes}`}
                   >
-                    {POTION_CATEGORY_CONFIG[recipe.winningAttribute].label}
+                    {t(POTION_CATEGORY_CONFIG[recipe.winningAttribute].label)}
                   </div>
 
                   <div className="grid grid-cols-3 gap-3 py-3 border-y border-totoro-blue/5">
@@ -123,7 +126,7 @@ export const RecipeCollection: React.FC = () => {
                   </div>
 
                   <div className="text-[9px] font-bold text-totoro-gray/30 uppercase tracking-[0.2em]">
-                    Criada em {recipe.createdAt.toLocaleDateString('pt-BR')}
+                    {t('recipes.card.created', recipe.createdAt.toLocaleDateString('pt-BR'))}
                   </div>
                 </div>
               </div>
@@ -133,7 +136,7 @@ export const RecipeCollection: React.FC = () => {
       </ContentCard>
 
       {selectedRecipe && (
-        <Modal isOpen={showModal} onClose={closeModal} title="Detalhes da Receita">
+        <Modal isOpen={showModal} onClose={closeModal} title={t('recipes.details.title')}>
           <div className="space-y-6 pt-2">
             <div className="text-center">
               <h1 className="text-3xl font-serif font-bold text-foreground mb-1">
@@ -158,7 +161,7 @@ export const RecipeCollection: React.FC = () => {
             <div className="glass-panel p-6 rounded-3xl border border-border/40 relative overflow-hidden">
               <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
               <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-3 relative z-10">
-                Efeito da Poção
+                {t('recipes.details.effect')}
               </h4>
               <p className="text-sm text-foreground leading-relaxed italic relative z-10">
                 &quot;{selectedRecipe.resultingPotion.descricao}&quot;
@@ -167,7 +170,7 @@ export const RecipeCollection: React.FC = () => {
 
             <div className="space-y-4">
               <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] pl-1">
-                Ingredientes Utilizados
+                {t('recipes.details.ingredients')}
               </h4>
               <div className="grid grid-cols-1 gap-3">
                 {selectedRecipe.ingredients.map((ingredient) => (
@@ -179,7 +182,7 @@ export const RecipeCollection: React.FC = () => {
             <div className="glass-panel p-6 rounded-3xl border border-border/40 shadow-sm relative overflow-hidden">
               <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
               <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-4 relative z-10 text-center">
-                Potencial Místico
+                {t('recipes.details.potential')}
               </h4>
               <div className="grid grid-cols-3 gap-6 relative z-10">
                 <div className="text-center group">
@@ -208,9 +211,9 @@ export const RecipeCollection: React.FC = () => {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-totoro-blue/5 text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">
-                Domínio Previsto:{' '}
+                {t('recipes.details.predictedDomain')}{' '}
                 <span className="text-totoro-blue">
-                  {POTION_CATEGORY_CONFIG[selectedRecipe.winningAttribute].label}
+                  {t(POTION_CATEGORY_CONFIG[selectedRecipe.winningAttribute].label)}
                 </span>
               </div>
             </div>
@@ -221,10 +224,10 @@ export const RecipeCollection: React.FC = () => {
                 variant="ghost"
                 className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-2xl !font-bold"
               >
-                🗑️ Excluir Receita
+                {t('recipes.details.delete')}
               </Button>
               <Button onClick={closeModal} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
-                Fechar
+                {t('recipes.details.close')}
               </Button>
             </div>
           </div>

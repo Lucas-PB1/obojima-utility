@@ -11,8 +11,11 @@ import ActivityLog from '@/components/ActivityLog';
 import PageLayout from '@/components/ui/PageLayout';
 import Button from '@/components/ui/Button';
 import { useHome } from '@/hooks/useHome';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useSettings } from '@/hooks/useSettings';
 
 export default function Home() {
+  const { t } = useTranslation();
   const {
     user,
     authLoading,
@@ -28,18 +31,25 @@ export default function Home() {
     availableIngredients,
     handleIngredientsUsed
   } = useHome();
+  const { isInitialized } = useSettings();
 
-  if (!isClient || authLoading || !isAuthenticated) {
+  if (!isClient || authLoading || !isAuthenticated || !isInitialized) {
     return (
       <div className="min-h-screen bg-mesh flex items-center justify-center p-4">
         <main className="text-center">
           <div className="text-6xl mb-6 animate-float">🌿</div>
-          <h2 className="text-3xl font-serif font-bold text-totoro-gray mb-3 pb-2 border-b-2 border-totoro-blue/10 inline-block">
-            Carregando Obojima...
-          </h2>
-          <p className="text-totoro-blue/70 font-semibold uppercase tracking-[0.2em] text-[10px] font-sans">
-            Preparando o sistema arcano
-          </p>
+          {isInitialized ? (
+            <>
+              <h2 className="text-3xl font-serif font-bold text-totoro-gray mb-3 pb-2 border-b-2 border-totoro-blue/10 inline-block">
+                {t('app.loading.title')}
+              </h2>
+              <p className="text-totoro-blue/70 font-semibold uppercase tracking-[0.2em] text-[10px] font-sans">
+                {t('app.loading.subtitle')}
+              </p>
+            </>
+          ) : (
+            <div className="h-20 opacity-0"></div>
+          )}
         </main>
       </div>
     );
@@ -52,10 +62,10 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-serif font-bold text-totoro-gray tracking-tight transition-all duration-300">
-                🌿 Obojima Utilities
+                🌿 {t('app.header.title')}
               </h1>
               <p className="text-[10px] font-semibold text-totoro-blue/70 uppercase tracking-[0.2em] font-sans -mt-1">
-                Arcana & Foraging System
+                {t('app.header.subtitle')}
               </p>
             </div>
 
@@ -70,13 +80,13 @@ export default function Home() {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-totoro-orange uppercase tracking-wider leading-none mb-1">
-                      Novos Itens!
+                      {t('app.notification.newItems')}
                     </span>
                     <button
                       onClick={handleViewCollection}
                       className="text-[10px] text-totoro-gray/70 hover:text-totoro-blue font-bold text-left transition-colors"
                     >
-                      VER COLEÇÃO →
+                      {t('app.notification.viewCollection')}
                     </button>
                   </div>
                 </div>
@@ -100,7 +110,7 @@ export default function Home() {
                     size="sm"
                     className="!px-3 !py-1.5 !rounded-xl !text-[10px] !font-black hover:!bg-totoro-orange/10 hover:!text-totoro-orange transition-all"
                   >
-                    SAIR
+                    {t('app.user.logout')}
                   </Button>
                 </div>
               )}
@@ -160,7 +170,7 @@ export default function Home() {
       <footer className="py-6 border-t border-totoro-blue/5">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-[10px] font-black text-totoro-blue/20 uppercase tracking-[0.4em]">
-            Obojima Utilities • Arcana System
+            {t('app.footer.text')}
           </p>
         </div>
       </footer>

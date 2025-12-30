@@ -3,8 +3,10 @@ import { useState, useMemo } from 'react';
 import { ForageAttempt } from '@/types/ingredients';
 import { StatsService } from '@/services/statsService';
 import { useIngredients } from '@/hooks/useIngredients';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function useActivityLog() {
+  const { t } = useTranslation();
   const { attempts, refreshData } = useIngredients();
   const [filteredAttempts, setFilteredAttempts] = useState<ForageAttempt[]>([]);
 
@@ -17,26 +19,26 @@ export function useActivityLog() {
     () => [
       {
         value: activityStats.totalAttempts,
-        label: 'Total de Tentativas',
+        label: t('activity.stats.totalAttempts'),
         color: 'totoro-green' as const
       },
       {
         value: `${activityStats.successRate.toFixed(1)}%`,
-        label: 'Taxa de Sucesso',
+        label: t('activity.stats.successRate'),
         color: 'totoro-blue' as const
       },
       {
         value: activityStats.averageRoll.toFixed(1),
-        label: 'Rolagem Média',
+        label: t('activity.stats.averageRoll'),
         color: 'totoro-yellow' as const
       },
       {
         value: activityStats.ingredientsCollected,
-        label: 'Ingredientes Coletados',
+        label: t('activity.stats.ingredientsCollected'),
         color: 'totoro-gray' as const
       }
     ],
-    [activityStats]
+    [activityStats, t]
   );
 
   return {

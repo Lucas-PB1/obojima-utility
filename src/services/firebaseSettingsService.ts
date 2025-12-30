@@ -9,6 +9,7 @@ interface Settings {
   cauldronBonus: boolean;
   potionBrewerTalent: boolean;
   potionBrewerLevel: number;
+  language?: 'pt' | 'en' | 'es';
 }
 
 const defaultSettings: Settings = {
@@ -17,7 +18,8 @@ const defaultSettings: Settings = {
   doubleForageTalent: false,
   cauldronBonus: false,
   potionBrewerTalent: false,
-  potionBrewerLevel: 1
+  potionBrewerLevel: 1,
+  language: 'pt'
 };
 
 class FirebaseSettingsService {
@@ -182,6 +184,17 @@ class FirebaseSettingsService {
   async setPotionBrewerLevel(level: number): Promise<void> {
     const settings = await this.getSettings();
     settings.potionBrewerLevel = Math.max(1, Math.min(20, level));
+    await this.saveSettings(settings);
+  }
+
+  async getLanguage(): Promise<'pt' | 'en' | 'es'> {
+    const settings = await this.getSettings();
+    return settings.language || 'pt';
+  }
+
+  async setLanguage(language: 'pt' | 'en' | 'es'): Promise<void> {
+    const settings = await this.getSettings();
+    settings.language = language;
     await this.saveSettings(settings);
   }
 

@@ -1,3 +1,11 @@
+export type Language = 'pt' | 'en' | 'es';
+
+export const LANGUAGE_OPTIONS = [
+  { value: 'pt', label: 'Português' },
+  { value: 'en', label: 'English' },
+  { value: 'es', label: 'Español' }
+] as const;
+
 export const DICE_OPTIONS = [
   { value: 'd4', label: 'D4' },
   { value: 'd6', label: 'D6' },
@@ -14,6 +22,7 @@ export interface SettingsState {
   cauldronBonus: boolean;
   potionBrewerTalent: boolean;
   potionBrewerLevel: number;
+  language: Language;
 }
 
 export const DEFAULT_SETTINGS: SettingsState = {
@@ -23,5 +32,6 @@ export const DEFAULT_SETTINGS: SettingsState = {
   doubleForageTalent: false,
   cauldronBonus: false,
   potionBrewerTalent: false,
-  potionBrewerLevel: 1
+  potionBrewerLevel: 1,
+  language: 'pt'
 };

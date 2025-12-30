@@ -3,10 +3,12 @@
 import * as React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     setMounted(true);
@@ -19,7 +21,7 @@ export function ThemeSwitch() {
   return (
     <div className="flex items-center gap-3">
       <span className={`text-xs font-medium transition-colors ${!isDark ? 'text-totoro-blue' : 'text-foreground/40'}`}>
-        Claro
+        {t('ui.theme.light')}
       </span>
       <button
         type="button"
@@ -29,7 +31,7 @@ export function ThemeSwitch() {
           ${isDark ? 'bg-totoro-blue/20 border border-totoro-blue/30' : 'bg-slate-200 border border-slate-300'}
         `}
       >
-        <span className="sr-only">Alternar tema</span>
+        <span className="sr-only">{t('ui.theme.toggle')}</span>
         <div
           className={`
             pointer-events-none flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition-transform duration-300 ease-in-out
@@ -44,7 +46,7 @@ export function ThemeSwitch() {
         </div>
       </button>
       <span className={`text-xs font-medium transition-colors ${isDark ? 'text-totoro-blue' : 'text-foreground/40'}`}>
-        Escuro
+        {t('ui.theme.dark')}
       </span>
     </div>
   );

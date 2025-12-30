@@ -10,18 +10,21 @@ export interface Tab {
   icon: string;
 }
 
-const TABS: Tab[] = [
-  { id: 'forage', label: 'Forragear', icon: '🌿' },
-  { id: 'collection', label: 'Coleção', icon: '🎒' },
-  { id: 'potions', label: 'Poções', icon: '🧪' },
-  { id: 'created-potions', label: 'Inventário', icon: '⚗️' },
-  { id: 'recipes', label: 'Receitas', icon: '📜' },
-  { id: 'log', label: 'Log', icon: '📋' }
+const TABS_CONFIG: Omit<Tab, 'label'>[] = [
+  { id: 'forage', icon: '🌿' },
+  { id: 'collection', icon: '🎒' },
+  { id: 'potions', icon: '🧪' },
+  { id: 'created-potions', icon: '⚗️' },
+  { id: 'recipes', icon: '📜' },
+  { id: 'log', icon: '📋' }
 ];
 
 const MAX_RECENT_ITEMS = 5;
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 export function useApp() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabType>('forage');
   const [recentlyCollected, setRecentlyCollected] = useState<CollectedIngredient[]>([]);
   const [isClient, setIsClient] = useState(false);
@@ -42,11 +45,24 @@ export function useApp() {
     setActiveTab('collection');
   }, []);
 
+  const tabs: Tab[] = TABS_CONFIG.map(tab => {
+    let label = '';
+    switch(tab.id) {
+        case 'forage': label = t('menu.forage'); break;
+        case 'collection': label = t('menu.collection'); break;
+        case 'potions': label = t('menu.potions'); break;
+        case 'created-potions': label = t('menu.inventory'); break;
+        case 'recipes': label = t('menu.recipes'); break;
+        case 'log': label = t('menu.log'); break;
+    }
+    return { ...tab, label };
+  });
+
   return {
     activeTab,
     recentlyCollected,
     isClient,
-    tabs: TABS,
+    tabs,
     handleIngredientCollected,
     handleTabChange,
     handleViewCollection

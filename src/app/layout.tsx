@@ -31,6 +31,8 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from '@/components/ThemeProvider';
 
+import { SettingsProvider } from '@/contexts/SettingsContext';
+
 export default function RootLayout({
   children
 }: Readonly<{
@@ -48,7 +50,9 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <SettingsProvider>
+            {children}
+          </SettingsProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -8,8 +8,11 @@ interface ForageResultProps {
   result: ForageAttempt | null;
 }
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 export default function ForageResult({ result }: ForageResultProps) {
   const { regionDisplayName, particles, showDoubleForage } = useForageResult(result);
+  const { t } = useTranslation();
 
   if (!result) return null;
 
@@ -40,17 +43,17 @@ export default function ForageResult({ result }: ForageResultProps) {
               {result.success ? '✨' : '🌙'}
             </div>
             <h3 className="text-4xl font-black uppercase tracking-tighter mb-2 italic">
-              {result.success ? 'Encontro Épico!' : 'Trilha Perdida'}
+              {result.success ? t('forage.result.success.title') : t('forage.result.failure.title')}
             </h3>
             <p className="text-sm font-bold opacity-80 uppercase tracking-[0.3em]">
-              {result.success ? 'A natureza sorri para você' : 'O destino foi esquivo...'}
+              {result.success ? t('forage.result.success.desc') : t('forage.result.failure.desc')}
             </p>
           </div>
 
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center justify-center gap-8 bg-black/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 w-full max-w-sm shadow-2xl">
               <div className="text-center">
-                <p className="text-[10px] font-black uppercase opacity-60 mb-1">Seu Destino</p>
+                <p className="text-[10px] font-black uppercase opacity-60 mb-1">{t('forage.result.roll')}</p>
                 <p
                   className={`text-5xl font-black ${result.success ? 'text-white' : 'text-totoro-orange'}`}
                 >
@@ -59,7 +62,7 @@ export default function ForageResult({ result }: ForageResultProps) {
               </div>
               <div className="h-12 w-[1px] bg-white/10"></div>
               <div className="text-center">
-                <p className="text-[10px] font-black uppercase opacity-60 mb-1">Desafio</p>
+                <p className="text-[10px] font-black uppercase opacity-60 mb-1">{t('forage.result.dc')}</p>
                 <p className="text-5xl font-black text-white/40">{result.dc}</p>
               </div>
             </div>
@@ -69,7 +72,7 @@ export default function ForageResult({ result }: ForageResultProps) {
                 DC {result.dcRange} • {result.rarity}
               </span>
               <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
-                Região: {regionDisplayName}
+                {t('forage.result.region', regionDisplayName)}
               </span>
             </div>
           </div>
@@ -81,17 +84,17 @@ export default function ForageResult({ result }: ForageResultProps) {
           <div className="text-center mb-6">
             <div className="text-3xl mb-2">🎁</div>
             <h4 className="font-black text-foreground text-xl uppercase tracking-tight">
-              Ingrediente Coletado!
+              {t('forage.result.ingredient.title')}
             </h4>
             {showDoubleForage && (
               <div className="mt-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl px-4 py-3">
                 <div className="text-purple-500 text-sm font-black flex items-center justify-center gap-2">
                   <span>✨</span>
-                  FORRAGEAMENTO DUPLO ATIVADO!
+                  {t('forage.result.double.title')}
                   <span>✨</span>
                 </div>
                 <p className="text-purple-500 text-[10px] font-bold mt-1 uppercase">
-                  Você coletou 2x este ingrediente!
+                  {t('forage.result.double.desc')}
                 </p>
               </div>
             )}
@@ -112,7 +115,7 @@ export default function ForageResult({ result }: ForageResultProps) {
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-totoro-orange/10 border border-totoro-orange/20 rounded-2xl p-4 text-center">
               <div className="text-totoro-orange text-[10px] font-black uppercase mb-1 tracking-widest">
-                Combat
+                {t('forage.result.stats.combat')}
               </div>
               <div className="text-totoro-orange font-black text-2xl">
                 {result.ingredient.combat}
@@ -120,7 +123,7 @@ export default function ForageResult({ result }: ForageResultProps) {
             </div>
             <div className="bg-totoro-blue/10 border border-totoro-blue/20 rounded-2xl p-4 text-center">
               <div className="text-totoro-blue text-[10px] font-black uppercase mb-1 tracking-widest">
-                Utility
+                {t('forage.result.stats.utility')}
               </div>
               <div className="text-totoro-blue font-black text-2xl">
                 {result.ingredient.utility}
@@ -128,7 +131,7 @@ export default function ForageResult({ result }: ForageResultProps) {
             </div>
             <div className="bg-totoro-yellow/10 border border-totoro-yellow/20 rounded-2xl p-4 text-center">
               <div className="text-totoro-yellow text-[10px] font-black uppercase mb-1 tracking-widest">
-                Whimsy
+                {t('forage.result.stats.whimsy')}
               </div>
               <div className="text-totoro-yellow font-black text-2xl">
                 {result.ingredient.whimsy}

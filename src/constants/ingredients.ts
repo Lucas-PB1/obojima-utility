@@ -9,37 +9,37 @@ export const ATTRIBUTE_NUMERIC_OPTIONS = [
 ];
 
 export const STATUS_OPTIONS = [
-  { value: 'false', label: 'Disponível' },
-  { value: 'true', label: 'Usado' }
+  { value: 'false', label: 'constants.ingredients.status.available' },
+  { value: 'true', label: 'constants.ingredients.status.used' }
 ];
 
 export const INGREDIENT_COLLECTION_FILTERS: Filter[] = [
   {
     key: 'used',
-    label: 'Status',
+    label: 'constants.ingredients.filters.status',
     type: 'select',
     options: STATUS_OPTIONS,
-    placeholder: 'Todos os status'
+    placeholder: 'constants.ingredients.filters.placeholder.status'
   },
   {
     key: 'ingredient.combat',
-    label: 'Combat',
+    label: 'constants.ingredients.filters.combat',
     type: 'select',
     options: ATTRIBUTE_NUMERIC_OPTIONS,
-    placeholder: 'Todos os valores'
+    placeholder: 'constants.ingredients.filters.placeholder.values'
   },
   {
     key: 'ingredient.utility',
-    label: 'Utility',
+    label: 'constants.ingredients.filters.utility',
     type: 'select',
     options: ATTRIBUTE_NUMERIC_OPTIONS,
-    placeholder: 'Todos os valores'
+    placeholder: 'constants.ingredients.filters.placeholder.values'
   },
   {
     key: 'ingredient.whimsy',
-    label: 'Whimsy',
+    label: 'constants.ingredients.filters.whimsy',
     type: 'select',
     options: ATTRIBUTE_NUMERIC_OPTIONS,
-    placeholder: 'Todos os valores'
+    placeholder: 'constants.ingredients.filters.placeholder.values'
   }
 ];

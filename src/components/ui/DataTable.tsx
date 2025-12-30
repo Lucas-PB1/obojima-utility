@@ -20,6 +20,8 @@ export interface Filter {
   placeholder?: string;
 }
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 interface DataTableProps<T> {
   data: T[];
   columns: Column<T>[];
@@ -35,10 +37,11 @@ export default function DataTable<T extends Record<string, unknown>>({
   columns,
   filters = [],
   searchKey,
-  searchPlaceholder = 'Buscar...',
+  searchPlaceholder,
   itemsPerPage = 10,
   className = ''
 }: DataTableProps<T>) {
+  const { t } = useTranslation();
   const {
     paginatedData,
     totalPages,
@@ -58,6 +61,8 @@ export default function DataTable<T extends Record<string, unknown>>({
     itemsPerPage
   });
 
+  const effectiveSearchPlaceholder = searchPlaceholder || t('ui.datatable.searchPlaceholder');
+
   return (
     <div className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-border/40 overflow-hidden ${className}`}>
       <div className="p-6 border-b border-border/20">
@@ -66,7 +71,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             <div className="flex-1">
               <Input
                 type="text"
-                placeholder={searchPlaceholder}
+                placeholder={effectiveSearchPlaceholder}
                 value={searchTerm}
                 onChange={(value) => setSearch(value as string)}
               />
@@ -80,12 +85,12 @@ export default function DataTable<T extends Record<string, unknown>>({
                   value={activeFilters[filter.key] || ''}
                   onChange={(value) => handleFilterChange(filter.key, value)}
                   options={filter.options || []}
-                  placeholder={filter.placeholder || `Todos os ${filter.label}`}
+                  placeholder={filter.placeholder || t(filter.label)}
                 />
               ) : (
                 <Input
                   type={filter.type === 'date' ? 'text' : filter.type}
-                  placeholder={filter.placeholder || filter.label}
+                  placeholder={filter.placeholder || t(filter.label)}
                   value={activeFilters[filter.key] || ''}
                   onChange={(value) => handleFilterChange(filter.key, value as string)}
                 />
@@ -95,14 +100,18 @@ export default function DataTable<T extends Record<string, unknown>>({
 
           {(Object.keys(activeFilters).length > 0 || searchTerm) && (
             <Button onClick={clearFilters} variant="secondary" size="md">
-              Limpar
+              {t('ui.datatable.clear')}
             </Button>
           )}
         </div>
 
         <div className="mt-4 text-sm text-foreground/60">
-          Mostrando {startIndex + 1}-{Math.min(startIndex + itemsPerPage, paginatedData.length)} de{' '}
-          {paginatedData.length} resultados
+          {t(
+            'ui.datatable.showing',
+            startIndex + 1,
+            Math.min(startIndex + itemsPerPage, paginatedData.length),
+            paginatedData.length
+          )}
         </div>
       </div>
 
@@ -120,7 +129,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                   onClick={() => column.sortable && handleSort(column.key)}
                 >
                   <div className="flex items-center space-x-1">
-                    <span>{column.label}</span>
+                    <span>{column.label.startsWith('constants.') ? t(column.label) : column.label}</span>
                     {column.sortable && (
                       <div className="flex flex-col">
                         <span
@@ -154,8 +163,8 @@ export default function DataTable<T extends Record<string, unknown>>({
                 <td colSpan={columns.length} className="px-6 py-12 text-center text-foreground/60">
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-2xl">📦</span>
-                    <span>Nenhum item encontrado</span>
-                    <span className="text-xs">Total de dados: {data.length}</span>
+                    <span>{t('ui.datatable.noItems')}</span>
+                    <span className="text-xs">{t('ui.datatable.totalData', data.length)}</span>
                   </div>
                 </td>
               </tr>
@@ -183,7 +192,7 @@ export default function DataTable<T extends Record<string, unknown>>({
         <div className="px-6 py-4 border-t border-border/20">
           <div className="flex items-center justify-between">
             <div className="text-sm text-foreground/60">
-              Página {currentPage} de {totalPages}
+              {t('ui.datatable.page', currentPage, totalPages)}
             </div>
             <div className="flex space-x-2">
               <Button
@@ -192,7 +201,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 variant="secondary"
                 size="sm"
               >
-                Anterior
+                {t('ui.datatable.previous')}
               </Button>
 
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -215,7 +224,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 variant="secondary"
                 size="sm"
               >
-                Próxima
+                {t('ui.datatable.next')}
               </Button>
             </div>
           </div>

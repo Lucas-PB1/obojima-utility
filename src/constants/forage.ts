@@ -9,12 +9,12 @@ export const DICE_OPTIONS: { value: DiceType; label: string }[] = [
 ];
 
 export const TEST_TYPE_OPTIONS = [
-  { value: 'natureza', label: 'Natureza', icon: '🌱' },
-  { value: 'sobrevivencia', label: 'Sobrevivência', icon: '🏕️' }
+  { value: 'natureza', label: 'constants.forage.testType.nature', icon: '🌱' },
+  { value: 'sobrevivencia', label: 'constants.forage.testType.survival', icon: '🏕️' }
 ];
 
 export const ADVANTAGE_OPTIONS = [
-  { value: 'normal', label: 'Normal' },
-  { value: 'vantagem', label: 'Vantagem', icon: '✨' },
-  { value: 'desvantagem', label: 'Desvantagem', icon: '⚠️' }
+  { value: 'normal', label: 'constants.forage.advantage.normal' },
+  { value: 'vantagem', label: 'constants.forage.advantage.advantage', icon: '✨' },
+  { value: 'desvantagem', label: 'constants.forage.advantage.disadvantage', icon: '⚠️' }
 ];

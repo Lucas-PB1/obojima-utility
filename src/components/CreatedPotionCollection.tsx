@@ -8,7 +8,10 @@ import ContentCard from '@/components/ui/ContentCard';
 import { useCreatedPotionCollection } from '@/hooks/useCreatedPotionCollection';
 import { POTION_CATEGORY_CONFIG, POTION_FILTER_OPTIONS } from '@/constants/potions';
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 export const CreatedPotionCollection: React.FC = () => {
+  const { t } = useTranslation();
   const {
     filteredPotions,
     selectedPotion,
@@ -23,27 +26,27 @@ export const CreatedPotionCollection: React.FC = () => {
   } = useCreatedPotionCollection();
 
   const statsData = [
-    { value: stats.total, label: 'Total', color: 'totoro-gray' as const },
-    { value: stats.available, label: 'Disponíveis', color: 'totoro-green' as const },
-    { value: stats.used, label: 'Usadas', color: 'totoro-gray' as const },
-    { value: stats.recent, label: 'Recentes', color: 'totoro-blue' as const }
+    { value: stats.total, label: t('potions.collection.stats.total'), color: 'totoro-gray' as const },
+    { value: stats.available, label: t('potions.collection.stats.available'), color: 'totoro-green' as const },
+    { value: stats.used, label: t('potions.collection.stats.used'), color: 'totoro-gray' as const },
+    { value: stats.recent, label: t('potions.collection.stats.recent'), color: 'totoro-blue' as const }
   ];
 
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Poções Criadas"
-        subtitle="Gerencie suas poções criadas e use-as quando necessário"
+        title={t('potions.collection.title')}
+        subtitle={t('potions.collection.subtitle')}
         icon="🧪"
       />
 
-      <StatsGrid title="📊 Visão Geral" stats={statsData} />
+      <StatsGrid title={`📊 ${t('potions.collection.stats.total')}`} stats={statsData} />
 
       <ContentCard>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <h3 className="text-lg font-black text-foreground tracking-tight flex items-center gap-2">
             <span className="w-1 h-5 bg-totoro-blue rounded-full"></span>
-            Minhas Poções ({filteredPotions.length})
+            {t('potions.collection.myPotions', filteredPotions.length)}
           </h3>
 
           <div className="flex flex-wrap gap-2 p-1 bg-primary/5 rounded-2xl border border-border/40 backdrop-blur-sm">
@@ -57,7 +60,7 @@ export const CreatedPotionCollection: React.FC = () => {
                     : 'text-foreground/50 hover:text-totoro-blue hover:bg-muted'
                 }`}
               >
-                {option.label}
+                {t(option.label)}
               </button>
             ))}
           </div>
@@ -67,10 +70,10 @@ export const CreatedPotionCollection: React.FC = () => {
             <div className="text-4xl mb-3">🧪</div>
             <p className="text-sm font-medium">
               {filter === 'all'
-                ? 'Nenhuma poção criada ainda. Vá para a aba Poções para criar sua primeira poção!'
+                ? t('potions.collection.empty.all')
                 : filter === 'available'
-                  ? 'Nenhuma poção disponível. Crie mais poções na aba Poções!'
-                  : 'Nenhuma poção usada ainda.'}
+                  ? t('potions.collection.empty.available')
+                  : t('potions.collection.empty.used')}
             </p>
           </div>
         ) : (
@@ -96,7 +99,7 @@ export const CreatedPotionCollection: React.FC = () => {
                     <div
                       className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].classes}`}
                     >
-                      {POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].label}
+                      {t(POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].label)}
                     </div>
                     <div
                       className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${
@@ -119,7 +122,7 @@ export const CreatedPotionCollection: React.FC = () => {
                           : 'bg-muted text-foreground/40 border-border/40'
                       }`}
                     >
-                      {potion.quantity > 0 ? `${potion.quantity} disponível(is)` : 'Usada'}
+                      {potion.quantity > 0 ? t('potions.card.available', potion.quantity) : t('potions.card.used')}
                     </span>
 
                     {potion.quantity > 0 && (
@@ -132,13 +135,13 @@ export const CreatedPotionCollection: React.FC = () => {
                         size="sm"
                         className="!text-[10px] !font-black !rounded-xl"
                       >
-                        USAR
+                        {t('potions.card.use')}
                       </Button>
                     )}
                   </div>
 
                   <div className="text-[9px] font-bold text-foreground/30 uppercase tracking-[0.2em]">
-                    Criada em {potion.createdAt.toLocaleDateString('pt-BR')}
+                    {t('potions.card.created', potion.createdAt.toLocaleDateString('pt-BR'))}
                   </div>
                 </div>
               </div>
@@ -148,7 +151,7 @@ export const CreatedPotionCollection: React.FC = () => {
       </ContentCard>
 
       {selectedPotion && (
-        <Modal isOpen={showModal} onClose={closeModal} title="Detalhes da Poção">
+        <Modal isOpen={showModal} onClose={closeModal} title={t('potions.details.title')}>
           <div className="space-y-6 pt-2">
             <div className="text-center">
               <h1 className="text-3xl font-serif font-bold text-foreground mb-1">
@@ -172,7 +175,7 @@ export const CreatedPotionCollection: React.FC = () => {
                 <div
                   className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 shadow-sm ${POTION_CATEGORY_CONFIG[selectedPotion.recipe.winningAttribute].classes}`}
                 >
-                  {POTION_CATEGORY_CONFIG[selectedPotion.recipe.winningAttribute].label}
+                  {t(POTION_CATEGORY_CONFIG[selectedPotion.recipe.winningAttribute].label)}
                 </div>
               </div>
             </div>
@@ -180,7 +183,7 @@ export const CreatedPotionCollection: React.FC = () => {
             <div className="glass-panel p-6 rounded-3xl border border-border/40 relative overflow-hidden">
               <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
               <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-3 relative z-10">
-                Descrição Arcana
+                {t('potions.details.desc.arcane')}
               </h4>
               <p className="text-sm text-foreground leading-relaxed italic relative z-10">
                 &quot;{selectedPotion.potion.descricao}&quot;
@@ -192,7 +195,7 @@ export const CreatedPotionCollection: React.FC = () => {
               <div className="flex items-center justify-between relative z-10">
                 <div>
                   <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-1">
-                    Status da Unidade
+                    {t('potions.details.status')}
                   </h4>
                   <span
                     className={`px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-widest ${
@@ -202,8 +205,8 @@ export const CreatedPotionCollection: React.FC = () => {
                     }`}
                   >
                     {selectedPotion.quantity > 0
-                      ? `${selectedPotion.quantity} disponível(is)`
-                      : 'Esgotada'}
+                      ? t('potions.card.available', selectedPotion.quantity)
+                      : t('potions.card.exhausted')}
                   </span>
                 </div>
 
@@ -217,14 +220,14 @@ export const CreatedPotionCollection: React.FC = () => {
                     size="md"
                     className="!rounded-2xl !font-bold"
                   >
-                    Usar Agora
+                    {t('potions.card.useNow')}
                   </Button>
                 )}
               </div>
 
               {selectedPotion.used && selectedPotion.usedAt && (
                 <div className="mt-4 pt-4 border-t border-totoro-blue/5 text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">
-                  Último uso: {selectedPotion.usedAt.toLocaleDateString('pt-BR')}
+                  {t('potions.details.lastUse', selectedPotion.usedAt.toLocaleDateString('pt-BR'))}
                 </div>
               )}
             </div>
@@ -232,7 +235,7 @@ export const CreatedPotionCollection: React.FC = () => {
             <div className="glass-panel p-6 rounded-3xl border border-white/40 shadow-sm relative overflow-hidden">
               <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
               <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] mb-4 relative z-10 text-center">
-                Scores da Receita
+                {t('potions.result.scores')}
               </h4>
               <div className="grid grid-cols-3 gap-6 relative z-10">
                 <div className="text-center group">
@@ -268,10 +271,10 @@ export const CreatedPotionCollection: React.FC = () => {
                 variant="ghost"
                 className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-2xl !font-bold"
               >
-                🗑️ Excluir do Registro
+                {t('potions.details.delete')}
               </Button>
               <Button onClick={closeModal} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
-                Fechar Detalhes
+                {t('potions.details.close')}
               </Button>
             </div>
           </div>

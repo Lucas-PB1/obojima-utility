@@ -14,7 +14,10 @@ interface ForageSystemProps {
   onIngredientCollected?: (ingredient: CollectedIngredient) => void;
 }
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 export default function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
+  const { t } = useTranslation();
   const {
     region,
     setRegion,
@@ -39,8 +42,8 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Sistema de Forrageamento de Obojima"
-        subtitle="Explore as terras mágicas e colete ingredientes únicos"
+        title={t('forage.title')}
+        subtitle={t('forage.subtitle')}
         icon="🌿"
         action={
           <div className="flex items-center gap-3">
@@ -61,7 +64,7 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
               <div>
                 <div className="text-2xl font-black leading-none mb-0.5">{remainingAttempts}</div>
                 <div className="text-[9px] font-black uppercase tracking-wider opacity-60">
-                  Tentativas
+                  {t('forage.attempts.label')}
                 </div>
               </div>
             </div>
@@ -75,7 +78,7 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
               <span className="text-lg group-hover:rotate-90 transition-transform duration-500">
                 ⚙️
               </span>
-              <span className="text-[10px] font-black uppercase tracking-widest ml-1">Ajustes</span>
+              <span className="text-[10px] font-black uppercase tracking-widest ml-1">{t('forage.settings.button')}</span>
             </Button>
           </div>
         }
@@ -104,7 +107,7 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
       </div>
 
       {ingredients.length > 0 && (
-        <ContentCard title={`🎒 Ingredientes Coletados (${ingredients.length})`}>
+        <ContentCard title={t('forage.collected.title', ingredients.length)}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {ingredients.slice(-6).map((ingredient) => (
               <IngredientCard key={ingredient.id} ingredient={ingredient} showActions={false} />

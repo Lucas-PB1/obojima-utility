@@ -9,7 +9,10 @@ import DataTable, { Column } from '@/components/ui/DataTable';
 import { INGREDIENT_COLLECTION_FILTERS } from '@/constants/ingredients';
 import { useIngredientCollection } from '@/hooks/useIngredientCollection';
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 export default function IngredientCollection() {
+  const { t } = useTranslation();
   const {
     displayIngredients,
     selectedIngredient,
@@ -23,7 +26,7 @@ export default function IngredientCollection() {
   const columns: Column<CollectedIngredient>[] = [
     {
       key: 'ingredient' as keyof CollectedIngredient,
-      label: 'Ingrediente',
+      label: t('ingredients.table.ingredient'),
       sortable: true,
       width: '30%',
       render: (_, item) => (
@@ -41,14 +44,14 @@ export default function IngredientCollection() {
               {item.ingredient.nome_portugues}
             </div>
             <div className="text-sm text-totoro-gray/60">{item.ingredient.nome_ingles}</div>
-            <div className="text-xs text-totoro-blue mt-1">Clique para ver detalhes</div>
+            <div className="text-xs text-totoro-blue mt-1">{t('ingredients.table.clickDetails')}</div>
           </div>
         </div>
       )
     },
     {
       key: 'quantity' as keyof CollectedIngredient,
-      label: 'Quantidade',
+      label: t('ingredients.table.quantity'),
       sortable: true,
       width: '15%',
       render: (value: unknown) => (
@@ -61,7 +64,7 @@ export default function IngredientCollection() {
     },
     {
       key: 'collectedAt' as keyof CollectedIngredient,
-      label: 'Estatísticas',
+      label: t('ingredients.table.collectedAt'),
       sortable: false,
       width: '25%',
       render: (_, item) => (
@@ -80,7 +83,7 @@ export default function IngredientCollection() {
     },
     {
       key: 'used' as keyof CollectedIngredient,
-      label: 'Coletado em',
+      label: t('ingredients.table.date'),
       sortable: true,
       width: '15%',
       render: (_, item) => (
@@ -91,7 +94,7 @@ export default function IngredientCollection() {
     },
     {
       key: 'forageAttemptId' as keyof CollectedIngredient,
-      label: 'Ações',
+      label: t('ingredients.table.actions'),
       sortable: true,
       width: '20%',
       render: (_, item) => (
@@ -104,7 +107,7 @@ export default function IngredientCollection() {
                   : 'bg-totoro-green/20 text-totoro-green'
               }`}
             >
-              {item.used ? 'Usado' : `${item.quantity} disponível(is)`}
+              {item.used ? t('ingredients.table.used') : t('ingredients.table.available', item.quantity)}
             </span>
           </div>
           {!item.used && (
@@ -114,12 +117,12 @@ export default function IngredientCollection() {
               size="sm"
               className="text-xs"
             >
-              Usar 1
+              {t('ingredients.table.use')}
             </Button>
           )}
           {item.used && (
             <span className="text-xs text-totoro-gray/60">
-              Usado em: {item.usedAt ? new Date(item.usedAt).toLocaleDateString('pt-BR') : 'N/A'}
+              {t('ingredients.table.usedAt', item.usedAt ? new Date(item.usedAt).toLocaleDateString('pt-BR') : 'N/A')}
             </span>
           )}
         </div>
@@ -130,12 +133,12 @@ export default function IngredientCollection() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Coleção de Ingredientes"
-        subtitle="Gerencie seus ingredientes coletados em Obojima"
+        title={t('ingredients.collection.title')}
+        subtitle={t('ingredients.collection.subtitle')}
         icon="🎒"
       />
 
-      <StatsGrid title="📊 Estatísticas" stats={statsData} className="mb-8" />
+      <StatsGrid title={t('ingredients.stats.title')} stats={statsData} className="mb-8" />
 
       <DataTable<CollectedIngredient>
         data={displayIngredients}
