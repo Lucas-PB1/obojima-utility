@@ -1,0 +1,366 @@
+{
+  "total": 60,
+  "descricao": "Combat potions of Obojima island for use in adventures",
+  "pocoes": [
+    {
+      "id": 1,
+      "raridade": "Common",
+      "descricao": "Within seconds of drinking this potion, you feel a distinct lightness and agility in your step. For the next 10 minutes, your walking speed increases by 5 feet.",
+      "nome": "Rabbit's Speed"
+    },
+    {
+      "id": 2,
+      "raridade": "Common",
+      "descricao": "When you drink this potion, you gain a sense of clarity and focus, and the handling of a certain weapon becomes natural to you. For the next 24 hours, you gain proficiency with a melee weapon of your choice.",
+      "nome": "Weapon Master's Elixir"
+    },
+    {
+      "id": 3,
+      "raridade": "Common",
+      "descricao": "This potion is said to contain the spirit of Salyri, a great Obojiman warrior known for her combat prowess. Anyone who drinks this potion gains a certain understanding of how to effectively use armor in combat. For the next 24 hours, you gain proficiency with a type of armor of your choice.",
+      "nome": "Spirit of Salyri"
+    },
+    {
+      "id": 4,
+      "raridade": "Common",
+      "descricao": "Drinking this potion thickens your skin and grows patches of fur all over your body. Ice that would normally freeze your skin melts on contact. For 1 minute, you have resistance to cold damage.",
+      "nome": "Beast Hide"
+    },
+    {
+      "id": 5,
+      "raridade": "Common",
+      "descricao": "When poured onto a creature that isn't wearing armor, this potion covers the target with a magical force. For the next 60 minutes, the target has AC 15 while not wearing armor. This effect ends if the target dons armor.",
+      "nome": "Spirit Armor"
+    },
+    {
+      "id": 6,
+      "raridade": "Common",
+      "descricao": "Drinking this shimmering silvery potion makes you shimmer and flicker, making you appear to be standing just beside your actual location. Until the start of your next turn, all attacks against you are made with disadvantage.",
+      "nome": "Displacement Field"
+    },
+    {
+      "id": 7,
+      "raridade": "Common",
+      "descricao": "It is said that this potion was first brewed in the Gale Fields by a young shepherd looking to protect his flock. The irony was not lost when they drank the potion and took on wolf-like traits. When you drink this potion, you grow claws that last for 1 hour. For the duration, your unarmed strikes using your claws deal slashing damage equal to 1d6 plus your Strength modifier, instead of the normal bludgeoning damage for an unarmed strike.",
+      "nome": "Shepherd's Bane"
+    },
+    {
+      "id": 8,
+      "raridade": "Common",
+      "descricao": "When thrown at a point you can see within 60 feet of you, this volatile liquid explodes. Each creature within 5 feet of the explosion must make a DC 14 Dexterity saving throw, taking 1d8 force damage on a failed save, or half as much damage on a successful one.",
+      "nome": "Bottled Bomb"
+    },
+    {
+      "id": 9,
+      "raridade": "Common",
+      "descricao": "When you drink this multicolored potion, you instantly feel average. For 1 minute, everything you are wearing or carrying is considered magical, allowing weapons you wield to overcome resistance and immunity to nonmagical attacks and damage.",
+      "nome": "Wonder Juice"
+    },
+    {
+      "id": 10,
+      "raridade": "Common",
+      "descricao": "After ingesting this potion, you gain animated flaming hair, which lasts for 1 hour and sheds bright light in a 20-foot radius and dim light for an additional 20 feet. Once on each of your turns for the duration, you can have an unarmed strike with your head deal an extra 1d4 fire damage. In addition, you can use an action to cause the flame on your head to flare up and blast outwards, dealing 2d4 fire damage to all other creatures within 5 feet of you; using this ability causes the effects of this potion to end prematurely.",
+      "nome": "Candlecap"
+    },
+    {
+      "id": 11,
+      "raridade": "Common",
+      "descricao": "When you drink this potion, your eyes grow slightly larger and turn the golden color of an eagle's. For the next 60 seconds, attacking at long range doesn't impose disadvantage on your ranged weapon attack rolls.",
+      "nome": "Eagle's Vision"
+    },
+    {
+      "id": 12,
+      "raridade": "Common",
+      "descricao": "When you drink this potion, you gain heightened senses along with the sneaking suspicion that you are being followed. For the next 8 hours, you cannot be surprised.",
+      "nome": "Paranoia"
+    },
+    {
+      "id": 13,
+      "raridade": "Common",
+      "descricao": "When unstoppered, this potion spouts a hot yellow flame from its bottle for 1 minute, which resembles the shape of a blade. For the duration, you can make a melee attack with the flame blade as if it were an improvised weapon. On a hit, the target takes 2d4 fire damage. The blade disappears prematurely if it is submerged in water.",
+      "nome": "Bottled Torch"
+    },
+    {
+      "id": 14,
+      "raridade": "Common",
+      "descricao": "This potion makes you feel tingly as it charges you with static electricity. Immediately after a creature touches you or hits you with a melee attack made with a metal weapon within the next 24 hours, you can use your reaction to send a jolt of static electricity back at that creature, dealing 1d10 lightning damage to it. Once you do so, the effects of this potion end.",
+      "nome": "Static Shock"
+    },
+    {
+      "id": 15,
+      "raridade": "Common",
+      "descricao": "Upon drinking this potion, you become hyper-aware of ranged threats and your reflexes kick into gear, empowering you to dodge out of harm's way or swat missiles aside. For 1 minute, you gain a +2 bonus to AC against ranged attacks.",
+      "nome": "Incoming!"
+    },
+    {
+      "id": 16,
+      "raridade": "Common",
+      "descricao": "For 24 hours after drinking this glowing golden liquid, your voice gains a crackling quality and your breath sparks and sputters. For the duration, you can use a bonus action to exhale an arc of lightning at a creature you can see within 30 feet of you. The target must make a DC 12 Dexterity saving throw, taking 1d10 lightning damage on a failed save, or half as much damage on a successful one. Once you exhale this lightning, the effects of this potion end.",
+      "nome": "Lightning Breath"
+    },
+    {
+      "id": 17,
+      "raridade": "Common",
+      "descricao": "When you drink this glowing red elixir, you gain advantage on the next attack roll you make within the next 24 hours.",
+      "nome": "Heroism"
+    },
+    {
+      "id": 18,
+      "raridade": "Common",
+      "descricao": "Drinking this potion turns your skin thick, slimy, and rubbery. Spears and sharp objects that would normally pierce your skin have a hard time getting through this tough texture. For the next 60 seconds, you have resistance to piercing damage. While the potion is active, you can choose to exude a trail of slime as part of your movement.",
+      "nome": "Slugskin"
+    },
+    {
+      "id": 19,
+      "raridade": "Common",
+      "descricao": "Upon ingesting this fiercely fizzing potion, roll a d4 to determine the number of rounds before you unleash a thunderous burp of epic proportions. On your turn of that round, you must use your action to release the burp. Each creature other than you within 10 feet of you must make a DC 14 Constitution saving throw. On a failed save, a creature takes 3d8 thunder damage and is deafened until the end of its next turn. On a successful save, the creature takes half as much damage and isn't deafened.",
+      "nome": "Thunderbelch"
+    },
+    {
+      "id": 20,
+      "raridade": "Common",
+      "descricao": "When thrown at a creature you can see within 30 feet of you, this shimmering liquid explodes, releasing a cloud of smoke. The target creature must succeed on a DC 12 Dexterity saving throw, or be covered in a shroud of smoke for 1 minute. A creature covered in smoke has disadvantage on Dexterity (Stealth) checks made to hide.",
+      "nome": "Seeking Smoke"
+    },
+    {
+      "id": 21,
+      "raridade": "Common",
+      "descricao": "You can coat one melee weapon with this potion. When you hit a creature with the coated weapon within the next hour, you can force it to make a DC 12 Constitution saving throw. On a failed save, the weapon is no longer coated in the potion, and the target begins to convulse in a way that can be mistaken for a clumsy, shambling series of dance steps. The target's speed is halved until the end of its next turn, after which the convulsions end.",
+      "nome": "Dancing Juice"
+    },
+    {
+      "id": 22,
+      "raridade": "Common",
+      "descricao": "Drinking this potion causes quills to emerge all over your body. These quills lay flat but can be controlled by you to stand straight out. When you successfully grapple a creature and as a bonus action while it remains grappled, you can deal 1d4 piercing damage to the target. The effects of this potion last for 1 minute.",
+      "nome": "Prickleskin"
+    },
+    {
+      "id": 23,
+      "raridade": "Common",
+      "descricao": "Drinking this bitter-tasting pink potion causes hundreds of tiny iridescent bubbles to emerge from your nose and mouth and fill a 20-foot cube that you can see within 30 feet of you. If the bubbles are left undisturbed, they float in place, remaining there for 1 hour. When a creature enters a space occupied by the bubbles for the first time on a turn, it must make a DC 13 Dexterity saving throw. On a failed save, a cacophony of pops erupts as the bubbles burst, dealing 1d6 thunder damage to all creatures within the cube. The sound of the bubbles popping can be heard from a mile away.",
+      "nome": "Tiny Bubbles"
+    },
+    {
+      "id": 24,
+      "raridade": "Common",
+      "descricao": "Your hands transform into a sleek set of powerful crab claws. For 1 minute, your unarmed strikes using the claws deal double damage to objects and structures, and you make grapple checks using them with advantage. The claws can't wield weapons or shields or do anything requiring manual precision, such as using tools or magic items or performing the somatic components of a spell.",
+      "nome": "Claws of the Crab King"
+    },
+    {
+      "id": 25,
+      "raridade": "Common",
+      "descricao": "When you drink this blue goo, your skin turns into a thick gray rubber. For 1 hour, you have resistance to lightning damage.",
+      "nome": "Rubberskin"
+    },
+    {
+      "id": 26,
+      "raridade": "Common",
+      "descricao": "When you open this potion, a mournful wail drifts from the bottle. When ingested, this potion gives the drinker's vocal cords a magical resonance. As a bonus action, you can make a ranged spell attack against a creature within 60 feet of you, using your Charisma (Performance) bonus for the attack bonus. The target isn't affected if it can't hear you. On a hit, the target takes 1d6 thunder damage. The effect of this potion lasts for 1 hour.",
+      "nome": "Keening Voice"
+    },
+    {
+      "id": 27,
+      "raridade": "Common",
+      "descricao": "When poured onto a nonmagical weapon, this potion fills the mundane item with kinetic energy, causing it to vibrate with anticipation. The next time you hit a creature with the weapon, the energy explodes, doubling the damage rolled by the weapon's damage dice. The effects of this potion end after 1 hour or once the energy explodes.",
+      "nome": "Kinetic Pop"
+    },
+    {
+      "id": 28,
+      "raridade": "Common",
+      "descricao": "When thrown at a point you can see within 60 feet of you, this volatile liquid explodes, releasing a ball of crimson gas. Each creature within 5 feet of the explosion regains a number of hit points equal to 1d4 + 1.",
+      "nome": "Healing Gas"
+    },
+    {
+      "id": 29,
+      "raridade": "Common",
+      "descricao": "When you drink this bubbling black potion, your skin becomes crusted with charcoal. For 1 hour, you have resistance to fire damage.",
+      "nome": "Cinderskin"
+    },
+    {
+      "id": 30,
+      "raridade": "Common",
+      "descricao": "After ingesting this elixir, your eyes glow with a bluish-silver hue. For 1 hour, you receive advantage on saving throws against being charmed and resistance to psychic damage.",
+      "nome": "Iron Mind"
+    },
+    {
+      "id": 31,
+      "raridade": "Uncommon",
+      "descricao": "This gray liquid tastes like mud and numbs your tongue. Within seconds of swallowing the potion, your skin turns into living stone. For the next 60 minutes, you gain a +2 bonus to AC, and your walking speed is reduced by 5 feet.",
+      "nome": "Gargoyle Hooch"
+    },
+    {
+      "id": 32,
+      "raridade": "Uncommon",
+      "descricao": "When you drink this potion, you can feel your nervous system get a boost of twitchy energy from the rabbit spirit, Jipampa. Your pupils dilate and your reflexes become honed. For the next 24 hours you gain a +5 bonus to initiative rolls. Additionally, if a trigger allows you to take a reaction, but you've already used your reaction this round, you can choose to take a second reaction; using this ability causes the effects of this potion to end prematurely.",
+      "nome": "Elixir of Jipampa"
+    },
+    {
+      "id": 33,
+      "raridade": "Uncommon",
+      "descricao": "When you drink this potion, you are overcome by a warm lethargic feeling that rests like a blanket over an intense burst of energy you feel swirling inside you. Once within the next 24 hours when you take the Attack action, you can make two additional attacks as part of that action. Once you do so, the effects of this potion end. While the potion is active, you gain the ability to purr like a cat.",
+      "nome": "Catspeed"
+    },
+    {
+      "id": 34,
+      "raridade": "Uncommon",
+      "descricao": "When you drink this potion, your skin becomes as tough as thick leather that, for a short time, repairs itself. For 1 minute, you gain 10 temporary hit points at the start of each of your turns.",
+      "nome": "Durability"
+    },
+    {
+      "id": 35,
+      "raridade": "Uncommon",
+      "descricao": "This potion burns like a hot pepper when you drink it and fills you with fiery strength. The next time you would take fire damage, you take no damage and instead you regain a number of hit points equal to half of the damage you would have taken. The effects of this potion last for 24 hours or until you regain hit points in this way.",
+      "nome": "Fire Shield"
+    },
+    {
+      "id": 36,
+      "raridade": "Uncommon",
+      "descricao": "Drinking this potion makes you hyperfixate on your strikes but potentially opens you to counter attacks. The effects of this potion last for 1 minute. For the duration, the first time you hit a target with a weapon attack on each of your turns, it deals an extra 1d12 damage of the same type. Until the potion's effects end, you also suffer a -2 penalty to AC.",
+      "nome": "Tunnel Vision"
+    },
+    {
+      "id": 37,
+      "raridade": "Uncommon",
+      "descricao": "When you drink this potion, your skin begins to emit dim light in a 10-foot radius around you. As a bonus action, you can choose to intensify this light—shedding bright light in a 10-foot radius, and dim light for an additional 10 feet—or diminish the intensity again. In addition, you can take an action to produce a blinding flash of light around yourself. Each creature within 30 feet of you that can see must succeed on a DC 16 Constitution saving throw or be blinded for 1 minute. An affected creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. The effects of this potion last for 8 hours or until you use the flash.",
+      "nome": "Ratatam's Glowskin Elixir"
+    },
+    {
+      "id": 38,
+      "raridade": "Uncommon",
+      "descricao": "When thrown at a creature you can see within 30 feet of you, this shimmering pink elixir smashes, covering the creature in juice. The target must succeed on a DC 16 Wisdom saving throw or be pacified for 1 minute. A pacified creature cannot attack, cast a spell that affects an enemy, or deal damage to another creature. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+      "nome": "Don't Hit Me Juice"
+    },
+    {
+      "id": 39,
+      "raridade": "Uncommon",
+      "descricao": "When you open this potion, it bursts forth with a symphonic fanfare. Until the start of your next turn, you are immune to all damage. On your next turn, you cannot move or take actions as a wave of lethargy sweeps over you.",
+      "nome": "Invulnerability"
+    },
+    {
+      "id": 40,
+      "raridade": "Uncommon",
+      "descricao": "When thrown at a creature you can see within 30 feet of you, this thick mud-like potion smashes, covering the creature in sticky glue. The target must succeed on a DC 15 Strength saving throw or be restrained for 1 minute. The restrained target can use its action to make a DC 15 Strength check. On a success, the target is no longer restrained.",
+      "nome": "Bottled Bind"
+    },
+    {
+      "id": 41,
+      "raridade": "Uncommon",
+      "descricao": "This potion reacts instantly with the air, expanding rapidly into a 15-foot-radius cloud of irritating gas when exposed. You can throw it at a point you can see within 60 feet of you, causing it to shatter and release the cloud there. Each creature within the cloud when it appears must make a DC 15 Constitution saving throw. On a failure, a creature spends its reaction coughing and sniffling and its concentration is broken if it was concentrating.",
+      "nome": "Respiratory Distress"
+    },
+    {
+      "id": 42,
+      "raridade": "Uncommon",
+      "descricao": "When consumed, this warm harvest drink transforms your head into a Jack-O'-Lantern. From your newly formed eyes you cast a cone of bright light, which causes creatures in a 15-foot cone to fall under the effects of the faerie fire spell. At the start of each of your turns while the effects last, you decide which way the cone faces and whether the cone is active. The potion's effect lasts for 1 minute.",
+      "nome": "Pumpkin Patch Guard"
+    },
+    {
+      "id": 43,
+      "raridade": "Uncommon",
+      "descricao": "A sip of this stout potion will grow you a thick coat of sheep dragon wool all over your body. Beyond keeping you toasty, it aids your survival and protects you from the cold. For the duration your AC increases by 1, and you gain resistance to cold damage. The potion's effects last for 1 hour.",
+      "nome": "Sheep Dragon Brew"
+    },
+    {
+      "id": 44,
+      "raridade": "Uncommon",
+      "descricao": "This potion makes you feel tingly as it charges you with static electricity. Immediately after a creature touches you or hits you with a melee attack made with a metal weapon within the next 24 hours, you can use your reaction to send a jolt of static electricity back at that creature, dealing 3d10 lightning damage to it. Once you do so, the effects of this potion end.",
+      "nome": "Enhanced Static Shock"
+    },
+    {
+      "id": 45,
+      "raridade": "Uncommon",
+      "descricao": "For 24 hours after drinking this glowing golden liquid, your voice gains a crackling quality and your breath sparks and sputters. For the duration, you can use a bonus action to exhale an arc of lightning at a creature you can see within 30 feet of you. The target must make a DC 16 Dexterity saving throw, taking 3d10 lightning damage on a failed save, or half as much damage on a successful one. Once you exhale this lightning, the effects of this potion end.",
+      "nome": "Enhanced Lightning Breath"
+    },
+    {
+      "id": 46,
+      "raridade": "Uncommon",
+      "descricao": "When thrown at a point you can see within 60 feet of you, this volatile liquid explodes. Each creature within 5 feet of the explosion must make a DC 16 Dexterity saving throw, taking 3d8 force damage on a failed save, or half as much damage on a successful one.",
+      "nome": "Enhanced Bottled Bomb"
+    },
+    {
+      "id": 47,
+      "raridade": "Uncommon",
+      "descricao": "When consumed, you feel the essence of a long-dead spirit overcome you. You feel tense and have an undertone of rage that simmers below the surface. Roll 2d8. For the duration, whenever you cast a spell, you can have one target that took damage from it take extra force damage equal to the number rolled. The effects of this potion last for 1 minute.",
+      "nome": "Wrathful Spirit"
+    },
+    {
+      "id": 48,
+      "raridade": "Uncommon",
+      "descricao": "When you drink this potion, motes of pink light erupt from your body and orbit around you. For 1 minute, whenever you take damage from a hostile creature, you can use your reaction to teleport up to 15 feet to an unoccupied space you can see.",
+      "nome": "Rapid Withdrawal"
+    },
+    {
+      "id": 49,
+      "raridade": "Uncommon",
+      "descricao": "This dangerous and vile potion transforms when used. As an action, you can unstopper the potion and point it at a creature within 10 feet of you. The target takes 3d6 necrotic damage, and the potion transforms into a healing elixir. A creature that consumes this elixir regains a number of hit points equal to the necrotic damage dealt.",
+      "nome": "Life-Steal"
+    },
+    {
+      "id": 50,
+      "raridade": "Uncommon",
+      "descricao": "Uncorking this potion, you are immediately assaulted with a powerfully pungent and acrid odor. Once you drink it, your skin takes on a shiny red-burgundy tone and your eyes turn a sickly yellow. For 1 minute, you gain a +2 bonus to AC and resistance to cold, fire, and lightning damage, as well as bludgeoning, piercing, and slashing damage from nonmagical attacks. Until the potion's effects end, your creature type changes to Fiend (Devil).",
+      "nome": "Demonskin"
+    },
+    {
+      "id": 51,
+      "raridade": "Rare",
+      "descricao": "After drinking this light, dewy potion, you gain the ability to breathe a cloud of withering vapor. For the next 60 seconds, you can use a bonus action to exhale a cloud in a 60-foot cone. Each creature in that area must make a DC 17 Constitution saving throw. On a failed save, a creature's speed is halved, it can't take reactions, and it has disadvantage on attack rolls until the start of your next turn. At the start of your next turn, roll a d6. You regain the use of this ability on a roll of 4–6.",
+      "nome": "Withered Will"
+    },
+    {
+      "id": 52,
+      "raridade": "Rare",
+      "descricao": "When you drink this stout potion, you feel the strongest and healthiest you have ever felt. For the duration, you gain a number of temporary hit points equal to your hit point maximum. The effects of this potion last for 24 hours or until these temporary hit points are lost.",
+      "nome": "Astounding Vigor"
+    },
+    {
+      "id": 53,
+      "raridade": "Rare",
+      "descricao": "When you drink this potion you can summon an ancient and wicked spirit known as Many Hands. When you do, a host of long, slender spectral arms reach out from your body. Anyone who can see you when the hands first emerge must succeed on a DC 19 Wisdom saving throw or become frightened until the start of your next turn; creatures that are friendly to you have advantage on this save. In addition, the arms reach out from you, clawing at all other creatures within 20 feet of you. Each creature in that area must make a DC 19 Constitution saving throw. On a failed save, a target takes 10d6 necrotic damage and can't regain hit points until the start of your next turn. On a successful save, the creature takes half as much damage, but suffers no other effect.",
+      "nome": "Many Hands"
+    },
+    {
+      "id": 54,
+      "raridade": "Rare",
+      "descricao": "When thrown at a point you can see within 60 feet of you, this volatile liquid explodes. Each creature within 30 feet of the explosion must make a DC 19 Dexterity saving throw, taking 20d6 force damage on a failed save, or half as much damage on a successful one.",
+      "nome": "Epic Bottled Bomb"
+    },
+    {
+      "id": 55,
+      "raridade": "Rare",
+      "descricao": "This crystalline potion captures the essence of the four great river spirits Mu, Go, Yon, and Din. For the next 24 hours, you can call upon their strength to aid you. If you fail a saving throw, you can choose to succeed instead. You can do this three times before the potion's magic fades.",
+      "nome": "Essence of Great Rivers"
+    },
+    {
+      "id": 56,
+      "raridade": "Rare",
+      "descricao": "This potion was invented by none other than the legendary Carla Cackletooth, a witch of considerable potion-brewing skill. When poured out, it summons 10 corrupted muks, which are at your disposal and under your control until destroyed.",
+      "nome": "Carla Cackletooth's Corruption Cocktail"
+    },
+    {
+      "id": 57,
+      "raridade": "Rare",
+      "descricao": "When this amber potion is consumed, you gain the attributes of the Hunter, one of the great beasts of Obojima. Roll a d4. For the duration, you gain a flying speed of 90 feet, and whenever you take the Attack action, you can make an additional number of attacks equal to 1 + the number rolled on the d4. The effects of this potion last for 1 minute.",
+      "nome": "Hunter's Speed"
+    },
+    {
+      "id": 58,
+      "raridade": "Rare",
+      "descricao": "When poured onto a weapon, this heroic elixir stains it blue and makes it shine as if it were a gem reflecting light. For the next 60 seconds, the weapon gains a +3 bonus to attack and damage rolls. Until this effect ends, creatures hit by this weapon do not benefit from any damage immunities or resistances they have, if any, for 1 minute.",
+      "nome": "Hero's Blade"
+    },
+    {
+      "id": 59,
+      "raridade": "Rare",
+      "descricao": "Consuming this murky drink gives you a headache that you can never quite shake. While under the effects of this potion, you can take two reactions per round instead of one. Each time you take a second reaction, you lose a number of hit points equal to half your level. The effect of this potion is permanent, and does not count against the number of potions that can be affecting you at one time.",
+      "nome": "Severed Reaction"
+    },
+    {
+      "id": 60,
+      "raridade": "Rare",
+      "descricao": "After swallowing this toad-potion, you transform into an Ancient Dragon Frog, as if by the true polymorph spell. This transformation lasts for 1 minute, or 10 minutes if a Dragon Fang of Yutro was used when brewing this potion.",
+      "nome": "Dragon Frog Transmutation"
+    }
+  ]
+}

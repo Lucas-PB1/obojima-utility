@@ -8,27 +8,42 @@ import {
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 
 class PotionService {
-  private combatPotions: PotionCategory | null = null;
-  private utilityPotions: PotionCategory | null = null;
-  private whimsicalPotions: PotionCategory | null = null;
+  private combatPotions: Record<string, PotionCategory> = {};
+  private utilityPotions: Record<string, PotionCategory> = {};
+  private whimsicalPotions: Record<string, PotionCategory> = {};
 
   constructor() {
-    if (typeof window !== 'undefined') {
-      this.loadPotionData();
-    }
+    // Constructor no longer auto-loads default, components should trigger load or we load lazily
   }
 
-  private async loadPotionData(): Promise<void> {
+  private async loadPotionData(language: string = 'pt'): Promise<void> {
+    if (this.combatPotions[language] && this.utilityPotions[language] && this.whimsicalPotions[language]) {
+        return;
+    }
+
     try {
+      const load = async (url: string) => {
+          const res = await fetch(url);
+          if (!res.ok) {
+              if (language !== 'pt') {
+                  const fallback = url.replace(`/data/${language}/`, '/data/pt/');
+                  const rb = await fetch(fallback);
+                  if (rb.ok) return rb.json();
+              }
+              throw new Error(`Failed to load ${url}`);
+          }
+          return res.json();
+      }
+
       const [combatResponse, utilityResponse, whimsicalResponse] = await Promise.all([
-        fetch('/potions/combate/combat-potions.json'),
-        fetch('/potions/utilidade/utility-potions.json'),
-        fetch('/potions/caprichosas/whimsical-potions.json')
+        load(`/data/${language}/potions/combat/combat-potions.json`),
+        load(`/data/${language}/potions/utility/utility-potions.json`),
+        load(`/data/${language}/potions/whimsical/whimsical-potions.json`)
       ]);
 
-      this.combatPotions = await combatResponse.json();
-      this.utilityPotions = await utilityResponse.json();
-      this.whimsicalPotions = await whimsicalResponse.json();
+      this.combatPotions[language] = combatResponse;
+      this.utilityPotions[language] = utilityResponse;
+      this.whimsicalPotions[language] = whimsicalResponse;
     } catch (error) {
       console.error('Erro ao carregar dados das poções:', error);
     }
@@ -65,7 +80,8 @@ class PotionService {
 
   public async brewPotion(
     ingredients: Ingredient[],
-    chosenAttribute?: 'combat' | 'utility' | 'whimsy'
+    chosenAttribute?: 'combat' | 'utility' | 'whimsy',
+    language: string = 'pt'
   ): Promise<PotionBrewingResult> {
     if (ingredients.length !== 3) {
       return {
@@ -114,11 +130,9 @@ class PotionService {
       winningScore = scores[0].value;
     }
 
-    if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
-      await this.loadPotionData();
-    }
+    await this.loadPotionData(language);
 
-    const resultingPotion = this.selectPotion(winningAttribute, winningScore);
+    const resultingPotion = this.selectPotion(winningAttribute, winningScore, language);
 
     if (!resultingPotion) {
       return {
@@ -143,7 +157,7 @@ class PotionService {
     const isUncommonOrRare =
       resultingPotion.raridade === 'Incomum' || resultingPotion.raridade === 'Rara';
 
-    let message = `Poção criada com sucesso! ${resultingPotion.nome_portugues} (${resultingPotion.raridade})`;
+    let message = `Poção criada com sucesso! ${resultingPotion.nome} (${resultingPotion.raridade})`;
 
     if (cauldronBonus && isUncommonOrRare) {
       message += `\n\n✨ Caldeirão Especial ativado! Você também gerou uma poção comum do mesmo tipo com os restos!`;
@@ -158,7 +172,7 @@ class PotionService {
 
     if (cauldronBonus && isUncommonOrRare) {
       try {
-        const commonPotion = await this.generateCommonPotionFromRemains(recipe.winningAttribute);
+        const commonPotion = await this.generateCommonPotionFromRemains(recipe.winningAttribute, language);
         if (commonPotion) {
           result.remainsPotion = commonPotion;
         }
@@ -172,7 +186,7 @@ class PotionService {
       const percentageRoll = Math.floor(Math.random() * 100) + 1;
 
       if (percentageRoll <= potionBrewerLevel) {
-        const secondPotion = this.selectPotion(scores[0].attribute, scores[0].value);
+        const secondPotion = this.selectPotion(scores[0].attribute, scores[0].value, language);
         if (secondPotion) {
           result.secondPotion = secondPotion;
           result.potionBrewerSuccess = true;
@@ -187,18 +201,21 @@ class PotionService {
     return result;
   }
 
-  private selectPotion(attribute: 'combat' | 'utility' | 'whimsy', score: number): Potion | null {
+  private selectPotion(attribute: 'combat' | 'utility' | 'whimsy', score: number, language: string): Potion | null {
     let potionCategory: PotionCategory | null = null;
+    
+    // Ensure loaded
+    if (!this.combatPotions[language]) return null;
 
     switch (attribute) {
       case 'combat':
-        potionCategory = this.combatPotions;
+        potionCategory = this.combatPotions[language];
         break;
       case 'utility':
-        potionCategory = this.utilityPotions;
+        potionCategory = this.utilityPotions[language];
         break;
       case 'whimsy':
-        potionCategory = this.whimsicalPotions;
+        potionCategory = this.whimsicalPotions[language];
         break;
     }
 
@@ -224,8 +241,7 @@ class PotionService {
       winningAttribute: 'combat',
       resultingPotion: {
         id: 0,
-        nome_ingles: '',
-        nome_portugues: '',
+        nome: '',
         raridade: '',
         descricao: ''
       },
@@ -233,18 +249,16 @@ class PotionService {
     };
   }
 
-  public async getPotionsByCategory(category: 'combat' | 'utility' | 'whimsy'): Promise<Potion[]> {
-    if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
-      await this.loadPotionData();
-    }
+  public async getPotionsByCategory(category: 'combat' | 'utility' | 'whimsy', language: string = 'pt'): Promise<Potion[]> {
+    await this.loadPotionData(language);
 
     switch (category) {
       case 'combat':
-        return this.combatPotions?.pocoes || [];
+        return this.combatPotions[language]?.pocoes || [];
       case 'utility':
-        return this.utilityPotions?.pocoes || [];
+        return this.utilityPotions[language]?.pocoes || [];
       case 'whimsy':
-        return this.whimsicalPotions?.pocoes || [];
+        return this.whimsicalPotions[language]?.pocoes || [];
       default:
         return [];
     }
@@ -252,9 +266,10 @@ class PotionService {
 
   public async getPotionById(
     category: 'combat' | 'utility' | 'whimsy',
-    id: number
+    id: number,
+    language: string = 'pt'
   ): Promise<Potion | null> {
-    const potions = await this.getPotionsByCategory(category);
+    const potions = await this.getPotionsByCategory(category, language);
     return potions.find((potion) => potion.id === id) || null;
   }
 
@@ -289,23 +304,25 @@ class PotionService {
   }
 
   public async generateCommonPotionFromRemains(
-    winningAttribute: 'combat' | 'utility' | 'whimsy'
+    winningAttribute: 'combat' | 'utility' | 'whimsy',
+    language: string = 'pt'
   ): Promise<Potion | null> {
-    if (!this.combatPotions || !this.utilityPotions || !this.whimsicalPotions) {
-      await this.loadPotionData();
-    }
+    await this.loadPotionData(language);
 
     let potionCategory: PotionCategory | null = null;
+    
+    // Ensure loaded
+    if (!this.combatPotions[language]) return null;
 
     switch (winningAttribute) {
       case 'combat':
-        potionCategory = this.combatPotions;
+        potionCategory = this.combatPotions[language];
         break;
       case 'utility':
-        potionCategory = this.utilityPotions;
+        potionCategory = this.utilityPotions[language];
         break;
       case 'whimsy':
-        potionCategory = this.whimsicalPotions;
+        potionCategory = this.whimsicalPotions[language];
         break;
     }
 

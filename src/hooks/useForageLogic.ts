@@ -102,19 +102,20 @@ export function useForageLogic() {
 
   const getIngredientByRarity = useCallback(
     async (rarity: 'comum' | 'incomum' | 'raro' | 'unico', totalRoll: number) => {
+      const language = settings.language || 'pt'; // Default to pt if undefined
       const ingredientGetters = {
-        raro: () => ingredientsService.getRandomRareIngredient(),
-        unico: () => ingredientsService.getRandomUniqueIngredient(),
+        raro: () => ingredientsService.getRandomRareIngredient(language),
+        unico: () => ingredientsService.getRandomUniqueIngredient(language),
         incomum:
           totalRoll >= 21
-            ? () => ingredientsService.getRandomUncommonIngredientFromAnyRegion()
-            : () => ingredientsService.getRandomIngredientFromRegion(region, rarity),
-        comum: () => ingredientsService.getRandomIngredientFromRegion(region, rarity)
+            ? () => ingredientsService.getRandomUncommonIngredientFromAnyRegion(language)
+            : () => ingredientsService.getRandomIngredientFromRegion(region, rarity, language),
+        comum: () => ingredientsService.getRandomIngredientFromRegion(region, rarity, language)
       };
 
       return (await ingredientGetters[rarity]?.()) || null;
     },
-    [region]
+    [region, settings.language]
   );
 
   const executeForage = useCallback(

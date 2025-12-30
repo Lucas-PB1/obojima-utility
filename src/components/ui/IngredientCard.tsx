@@ -38,7 +38,7 @@ export default function IngredientCard({
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-serif font-bold text-foreground text-xl leading-tight group-hover:text-totoro-blue transition-colors">
-            {ingredient.ingredient.nome_portugues}
+            {ingredient.ingredient.nome}
           </h3>
           <span
             className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border font-sans ${
@@ -50,10 +50,6 @@ export default function IngredientCard({
             {ingredient.used ? 'Consumido' : 'Disponível'}
           </span>
         </div>
-
-        <p className="text-[10px] text-totoro-blue/60 mb-4 font-semibold uppercase tracking-[0.2em] font-sans">
-          {ingredient.ingredient.nome_ingles}
-        </p>
 
         <p className="text-sm text-foreground/60 mb-6 line-clamp-3 leading-relaxed italic">
           &quot;{ingredient.ingredient.descricao}&quot;

@@ -105,7 +105,7 @@ export default function ForageResult({ result }: ForageResultProps) {
               {result.rarity}
             </div>
             <h5 className="font-black text-foreground text-2xl mb-2 relative z-10">
-              {result.ingredient.nome_portugues}
+              {result.ingredient.nome}
             </h5>
             <p className="text-foreground/60 leading-relaxed italic relative z-10">
               &quot;{result.ingredient.descricao}&quot;

@@ -1,7 +1,6 @@
 export interface Ingredient {
   id: number;
-  nome_ingles: string;
-  nome_portugues: string;
+  nome: string;
   combat: number;
   utility: number;
   whimsy: number;
@@ -16,8 +15,7 @@ export interface IngredientByRegion {
 
 export interface RareIngredient {
   id: number;
-  nome_ingles: string;
-  nome_portugues: string;
+  nome: string;
   combat: number;
   utility: number;
   whimsy: number;
@@ -27,8 +25,7 @@ export interface RareIngredient {
 
 export interface UniqueIngredient {
   id: number;
-  nome_ingles: string;
-  nome_portugues: string;
+  nome: string;
   combat: number;
   utility: number;
   whimsy: number;
@@ -38,60 +35,56 @@ export interface UniqueIngredient {
 
 export interface UniqueIngredientData {
   id: number;
-  nome_ingles: string;
-  nome_portugues: string;
+  nome: string;
   circunstancia: string;
   localizacao: string;
 }
 
 export interface RegionData {
   descricao: string;
-  comum: {
-    dado: string;
-    ingredientes: IngredientByRegion[];
+  common: {
+    dice: string;
+    ingredients: IngredientByRegion[];
   };
-  incomum: {
-    dado: string;
-    ingredientes: IngredientByRegion[];
+  uncommon: {
+    dice: string;
+    ingredients: IngredientByRegion[];
   };
 }
 
 export interface IngredientsData {
   descricao: string;
-  regioes: {
+  regions: {
     [key: string]: RegionData;
   };
-  ingredientes_especiais: {
+  special_ingredients: {
     descricao: string;
     categoria: string;
     dado: string;
-    ingredientes: Array<{
-      nome_ingles: string;
-      nome_portugues: string;
+    ingredients: Array<{
+      nome: string;
       id: number;
       circunstancia: string;
       localizacao: string;
     }>;
   };
-  ingredientes_raros: {
+  rare_ingredients: {
     descricao: string;
     categoria: string;
     dado: string;
-    ingredientes: Array<{
-      nome_ingles: string;
-      nome_portugues: string;
+    ingredients: Array<{
+      nome: string;
       id: number;
       regioes: string[];
       circunstancia: string;
     }>;
   };
-  ingredientes_raros_unicos: {
+  unique_rare_ingredients: {
     descricao: string;
     categoria: string;
     dado: string;
-    ingredientes: Array<{
-      nome_ingles: string;
-      nome_portugues: string;
+    ingredients: Array<{
+      nome: string;
       id: number;
       circunstancia: string;
       localizacao: string;
@@ -110,13 +103,13 @@ export interface IngredientsData {
 export interface CommonIngredientsData {
   total: number;
   descricao: string;
-  ingredientes: Ingredient[];
+  ingredients: Ingredient[];
 }
 
 export interface UncommonIngredientsData {
   total: number;
   descricao: string;
-  ingredientes: Ingredient[];
+  ingredients: Ingredient[];
 }
 
 export type RegionKey =
@@ -166,8 +159,7 @@ export interface CollectedIngredient {
 
 export interface Potion {
   id: number;
-  nome_ingles: string;
-  nome_portugues: string;
+  nome: string;
   raridade: string;
   descricao: string;
 }

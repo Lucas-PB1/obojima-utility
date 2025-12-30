@@ -1,0 +1,366 @@
+{
+  "total": 60,
+  "descricao": "Pociones utilitarias de la isla de Obojima para usar en aventuras",
+  "pocoes": [
+    {
+      "id": 1,
+      "raridade": "Común",
+      "descricao": "Esta poción verde efervescente sabe a calcetín viejo. Cuando se ingiere, agudiza todos los sentidos con una sensación expansiva, casi eufórica. Durante los próximos 60 minutos, obtienes una bonificación de +3 en las pruebas de Sabiduría (Percepción).",
+      "nome": "Sensorius Maximus"
+    },
+    {
+      "id": 2,
+      "raridade": "Común",
+      "descricao": "Esta poción azul brilla y burbujea cuando se abre y hace que tu lengua hormiguee cuando se ingiere. Durante los próximos 60 minutos, obtienes una bonificación de +3 en las pruebas de Destreza (Acrobacia).",
+      "nome": "Flip and Skip"
+    },
+    {
+      "id": 3,
+      "raridade": "Común",
+      "descricao": "Beber este caldo pardusco llena tus tendones con poder ogresco. Durante los próximos 60 minutos, obtienes una bonificación de +3 en las pruebas de Fuerza (Atletismo).",
+      "nome": "Brute Brew"
+    },
+    {
+      "id": 4,
+      "raridade": "Común",
+      "descricao": "Esta poción es de color violeta y huele como un prado primaveral. Cuando la bebes, te sientes muy tranquilo y eres capaz de sentir las señales sutiles de todo tipo de animales. Durante los próximos 60 minutos, obtienes una bonificación de +3 en las pruebas de Sabiduría (Trato con Animales).",
+      "nome": "Animal Affinity"
+    },
+    {
+      "id": 5,
+      "raridade": "Común",
+      "descricao": "Esta sutil poción con sabor a bourbon arde cuando se consume. Durante los próximos 60 minutos, obtienes una bonificación de +3 en las pruebas de Inteligencia (Investigación).",
+      "nome": "Detective's Tonic"
+    },
+    {
+      "id": 6,
+      "raridade": "Común",
+      "descricao": "Cuando se vierte en tus manos y pies, se tiñen temporalmente de un color índigo profundo. Durante los próximos 10 minutos, obtienes la capacidad de moverte hacia arriba, hacia abajo y a través de superficies verticales y boca abajo a lo largo de los techos, dejando tus manos libres. También obtienes una velocidad de escalada igual a tu velocidad al caminar.",
+      "nome": "Cave Diver"
+    },
+    {
+      "id": 7,
+      "raridade": "Común",
+      "descricao": "Durante 1 hora después de beber esta poción, todo lo que ves y oyes se registra perfectamente en tu memoria. Puedes recordar estos recuerdos hasta 24 horas después. Después de eso, todos los recuerdos comienzan a desvanecerse y solo quedan las partes más memorables.",
+      "nome": "Perfect Memory"
+    },
+    {
+      "id": 8,
+      "raridade": "Común",
+      "descricao": "Cuando esta poción se vierte sobre tus ojos, tu visión de largo alcance mejora. Durante 4 horas, puedes ver hasta 300 pies de distancia como si estuvieras mirando algo a una décima parte de la distancia de ti.",
+      "nome": "Eyes of Akibu"
+    },
+    {
+      "id": 9,
+      "raridade": "Común",
+      "descricao": "Irónicamente, las pociones de piel brillante son de color negro azabache. Durante 4 horas después de beber esta poción, tu piel emite luz brillante en un radio de 30 pies y luz tenue por 30 pies adicionales.",
+      "nome": "Glowskin"
+    },
+    {
+      "id": 10,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción, sientes una ligera presión detrás de los ojos como si algo empujara desde el interior de tu cráneo tratando de salir. Durante los próximos 60 segundos, obtienes la capacidad de mover un objeto inanimado dentro de los 60 pies de ti con tu mente. El objeto no puede tener más de 5 pulgadas de diámetro y pesar no más de 1 libra, y no puede llevarse puesto o transportarse. Mover un objeto de esta manera requiere una acción. Puedes mover el objeto hasta 30 pies en cualquier dirección, y no puedes moverlo a más de 60 pies de distancia de ti.",
+      "nome": "Tiny Telekinesis"
+    },
+    {
+      "id": 11,
+      "raridade": "Común",
+      "descricao": "Una vez ingerida, una sensación de hormigueo se acumula dentro de ti, burbujeando en una alegre euforia de encanto confiado. Durante los próximos 10 minutos, obtienes pericia en la habilidad de Persuasión, lo que significa que puedes agregar el doble de tu bonificación de competencia a cualquier prueba de habilidad que hagas con ella.",
+      "nome": "Irresistible Charm"
+    },
+    {
+      "id": 12,
+      "raridade": "Común",
+      "descricao": "Esta poción se prepara para la tarea específica de detectar rastros dejados por una poción de camino secreto. Estos rastros te aparecen como huellas brillantes hechas con detalles sobrenaturales. También obtienes la capacidad de ver en el Reino Espiritual (Plano Etéreo). Los efectos de esta poción duran 1 hora.",
+      "nome": "Pathseeking"
+    },
+    {
+      "id": 13,
+      "raridade": "Común",
+      "descricao": "La leyenda dice que los guardabosques de Obojiman usarían esta poción durante largas caminatas en la naturaleza para poder comer raíces y hongos desconocidos, así como beber de lagos y arroyos de tierras bajas sin temor a enfermedades. Cuando se ingiere, obtienes 5 puntos de golpe temporales y resistencia al daño por veneno durante 1 hora.",
+      "nome": "Iron Belly"
+    },
+    {
+      "id": 14,
+      "raridade": "Común",
+      "descricao": "Fugari es una figura legendaria, una rana dragón que frunciría el ceño a sus súbditos, llenándolos de miedo a ser tragados enteros. Beber esta poción te da un comportamiento sombrío y de rana, que infunde miedo en aquellos que te ven. Durante los próximos 60 segundos, tienes ventaja en las pruebas de Carisma (Intimidación).",
+      "nome": "Face of Fugari"
+    },
+    {
+      "id": 15,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción con olor salobre, tus manos y pies comienzan a hormiguear. En segundos, se vuelven de color naranja brillante y se vuelven palmeados como los pies de un pato real. Durante los próximos 60 minutos, obtienes una velocidad de natación de 40 pies y eres capaz de hacer un sonido de graznido muy convincente.",
+      "nome": "Duck Foot"
+    },
+    {
+      "id": 16,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción, una ráfaga de niebla espesa brota de tu boca, duplicando el efecto del hechizo Nube de Niebla* (sin necesidad de concentración) centrado en ti. La nube dura 1 hora, y se mueve contigo, permaneciendo centrada en ti. Como una acción, puedes expulsar toda la niebla restante de tu estómago, haciendo que permanezca centrada en ese espacio durante la duración. La niebla produce un aroma de tu elección.",
+      "nome": "Potion of Fog"
+    },
+    {
+      "id": 17,
+      "raridade": "Común",
+      "descricao": "Cuando esta poción se aplica a un par de botas, permite a su usuario dejar un rastro de huellas mágicas que son invisibles a simple vista. Este rastro es visible solo para una criatura que puede ver objetos invisibles (como una beneficiada por ver invisibilidad o visión verdadera) o que ha ingerido una poción de búsqueda de caminos. Cuando se prepara esta poción, el creador puede elegir el color de las huellas. Las botas dejan huellas durante 24 horas, y las huellas duran un mes antes de desaparecer de la vista.",
+      "nome": "Secret Path"
+    },
+    {
+      "id": 18,
+      "raridade": "Común",
+      "descricao": "Esta poción sabe a una sopa hecha con amor. Cuando la consumes durante un descanso corto, puedes tirar 1d4 Dados de Golpe (agregando tu modificador de Constitución a cada uno y recuperando puntos de golpe iguales al total) sin gastarlos.",
+      "nome": "Grandma's Turnip Soup"
+    },
+    {
+      "id": 19,
+      "raridade": "Común",
+      "descricao": "Beber esta poción muy buscada te otorga un sentido único útil para detectar ingredientes. Durante los próximos 60 minutos, obtienes una bonificación de +3 en todas las pruebas de habilidad hechas para localizar un ingrediente.",
+      "nome": "Herbalist's Aid"
+    },
+    {
+      "id": 20,
+      "raridade": "Común",
+      "descricao": "Este elixir rojo ardiente huele a hogar y beberlo da una sensación de confort cuando se consume. Durante las próximas 24 horas, siempre sabes la dirección del lugar que consideras hogar, siempre que esté en el mismo plano de existencia.",
+      "nome": "Homeward Tonic"
+    },
+    {
+      "id": 21,
+      "raridade": "Común",
+      "descricao": "Cuando se consume, esta poción con sabor a regaliz transforma tus manos y pies en patas cubiertas de pelo. Durante los próximos 10 minutos, tienes ventaja en las pruebas de Destreza.",
+      "nome": "Soft Paw"
+    },
+    {
+      "id": 22,
+      "raridade": "Común",
+      "descricao": "Cuando esta poción azul brillante se vierte en tus manos, te da la capacidad de curar. Como una acción adicional, puedes tocar a una criatura, haciendo que recupere 2d4 puntos de golpe. Los efectos de esta poción duran 1 hora o hasta que hayas usado esta habilidad.",
+      "nome": "Potion of Healing Touch"
+    },
+    {
+      "id": 23,
+      "raridade": "Común",
+      "descricao": "Cuando ingieres esta poción, tus ojos se vuelven felinos, y puedes elegir su color. Durante los próximos 60 minutos, obtienes visión en la oscuridad hasta un alcance de 60 pies. Si ya tienes visión en la oscuridad de otra fuente, su alcance aumenta en 30 pies.",
+      "nome": "Cat's Eye"
+    },
+    {
+      "id": 24,
+      "raridade": "Común",
+      "descricao": "También conocida como 'artesano en una botella', esta poción muy querida se encuentra en la mayoría de los hogares y tiendas. Puedes verter esta poción sobre un objeto para reparar una sola rotura o desgarro en él, como por el hechizo Reparar*.",
+      "nome": "Liquid Mending"
+    },
+    {
+      "id": 25,
+      "raridade": "Común",
+      "descricao": "Aunque mal vista en muchos pueblos, esta útil poción todavía es buscada por muchos isleños por razones tanto sanas como nefastas. Puedes verter la poción en una cerradura, aflojando el mecanismo interno y reduciendo la CD para abrirla en 1d4. Una vez que la CD de una cerradura se reduce con esta poción, su CD no puede reducirse con otra poción de ganzúa líquida. Los efectos de esta poción duran 1 hora.",
+      "nome": "Liquid Lockpick"
+    },
+    {
+      "id": 26,
+      "raridade": "Común",
+      "descricao": "Esta poción grisácea sabe a papel masticado. Durante 1 hora después de beberla, entiendes el significado literal de cualquier idioma hablado que escuches.",
+      "nome": "Language Lore"
+    },
+    {
+      "id": 27,
+      "raridade": "Común",
+      "descricao": "Después de beber esta poción rosa pastel, hay una breve transformación incómoda, donde al bebedor le crece un fino hocico de cerdo que olfatea. Durante los próximos 60 minutos, te vuelves muy aficionado a las trufas, tal vez incluso hasta el punto de la beligerancia, y tienes ventaja en las pruebas de Sabiduría (Percepción) que dependen del olfato.",
+      "nome": "Pig Snout"
+    },
+    {
+      "id": 28,
+      "raridade": "Común",
+      "descricao": "Cuando se vierte sobre una máquina que está en funcionamiento, este líquido negro oscuro energiza el dispositivo, permitiendo que funcione como si estuviera poseído por un espíritu o activado por el hechizo Agarre Electrizante*. La máquina permanece alimentada por esta poción durante 1 minuto.",
+      "nome": "Machine Oil"
+    },
+    {
+      "id": 29,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta bebida espumosa, flotas a una pulgada del suelo y caminas sobre un colchón de aire. Durante los próximos 10 minutos, obtienes una bonificación de +2 en las pruebas de Destreza (Sigilo), y no dejas rastros discernibles.",
+      "nome": "Potion of Soft Steps"
+    },
+    {
+      "id": 30,
+      "raridade": "Común",
+      "descricao": "Este brebaje animado y remolino se transforma y se congela en un gato amigable cuando se vierte. El gato te sirve como familiar, como por el hechizo Encontrar Familiar*. El gato desaparece después de 24 horas.",
+      "nome": "Liquid Cat"
+    },
+    {
+      "id": 31,
+      "raridade": "Poco común",
+      "descricao": "Esta poción debe ser compartida con otra criatura, cada una ingiriendo la mitad de la poción. Cuando se consume la segunda mitad de la poción, la primera criatura obtiene la capacidad de ver a través de los ojos de la segunda criatura, obteniendo los beneficios de cualquier sentido especial que tenga esa criatura. Mientras ve de esta manera, la primera criatura está ciega con respecto a sus propios sentidos. Cualquiera de las criaturas puede usar su acción para detener la vista compartida o reactivarla. Esta habilidad dura 8 horas, y no se puede usar si las criaturas están a más de 1 milla de distancia.",
+      "nome": "Twin Vision"
+    },
+    {
+      "id": 32,
+      "raridade": "Poco común",
+      "descricao": "Esta poción puede ingerirse o verterse en un cuadrado de 1 pie, haciendo que el área cercana se vuelva repulsiva para los espíritus. Cualquier espíritu que tenga un nivel de desafío de 5 o menos dentro de los 30 pies de ti o del cuadrado debe hacer una tirada de salvación de Carisma DC 15. Si falla, el espíritu es teletransportado a un espacio desocupado aleatorio que está a 35 pies de distancia de ti o del cuadrado, y no puede moverse voluntariamente a un espacio dentro del alcance durante 1 minuto. Un espíritu que no haya hecho esta salvación debe hacerlo inmediatamente si se mueve dentro del alcance, siendo afectado por el repelente durante la duración si falla.",
+      "nome": "Spirit Repellent"
+    },
+    {
+      "id": 33,
+      "raridade": "Poco común",
+      "descricao": "Este pequeño frasco tapado contiene un líquido transparente que brilla con una tenue luz azul. Cuando se abre el frasco, puedes verter el líquido en un pequeño cuerpo de agua, como un baño o una fuente termal, transformándolo en una piscina curativa. Una criatura que se bañe en la piscina durante al menos 10 minutos recupera 4d4 + 4 puntos de golpe. La piscina pierde su magia después de 1 hora o una vez que seis criaturas se han beneficiado de este efecto.",
+      "nome": "Essence of the River Spirit"
+    },
+    {
+      "id": 34,
+      "raridade": "Poco común",
+      "descricao": "Verter esta poción azul grisácea en cualquier líquido hará que ese líquido se congele sólido durante 1 hora, después de lo cual comienza a descongelarse normalmente. Este efecto puede congelar no más de un cubo de 20 pies de líquido.",
+      "nome": "Potion of Freezing"
+    },
+    {
+      "id": 35,
+      "raridade": "Poco común",
+      "descricao": "Como una acción, puedes verter una gota de esta poción en un objeto mágico que requiere sintonización y beber el resto. Una vez que lo hagas, instantáneamente te sintonizas con ese objeto.",
+      "nome": "Potion of Attunement"
+    },
+    {
+      "id": 36,
+      "raridade": "Poco común",
+      "descricao": "Este elixir con sabor a frutas tropicales sabe tan delicioso como tu jugo favorito. Durante la duración, puedes respirar bajo el agua. Los efectos de la poción duran 1 hora.",
+      "nome": "Water Breathing"
+    },
+    {
+      "id": 37,
+      "raridade": "Poco común",
+      "descricao": "Cuando se lanza a una criatura, objeto o efecto mágico dentro de los 30 pies de ti, esta poción se rompe, liberando su contenido sobre el objetivo. Cualquier hechizo de nivel 3 o inferior en el objetivo termina inmediatamente.",
+      "nome": "Liquid Dispel"
+    },
+    {
+      "id": 38,
+      "raridade": "Poco común",
+      "descricao": "Cuando se ingiere, tu estómago funciona temporalmente como una bolsa de contención, lo que le permite almacenar cualquier objeto que quepa en tu boca dentro de su espacio extradimensional. Los efectos de esta poción duran 1 hora, después de la cual vomitas cualquier cosa consumida.",
+      "nome": "Pocket Stomach"
+    },
+    {
+      "id": 39,
+      "raridade": "Poco común",
+      "descricao": "El cervecero de esta poción tira un d4 para determinar el nivel máximo de espacio de hechizo que puede restaurar. Cuando la bebes, inmediatamente recuperas un espacio de hechizo gastado de ese nivel o inferior.",
+      "nome": "Liquid Arcana"
+    },
+    {
+      "id": 40,
+      "raridade": "Poco común",
+      "descricao": "Cuando esta poción se aplica a un objeto mágico, cualquier criatura que estuviera sintonizada con él ya no está sintonizada. Si el objeto está siendo usado o transportado por la criatura sintonizada, puede resistir los efectos de esta poción con una tirada de salvación de Sabiduría DC 13 exitosa.",
+      "nome": "Arcane Solvent"
+    },
+    {
+      "id": 41,
+      "raridade": "Poco común",
+      "descricao": "Cuando esta poción aceitosa y verdosa se frota en una planta, la planta crece instantáneamente hasta la madurez completa. Si la planta es demasiado grande para el espacio, como una secoya, dejará de crecer una vez que haya llenado razonablemente el espacio. Si se ingiere la poción, no hace nada, pero sabe a jarabe de arce.",
+      "nome": "Gardner's Solution"
+    },
+    {
+      "id": 42,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción, obtienes una oleada de energía maníaca que te permite realizar otra acción en esta ronda en el conteo de iniciativa 1.",
+      "nome": "Potion of Exertion"
+    },
+    {
+      "id": 43,
+      "raridade": "Poco común",
+      "descricao": "El cervecero de esta poción tira un d4 para determinar la cantidad de porciones que crea. Cuando se vierte, este líquido se forma rápidamente en un desayuno apetitoso, como pan o panqueques. Una criatura que consume una porción de él se siente saciada por el día, y su nivel de agotamiento se reduce en 1. Se tarda 1 minuto en consumir una porción, y una vez que una criatura se beneficia de este efecto, no puede volver a hacerlo hasta que termine un descanso largo. La comida se echa a perder después de 24 horas, perdiendo su magia.",
+      "nome": "Breakfast in a Bottle"
+    },
+    {
+      "id": 44,
+      "raridade": "Poco común",
+      "descricao": "Esta poción debe ser compartida con otra criatura, cada una ingiriendo la mitad de la poción. Cuando se consume, la poción permite a los bebedores comunicarse telepáticamente a cualquier distancia. Los efectos de esta poción duran 24 horas.",
+      "nome": "Twin Telepathy"
+    },
+    {
+      "id": 45,
+      "raridade": "Poco común",
+      "descricao": "Cuando se ingiere, esta poción ofrece un alivio temporal de un efecto dañino. Durante los próximos 60 minutos, obtienes el beneficio de un efecto de tu elección del hechizo Restauración Mayor*. Cuando terminan los efectos de esta poción, pierdes el beneficio elegido, lo que hace que regrese el efecto dañino.",
+      "nome": "Potion of Reprieve"
+    },
+    {
+      "id": 46,
+      "raridade": "Poco común",
+      "descricao": "Durante 1 minuto después de ingerir este líquido purpurino, tienes ventaja en las tiradas de salvación de Constitución hechas para mantener la concentración en los hechizos. Además, quedar incapacitado no hace que pierdas la concentración en un hechizo.",
+      "nome": "Uncanny Focus"
+    },
+    {
+      "id": 47,
+      "raridade": "Poco común",
+      "descricao": "Esta poción violeta huele a lavanda y cítricos. La próxima vez que tomes un descanso corto después de ingerirla, disfrutas de un sueño profundo y sin sueños, otorgándote los beneficios de un descanso largo, incluso si ya te has beneficiado de un descanso largo en las últimas 24 horas.",
+      "nome": "Meditative Trance"
+    },
+    {
+      "id": 48,
+      "raridade": "Poco común",
+      "descricao": "Cuando destapas esta poción de líquido brillante, tus sentidos se calman con el aroma de vainilla y miel junto con una cálida brisa primaveral. Cuando se ingiere, sientes como si toda tu alma fuera abrazada en un abrazo amoroso, lo que te hace recuperar 4d8 + 4 puntos de golpe, y elimina cualquier condición que te afecte, excluyendo las condiciones de agarrado, derribado o restringido.",
+      "nome": "Potion of Holistic Wellness"
+    },
+    {
+      "id": 49,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción, tu mente se sobrecarga con energía mágica. Durante las próximas 8 horas, obtienes una bonificación de +2 a las tiradas de salvación de Inteligencia, y obtienes resistencia al daño psíquico. Además, puedes devorar tomos enteros de texto, leyendo 10 veces más rápido de lo normal.",
+      "nome": "Sharp Mind"
+    },
+    {
+      "id": 50,
+      "raridade": "Poco común",
+      "descricao": "Cuando se consume, este elixir calcáreo transforma a un erudito intelectual en un atleta. Durante las próximas 24 horas, puedes usar tu modificador de Inteligencia o Sabiduría (tu elección), en lugar de tu modificador de Fuerza o Destreza, al hacer pruebas de Fuerza (Atletismo) y Destreza (Acrobacia). También obtienes pericia en esas habilidades durante la duración, si aún no la tienes.",
+      "nome": "Mind over Might"
+    },
+    {
+      "id": 51,
+      "raridade": "Raro",
+      "descricao": "Cuando se consume, este brebaje adormecedor te envía a un sueño profundo. Cuando te despiertas, tu mente se ha apoderado de un clon perfecto de ti mismo. El clon parece ser el mismo que tú en todos los aspectos, pero tiene la mitad de tu máximo de puntos de golpe y se forma sin ningún equipo que no sea ropa mundana. De lo contrario, el clon usa todas tus estadísticas, excepto que es un constructo. El clon carece de la capacidad de aprender o volverse más poderoso, por lo que nunca aumenta su nivel u otras habilidades, ni puede recuperar espacios de hechizo gastados. Mientras existe el clon, tu cuerpo original permanece en un sueño profundo constante donde no requiere alimentación, pero aún puede recibir daño normalmente. El clon dura hasta que lo descartas o cae a 0 puntos de golpe, momento en el que desaparece en una nube de mariposas. Cuando desaparece, tu mente regresa a tu cuerpo original.",
+      "nome": "Simulacrum Elixir"
+    },
+    {
+      "id": 52,
+      "raridade": "Raro",
+      "descricao": "Cuando se consume, esta poción arenosa agudiza tus sentidos y te da una sensación hundida de fuerza sin explotar. Durante las próximas 24 horas, obtienes poderes telequinéticos como si estuvieras bajo los efectos del hechizo Telequinesis*.",
+      "nome": "Hidden Hand"
+    },
+    {
+      "id": 53,
+      "raridade": "Raro",
+      "descricao": "Cuando se traga esta poción, comienza a formarse un capullo cristalino a tu alrededor. El capullo se forma completamente al comienzo de tu siguiente turno, y no puedes ser contactado o interactuar de ninguna manera. El capullo es inmune a todo daño, y no puede moverse o destruirse por ningún medio que no sea un hechizo de deseo. Mientras estás en el capullo, estás en estasis y no necesitas comer o respirar. El capullo dura entre 1 hora y 4 décadas. Tira en la tabla a continuación para determinar la medida de tiempo para el efecto, de horas a décadas. Luego tira un d4 para determinar la cantidad exacta de tiempo que existe el capullo.",
+      "nome": "Last Resort"
+    },
+    {
+      "id": 54,
+      "raridade": "Raro",
+      "descricao": "Cuando bebes esta poción, obtienes la capacidad de lanzar un hechizo que ha sido lanzado por otra criatura en el último minuto. El hechizo debe haber sido lanzado dentro de los 100 pies de ti, y debes haber sido consciente de que se lanzó el hechizo. Una vez ingerida, puedes lanzar el hechizo copiado una vez dentro del próximo minuto, sin gastar un espacio de hechizo o componentes materiales. Si el hechizo requiere una tirada de salvación o de ataque de hechizo, usas la CD y la bonificación de ataque de la criatura que lanzó originalmente el hechizo.",
+      "nome": "Elixir of Echoes"
+    },
+    {
+      "id": 55,
+      "raridade": "Raro",
+      "descricao": "Después de beber esta poción, que brilla como una luna llena, obtienes una extraña y maravillosa afinidad con la luz de la luna. Los efectos de esta poción son permanentes. Mientras la luz de la luna te toca, puedes usar una acción adicional para gastar tres dados de golpe. Puedes usar esta habilidad una vez por descanso largo. Cuando consumes por primera vez esta poción, tu máximo de puntos de golpe aumenta en 2d10. Esto no cuenta contra la cantidad de pociones que pueden estar afectándote a la vez.",
+      "nome": "Blessing of the Moon Spirit"
+    },
+    {
+      "id": 56,
+      "raridade": "Raro",
+      "descricao": "Esta poción fue descubierta por accidente por el gran maestro cervecero, Bowark. Abrirla llena la habitación con un fuerte aroma a lúpulo y bondad de levadura. Cuando se consume, esta cerveza te da una cálida calma eufórica que te hace sentir que todo va a estar bien. Hasta que terminen los efectos de esta poción, puedes elegir volver a tirar cualquier prueba de habilidad, tirada de ataque o tirada de salvación que hagas. Puedes volver a tirar de esta manera un total de 7 veces antes de que se pase el efecto de la poción.",
+      "nome": "Bowark's Bombastic Beer"
+    },
+    {
+      "id": 57,
+      "raridade": "Raro",
+      "descricao": "Cuando se consume, esta poción produce una sensación de ardor que llena tu cuerpo, dejándote con una fuerza intelectual y física recién descubierta. Durante los próximos 60 minutos, dos puntuaciones de habilidad de tu elección aumentan a 25.",
+      "nome": "Unified Might"
+    },
+    {
+      "id": 58,
+      "raridade": "Raro",
+      "descricao": "Este potente elixir permite al bebedor mejorar sus hechizos de agua con la ira del océano. Durante los próximos 60 minutos, cuando lanzas un hechizo que produce o manipula agua en alguna capacidad, el hechizo se lanza como si se usara un espacio de hechizo de un nivel superior. Además, los hechizos que usan agua para infligir daño a una criatura u objeto, infligen 2d12 de daño contundente extra. Alternativamente, puedes lanzar la poción en un espacio desocupado dentro de los 30 pies de ti, rompiendo el vidrio y convocando a tres elementales de agua en los espacios desocupados más cercanos. Estas criaturas están bajo tu control hasta que sean destruidas.",
+      "nome": "Umi's Powerful Undertow"
+    },
+    {
+      "id": 59,
+      "raridade": "Raro",
+      "descricao": "Consumir esta dulce poción te da una sensación calmante antes de revitalizar tu fuerza vital y empujarte a la acción. Recuperas 100 puntos de golpe, y como parte de la misma acción adicional para consumirla, puedes hacer inmediatamente un ataque con arma cuerpo a cuerpo, lanzar un hechizo que tenga como objetivo solo a una criatura u objeto, o moverte hasta tu velocidad.",
+      "nome": "Island Nectar"
+    },
+    {
+      "id": 60,
+      "raridade": "Raro",
+      "descricao": "Esta poción azul pálido huele a ozono. Cuando la bebes, tu mente se expande y obtienes una capacidad breve pero excepcional para comprender las vastas complejidades de lo arcano. Durante los próximos 60 segundos, puedes concentrarte en dos hechizos al mismo tiempo. Si te ves obligado a hacer una tirada de salvación de Constitución para mantener tu concentración, debes hacer una tirada de salvación separada para cada hechizo.",
+      "nome": "Elixir of Omnimind"
+    }
+  ]
+}

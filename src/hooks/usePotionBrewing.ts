@@ -117,7 +117,8 @@ export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePoti
     try {
       const result = await potionService.brewPotion(
         selectedIngredients,
-        chosenAttribute || undefined
+        chosenAttribute || undefined,
+        settings.language
       );
       setBrewingResult(result);
       setShowResultModal(true);
@@ -164,8 +165,7 @@ export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePoti
           winningAttribute: 'combat',
           resultingPotion: {
             id: 0,
-            nome_ingles: '',
-            nome_portugues: '',
+            nome: '',
             raridade: '',
             descricao: ''
           },
@@ -184,7 +184,8 @@ export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePoti
     availableScores,
     onIngredientsUsed,
     onPotionCreated,
-    saveAdditionalPotion
+    saveAdditionalPotion,
+    settings.language
   ]);
 
   const closeResultModal = useCallback(() => setShowResultModal(false), []);

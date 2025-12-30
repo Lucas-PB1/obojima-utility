@@ -8,10 +8,12 @@ import { useActivityLog } from '@/hooks/useActivityLog';
 import ActivityFilters from '@/components/filters/ActivityFilters';
 import { ingredientsService } from '@/services/ingredientsService';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useSettings } from '@/hooks/useSettings';
 
 export default function ActivityLog() {
   const { t } = useTranslation();
   const { attempts, filteredAttempts, setFilteredAttempts, statsData } = useActivityLog();
+  const { settings } = useSettings();
 
   return (
     <div className="space-y-6">
@@ -77,7 +79,7 @@ export default function ActivityLog() {
                       <div>
                         <span className="font-medium text-foreground/70">{t('activity.card.region')}</span>
                         <p className="text-foreground/60">
-                          {ingredientsService.getRegionDisplayName(attempt.region)}
+                          {ingredientsService.getRegionDisplayName(attempt.region, settings.language)}
                         </p>
                       </div>
                       <div>
@@ -128,7 +130,7 @@ export default function ActivityLog() {
                           {t('activity.card.ingredient.title')}
                         </h4>
                         <p className="text-totoro-green font-medium mb-2">
-                          {attempt.ingredient.nome_portugues}
+                          {attempt.ingredient.nome}
                         </p>
                         <p className="text-sm text-foreground/60 mb-3">
                           {attempt.ingredient.descricao.substring(0, 120)}...

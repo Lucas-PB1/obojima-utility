@@ -25,8 +25,7 @@ const searchIngredients = (ingredients: CollectedIngredient[], searchTerm: strin
   const term = searchTerm.toLowerCase();
   return ingredients.filter(
     (ing) =>
-      ing.ingredient.nome_portugues.toLowerCase().includes(term) ||
-      ing.ingredient.nome_ingles.toLowerCase().includes(term)
+      ing.ingredient.nome.toLowerCase().includes(term)
   );
 };
 
@@ -34,7 +33,7 @@ const sortIngredients = (ingredients: CollectedIngredient[], sortBy: SortType) =
   return [...ingredients].sort((a, b) => {
     switch (sortBy) {
       case 'name':
-        return a.ingredient.nome_portugues.localeCompare(b.ingredient.nome_portugues);
+        return a.ingredient.nome.localeCompare(b.ingredient.nome);
       case 'rarity':
         const rarityOrder = { unico: 4, raro: 3, incomum: 2, comum: 1 };
         const aRarity = a.ingredient.raridade || 'comum';

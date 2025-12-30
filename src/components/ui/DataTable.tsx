@@ -84,13 +84,22 @@ export default function DataTable<T extends Record<string, unknown>>({
                 <Select
                   value={activeFilters[filter.key] || ''}
                   onChange={(value) => handleFilterChange(filter.key, value)}
-                  options={filter.options || []}
-                  placeholder={filter.placeholder || t(filter.label)}
+                  options={
+                    filter.options?.map((opt) => ({
+                      ...opt,
+                      label: t(opt.label)
+                    })) || []
+                  }
+                  placeholder={
+                    filter.placeholder ? t(filter.placeholder) : t(filter.label)
+                  }
                 />
               ) : (
                 <Input
                   type={filter.type === 'date' ? 'text' : filter.type}
-                  placeholder={filter.placeholder || t(filter.label)}
+                  placeholder={
+                    filter.placeholder ? t(filter.placeholder) : t(filter.label)
+                  }
                   value={activeFilters[filter.key] || ''}
                   onChange={(value) => handleFilterChange(filter.key, value as string)}
                 />

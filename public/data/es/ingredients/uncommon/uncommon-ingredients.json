@@ -1,0 +1,366 @@
+{
+  "total": 45,
+  "descricao": "Ingredientes poco comunes de la isla de Obojima para la creación de pociones",
+  "ingredients": [
+    {
+      "id": 1,
+      "combat": 13,
+      "utility": 14,
+      "whimsy": 15,
+      "descricao": "Nada es más codiciado por los proveedores de magia que el brillo onírico de una perla negra. Algunos magos afirman que mirar la iridiscencia giratoria de una perla negra puede traer visiones de un posible evento futuro o ayudar a encontrar un objeto perdido. Las perlas negras se encuentran dentro de las almejas gigantes de concha que se encuentran en los Bajíos alrededor de Obojima, y la mayoría de ellas están protegidas ferozmente por guerreros del pueblo pez.",
+      "nome": "Black Pearl"
+    },
+    {
+      "id": 2,
+      "combat": 16,
+      "utility": 12,
+      "whimsy": 11,
+      "descricao": "Por alguna razón desconocida, los árboles de canela negra emanan una magia sutil y uno de cada cien o más árboles de canela en Obojima gana esta característica especial. Existen muchas leyendas en torno al primer árbol de canela negra. La aldea de Kuroki cuenta la historia de un mago que caminó hacia dentro de un árbol de canela, volviéndolo negro—el árbol sagrado aún permanece hasta hoy en el centro del Templo Kuroki.",
+      "nome": "Black Cinnamon"
+    },
+    {
+      "id": 3,
+      "combat": 11,
+      "utility": 13,
+      "whimsy": 16,
+      "descricao": "Quizás el metal de la tapa de la botella sea el motivo por el cual contienen magia latente tan buscada por los fabricantes de pociones... ¡o quizás sea simplemente el poder del Supa-Fizz! Con un poco de conocimiento y alguna excavación diligente, estas tapas de botella pueden encontrarse dentro y alrededor de las áreas más habitables de Obojima.",
+      "nome": "Bottle Cap (Supa-Fizz!)"
+    },
+    {
+      "id": 4,
+      "combat": 17,
+      "utility": 15,
+      "whimsy": 12,
+      "descricao": "Algunos dicen que el jaspe chispeante contiene espíritus de fuego inquietos que luchan incesantemente entre sí, haciendo que las piedras escupan chispas, disparen pequeñas llamas y a veces exploten con un estruendo. Los Obojimans son conocidos por colocar jaspe chispeante en latas de estaño atadas a postes durante festivales para alejar espíritus traviesos. El jaspe chispeante se encuentra cerca de fuentes termales y tubos de lava dentro de la Tierra de Agua Caliente.",
+      "nome": "Crackling Jasper"
+    },
+    {
+      "id": 5,
+      "combat": 17,
+      "utility": 11,
+      "whimsy": 14,
+      "descricao": "Solo los cerveceros más avanzados o las brujas y brujos más dementes están dispuestos a exponerse al agua de mar corrompida, ya que aún se sabe poco sobre ella. Esta agua violácea tiene el hedor acre y enfermizo característico de la Corrupción. Para aquellos que son lo suficientemente intrépidos para aventurarse en el lado este de Obojima, el agua de mar corrompida es fácil de encontrar, pero asegúrate de traer un recipiente que pueda evitar que el fluido nocivo propague su contaminación.",
+      "nome": "Corrupted Seawater"
+    },
+    {
+      "id": 6,
+      "combat": 16,
+      "utility": 14,
+      "whimsy": 13,
+      "descricao": "El limo que ha sido afectado por la Corrupción se vuelve opaco y oscuro, manchando las cosas con las que entra en contacto. El limo corrompido mantiene su viscosidad, pero es bastante pegajoso. Según todos los relatos, estar cerca del limo corrompido es singularmente desagradable y aquellos que lo tocan son conocidos por volverse letárgicos y apáticos. El limo corrompido puede cultivarse de monstruos de limo que han sido corrompidos.",
+      "nome": "Corrupted Slime"
+    },
+    {
+      "id": 7,
+      "combat": 12,
+      "utility": 14,
+      "whimsy": 17,
+      "descricao": "El caldo de ramen hecho por el maestro chef de ramen, Hakumon, es legendario entre chefs y fabricantes de pociones por sus efectos particularmente potentes. Muchos competidores de ramen y fabricantes de pociones son conocidos por pagar un precio alto para asegurar un recipiente lleno de caldo de la famosa tienda de ramen de Hakumon. ¡Pero cuidado! Para Hakumon, el ramen no es broma, y el maestro chef se esfuerza mucho para asegurar que ladrones y malhechores no puedan robar su caldo tan fácilmente.",
+      "nome": "Hakumon's Ramen Broth"
+    },
+    {
+      "id": 8,
+      "combat": 11,
+      "utility": 13,
+      "whimsy": 17,
+      "descricao": "Los pétalos de la flor del amanecer son admirados por los Obojimans por su forma única, fragancia y brillo dorado. Los árboles de flor del amanecer no se propagan como otros árboles, ya que cada árbol de flor del amanecer fue plantado por un espíritu de la naturaleza que luego habita el árbol. A pesar de los esfuerzos de horticultores ambiciosos, los árboles de flor del amanecer solo crecen donde son plantados por su espíritu anfitrión. Por eso, son bastante poco comunes y considerados sagrados por la mayoría de los aldeanos.",
+      "nome": "Dawn Petal"
+    },
+    {
+      "id": 9,
+      "combat": 14,
+      "utility": 15,
+      "whimsy": 16,
+      "descricao": "No hay rima o razón discernible para dónde se encuentra la raíz de dragón en Obojima. Pero como todos estos misterios, las leyendas abundan. La historia más frecuentemente repetida sobre la raíz de dragón afirma que donde sea que se encuentre, marca las huellas de un dragón espíritu de una era pasada llamado Runivarish. Si eso es verdad o no, los lugareños encuentran peculiar que la raíz de dragón, una vez cosechada, crecerá exactamente en el mismo lugar, como si marcara algo. La raíz de dragón arde más caliente que la mayoría de las maderas y carbones y, por lo tanto, es valiosa tanto para cerveceros como para herreros.",
+      "nome": "Dragon Root"
+    },
+    {
+      "id": 10,
+      "combat": 16,
+      "utility": 12,
+      "whimsy": 11,
+      "descricao": "Hay un gran debate entre brujas sobre si esta sustancia volátil es causada por o es la causa de malos presagios, aunque se entiende que este residuo grisáceo es un componente potente en magia de protección o hechizos asociados a la fortuna. La Esencia de Mal Presagio se crea espontáneamente como una especie de retroalimentación mágica de la magia de adivinación, que se manifiesta como una nube de vapor hollinoso que puede capturarse en cualquier tipo de vaso hermético.",
+      "nome": "Essence of Ill Omen"
+    },
+    {
+      "id": 11,
+      "combat": 11,
+      "utility": 11,
+      "whimsy": 17,
+      "descricao": "Quien primero aprendió el arte de hacer cosquillas en glumbugs se ha perdido en el tiempo, pero hay algunos veteranos que todavía están dispuestos a enseñar algunos trucos a un alumno dispuesto. Los que hacen cosquillas en glumbugs son los únicos que saben cómo extraer la esencia brillante del glumbug, ya que no puede recolectarse aplastando o disecando los insectos brillantes. Los glumbugs se encuentran principalmente bajo piedras y en cuevas.",
+      "nome": "Essence of Glumbug"
+    },
+    {
+      "id": 12,
+      "combat": 13,
+      "utility": 17,
+      "whimsy": 15,
+      "descricao": "Como su nombre sugiere, la piedra de pluma es una piedra paradójica con una naturaleza peculiar que parece contradecir la atracción de la gravedad. Estas piedras en forma de huso siempre se extienden hacia el cielo, mientras permanecen ancladas al suelo en una punta afilada. Incluso si estas piedras son derribadas, regresan a su posición de \"alcance\". Los aulladores codician la piedra de pluma. Pequeños trozos de piedra de pluma se distribuyen por la isla, pero piedras más grandes se encuentran en depósitos principalmente en los Campos de Vendaval.",
+      "nome": "Feather Rock"
+    },
+    {
+      "id": 13,
+      "combat": 12,
+      "utility": 14,
+      "whimsy": 12,
+      "descricao": "Muy profundo en los bosques de Obojima, hay una planta muy especial llamada helecho espiral que es la fuente del verde efervescente. Solo algunos druidas y naturalistas conocen el secreto para hacer que un helecho espiral libere verde efervescente, y son reacios a contarlo, pero estarán felices de ir y cosechar la sustancia extraña y efervescente por un intercambio.",
+      "nome": "Fizzing Green"
+    },
+    {
+      "id": 14,
+      "combat": 15,
+      "utility": 14,
+      "whimsy": 11,
+      "descricao": "La escoria de forja puede recolectarse en cualquier fundición o fragua de herrero, pero la escoria creada por el fuego y golpes de martillo de un maestro herrero es lo que los fabricantes de pociones están buscando, ya que siempre hay magia latente en el trabajo de un maestro.",
+      "nome": "Forge Slag"
+    },
+    {
+      "id": 15,
+      "combat": 15,
+      "utility": 16,
+      "whimsy": 13,
+      "descricao": "El polvo de gárgola proviene de huevos de dragón molidos que han sido encapsulados en cenizas de erupciones antiguas. Moler esos huevos libera la magia dentro de sus huesos y a menudo se usa en hechizos de petrificación, de ahí el nombre. El polvo de gárgola puede comprarse o negociarse solo con mercaderes y magos que tratan específicamente con tales materiales. Además, buscar huevos petrificados en los campos de ceniza antiguos en las laderas del volcán es una tarea mucho más difícil y peligrosa.",
+      "nome": "Gargoyle Powder"
+    },
+    {
+      "id": 16,
+      "combat": 12,
+      "utility": 15,
+      "whimsy": 14,
+      "descricao": "Los gusanos brillantes se encuentran en cuevas y pantanos por toda Obojima y funcionan bien como ingredientes en pociones, pero los fabricantes de pociones intrépidos han descubierto que los gusanos brillantes de colores salvajes encontrados en el Valle de la Abundancia en los Campos de Vendaval tienen una potencia mucho mayor.",
+      "nome": "Glow Worms of the Vale"
+    },
+    {
+      "id": 17,
+      "combat": 12,
+      "utility": 13,
+      "whimsy": 12,
+      "descricao": "Los fabricantes del Pastel de la Alegría Feliz son una familia secreta y se cree que al menos uno de ellos es un espíritu, pero los Obojimans, sin embargo, están enamorados de los pequeños bocadillos cuya receta ha sido pasada por generaciones. Aunque los Pasteles de la Alegría Feliz se hacen solo en Yatamon, hay algunos mercaderes viajeros confiables que tienen permiso para distribuirlos por la isla.",
+      "nome": "Happy Joy Cake"
+    },
+    {
+      "id": 18,
+      "combat": 14,
+      "utility": 14,
+      "whimsy": 14,
+      "descricao": "Casi toda aldea tiene algunos árboles kojobi, pero solo dan frutos cada dos o tres años. Cuando un árbol kojobi da frutos, es motivo de celebración y todos vienen a participar en un Festival Kojobi donde la fruta abundante se transforma en todo tipo de platos y bebidas para ser disfrutados por todos.",
+      "nome": "Kojobi Fruit"
+    },
+    {
+      "id": 19,
+      "combat": 11,
+      "utility": 16,
+      "whimsy": 16,
+      "descricao": "El musgo risueño es bien conocido entre naturalistas y leñadores, ya que es bastante fácil de encontrar cuando sabes lo que estás buscando. Para encontrar un trozo de este musgo es bastante simple, ya que todo lo que necesitas hacer es ir al bosque y escuchar los sonidos distintos de risas cálidas emanando de un campamento por la noche. Además de encontrarlo en la naturaleza, el musgo risueño se vende en farmacias especiales alrededor de la isla.",
+      "nome": "Laughing Moss"
+    },
+    {
+      "id": 20,
+      "combat": 14,
+      "utility": 12,
+      "whimsy": 17,
+      "descricao": "De vez en cuando, una patata sale del suelo y comienza una larga caminata errante. Los granjeros Obojimans las llaman \"patatas vivas\" y son objetos de curiosidad y reverencia. Las carretas se detendrán en los caminos y la gente en mercados abarrotados abrirá paso para dejar pasar una patata viva. Pero sea lo que sea que anima estas patatas errantes, esa magia es deseada por los fabricantes de pociones que usarán hasta el trozo más pequeño de una patata viva para alimentar sus pociones.",
+      "nome": "Living Spud"
+    },
+    {
+      "id": 21,
+      "combat": 17,
+      "utility": 13,
+      "whimsy": 16,
+      "descricao": "Esta flor carnívora se caracteriza por una boca en el centro de su variedad de pétalos color miel. Los apicultores consideran la flor una mala hierba invasora que devora poblaciones de abejas. La flor del león crece en manchas conocidas como manadas en los páramos altos de las Tierras Altas Costeras. Cada manada tiene su propio linaje que intenta sofocar otras manadas creciendo en las cercanías. Los cerveceros buscan la flor del león por la savia lechosa de la flor, así como por sus \"dientes\".",
+      "nome": "Lions Blume"
+    },
+    {
+      "id": 22,
+      "combat": 16,
+      "utility": 12,
+      "whimsy": 15,
+      "descricao": "El Vino de Arroz del Monje Mágico es un espíritu delicioso y refrescante de alta calidad. Muchos que lo beben dicen que estimula el intelecto y luego sus sueños son mucho más vívidos. En cada uno de los solsticios, una entrega del Vino de Arroz del Monje Mágico es manejada por equipos de espíritus que misteriosamente aparecen y lo distribuyen a las tabernas y templos de Obojima. El Vino de Arroz del Monje Mágico se fermenta y destila en algún lugar desconocido dentro del reino espiritual.",
+      "nome": "Magic Monk's Rice Wine"
+    },
+    {
+      "id": 23,
+      "combat": 15,
+      "utility": 12,
+      "whimsy": 12,
+      "descricao": "Para resultados máximos, intenta encontrar una piel entera que haya sido completamente secada por el sol. Cuanto más crujiente, mejor.",
+      "nome": "Molted Lizard Skin"
+    },
+    {
+      "id": 24,
+      "combat": 14,
+      "utility": 15,
+      "whimsy": 12,
+      "descricao": "Como ingrediente de poción, el valor del caracol de montaña está en su concha, que cuando se pulveriza en polvo, se usa en magias asociadas a la protección. Sin embargo, es una búsqueda peligrosa cultivar caracoles de montaña, ya que tienden a vivir en las guaridas de depredadores peligrosos que viven en cuevas de la montaña. Allí, los caracoles se alimentan de restos de carne dejados atrás. Los caracoles evitan la detección disfrazándose de piedras, aunque son atraídos por la música.",
+      "nome": "Mountain Snail"
+    },
+    {
+      "id": 25,
+      "combat": 13,
+      "utility": 14,
+      "whimsy": 13,
+      "descricao": "La sombra de luto es usada por curanderos en toda la isla por lo que creen que es la capacidad de la planta de absorber emociones dolorosas. Aunque es raro encontrarla en la naturaleza, siempre parece haber alguien en la aldea que tiene un saquito lleno de sombra de luto por precaución. La sombra de luto se encuentra en pantanos y áreas húmedas pantanosas donde brilla débilmente en noches sin luna.",
+      "nome": "Mournshade"
+    },
+    {
+      "id": 26,
+      "combat": 17,
+      "utility": 11,
+      "whimsy": 11,
+      "descricao": "La raíz de la planta mortal munchanka debe ser manejada y procesada con habilidad y cuidado, ya que se dice que aquellos que comieron las partes equivocadas de esta planta fueron llevados a la locura. La raíz de munchanka puede encontrarse en regiones secas y áridas.",
+      "nome": "Munchanka Root"
+    },
+    {
+      "id": 27,
+      "combat": 12,
+      "utility": 15,
+      "whimsy": 14,
+      "descricao": "Con su sabor terroso distintivo, esta especia alguna vez fue parte de una moda culinaria entre los Nakudama. Desde entonces ha pasado de moda, pero el nombre permanece. La especia proviene del frijol zelk, que crece de una especie de lirio de estanque. Estos frijoles se cosechan, fermentan y luego se secan antes de ser molidos en polvo púrpura. Algunos granjeros Nakudama continúan haciéndolo, pero como el proceso de producción de la especia Nakudama es lento y laborioso, no es barato.",
+      "nome": "Nakudama Spice"
+    },
+    {
+      "id": 28,
+      "combat": 14,
+      "utility": 17,
+      "whimsy": 16,
+      "descricao": "Se dice que el cardo nocturno vino con la Corrupción y solo crece en las tumbas de espíritus inquietos. Florece solo en la noche más oscura de la luna nueva, produciendo una flor esquelética y bioluminiscente que atrae polinizadores nocturnos. Los cardos nocturnos se encuentran solo cerca y dentro de regiones corrompidas, haciendo peligroso recolectarlos.",
+      "nome": "Night Thistle"
+    },
+    {
+      "id": 29,
+      "combat": 13,
+      "utility": 12,
+      "whimsy": 16,
+      "descricao": "De vez en cuando, un chef de ramen encuentra una anguila de fideos empachada durmiendo enrollada en un tazón vacío. Todos los chefs de ramen las ven como plagas, ya que aparentemente las anguilas de fideos tienen un paladar bastante refinado y no vienen a cualquier tazón de caldo, buscando solo sorber el mejor ramen—una gran molestia para chefs serios. Esto hace difícil atrapar una, ya que requiere buen ramen y ningún chef que se precie sacrificará su trabajo como cebo.",
+      "nome": "Noodle Eel"
+    },
+    {
+      "id": 30,
+      "combat": 11,
+      "utility": 16,
+      "whimsy": 14,
+      "descricao": "El agua sagrada del Manantial Opu Opu siempre ha sido famosa por sus propiedades curativas. Aldeanos venían de todos lados y hacían la larga caminata hasta las montañas para recolectar el agua del manantial, pero recientemente un trol grande se mudó al área y los aldeanos quedaron con demasiado miedo para viajar hasta allí. Por eso, los suministros del agua del manantial ahora están en un nivel históricamente bajo.",
+      "nome": "Opu Opu Spring Water"
+    },
+    {
+      "id": 31,
+      "combat": 13,
+      "utility": 14,
+      "whimsy": 13,
+      "descricao": "Para aquellos fabricantes de pociones que tienen un talento culinario, usar copos secos del pez pok pok es una forma de dar un toque sabroso y mágico a cualquier poción. Los peces pok pok son notoriamente difíciles de atrapar, pero hay algunos pescadores en la isla que conocen todos los trucos del oficio. Generalmente venden sus productos directamente a fabricantes de pociones o tiendas de mercado que se especializan en ingredientes de poción y componentes de hechizo.",
+      "nome": "Pok Pok Flakes"
+    },
+    {
+      "id": 32,
+      "combat": 15,
+      "utility": 16,
+      "whimsy": 13,
+      "descricao": "Los bardos hablan del druida loco Fennistrix, que tenía una propensión por la petrificación junto con una obsesión extraña por caimanes que resultó en casi todos los caimanes en Obojima siendo petrificados y exhibidos. La leyenda dice que cuando la cabaña de taxidermia de Fennistrix explotó, partes de caimán petrificado se esparcieron por toda la isla. Es raro hoy en día encontrar un pie o una cabeza, mucho menos un caimán entero, pero incluso una pequeña cantidad de él molida libera un poco de la magia potente de Fennistrix.",
+      "nome": "Petrified Alligator"
+    },
+    {
+      "id": 33,
+      "combat": 16,
+      "utility": 11,
+      "whimsy": 15,
+      "descricao": "Cuando el ánimo de un gólem de escombros se silencia, alguna cantidad de magia continúa irradiando de los trozos de escombros de los cuales su cuerpo fue formado. Por la noche, ocasionales partículas de luz blanca disparan de esos trozos rotos. Los cerveceros buscan este material por su cualidad mágica inherente, que pueden usar para varios propósitos.",
+      "nome": "Rubble from a Rubble Golem"
+    },
+    {
+      "id": 34,
+      "combat": 15,
+      "utility": 13,
+      "whimsy": 12,
+      "descricao": "Esta pequeña raíz nudosa solo crece donde sus hojas negras se dejan en sombra perpetua. Una vez cosechada, la raíz debe ser envuelta o sellada lejos de la luz o se marchitará y pudrirá rápidamente.",
+      "nome": "Shadowroot"
+    },
+    {
+      "id": 35,
+      "combat": 11,
+      "utility": 12,
+      "whimsy": 11,
+      "descricao": "Si fue traída por la Corrupción o una planta local fue mutada por ella, la hierba de escoria apareció en las costas corrompidas de Obojima y está arrastrándose más hacia el interior a lo largo de pantanos y marismas que son afectados por la Corrupción invasora. La hierba de escoria es viscosa y espesa. La hierba de escoria seca puede incluso hacer armadura resistente en una emergencia y más de algunos monstruos y brujas son conocidos por usarla exactamente para ese propósito.",
+      "nome": "Scumweed"
+    },
+    {
+      "id": 36,
+      "combat": 13,
+      "utility": 13,
+      "whimsy": 13,
+      "descricao": "Conocida por sus efectos naturalmente soporíferos, el mercader durmiente recibió su nombre a través de su uso por comerciantes viajeros que tradicionalmente beben sus flores secas como té después de un día ocupado vendiendo sus mercancías. Este lirio de agua puede identificarse por la flor blanca balanceándose bajo un paraguas de hojas. El mercader durmiente solo crece en ciertos estanques y lagos, lo que hizo imposible intentar cultivar plantas de mercader durmiente en otros cuerpos de agua. Así, la demanda por esta planta es alta entre los vendedores de té de Obojima.",
+      "nome": "Sleeping Merchant"
+    },
+    {
+      "id": 37,
+      "combat": 11,
+      "utility": 17,
+      "whimsy": 11,
+      "descricao": "Las bujías son usadas por fabricantes de pociones para agregar una pequeña carga de magia, solo lo suficiente para ser un catalizador para una reacción específica. La mayoría de los Obojimans aún no tienen idea de qué son estos ítems extraños, mucho menos de dónde vienen, pero los guardabosques y pícaros que saben mantienen la información para sí mismos.",
+      "nome": "Spark Plug"
+    },
+    {
+      "id": 38,
+      "combat": 11,
+      "utility": 11,
+      "whimsy": 17,
+      "descricao": "Hay muchos tés finos para ser probados por toda Obojima, pero solo algunos son legendarios. Uno de esos tés es hecho por el maestro mezclador de té, Chisuay. Se dice que Chisuay deja su cuerpo y prepara este té en el Reino Espiritual, entonces, a través de magia poderosa, trae esta delicada bebida espiritual de vuelta al Plano Material. El té de espíritu solo puede encontrarse en la casa de té de Chisuay.",
+      "nome": "Spirit Tea"
+    },
+    {
+      "id": 39,
+      "combat": 14,
+      "utility": 17,
+      "whimsy": 15,
+      "descricao": "Los resortes vienen en varios tamaños de diferentes máquinas. Por su forma espiral y material ferroso, son valorados por usuarios de magia para canalizar energías en hechizos y pociones. Mercaderes que tratan con arcana están siempre buscando resortes encontrados en las ruinas de aquellos que vinieron antes.",
+      "nome": "Spring"
+    },
+    {
+      "id": 40,
+      "combat": 13,
+      "utility": 16,
+      "whimsy": 14,
+      "descricao": "Descubierto por el mago conocido como Karoglin el Insomne, el hongo del sol permite que aquellos que lo consumen permanezcan despiertos por largos períodos de tiempo. El uso excesivo puede llevar a brotes prolongados de risa incontrolable y eventualmente sueño profundo e inquieto. El hongo del sol tiene un sabor salado y es más comúnmente consumido mezclándolo en el té. Los hongos del sol tienden a crecer cerca de las raíces de los árboles en el Bosque Errante, un hecho que llevó a algunos a especular que hongos energizantes son lo que mantiene a los árboles en movimiento.",
+      "nome": "Sun Shroom"
+    },
+    {
+      "id": 41,
+      "combat": 15,
+      "utility": 12,
+      "whimsy": 14,
+      "descricao": "Las trufas Toka son el objetivo de todo cazador de trufas, ya que su pungencia y delicia son renombradas. Pero fue solo recientemente que los fabricantes de pociones descubrieron las propiedades mágicas de la trufa, haciendo la competencia para encontrar estas delicias valiosas aún más feroz. Las trufas Toka se encuentran en el subsuelo cerca de robles. Además de hechizos mágicos o ítems, cerdos cazadores de trufas premiados son la mejor forma de encontrar estos tesoros escondidos.",
+      "nome": "Toka Truffle"
+    },
+    {
+      "id": 42,
+      "combat": 15,
+      "utility": 15,
+      "whimsy": 15,
+      "descricao": "Estos discos negros están cubiertos por una espiral continua que se mueve hacia el centro del disco—se cree que es una forma antigua y perdida de grabar conocimiento. Algunos sabios saben cómo desbloquear los mensajes dentro de los surcos, mientras que muchos fabricantes de pociones Obojimans muelen o derriten estos \"discos\" para liberar la magia que contienen. Estos objetos se encuentran en cachés donde a menudo están apilados como platos en un restaurante. Pero los descubrimientos son pocos y distantes, y los mercaderes ciertamente harán un trato difícil.",
+      "nome": "Vinyl Record"
+    },
+    {
+      "id": 43,
+      "combat": 11,
+      "utility": 17,
+      "whimsy": 11,
+      "descricao": "La wolfenita se encuentra en lo alto de las montañas en grietas y hendiduras entre los bloques de granito. Para aquellos que son más intrépidos y dispuestos a correr el riesgo, infiltrarse en una guarida de aullador es otra forma de encontrar un caché de este mineral raro, ya que son por alguna razón atraídos por este mineral raro.",
+      "nome": "Wolfenite"
+    },
+    {
+      "id": 44,
+      "combat": 14,
+      "utility": 13,
+      "whimsy": 15,
+      "descricao": "Las ramas retorcidas y espinosas de un árbol de madera de bruja son bien conocidas por magos y aquellos que practican magia involucrando espíritos. Muchos brujos y druidas usan varitas de madera de bruja para sus hechizos. Se dice que los árboles de madera de bruja solo crecen en algunos bosques donde los espíritos son abundantes, lugares donde la magia fluye del suelo, y donde la luz de la luna llena puede tocar sus ramas.",
+      "nome": "Wychwood"
+    },
+    {
+      "id": 45,
+      "combat": 17,
+      "utility": 11,
+      "whimsy": 11,
+      "descricao": "Solo aquellos con constituciones de hierro o equipados con el equipo de protección adecuado pueden soportar las náuseas a menudo causadas por el hedor maduro y avinagrado del limo. Los cerveceros pasaron generaciones aprendiendo cómo neutralizar el olor desagradable porque el limo amarillo también posee la capacidad de metabolizar muchos venenos y toxinas. La sustancia limo amarillo se cultiva de monstruos omnívoros vivos más grandes del mismo nombre.",
+      "nome": "Yellow Slime"
+    }
+  ]
+}

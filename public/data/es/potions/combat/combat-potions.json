@@ -1,0 +1,366 @@
+{
+  "total": 60,
+  "descricao": "Pociones de combate de la isla de Obojima para usar en aventuras",
+  "pocoes": [
+    {
+      "id": 1,
+      "raridade": "Común",
+      "descricao": "En segundos después de beber esta poción, sientes una ligereza y agilidad distintas en tus pasos. Durante los próximos 10 minutos, tu velocidad al caminar aumenta en 5 pies.",
+      "nome": "Rabbit's Speed"
+    },
+    {
+      "id": 2,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción, obtienes una sensación de claridad y concentración, y el manejo de cierta arma se vuelve natural para ti. Durante las próximas 24 horas, obtienes competencia con un arma cuerpo a cuerpo de tu elección.",
+      "nome": "Weapon Master's Elixir"
+    },
+    {
+      "id": 3,
+      "raridade": "Común",
+      "descricao": "Se dice que esta poción contiene el espíritu de Salyri, una gran guerrera Obojiman conocida por su destreza en combate. Cualquiera que beba esta poción obtiene una cierta comprensión de cómo usar eficazmente la armadura en combate. Durante las próximas 24 horas, obtienes competencia con un tipo de armadura de tu elección.",
+      "nome": "Spirit of Salyri"
+    },
+    {
+      "id": 4,
+      "raridade": "Común",
+      "descricao": "Beber esta poción engrosa tu piel y hace crecer parches de pelo por todo tu cuerpo. El hielo que normalmente congelaría tu piel se derrite al contacto. Durante 1 minuto, tienes resistencia al daño por frío.",
+      "nome": "Beast Hide"
+    },
+    {
+      "id": 5,
+      "raridade": "Común",
+      "descricao": "Cuando se vierte sobre una criatura que no lleva armadura, esta poción cubre al objetivo con una fuerza mágica. Durante los próximos 60 minutos, el objetivo tiene CA 15 mientras no lleve armadura. Este efecto termina si el objetivo se pone armadura.",
+      "nome": "Spirit Armor"
+    },
+    {
+      "id": 6,
+      "raridade": "Común",
+      "descricao": "Beber esta poción plateada brillante te hace brillar y parpadear, haciéndote parecer estar justo al lado de tu ubicación real. Hasta el comienzo de tu siguiente turno, todos los ataques contra ti se realizan con desventaja.",
+      "nome": "Displacement Field"
+    },
+    {
+      "id": 7,
+      "raridade": "Común",
+      "descricao": "Se dice que esta poción se preparó por primera vez en los Campos de Vendaval por un joven pastor que buscaba proteger su rebaño. La ironía no se perdió cuando bebieron la poción y adquirieron rasgos de lobo. Cuando bebes esta poción, te crecen garras que duran 1 hora. Durante la duración, tus ataques desarmados usando tus garras infligen daño cortante igual a 1d6 más tu modificador de Fuerza, en lugar del daño contundente normal para un ataque desarmado.",
+      "nome": "Shepherd's Bane"
+    },
+    {
+      "id": 8,
+      "raridade": "Común",
+      "descricao": "Cuando se lanza a un punto que puedes ver dentro de los 60 pies de ti, este líquido volátil explota. Cada criatura dentro de los 5 pies de la explosión debe hacer una tirada de salvación de Destreza DC 14, sufriendo 1d8 de daño de fuerza si falla, o la mitad del daño si tiene éxito.",
+      "nome": "Bottled Bomb"
+    },
+    {
+      "id": 9,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción multicolor, instantáneamente te sientes mágico. Durante 1 minuto, todo lo que llevas puesto o transportas se considera mágico, lo que permite que las armas que empuñas superen la resistencia y la inmunidad a los ataques y daños no mágicos.",
+      "nome": "Wonder Juice"
+    },
+    {
+      "id": 10,
+      "raridade": "Común",
+      "descricao": "Después de ingerir esta poción, obtienes cabello llameante animado, que dura 1 hora y emite luz brillante en un radio de 20 pies y luz tenue por 20 pies adicionales. Una vez en cada uno de tus turnos durante la duración, puedes hacer que un ataque desarmado con tu cabeza inflija 1d4 de daño de fuego adicional. Además, puedes usar una acción para hacer que la llama en tu cabeza estalle y explote hacia afuera, infligiendo 2d4 de daño de fuego a todas las demás criaturas dentro de los 5 pies de ti; usar esta habilidad hace que los efectos de esta poción terminen prematuramente.",
+      "nome": "Candlecap"
+    },
+    {
+      "id": 11,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción, tus ojos se vuelven ligeramente más grandes y adquieren el color dorado de un águila. Durante los próximos 60 segundos, atacar a larga distancia no impone desventaja en tus tiradas de ataque con armas a distancia.",
+      "nome": "Eagle's Vision"
+    },
+    {
+      "id": 12,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción, obtienes sentidos agudizados junto con la sospecha furtiva de que te están siguiendo. Durante las próximas 8 horas, no puedes ser sorprendido.",
+      "nome": "Paranoia"
+    },
+    {
+      "id": 13,
+      "raridade": "Común",
+      "descricao": "Cuando se destapa, esta poción arroja una llama amarilla caliente de su botella durante 1 minuto, que se asemeja a la forma de una hoja. Durante la duración, puedes realizar un ataque cuerpo a cuerpo con la hoja de llama como si fuera un arma improvisada. Al impactar, el objetivo sufre 2d4 de daño de fuego. La hoja desaparece prematuramente si se sumerge en agua.",
+      "nome": "Bottled Torch"
+    },
+    {
+      "id": 14,
+      "raridade": "Común",
+      "descricao": "Esta poción te hace sentir hormigueo mientras te carga con electricidad estática. Inmediatamente después de que una criatura te toque o te golpee con un ataque cuerpo a cuerpo realizado con un arma de metal dentro de las próximas 24 horas, puedes usar tu reacción para enviar una descarga de electricidad estática de vuelta a esa criatura, infligiéndole 1d10 de daño de rayo. Una vez que lo hagas, los efectos de esta poción terminan.",
+      "nome": "Static Shock"
+    },
+    {
+      "id": 15,
+      "raridade": "Común",
+      "descricao": "Al beber esta poción, te vuelves hiperconsciente de las amenazas a distancia y tus reflejos se activan, permitiéndote esquivar el peligro o apartar los proyectiles. Durante 1 minuto, obtienes una bonificación de +2 a la CA contra ataques a distancia.",
+      "nome": "Incoming!"
+    },
+    {
+      "id": 16,
+      "raridade": "Común",
+      "descricao": "Durante 24 horas después de beber este líquido dorado brillante, tu voz adquiere una calidad crepitante y tu aliento chispea y crepita. Durante la duración, puedes usar una acción adicional para exhalar un arco de rayo a una criatura que puedas ver dentro de los 30 pies de ti. El objetivo debe hacer una tirada de salvación de Destreza DC 12, sufriendo 1d10 de daño de rayo si falla, o la mitad del daño si tiene éxito. Una vez que exhales este rayo, los efectos de esta poción terminan.",
+      "nome": "Lightning Breath"
+    },
+    {
+      "id": 17,
+      "raridade": "Común",
+      "descricao": "Cuando bebes este elixir rojo brillante, obtienes ventaja en la siguiente tirada de ataque que realices dentro de las próximas 24 horas.",
+      "nome": "Heroism"
+    },
+    {
+      "id": 18,
+      "raridade": "Común",
+      "descricao": "Beber esta poción vuelve tu piel gruesa, viscosa y gomosa. Las lanzas y los objetos afilados que normalmente perforarían tu piel tienen dificultades para atravesar esta textura resistente. Durante los próximos 60 segundos, tienes resistencia al daño perforante. Mientras la poción está activa, puedes elegir exudar un rastro de limo como parte de tu movimiento.",
+      "nome": "Slugskin"
+    },
+    {
+      "id": 19,
+      "raridade": "Común",
+      "descricao": "Al ingerir esta poción ferozmente efervescente, tira un d4 para determinar el número de rondas antes de que sueltes un eructo atronador de proporciones épicas. En tu turno de esa ronda, debes usar tu acción para liberar el eructo. Cada criatura que no seas tú dentro de los 10 pies de ti debe hacer una tirada de salvación de Constitución DC 14. Si falla, una criatura sufre 3d8 de daño de trueno y queda sorda hasta el final de su siguiente turno. Si tiene éxito, la criatura sufre la mitad del daño y no queda sorda.",
+      "nome": "Thunderbelch"
+    },
+    {
+      "id": 20,
+      "raridade": "Común",
+      "descricao": "Cuando se lanza a una criatura que puedes ver dentro de los 30 pies de ti, este líquido brillante explota, liberando una nube de humo. La criatura objetivo debe tener éxito en una tirada de salvación de Destreza DC 12, o ser cubierta por un manto de humo durante 1 minuto. Una criatura cubierta de humo tiene desventaja en las pruebas de Destreza (Sigilo) hechas para esconderse.",
+      "nome": "Seeking Smoke"
+    },
+    {
+      "id": 21,
+      "raridade": "Común",
+      "descricao": "Puedes cubrir un arma cuerpo a cuerpo con esta poción. Cuando golpeas a una criatura con el arma cubierta dentro de la próxima hora, puedes obligarla a hacer una tirada de salvación de Constitución DC 12. Si falla, el arma ya no está cubierta por la poción, y el objetivo comienza a convulsionar de una manera que puede confundirse con una serie torpe y arrastrada de pasos de baile. La velocidad del objetivo se reduce a la mitad hasta el final de su siguiente turno, después de lo cual terminan las convulsiones.",
+      "nome": "Dancing Juice"
+    },
+    {
+      "id": 22,
+      "raridade": "Común",
+      "descricao": "Beber esta poción hace que emerjan púas por todo tu cuerpo. Estas púas yacen planas pero pueden ser controladas por ti para que se mantengan rectas. Cuando agarras con éxito a una criatura y como una acción adicional mientras permanece agarrada, puedes infligir 1d4 de daño perforante al objetivo. Los efectos de esta poción duran 1 minuto.",
+      "nome": "Prickleskin"
+    },
+    {
+      "id": 23,
+      "raridade": "Común",
+      "descricao": "Beber esta poción rosa de sabor amargo hace que cientos de pequeñas burbujas iridiscentes emerjan de tu nariz y boca y llenen un cubo de 20 pies que puedes ver dentro de los 30 pies de ti. Si las burbujas no se tocan, flotan en su lugar, permaneciendo allí durante 1 hora. Cuando una criatura entra en un espacio ocupado por las burbujas por primera vez en un turno, debe hacer una tirada de salvación de Destreza DC 13. Si falla, estalla una cacofonía de estallidos a medida que las burbujas explotan, infligiendo 1d6 de daño de trueno a todas las criaturas dentro del cubo. El sonido de las burbujas explotando se puede escuchar a una milla de distancia.",
+      "nome": "Tiny Bubbles"
+    },
+    {
+      "id": 24,
+      "raridade": "Común",
+      "descricao": "Tus manos se transforman en un elegante conjunto de poderosas pinzas de cangrejo. Durante 1 minuto, tus ataques desarmados usando las pinzas infligen doble daño a objetos y estructuras, y haces pruebas de agarre usándolas con ventaja. Las pinzas no pueden empuñar armas o escudos ni hacer nada que requiera precisión manual, como usar herramientas u objetos mágicos o realizar los componentes somáticos de un hechizo.",
+      "nome": "Claws of the Crab King"
+    },
+    {
+      "id": 25,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta sustancia viscosa azul, tu piel se convierte en una goma gris gruesa. Durante 1 hora, tienes resistencia al daño por rayo.",
+      "nome": "Rubberskin"
+    },
+    {
+      "id": 26,
+      "raridade": "Común",
+      "descricao": "Cuando abres esta poción, un lamento lúgubre sale de la botella. Cuando se ingiere, esta poción da a las cuerdas vocales del bebedor una resonancia mágica. Como una acción adicional, puedes hacer un ataque de hechizo a distancia contra una criatura dentro de los 60 pies de ti, usando tu bonificación de Carisma (Actuación) para la bonificación de ataque. El objetivo no se ve afectado si no puede oírte. Al impactar, el objetivo sufre 1d6 de daño de trueno. El efecto de esta poción dura 1 hora.",
+      "nome": "Keening Voice"
+    },
+    {
+      "id": 27,
+      "raridade": "Común",
+      "descricao": "Cuando se vierte sobre un arma no mágica, esta poción llena el objeto mundano con energía cinética, haciendo que vibre con anticipación. La próxima vez que golpees a una criatura con el arma, la energía explota, duplicando el daño tirado por los dados de daño del arma. Los efectos de esta poción terminan después de 1 hora o una vez que la energía explota.",
+      "nome": "Kinetic Pop"
+    },
+    {
+      "id": 28,
+      "raridade": "Común",
+      "descricao": "Cuando se lanza a un punto que puedes ver dentro de los 60 pies de ti, este líquido volátil explota, liberando una bola de gas carmesí. Cada criatura dentro de los 5 pies de la explosión recupera un número de puntos de golpe igual a 1d4 + 1.",
+      "nome": "Healing Gas"
+    },
+    {
+      "id": 29,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción negra burbujeante, tu piel se incrusta de carbón. Durante 1 hora, tienes resistencia al daño por fuego.",
+      "nome": "Cinderskin"
+    },
+    {
+      "id": 30,
+      "raridade": "Común",
+      "descricao": "Después de ingerir este elixir, tus ojos brillan con un tono plateado azulado. Durante 1 hora, recibes ventaja en las tiradas de salvación contra ser encantado y resistencia al daño psíquico.",
+      "nome": "Iron Mind"
+    },
+    {
+      "id": 31,
+      "raridade": "Poco común",
+      "descricao": "Este líquido gris sabe a barro y adormece tu lengua. En segundos después de tragar la poción, tu piel se convierte en piedra viva. Durante los próximos 60 minutos, obtienes una bonificación de +2 a la CA, y tu velocidad al caminar se reduce en 5 pies.",
+      "nome": "Gargoyle Hooch"
+    },
+    {
+      "id": 32,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción, puedes sentir que tu sistema nervioso recibe un impulso de energía nerviosa del espíritu conejo, Jipampa. Tus pupilas se dilatan y tus reflejos se perfeccionan. Durante las próximas 24 horas obtienes una bonificación de +5 a las tiradas de iniciativa. Además, si un desencadenante te permite tomar una reacción, pero ya has usado tu reacción en esta ronda, puedes elegir tomar una segunda reacción; usar esta habilidad hace que los efectos de esta poción terminen prematuramente.",
+      "nome": "Elixir of Jipampa"
+    },
+    {
+      "id": 33,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción, eres superado por una sensación cálida y letárgica que descansa como una manta sobre una intensa ráfaga de energía que sientes girar dentro de ti. Una vez dentro de las próximas 24 horas cuando tomes la acción de Atacar, puedes hacer dos ataques adicionales como parte de esa acción. Una vez que lo hagas, los efectos de esta poción terminan. Mientras la poción está activa, obtienes la habilidad de ronronear como un gato.",
+      "nome": "Catspeed"
+    },
+    {
+      "id": 34,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción, tu piel se vuelve tan dura como el cuero grueso que, por un corto tiempo, se repara solo. Durante 1 minuto, obtienes 10 puntos de golpe temporales al comienzo de cada uno de tus turnos.",
+      "nome": "Durability"
+    },
+    {
+      "id": 35,
+      "raridade": "Poco común",
+      "descricao": "Esta poción quema como un pimiento picante cuando la bebes y te llena de fuerza ardiente. La próxima vez que fueras a sufrir daño por fuego, no sufres daño y en su lugar recuperas un número de puntos de golpe igual a la mitad del daño que hubieras sufrido. Los efectos de esta poción duran 24 horas o hasta que recuperes puntos de golpe de esta manera.",
+      "nome": "Fire Shield"
+    },
+    {
+      "id": 36,
+      "raridade": "Poco común",
+      "descricao": "Beber esta poción te hace hiperfijarte en tus golpes pero potencialmente te abre a contraataques. Los efectos de esta poción duran 1 minuto. Durante la duración, la primera vez que golpees a un objetivo con un ataque de arma en cada uno de tus turnos, inflige 1d12 de daño adicional del mismo tipo. Hasta que terminen los efectos de la poción, también sufres una penalización de -2 a la CA.",
+      "nome": "Tunnel Vision"
+    },
+    {
+      "id": 37,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción, tu piel comienza a emitir luz tenue en un radio de 10 pies a tu alrededor. Como una acción adicional, puedes elegir intensificar esta luz (emitiendo luz brillante en un radio de 10 pies y luz tenue por 10 pies adicionales) o disminuir la intensidad nuevamente. Además, puedes tomar una acción para producir un destello de luz cegador a tu alrededor. Cada criatura dentro de los 30 pies de ti que pueda ver debe tener éxito en una tirada de salvación de Constitución DC 16 o quedar cegada durante 1 minuto. Una criatura afectada puede repetir la tirada de salvación al final de cada uno de sus turnos, terminando el efecto sobre sí misma en un éxito. Los efectos de esta poción duran 8 horas o hasta que uses el destello.",
+      "nome": "Ratatam's Glowskin Elixir"
+    },
+    {
+      "id": 38,
+      "raridade": "Poco común",
+      "descricao": "Cuando se lanza a una criatura que puedes ver dentro de los 30 pies de ti, este elixir rosa brillante se rompe, cubriendo a la criatura de jugo. El objetivo debe tener éxito en una tirada de salvación de Sabiduría DC 16 o ser pacificado durante 1 minuto. Una criatura pacificada no puede atacar, lanzar un hechizo que afecte a un enemigo o infligir daño a otra criatura. El objetivo puede repetir la tirada de salvación al final de cada uno de sus turnos, terminando el efecto sobre sí mismo en un éxito.",
+      "nome": "Don't Hit Me Juice"
+    },
+    {
+      "id": 39,
+      "raridade": "Poco común",
+      "descricao": "Cuando abres esta poción, estalla con una fanfarria sinfónica. Hasta el comienzo de tu siguiente turno, eres inmune a todo daño. En tu siguiente turno, no puedes moverte ni tomar acciones mientras una ola de letargo te inunda.",
+      "nome": "Invulnerability"
+    },
+    {
+      "id": 40,
+      "raridade": "Poco común",
+      "descricao": "Cuando se lanza a una criatura que puedes ver dentro de los 30 pies de ti, esta poción espesa como barro se rompe, cubriendo a la criatura de pegamento pegajoso. El objetivo debe tener éxito en una tirada de salvación de Fuerza DC 15 o quedar restringido durante 1 minuto. El objetivo restringido puede usar su acción para hacer una prueba de Fuerza DC 15. En un éxito, el objetivo ya no está restringido.",
+      "nome": "Bottled Bind"
+    },
+    {
+      "id": 41,
+      "raridade": "Poco común",
+      "descricao": "Esta poción reacciona instantáneamente con el aire, expandiéndose rápidamente en una nube de gas irritante de 15 pies de radio cuando se expone. Puedes lanzarla a un punto que puedas ver dentro de los 60 pies de ti, haciendo que se rompa y libere la nube allí. Cada criatura dentro de la nube cuando aparece debe hacer una tirada de salvación de Constitución DC 15. Si falla, una criatura gasta su reacción tosiendo y resoplando y su concentración se rompe si estaba concentrándose.",
+      "nome": "Respiratory Distress"
+    },
+    {
+      "id": 42,
+      "raridade": "Poco común",
+      "descricao": "Cuando se consume, esta bebida de cosecha cálida transforma tu cabeza en una linterna de calabaza. Desde tus ojos recién formados lanzas un cono de luz brillante, lo que hace que las criaturas en un cono de 15 pies caigan bajo los efectos del hechizo Fuego Feérico*. Al comienzo de cada uno de tus turnos mientras duran los efectos, decides hacia dónde mira el cono y si el cono está activo. El efecto de la poción dura 1 minuto.",
+      "nome": "Pumpkin Patch Guard"
+    },
+    {
+      "id": 43,
+      "raridade": "Poco común",
+      "descricao": "Un sorbo de esta poción robusta te hará crecer una gruesa capa de lana de dragón oveja por todo tu cuerpo. Más allá de mantenerte calentito, ayuda a tu supervivencia y te protege del frío. Durante la duración, tu CA aumenta en 1, y obtienes resistencia al daño por frío. Los efectos de la poción duran 1 hora.",
+      "nome": "Sheep Dragon Brew"
+    },
+    {
+      "id": 44,
+      "raridade": "Poco común",
+      "descricao": "Esta poción te hace sentir hormigueo mientras te carga con electricidad estática. Inmediatamente después de que una criatura te toque o te golpee con un ataque cuerpo a cuerpo realizado con un arma de metal dentro de las próximas 24 horas, puedes usar tu reacción para enviar una descarga de electricidad estática de vuelta a esa criatura, infligiéndole 3d10 de daño de rayo. Una vez que lo hagas, los efectos de esta poción terminan.",
+      "nome": "Enhanced Static Shock"
+    },
+    {
+      "id": 45,
+      "raridade": "Poco común",
+      "descricao": "Durante 24 horas después de beber este líquido dorado brillante, tu voz adquiere una calidad crepitante y tu aliento chispea y crepita. Durante la duración, puedes usar una acción adicional para exhalar un arco de rayo a una criatura que puedas ver dentro de los 30 pies de ti. El objetivo debe hacer una tirada de salvación de Destreza DC 16, sufriendo 3d10 de daño de rayo si falla, o la mitad del daño si tiene éxito. Una vez que exhales este rayo, los efectos de esta poción terminan.",
+      "nome": "Enhanced Lightning Breath"
+    },
+    {
+      "id": 46,
+      "raridade": "Poco común",
+      "descricao": "Cuando se lanza a un punto que puedes ver dentro de los 60 pies de ti, este líquido volátil explota. Cada criatura dentro de los 5 pies de la explosión debe hacer una tirada de salvación de Destreza DC 16, sufriendo 3d8 de daño de fuerza si falla, o la mitad del daño si tiene éxito.",
+      "nome": "Enhanced Bottled Bomb"
+    },
+    {
+      "id": 47,
+      "raridade": "Poco común",
+      "descricao": "Cuando se consume, sientes que la esencia de un espíritu muerto hace mucho tiempo te domina. Te sientes tenso y tienes un trasfondo de rabia que hierve bajo la superficie. Tira 2d8. Durante la duración, cada vez que lances un hechizo, puedes hacer que un objetivo que sufrió daño de él sufra daño de fuerza adicional igual al número tirado. Los efectos de esta poción duran 1 minuto.",
+      "nome": "Wrathful Spirit"
+    },
+    {
+      "id": 48,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción, motas de luz rosa brotan de tu cuerpo y orbitan a tu alrededor. Durante 1 minuto, cada vez que sufras daño de una criatura hostil, puedes usar tu reacción para teletransportarte hasta 15 pies a un espacio desocupado que puedas ver.",
+      "nome": "Rapid Withdrawal"
+    },
+    {
+      "id": 49,
+      "raridade": "Poco común",
+      "descricao": "Esta poción peligrosa y vil se transforma cuando se usa. Como una acción, puedes destapar la poción y apuntarla a una criatura dentro de los 10 pies de ti. El objetivo sufre 3d6 de daño necrótico, y la poción se transforma en un elixir curativo. Una criatura que consume este elixir recupera un número de puntos de golpe igual al daño necrótico infligido.",
+      "nome": "Life-Steal"
+    },
+    {
+      "id": 50,
+      "raridade": "Poco común",
+      "descricao": "Al destapar esta poción, eres inmediatamente asaltado con un olor poderosamente acre y picante. Una vez que la bebes, tu piel adquiere un tono rojo burdeos brillante y tus ojos se vuelven de un amarillo enfermizo. Durante 1 minuto, obtienes una bonificación de +2 a la CA y resistencia al daño por frío, fuego y rayo, así como al daño contundente, perforante y cortante de ataques no mágicos. Hasta que terminen los efectos de la poción, tu tipo de criatura cambia a Infernal (Diablo).",
+      "nome": "Demonskin"
+    },
+    {
+      "id": 51,
+      "raridade": "Raro",
+      "descricao": "Después de beber esta poción ligera y cubierta de rocío, obtienes la capacidad de respirar una nube de vapor marchito. Durante los próximos 60 segundos, puedes usar una acción adicional para exhalar una nube en un cono de 60 pies. Cada criatura en esa área debe hacer una tirada de salvación de Constitución DC 17. Si falla, la velocidad de una criatura se reduce a la mitad, no puede tomar reacciones, y tiene desventaja en las tiradas de ataque hasta el comienzo de tu siguiente turno. Al comienzo de tu siguiente turno, tira un d6. Recuperas el uso de esta habilidad en un resultado de 4–6.",
+      "nome": "Withered Will"
+    },
+    {
+      "id": 52,
+      "raridade": "Raro",
+      "descricao": "Cuando bebes esta poción robusta, te sientes más fuerte y saludable que nunca. Durante la duración, obtienes un número de puntos de golpe temporales igual a tu máximo de puntos de golpe. Los efectos de esta poción duran 24 horas o hasta que se pierdan estos puntos de golpe temporales.",
+      "nome": "Astounding Vigor"
+    },
+    {
+      "id": 53,
+      "raridade": "Raro",
+      "descricao": "Cuando bebes esta poción puedes convocar a un espíritu antiguo y malvado conocido como Muchas Manos. Cuando lo haces, una hueste de brazos espectrales largos y delgados se extienden desde tu cuerpo. Cualquiera que pueda verte cuando las manos emergen por primera vez debe tener éxito en una tirada de salvación de Sabiduría DC 19 o asustarse hasta el comienzo de tu siguiente turno; las criaturas que son amigables contigo tienen ventaja en esta salvación. Además, los brazos se extienden desde ti, arañando a todas las demás criaturas dentro de los 20 pies de ti. Cada criatura en esa área debe hacer una tirada de salvación de Constitución DC 19. Si falla, un objetivo sufre 10d6 de daño necrótico y no puede recuperar puntos de golpe hasta el comienzo de tu siguiente turno. Si tiene éxito, la criatura sufre la mitad del daño, pero no sufre ningún otro efecto.",
+      "nome": "Many Hands"
+    },
+    {
+      "id": 54,
+      "raridade": "Raro",
+      "descricao": "Cuando se lanza a un punto que puedes ver dentro de los 60 pies de ti, este líquido volátil explota. Cada criatura dentro de los 30 pies de la explosión debe hacer una tirada de salvación de Destreza DC 19, sufriendo 20d6 de daño de fuerza si falla, o la mitad del daño si tiene éxito.",
+      "nome": "Epic Bottled Bomb"
+    },
+    {
+      "id": 55,
+      "raridade": "Raro",
+      "descricao": "Esta poción cristalina captura la esencia de los cuatro grandes espíritos de los ríos Mu, Go, Yon y Din. Durante las próximas 24 horas, puedes invocar su fuerza para ayudarte. Si fallas una tirada de salvación, puedes elegir tener éxito en su lugar. Puedes hacer esto tres veces antes de que la magia de la poción se desvanezca.",
+      "nome": "Essence of Great Rivers"
+    },
+    {
+      "id": 56,
+      "raridade": "Raro",
+      "descricao": "Esta poción fue inventada nada menos que por la legendaria Carla Cackletooth, una bruja con una habilidad considerable para preparar pociones. Cuando se vierte, convoca a 10 muks corruptos, que están a tu disposición y bajo tu control hasta que sean destruidos.",
+      "nome": "Carla Cackletooth's Corruption Cocktail"
+    },
+    {
+      "id": 57,
+      "raridade": "Raro",
+      "descricao": "Cuando se consume esta poción ámbar, obtienes los atributos del Cazador, una de las grandes bestias de Obojima. Tira un d4. Durante la duración, obtienes una velocidad de vuelo de 90 pies, y cada vez que tomas la acción de Atacar, puedes hacer un número adicional de ataques igual a 1 + el número tirado en el d4. Los efectos de esta poción duran 1 minuto.",
+      "nome": "Hunter's Speed"
+    },
+    {
+      "id": 58,
+      "raridade": "Raro",
+      "descricao": "Cuando se vierte sobre un arma, este elixir heroico la tiñe de azul y la hace brillar como si fuera una gema reflejando la luz. Durante los próximos 60 segundos, el arma obtiene una bonificación de +3 a las tiradas de ataque y daño. Hasta que este efecto termine, las criaturas golpeadas por este arma no se benefician de ninguna inmunidad o resistencia al daño que tengan, si la hay, durante 1 minuto.",
+      "nome": "Hero's Blade"
+    },
+    {
+      "id": 59,
+      "raridade": "Raro",
+      "descricao": "Consumir esta bebida turbia te da un dolor de cabeza que nunca puedes quitarte del todo. Mientras estás bajo los efectos de esta poción, puedes tomar dos reacciones por ronda en lugar de una. Cada vez que tomas una segunda reacción, pierdes un número de puntos de golpe igual a la mitad de tu nivel. El efecto de esta poción es permanente, y no cuenta contra el número de pociones que pueden estar afectándote al mismo tiempo.",
+      "nome": "Severed Reaction"
+    },
+    {
+      "id": 60,
+      "raridade": "Raro",
+      "descricao": "Después de tragar esta poción de sapo, te transformas en una Rana Dragón Antigua, como por el hechizo polimorfia verdadera*. Esta transformación dura 1 minuto, o 10 minutos si se usó un Colmillo de Dragón de Yutro al preparar esta poción.",
+      "nome": "Dragon Frog Transmutation"
+    }
+  ]
+}

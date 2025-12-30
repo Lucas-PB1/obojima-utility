@@ -152,7 +152,7 @@ class FirebaseStorageService {
         });
       }
 
-      console.log('Ingrediente adicionado à coleção:', ingredient.ingredient.nome_portugues);
+      console.log('Ingrediente adicionado à coleção:', ingredient.ingredient.nome);
     } catch (error) {
       console.error('Erro ao adicionar ingrediente coletado:', error);
       throw error;

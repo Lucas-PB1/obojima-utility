@@ -25,6 +25,7 @@ interface ForageFormProps {
 }
 
 import { useTranslation } from '@/hooks/useTranslation';
+import { useSettings } from '@/hooks/useSettings';
 
 export default function ForageForm({
   region,
@@ -42,9 +43,10 @@ export default function ForageForm({
   remainingAttempts
 }: ForageFormProps) {
   const { t } = useTranslation();
+  const { settings } = useSettings();
   const regionOptions = ingredientsService.getRegionKeys().map((key) => ({
     value: key,
-    label: ingredientsService.getRegionDisplayName(key)
+    label: ingredientsService.getRegionDisplayName(key, settings.language)
   }));
 
   const translatedTestTypeOptions = TEST_TYPE_OPTIONS.map(opt => ({

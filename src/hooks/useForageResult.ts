@@ -9,8 +9,8 @@ export function useForageResult(result: ForageAttempt | null) {
 
   const regionDisplayName = useMemo(() => {
     if (!result) return '';
-    return ingredientsService.getRegionDisplayName(result.region);
-  }, [result]);
+    return ingredientsService.getRegionDisplayName(result.region, settings.language);
+  }, [result, settings.language]);
 
   const particles = useMemo(() => {
     if (!result?.success) return [];

@@ -1,0 +1,366 @@
+{
+  "total": 60,
+  "descricao": "Pociones caprichosas de la isla de Obojima para usar en aventuras",
+  "pocoes": [
+    {
+      "id": 1,
+      "raridade": "Común",
+      "descricao": "Cuando bebes este líquido espumoso, puedes imitar perfectamente la llamada de cualquier pájaro cantor durante 24 horas.",
+      "nome": "Melodious Bird Calls"
+    },
+    {
+      "id": 2,
+      "raridade": "Común",
+      "descricao": "Cuando bebes esta poción granulada, una burbuja de 1 pie de diámetro emerge de la parte superior de tu cabeza. La burbuja dura 1 hora y se mueve contigo, permaneciendo centrada en ti. Hasta que este efecto termine, puedes elegir proyectar tus pensamientos en la burbuja, donde se manifiestan como palabras o imágenes ilusorias pero silenciosas (tu elección), que cualquiera puede ver.",
+      "nome": "Projected Thoughts"
+    },
+    {
+      "id": 3,
+      "raridade": "Común",
+      "descricao": "Cuando se consume, hueles a un perfume elaborado con maestría. Los efectos de esta poción duran 22 años. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "Intoxicating Aroma"
+    },
+    {
+      "id": 4,
+      "raridade": "Común",
+      "descricao": "Cuando se abre, esta poción comienza a evaporarse rápidamente. Durante 1 minuto, a medida que la poción se evapora, las mariquitas salen volando de la botella a una velocidad de 500 por ronda. La poción deja de producir mariquitas una vez que se ha evaporado por completo.",
+      "nome": "Ladybug Kinship"
+    },
+    {
+      "id": 5,
+      "raridade": "Común",
+      "descricao": "Esta poción hace que todo sepa increíble. Cuando la viertes sobre cualquier alimento, no importa si es un trozo de tofu o una rebanada de pechuga asada a fuego lento, la esencia de umami lo hace brillar con magia. Cuando se prueba la comida, mágicamente le da al catador su propia versión personal de la mejor experiencia culinaria.",
+      "nome": "Essence of Umami"
+    },
+    {
+      "id": 6,
+      "raridade": "Común",
+      "descricao": "Una vez ingerida, puedes imitar perfectamente el habla de una persona con la que no estás familiarizado. Si no puedes pensar en una persona que nunca has conocido, en su lugar imitas una voz aleatoria. Los efectos de la poción duran 1 hora.",
+      "nome": "Vocal Stranger"
+    },
+    {
+      "id": 7,
+      "raridade": "Común",
+      "descricao": "Beber este líquido peludo da la sensación de lana frotándose contra todo tu cuerpo. Cuando se consume, instantáneamente te crece vello facial, incluso si normalmente no podrías hacerlo. El estilo del vello facial es aleatorio y permanece en tu cara hasta que se afeita. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "Beard Brew"
+    },
+    {
+      "id": 8,
+      "raridade": "Común",
+      "descricao": "Esta vibrante poción verde sabe a hierba recién cortada. Durante las próximas 24 horas, mientras sale el sol, recuperas 1 punto de golpe al comienzo de cada hora.",
+      "nome": "Photosynthetic Skin"
+    },
+    {
+      "id": 9,
+      "raridade": "Común",
+      "descricao": "Después de beber esta poción, instantáneamente te adornas con un plumaje llamativo y distintivo. Puedes controlarlo para crear deslumbrantes exhibiciones de plumas brillantes, colores iridiscentes y patrones llamativos. Cuando lo haces, obtienes ventaja en todas las pruebas de Carisma (Actuación) realizadas para distraer o impresionar. Los efectos de esta poción duran 24 horas.",
+      "nome": "Paradise Plumage"
+    },
+    {
+      "id": 10,
+      "raridade": "Común",
+      "descricao": "Cuando se destapa, este elixir plateado produce una música hermosa y etérea durante 1 hora a medida que se evapora lentamente.",
+      "nome": "Musical Mixer"
+    },
+    {
+      "id": 11,
+      "raridade": "Común",
+      "descricao": "¡Apesta y ahora tú también! Después de beber esta poción, todas las demás criaturas dentro de los 15 pies de ti deben tener éxito en una tirada de salvación de Constitución DC 13 o no podrán moverse voluntariamente más cerca de ti durante la duración. Una criatura que aún no haya hecho esta salvación debe hacerlo inmediatamente cuando se mueva dentro de los 15 pies de ti. Los efectos de la poción duran 1d4 rondas.",
+      "nome": "Stink Brew"
+    },
+    {
+      "id": 12,
+      "raridade": "Común",
+      "descricao": "Esta poción se confunde fácilmente con agua salobre. Una vez que la bebes, puedes producir un huevo, una piedra, una moneda o una cuerda de 2 pies de largo de tu boca. Este efecto dura hasta que se utiliza. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "Duko the Trickster's Elixir"
+    },
+    {
+      "id": 13,
+      "raridade": "Común",
+      "descricao": "Después de consumir esta poción clara y sin sabor, experimentas rápidamente una transformación radical, convirtiéndote en la versión infantil de ti mismo durante las próximas 4 horas. Durante la duración, eres un tamaño más pequeño (hasta un mínimo de Pequeño), y tu Fuerza y Destreza se convierten en 10, a menos que esas puntuaciones ya sean inferiores a 10.",
+      "nome": "Manifested Nostalgia"
+    },
+    {
+      "id": 14,
+      "raridade": "Común",
+      "descricao": "Cuando se consume, esta poción multicolor te permite producir una variedad de pinturas al óleo desde la punta de tus dedos. Puedes cambiar el color de las pinturas a voluntad, y nunca parecen agotarse. Los efectos de la poción duran 8 horas.",
+      "nome": "Pigment"
+    },
+    {
+      "id": 15,
+      "raridade": "Común",
+      "descricao": "Cuando se abre, esta poción vergonzosa y ruidosa suena como un hombre adulto llorando. Cuando se consume, esta poción silencia extrañamente el sonido producido por cualquier hechizo lanzado por el bebedor durante los próximos 60 minutos.",
+      "nome": "Audio Oddity"
+    },
+    {
+      "id": 16,
+      "raridade": "Común",
+      "descricao": "Una poción bien conocida entre investigadores y comerciantes, este caldo espeso adquiere una visión especial de un objeto cuando se vierte sobre él. El único inconveniente es que debes lamer el caldo del objeto para obtener algo de esta información. Cuando se vierte y luego se lame, la poción revela un poco de información menor pero útil sobre el objeto.",
+      "nome": "Hindsight"
+    },
+    {
+      "id": 17,
+      "raridade": "Común",
+      "descricao": "Cuando se consume, esta poción sabe como si fuera té recién hecho con la cantidad perfecta de miel mezclada. Durante los próximos 60 minutos, eres incapaz de hablar sin cantar, y tienes ventaja en las pruebas de Carisma (Actuación) usando tu voz.",
+      "nome": "Super Singing"
+    },
+    {
+      "id": 18,
+      "raridade": "Común",
+      "descricao": "Este líquido casi ingrávido otorga a los bebedores los atributos de una semilla de diente de león, permitiéndoles flotar de manera segura hacia el suelo cuando caen y ser transportados fácilmente por el viento. Durante los próximos 60 minutos, estás bajo los efectos del hechizo Caída de Pluma* y no pesas más de 1 libra.",
+      "nome": "Fluffplum Tonic"
+    },
+    {
+      "id": 19,
+      "raridade": "Común",
+      "descricao": "¿Esto es solo alcohol? Durante los próximos 60 minutos, te intoxicas increíblemente. Durante la duración, obtienes pericia en una habilidad de tu elección, lo que significa que tu bonificación de competencia se duplica para cualquier prueba de habilidad que hagas con ella. Hasta que este efecto termine, todas las pruebas de habilidad que hagas que no usen la habilidad elegida se realizan con desventaja.",
+      "nome": "Merriment"
+    },
+    {
+      "id": 20,
+      "raridade": "Común",
+      "descricao": "Como parte de la acción adicional para consumir esta poción, pronuncias un mensaje y eructas una burbuja, que mágicamente contiene el mensaje en su interior. Luego describes a una criatura con la que estás familiarizado y la burbuja flota hacia esa criatura, viajando a una velocidad de 1 milla por hora, y luego explota. La burbuja explota prematuramente si recibe algún daño. Cuando la burbuja explota, libera el mensaje contenido en tu voz.",
+      "nome": "Bubble Message"
+    },
+    {
+      "id": 21,
+      "raridade": "Común",
+      "descricao": "Esta poción azul aguamarina está fría al tacto y te eriza el vello del brazo cuando se abre. Cuando se vierte en un líquido no mágico, vuelve el líquido invisible durante 1d4 horas. Si el líquido en el que se vierte la poción es más grande que un cubo de 20 pies, la poción no tiene efecto.",
+      "nome": "Crystal Clear"
+    },
+    {
+      "id": 22,
+      "raridade": "Común",
+      "descricao": "Esta discreta poción duplica temporalmente tu edad cuando se consume. Los efectos de la poción duran 1d12 meses. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "Elder Elixir"
+    },
+    {
+      "id": 23,
+      "raridade": "Común",
+      "descricao": "Esta poción aburrida y decepcionante cubre tu boca y garganta mientras la bebes, dejando una película delgada. Durante los próximos 60 minutos, cada líquido que consumes se convierte en vino mientras lo bebes.",
+      "nome": "Witch's Hidden Gem"
+    },
+    {
+      "id": 24,
+      "raridade": "Común",
+      "descricao": "Cuando se agita y se apunta en una dirección, el contenido de este elixir rápido sale disparado de la botella, transformándose en una serpiente venenosa en el aire y aterrizando en un espacio dentro de los 10 pies de ti.",
+      "nome": "Carbonated Snake"
+    },
+    {
+      "id": 25,
+      "raridade": "Común",
+      "descricao": "Te llenas de intensos sentimientos de confusión antes de que una aparición emerja de tu cuerpo que se asemeja a una joven con piel y cabello de ónix y penetrantes ojos verdes. Solo tú puedes verla, y ella no puede hablar. Ella funciona como el hechizo Sirviente Invisible* y dura 1 hora.",
+      "nome": "Shadow Child"
+    },
+    {
+      "id": 26,
+      "raridade": "Común",
+      "descricao": "Esta poción amarga te otorga una forma especial de habla que suena como un galimatías absoluto para cualquiera que no esté también bajo los efectos de una poción hsirebbig. Incluso hechizos como comprender idiomas no logran descifrar este discurso. Los efectos de esta poción duran 24 horas.",
+      "nome": "Hsirebbig"
+    },
+    {
+      "id": 27,
+      "raridade": "Común",
+      "descricao": "Después de beber esta poción, sientes la repentina y desagradable sensación de llevar ropa empapada. Durante los próximos 10 minutos, obtienes una velocidad de vuelo de 15 pies y puedes flotar, pero te ves y te sientes como si estuvieras nadando por el cielo. Mientras vuelas de esta manera, también debes cumplir con las reglas para el combate submarino.",
+      "nome": "Sky Swimming"
+    },
+    {
+      "id": 28,
+      "raridade": "Común",
+      "descricao": "Cuando se prepara, este poderoso elixir almacena uno de los recuerdos del creador de su elección en su interior. Cuando es consumido por otra criatura, esa criatura obtiene el recuerdo almacenado.",
+      "nome": "Passing Memory"
+    },
+    {
+      "id": 29,
+      "raridade": "Común",
+      "descricao": "Este limo travieso a veces puede formarse en lugar de una poción. Si se nota antes de ser consumido, se puede lanzar a un espacio desocupado dentro de los 30 pies de ti, liberando el limo cuando se rompe. Después de lanzar la poción, un limo de refresco aparece en el espacio y actúa por su propia voluntad.",
+      "nome": "Bottled Slime"
+    },
+    {
+      "id": 30,
+      "raridade": "Común",
+      "descricao": "Cuando aplicas este aceite a un objeto, le asignas un sonido característico que acompaña al objeto cuando se usa. Este efecto es permanente a menos que se elimine como una maldición.",
+      "nome": "Oil of the Trademark Flourish"
+    },
+    {
+      "id": 31,
+      "raridade": "Poco común",
+      "descricao": "Después de beber este brebaje terroso, tu forma cambia y se encoge rápidamente. Inmediatamente te polimorfas en un espíritu musgoso, como por el hechizo. Este efecto no requiere tu concentración y termina después de 1 hora.",
+      "nome": "Mosspot"
+    },
+    {
+      "id": 32,
+      "raridade": "Poco común",
+      "descricao": "Después de beber este maravilloso líquido, tu ánimo se levanta y los sentimientos optimistas te invaden. Obtienes ventaja en las próximas 1d4 pruebas de habilidad, tiradas de ataque o tiradas de salvación que realices.",
+      "nome": "Incredible Luck"
+    },
+    {
+      "id": 33,
+      "raridade": "Poco común",
+      "descricao": "Esta poción se puede dividir en hasta ocho partes. Cuando dos o más criaturas consumen este elixir dorado, obtienen una habilidad de vuelo condicional. Durante las próximas 24 horas, las criaturas que consumieron el elixir obtienen una velocidad de vuelo de 60 pies, pero solo mientras se toman de la mano con todas las demás criaturas que participaron de la poción.",
+      "nome": "Grand Friendship"
+    },
+    {
+      "id": 34,
+      "raridade": "Poco común",
+      "descricao": "Una vez consumida, esta poción convoca una nube de lluvia que llora por ti. Luego, en un destello de relámpago, tu cabeza toma la forma de un animal antropomórfico elegido por el DM. Este efecto es permanente.",
+      "nome": "Witch's Lament"
+    },
+    {
+      "id": 35,
+      "raridade": "Poco común",
+      "descricao": "Este elixir amargo y poco atractivo revuelve el estómago y a menudo es una lucha para mantenerse en la garganta. Una vez consumido, te crece una cola prensil de 6 pies de largo, que toma una forma decidida por el DM. La cola se puede usar como si fuera un tercer brazo y puede soportar fácilmente tu propio peso. La cola dura 1d12 días antes de caerse.",
+      "nome": "Spirit Appendage"
+    },
+    {
+      "id": 36,
+      "raridade": "Poco común",
+      "descricao": "Cuando se vierte sobre un objeto que pesa 500 libras o menos, comienza a pesar cada vez más ligero. El objeto pesa hasta 1d100 libras menos al comienzo de cada hora hasta que pesa exactamente 10 libras. Permanece pesando 10 libras durante 1 semana, después de lo cual los efectos de esta poción se desvanecen.",
+      "nome": "Move a Thing"
+    },
+    {
+      "id": 37,
+      "raridade": "Poco común",
+      "descricao": "Esta poción poco atractiva permite al bebedor comer cualquier cosa que quepa en su boca sin efectos nocivos: metal, veneno, agua de mar: lo que sea, lo comes. Los efectos de esta poción duran 1 hora. Cualquier objeto mágico consumido de esta manera se vomita después del final de la hora.",
+      "nome": "Gobble Gunk"
+    },
+    {
+      "id": 38,
+      "raridade": "Poco común",
+      "descricao": "Cuando se entierra y se deja reposar durante 24 horas, esta poción brotará y formará un portal temporal al Reino Espiritual a partir de raíces enredadas y barro. El portal permanece abierto durante 24 horas antes de cerrarse.",
+      "nome": "Pocket Portal"
+    },
+    {
+      "id": 39,
+      "raridade": "Poco común",
+      "descricao": "Cuando se consume, este caldo viscoso sabe a tierra húmeda. Durante la duración, te vuelves inmune a la condición de derribado. Siempre que fueras a caer derribado, en su lugar permaneces de pie como si una fuerza invisible te mantuviera erguido. Incluso por elección, no puedes caer derribado. Los efectos de esta poción duran 10 días.",
+      "nome": "Don't Eat Dirt"
+    },
+    {
+      "id": 40,
+      "raridade": "Poco común",
+      "descricao": "Cuando se vierte, este líquido plateado se expande rápidamente y cubre el área circundante, creando un brillo blanco calcáreo en todo lo que toca. Durante las próximas 8 horas, la gravedad en un cilindro de radio de 20 pies y 300 pies de altura centrado en la poción es como la gravedad de la luna. La distancia de salto para todas las criaturas dentro del cilindro se triplica, y el daño por caída sufrido dentro del cilindro se reduce a la mitad.",
+      "nome": "Lunar Elixir"
+    },
+    {
+      "id": 41,
+      "raridade": "Poco común",
+      "descricao": "Cuando se consume, esta poción hace que tu cabello crezca a un ritmo acelerado. Tira 1d4 + 2 y multiplícalo por 100 para averiguar cuántos pies de cabello te crecen. Después de 1 minuto, la poción desaparece y todo tu cabello se cae.",
+      "nome": "Lifetime Supply"
+    },
+    {
+      "id": 42,
+      "raridade": "Poco común",
+      "descricao": "Cuando se vierte sobre un objeto que es Pequeño o más pequeño, el objeto se vuelve invisible. Los efectos de esta poción duran hasta que se eliminan como si fueran una maldición.",
+      "nome": "Invisible Tonic"
+    },
+    {
+      "id": 43,
+      "raridade": "Poco común",
+      "descricao": "Cuando se prepara, esta poción asume la esencia de un humanoide aleatorio dentro de 1 milla. Una criatura que consume la poción asume la apariencia de esa criatura durante las próximas 24 horas.",
+      "nome": "Liquid Disguise"
+    },
+    {
+      "id": 44,
+      "raridade": "Poco común",
+      "descricao": "Esta mezcla amarga sabe y huele horrible para los seres físicos, pero no podría saber más deliciosa para los espíritus, muchos de los cuales intercambiarían bastante por un sorbo de la cosa. Un espíritu con clasificación de desafío 8 o inferior que consume esta poción se emborracha y se alegra durante 1d4 días. Alternativamente, la poción se puede verter, atrayendo espíritus con clasificación de desafío 2 o inferior que estén dentro de 1 milla. Cuando se vierte, la poción atrae espíritus durante 8 horas o hasta que se consume.",
+      "nome": "Spirit Sweets"
+    },
+    {
+      "id": 45,
+      "raridade": "Poco común",
+      "descricao": "Cuando se consume, este elixir discreto transforma mágicamente tu cabeza en un animal antropomórfico aleatorio, como un caballo, panda, cerdo o mapache. Este efecto dura hasta que se elimina como si fuera una maldición. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "A New Look"
+    },
+    {
+      "id": 46,
+      "raridade": "Poco común",
+      "descricao": "Una vez consumida, esta poción le da sensibilidad a tu sombra. La sombra comienza a actuar independientemente de ti, pero todavía está unida a tu cuerpo. Tiene sus propias emociones y personalidad, pero no puede interactuar con el mundo de ninguna manera más allá de lo que podría hacer una sombra normal. Los efectos de esta poción duran hasta que se eliminan como si fueran una maldición. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "Shadow Puppet"
+    },
+    {
+      "id": 47,
+      "raridade": "Poco común",
+      "descricao": "Cuando bebes esta poción metálica, tu cuerpo se retuerce y se altera en un objeto de tu elección, como por el hechizo Polimorfia Verdadera. Este efecto no requiere tu concentración y termina después de 1 hora.",
+      "nome": "Object Embodiment"
+    },
+    {
+      "id": 48,
+      "raridade": "Poco común",
+      "descricao": "Cuando se ingiere, este elixir quema tu garganta y enciende una brasa en lo profundo de ti. Durante 24 horas, eres inmune al daño por fuego. Cuando la magia de la poción finalmente se desvanece, el fuego dentro de ti arde intensamente desde el interior, consumiéndote en llamas y convirtiendo tu cuerpo en cenizas. 1 hora después apareces en la fogata más cercana, renacido de nuevo. Todos los artículos y ropa que estaban en tu persona cuando te convertiste en cenizas son dejados por tu cuerpo original.",
+      "nome": "Phoenix Elixir"
+    },
+    {
+      "id": 49,
+      "raridade": "Poco común",
+      "descricao": "Esta extraña mezcla de sabores recuerda a hierba recién cortada, vaselina y miel. Cuando se consume, se asienta en tu estómago como una roca y se hincha lentamente en poder. Obtienes la capacidad de lanzar un hechizo aleatorio de nivel 6 o inferior, sin gastar un espacio de hechizo. Este hechizo usa una CD de salvación de 17 y una bonificación de ataque de hechizo de +9. Los efectos de esta poción duran hasta que se lanza el hechizo. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "Unknown Elixir"
+    },
+    {
+      "id": 50,
+      "raridade": "Poco común",
+      "descricao": "Cuando se vierte esta poción, aparece una ilusión de tu elección en tu espacio, como por el hechizo Imagen Mayor. Una criatura que usa su acción para examinar la imagen puede determinar que es una ilusión con una prueba exitosa de Inteligencia (Investigación) DC 18. La ilusión dura 1 hora.",
+      "nome": "Illusion in a Bottle"
+    },
+    {
+      "id": 51,
+      "raridade": "Raro",
+      "descricao": "Cuando se vierte sobre una superficie que es al menos un área cuadrada de 50 pies y no está abarrotada de obstáculos (como árboles o rocas), este líquido picante comienza a espumar y expandirse rápidamente. Después de 1 minuto, aparece en el espacio una casa recién formada y completamente amueblada de tamaño grandioso.",
+      "nome": "Homegrown"
+    },
+    {
+      "id": 52,
+      "raridade": "Raro",
+      "descricao": "Cuando se ingiere, este elixir acre desvincula tu alma de tu cuerpo y la prepara para la transferencia. La primera vez que eres tocado por una criatura después de consumir esta poción, tu mente y alma se transfieren al cuerpo de esa criatura. Mientras habitas el cuerpo de la criatura, puedes obligarla a realizar una prueba disputada de Inteligencia o Sabiduría (ambos eligen qué habilidad usar) al comienzo de cada uno de tus turnos. Si tienes éxito, obtienes el control total sobre la criatura hasta el comienzo de tu siguiente turno. Mientras tu mente y alma están fuera, tu cuerpo cae inconsciente. Si la criatura muere mientras tu mente y alma todavía están dentro de ella, tú también mueres. Habitas el cuerpo de la criatura durante 1 hora, hasta que descartas el efecto como una acción, o hasta que la criatura es blanco de un hechizo de Disipar el Bien y el Mal*.",
+      "nome": "Mind Transfer"
+    },
+    {
+      "id": 53,
+      "raridade": "Raro",
+      "descricao": "El cervecero de esta poción elige la semejanza de un humanoide con el que está familiarizado. Cuando se ingiere, asumes la forma ilusoria de la criatura elegida. Este disfraz ilusorio es perfecto en todos los sentidos y coincide tanto con la apariencia como con la voz de la criatura. Solo las criaturas con la capacidad de detectar magia o ver a través de ilusiones (como con visión verdadera) pueden discernir este disfraz. Los efectos de esta poción duran 7 años o hasta que se eliminan como si fueran una maldición. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "New Life"
+    },
+    {
+      "id": 54,
+      "raridade": "Raro",
+      "descricao": "Cuando se vierte sobre una criatura u objeto, este elixir cremoso despierta instantáneamente al objetivo, como por el hechizo Despertar*. La criatura despertada permanece encantada por ti durante 1 año, en lugar de 30 días.",
+      "nome": "Ups-A-Daisy"
+    },
+    {
+      "id": 55,
+      "raridade": "Raro",
+      "descricao": "Cuando se vierte, este elixir oscuro tiñe la tierra y crea un cubo de 10 pies que está vacío de la magia de la isla, como si estuviera bajo los efectos del hechizo Campo Antimagia*. Este efecto dura 1 año.",
+      "nome": "Spiritual Rebuke"
+    },
+    {
+      "id": 56,
+      "raridade": "Raro",
+      "descricao": "Cuando se consume, sientes una ola de inspiración mágica fluir a través de ti. Aprendes instantáneamente un hechizo aleatorio de tercer nivel. Puedes lanzarlo sin gastar un espacio de hechizo, y una vez que lo haces, no puedes lanzarlo de esta manera nuevamente hasta que termines un descanso largo. El efecto de esta poción es permanente y no cuenta contra la cantidad de pociones que pueden estar afectándote a la vez.",
+      "nome": "Newly Found Magic"
+    },
+    {
+      "id": 57,
+      "raridade": "Raro",
+      "descricao": "La cerveza del artesano se puede agregar a cualquier recipiente más grande de agua o un pequeño cuerpo de agua para crear un baño encantador. El primer objeto no mágico sumergido en el agua durante al menos 1 minuto obtiene un efecto mágico permanente. Este efecto es aleatorio y lo suficientemente poderoso como para que la rareza del artículo se considere poco común o superior.",
+      "nome": "Crafter's Brew"
+    },
+    {
+      "id": 58,
+      "raridade": "Raro",
+      "descricao": "Después de beber esta poción, ya no caminas ni corres, ahora bailas. Ir de un lugar a otro ya no es una caminata mundana, una expresión de aburrimiento arrastrando los pies. Cómo vas del punto A al punto B ahora es una deslumbrante actuación de baile. Desde suaves valses élficos, hasta los saltos y giros de Nakudama, hasta las formas de danza interpretativa de los dara, los exploras todos. Tus movimientos elegantes aumentan tu velocidad al caminar en 10 pies, otorgan una bonificación de +5 en las pruebas de Carisma (Actuación) que involucran baile, y otorgan competencia en las tiradas de salvación de Destreza si aún no la tienes. Esto dura hasta que descartas los efectos de la poción como una acción.",
+      "nome": "Dancing Feet"
+    },
+    {
+      "id": 59,
+      "raridade": "Raro",
+      "descricao": "Cuando bebes esta poción, tu cabello se vuelve rojo oscuro (suponiendo que tengas alguno), y obtienes la capacidad de hablar con los pollos permanentemente, como por el hechizo Hablar con Animales*. ADEMÁS, puedes cacarear un cloqueo sagrado y atronador que convoca a 100 pollos en un radio de 20 pies centrado en ti. Estos pollos aparecen corriendo desde la distancia, cavando desde el suelo debajo y cayendo del cielo en un verdadero tsunami de aves de corral aleteando y cloqueando. Cada criatura en el área (excluyendo a ti) debe hacer una tirada de salvación de Destreza DC 19, sufriendo 30d6 de daño cortante en una salvación fallida, o la mitad del daño en una exitosa. Una vez que hayas convocado a los pollos de esta manera, no puedes volver a hacerlo. Esto no cuenta contra la cantidad de pociones que pueden estar afectando tu cuerpo al mismo tiempo.",
+      "nome": "Chicken Chaser"
+    },
+    {
+      "id": 60,
+      "raridade": "Raro",
+      "descricao": "Cuando se consume, tu cuerpo desaparece junto con todos los artículos que llevabas puestos o transportabas, y tu conciencia se transfiere a un objeto aleatorio dentro de las 100 millas de ti.",
+      "nome": "Disappearing Act"
+    }
+  ]
+}

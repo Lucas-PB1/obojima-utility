@@ -183,12 +183,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             {brewingResult.success ? (
               <>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground mb-2">
-                    {brewingResult.recipe.resultingPotion.nome_portugues}
-                  </div>
-                  <div className="text-sm text-foreground/60 mb-4">
-                    {brewingResult.recipe.resultingPotion.nome_ingles}
-                  </div>
+                  <span className="font-bold text-lg">
+                  {brewingResult.recipe.resultingPotion.nome}
+                </span>
+
                   <div
                     className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
                       brewingResult.recipe.resultingPotion.raridade === 'Comum'
@@ -213,10 +211,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                     <div className="bg-muted/30 rounded-lg p-4 border border-green-200/20">
                       <div className="text-center">
                         <div className="text-xl font-bold text-green-700 dark:text-green-400 mb-1">
-                          {brewingResult.remainsPotion.nome_portugues}
-                        </div>
-                        <div className="text-xs text-foreground/60 mb-2">
-                          {brewingResult.remainsPotion.nome_ingles}
+                          {brewingResult.remainsPotion.nome}
                         </div>
                         <div className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-3">
                           {brewingResult.remainsPotion.raridade}
@@ -242,10 +237,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                     <div className="bg-muted/30 rounded-lg p-4 border border-purple-200/20">
                       <div className="text-center">
                         <div className="text-xl font-bold text-purple-700 dark:text-purple-400 mb-1">
-                          {brewingResult.secondPotion.nome_portugues}
-                        </div>
-                        <div className="text-xs text-foreground/60 mb-2">
-                          {brewingResult.secondPotion.nome_ingles}
+                          {brewingResult.secondPotion.nome}
                         </div>
                         <div
                           className={`inline-block px-2 py-1 rounded-full text-xs font-medium mb-3 ${

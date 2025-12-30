@@ -91,11 +91,9 @@ export const RecipeCollection: React.FC = () => {
                 <div className="relative z-10 space-y-4">
                   <div>
                     <h4 className="font-serif font-bold text-foreground text-lg leading-tight group-hover:text-totoro-blue transition-colors">
-                      {recipe.resultingPotion.nome_portugues}
+                      {recipe.resultingPotion.nome}
                     </h4>
-                    <p className="text-[10px] text-primary/60 font-semibold uppercase tracking-widest font-sans">
-                      {recipe.resultingPotion.nome_ingles}
-                    </p>
+
                   </div>
 
                   <div
@@ -140,11 +138,9 @@ export const RecipeCollection: React.FC = () => {
           <div className="space-y-6 pt-2">
             <div className="text-center">
               <h1 className="text-3xl font-serif font-bold text-foreground mb-1">
-                {selectedRecipe.resultingPotion.nome_portugues}
+                {selectedRecipe.resultingPotion.nome}
               </h1>
-              <p className="text-xs text-primary/60 font-semibold uppercase tracking-[0.2em] mb-4">
-                {selectedRecipe.resultingPotion.nome_ingles}
-              </p>
+
               <div
                 className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 shadow-sm ${
                   selectedRecipe.resultingPotion.raridade === 'Comum'

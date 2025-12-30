@@ -3,6 +3,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { StatsService } from '@/services/statsService';
 import { useIngredients } from '@/hooks/useIngredients';
 import { CollectedIngredient } from '@/types/ingredients';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function useIngredientCollection() {
   const { ingredients, attempts, markAsUsed } = useIngredients();
@@ -22,26 +23,28 @@ export function useIngredientCollection() {
     [displayIngredients, attempts]
   );
 
+  const { t } = useTranslation();
+
   const statsData = useMemo(
     () => [
       {
         value: collectionStats.totalCollected,
-        label: 'Total Coletados',
+        label: t('activity.stats.ingredientsCollected'),
         color: 'totoro-green' as const
       },
-      { value: collectionStats.totalUsed, label: 'Usados', color: 'totoro-blue' as const },
+      { value: collectionStats.totalUsed, label: t('ingredients.table.used'), color: 'totoro-blue' as const },
       {
         value: collectionStats.totalAttempts,
-        label: 'Tentativas',
+        label: t('activity.stats.totalAttempts'),
         color: 'totoro-yellow' as const
       },
       {
         value: `${collectionStats.successRate.toFixed(1)}%`,
-        label: 'Taxa de Sucesso',
+        label: t('activity.stats.successRate'),
         color: 'totoro-orange' as const
       }
     ],
-    [collectionStats]
+    [collectionStats, t]
   );
 
   const handleMarkAsUsed = useCallback(

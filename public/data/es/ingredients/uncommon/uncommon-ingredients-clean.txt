@@ -1,0 +1,183 @@
+INGREDIENTES INCOMUNS DE OBOJIMA - DADOS LIMPOS
+
+1. BLACK PEARL
+   Combat: 13, Utility: 14, Whimsy: 15
+   Descrição: Nothing is more coveted by purveyors of magic than the dreamlike luster of a black pearl. Some magicians claim that gazing into the swirling iridescence of a black pearl can bring you visions of a possible future event or help you find a missing object. Black pearls are found inside the giant hornshell clams that are found in the Shallows around Obojima, and most of these are guarded fiercely by fish folk warriors.
+
+2. BLACK CINNAMON
+   Combat: 16, Utility: 12, Whimsy: 11
+   Descrição: For some reason that is unknown, black cinnamon trees emanate a subtle magic and one in every hundred or so cinnamon trees across Obojima gains this special trait. There are many legends surrounding the first black cinnamon tree. Kuroki village tells the tale of a wizard who walked into a cinnamon tree, turning it black—the sacred tree still stands to this day in the center of Kuroki Temple.
+
+3. BOTTLE CAP (SUPA-FIZZ!)
+   Combat: 11, Utility: 13, Whimsy: 16
+   Descrição: Perhaps the metal of the bottle cap is why they contain latent magic so sought after by potion makers… or perhaps is simply the power of Supa-Fizz! With a bit of knowledge and some diligent digging, these bottle caps can be found in and around the more habitable areas of Obojima.
+
+4. CRACKLING JASPER
+   Combat: 17, Utility: 15, Whimsy: 12
+   Descrição: Some say that crackling jasper contains restless fire spirits that incessantly battle among one another causing the stones to spit sparks, shoot tiny flames, and sometimes burst apart with a bang. Obojimans are known to put crackling jasper into tin cans tied to poles during festivals to scare away mischievous spirits. Crackling jasper is found near hot springs and lava tubes within the Land of Hot Water.
+
+5. CORRUPTED SEAWATER
+   Combat: 17, Utility: 11, Whimsy: 14
+   Descrição: Only the most advanced brewers or the most demented witches and warlocks are willing to expose themselves to Corrupted seawater as there is still little known about it. This purplish water has the Corruption's signature sickly, acrid stench. For those who are intrepid enough to venture to the eastern side of Obojima, Corrupted seawater is easy enough to find, but be sure to bring a container that can keep the noxious fluid from spreading its contamination.
+
+6. CORRUPTED SLIME
+   Combat: 16, Utility: 14, Whimsy: 13
+   Descrição: Slime that has become affected by the Corruption becomes opaque and inky, staining things it comes in contact with. Corrupted slime retains its viscosity but it's quite sticky. By all accounts, being near Corrupted slime is uniquely unpleasant and those who touch it have been known to become lethargic and listless. Corrupted slime can be cultivated from slime monsters that have themselves been corrupted.
+
+7. HAKUMON'S RAMEN BROTH
+   Combat: 12, Utility: 14, Whimsy: 17
+   Descrição: The ramen broth made by master ramen chef, Hakumon, is legendary among chefs and potion makers alike for its particularly potent effects. Many ramen competitors and potion makers have been known to pay a high price to secure a container-full of broth from Hakumon's famed ramen shop. But be warned! For Hakumon, ramen is no laughing matter, and the master chef takes great pains to ensure that thieves and miscreants cannot steal his broth so easily.
+
+8. DAWN PETAL
+   Combat: 11, Utility: 13, Whimsy: 17
+   Descrição: The petals of the dawn blossom petals are admired by Obojimans for their unique shape, fragrance, and golden luster. Dawn blossom trees don't propagate like other trees as each dawn blossom tree has been planted by a nature spirit that then inhabits the tree. Despite the efforts of ambitious horticulturists, dawn blossom trees only grow where they are planted by their host spirit. Because of this, they are quite uncommon and considered sacred by most villagers.
+
+9. DRAGON ROOT
+   Combat: 14, Utility: 15, Whimsy: 16
+   Descrição: There is no discernable rhyme or reason for where dragon root is located on Obojima. But like all such mysteries, legends abound. The story most often repeated regarding dragon root claims that wherever it is found, it marks the footfalls of a spirit dragon from a bygone age named Runivarish. Whether or not this is true, or not, locals do find it peculiar that dragon root, once harvested, will grow in the exact same spot, as if marking something.Dragon root burns hotter than most woods and coals and is therefore valuable to both brewers and smiths.
+
+10. ESSENCE OF ILL OMEN
+    Combat: 16, Utility: 12, Whimsy: 11
+    Descrição: There is great debate among witches whether this mercurial substance is caused by or is the cause of evil tidings, though it is understood that this ashy residue is a potent component in warding magic or spells associated with fortune. Essence of Ill Omen is created spontaneously as a kind of magical feedback from divination magic, which manifests as a puff of sooty vapor that can be captured in any kind of airtight vessel.
+
+11. ESSENCE OF GLUMBUG
+    Combat: 11, Utility: 11, Whimsy: 17
+    Descrição: Whoever first learned the art of glumbug tickling has been lost to time, but there are a few old-timers left who are willing to teach a willing pupil a few tricks. Glumbug ticklers are the only ones who know how to extract the glowing glumbug essence, as it cannot be gathered by squashing or dissecting the shiny bugs. Glumbugs are mostly found under stones and in caves.
+
+12. FEATHER ROCK
+    Combat: 13, Utility: 17, Whimsy: 15
+    Descrição: As its name suggests, feather rock is a paradoxical stone with a peculiar nature that seems to contradict the pull of gravity. These spindle-shaped stones always reach skyward, while remaining anchored to the ground on a tapered point. Even if these stones are tipped over, they return to their "reaching" position. Howlers covet feather rock. Small chunks of feather rock are distributed across the island, but larger stones are found in deposits primarily in the Gale Fields.
+
+13. FIZZING GREEN
+    Combat: 12, Utility: 14, Whimsy: 12
+    Descrição: Deep within the forests of Obojima, there is a very special plant called a spiral fern that is the source of fizzing green. Only a few druids and naturalists know the secret to getting a spiral fern to release fizzing green, and they are reluctant to tell, but will gladly go and harvest the strange, effervescent substance for a trade.
+
+14. FORGE SLAG
+    Combat: 15, Utility: 14, Whimsy: 11
+    Descrição: Forge slag can be gathered at any foundry or blacksmithing forge, but the slag created by the fire and hammer strokes of a master smith is what potion makers are searching for, as there is always latent magic in the work of a master.
+
+15. GARGOYLE POWDER
+    Combat: 15, Utility: 16, Whimsy: 13
+    Descrição: Gargoyle powder comes from ground-up dragon eggs that have been encased in ash from ancient eruptions. Grinding up these eggs releases the magic within their bones and is often used in petrification spells, hence the name. Gargoyle powder can be bought or traded only with merchants and wizards who specifically deal with such materials. Other than that, seeking out petrified eggs in the ancient ash fields on the sides of the volcano is a much more difficult and perilous task.
+
+16. GLOW WORMS OF THE VALE
+    Combat: 12, Utility: 15, Whimsy: 14
+    Descrição: Glow worms are found in caves and marshes across Obojima and work fine as ingredients in potions, but intrepid potion brewers have discovered that the wildly-colored glow worms found in the Vale of Abundance in the Gale Fields have a much greater potency.
+
+17. HAPPY JOY CAKE
+    Combat: 12, Utility: 13, Whimsy: 12
+    Descrição: The makers of Happy Joy Cake are a secretive family and it is believed that at least one of them is a spirit, but Obojimans are nevertheless in love with the small, bite-sized treats whose recipe has been handed down for generations. Although Happy Joy Cakes are made only in Yatamon, there are a few trusted traveling merchants who are allowed to distribute them across the island.
+
+18. KOJOBI FRUIT
+    Combat: 14, Utility: 14, Whimsy: 14
+    Descrição: Almost every village has a couple of kojobi trees in it but they only fruit every two or three years. When a kojobi tree bears fruit it is a cause for celebration and everyone comes to take part in a Kojobi Festival where the abundant fruit is made into all kinds of dishes and beverages to be enjoyed by all.
+
+19. LAUGHING MOSS
+    Combat: 11, Utility: 16, Whimsy: 16
+    Descrição: Laughing moss is well-known amongst naturalists and woodcutters, as it's fairly easy to find when you know what you're looking for. To find a patch of this moss is quite simple, as all you need to do is head to the woods and listen for the distinctive sounds of hearty laughter emanating from a campsite in the evening. Along with finding it in the wild, laughing moss is sold in special apothecaries around the island.
+
+20. LIVING SPUD
+    Combat: 14, Utility: 12, Whimsy: 17
+    Descrição: Every now and then, a spud pops out of the ground and begins a long meandering trek. Obojiman farmers call them "living spuds" and they are objects of curiosity and reverence. Wagons will stop on roads and people in crowded markets will make way to let a living spud trundle through. But whatever it is that animates these wayward potatoes, that magic is desired by potion brewers who will use even the smallest snip of a living spud to power their brews.
+
+21. LIONS BLUME
+    Combat: 17, Utility: 13, Whimsy: 16
+    Descrição: This carnivorous flower is characterized by a maw at the center of its array of honey-colored petals. Beekeepers consider the flower an invasive weed that devours bee populations. Lions blume grows in patches known as prides on the high moors of the Coastal Highlands. Each pride has its own lineage which tries to choke out other prides growing nearby. Brewers seek out lions blume because of the flower's milky sap as well as its "teeth."
+
+22. MAGIC MONK'S RICE WINE
+    Combat: 16, Utility: 12, Whimsy: 15
+    Descrição: Magic Monk's Rice Wine is a delicious and refreshing high-end spirit. Many who imbibe it say it stimulates the intellect and afterward their dreams are far more vivid. On each of the solstices, a delivery of Magic Monk's Rice Wine is handled by teams of spirits who mysteriously appear and distribute it to the taverns and temples of Obojima. Magic Monk's Rice Wine is brewed and distilled in some unknown location within the spirit realm.
+
+23. MOLTED LIZARD SKIN
+    Combat: 15, Utility: 12, Whimsy: 12
+    Descrição: For maximum results, try to find a whole skin that has been thoroughly dried by the sun. The crispier the better.
+
+24. MOUNTAIN SNAIL
+    Combat: 14, Utility: 15, Whimsy: 12
+    Descrição: As a potion ingredient, the mountain snail's value is in its shell, which when pulverized into a powder, is used in magics associated with protection. However, it's a perilous pursuit cultivating mountain snails, for they tend to live in the lairs of dangerous predators who live in mountain caves. There, the snails feed off meat scraps left behind. The snails avoid detection by masquerading as stones, though they are drawn to music.
+
+25. MOURNSHADE
+    Combat: 13, Utility: 14, Whimsy: 13
+    Descrição: Mournshade is used by healers across the island for what they believe is the plant's ability to absorb painful emotions. Although it is rare to find in the wild, there always seems to be someone in the village who has a sachet full of mournshade just in case. Mournshade is found in bogs and swampy wetlands where it faintly glows on moonless nights.
+
+26. MUNCHANKA ROOT
+    Combat: 17, Utility: 11, Whimsy: 11
+    Descrição: The root of the deadly munchanka plant must be handled and processed with skill and care, for it is said that those who have eaten the wrong parts of this plant have been driven mad. Munchanka root can be found in dry, arid regions.
+
+27. NAKUDAMA SPICE
+    Combat: 12, Utility: 15, Whimsy: 14
+    Descrição: With its distinct earthy flavor, this spice was once part of a culinary fad among Nakudama. It has since fallen out of fashion, but the name remains. The spice comes from the zelk bean, which grows from a species of pond lily. These beans are harvested, fermented, and then dried before being ground into a purple powder. A few Nakudama farmers continue to make it, but because the process of producing Nakudama spice is time-consuming and labor-intensive, it isn't cheap.
+
+28. NIGHT THISTLE
+    Combat: 14, Utility: 17, Whimsy: 16
+    Descrição: It is said that the night thistle came with the Corruption and only grows on the graves of restless spirits. It blooms only on the darkest night of the new moon, putting forth an eerily skeletal, bioluminescent flower that attracts nocturnal pollinators. Night thistles are only found near and within corrupted regions making it dangerous to collect.
+
+29. NOODLE EEL
+    Combat: 13, Utility: 12, Whimsy: 16
+    Descrição: Every now and then, a ramen chef finds a gorged noodle eel sleepily coiled in an empty bowl of theirs. All ramen chefs see them as pests as apparently noodle eels have a rather refined palate and don't come to just any bowl of broth, seeking only to slurp down the finest ramen—a major irritant to serious chefs. This makes catching one difficult as it requires good ramen and no self-respecting chef will sacrifice their work for bait.
+
+30. OPU OPU SPRING WATER
+    Combat: 11, Utility: 16, Whimsy: 14
+    Descrição: The sacred water from the Opu Opu Spring has always been famous for its healing properties. Villagers would come from all around and make the long trek up into the mountains to collect the spring water, but recently a large troll has moved into the area and the villagers have been too afraid to travel there. Because of this, supplies of the spring water are now at an all-time low.
+
+31. POK POK FLAKES
+    Combat: 13, Utility: 14, Whimsy: 13
+    Descrição: For those potion makers who have a culinary flair, using dried flakes from the pok pok fish is a way to give a savory and sorcerous kick to any brew. Pok pok fish are notoriously hard to catch, but there are a few fisherfolk on the island who know all the tricks of the trade. They usually sell their wares direct to potion makers or market shops that specialize in potion ingredients and spell components.
+
+32. PETRIFIED ALLIGATOR
+    Combat: 15, Utility: 16, Whimsy: 13
+    Descrição: Bards speak of the mad druid Fennistrix, who had a penchant for petrification along with a bizarre alligator obsession that resulted in almost all of the alligators on Obojima being petrified and displayed. Legend says that when Fennistrix's taxidermy hut exploded, petrified alligator parts scattered all over the island. It's rare nowadays to find a foot or a head, let alone an entire alligator, but even a small amount of it ground up releases some of Fennistrix's potent magic.
+
+33. RUBBLE FROM A RUBBLE GOLEM
+    Combat: 16, Utility: 11, Whimsy: 15
+    Descrição: When the animus of a rubble golem falls silent, some amount of magic continues to radiate from the chunks of debris that its body was formed from. At night, occasional motes of white light shoot off from these broken bits. Brewers seek this material for its inherent magical quality, which they can use for various purposes.
+
+34. SHADOWROOT
+    Combat: 15, Utility: 13, Whimsy: 12
+    Descrição: This small, knobby root only grows where its black leaves are left in perpetual shadow. Once harvested, the root must be wrapped or sealed away from light or it will rapidly wither and rot.
+
+35. SCUMWEED
+    Combat: 11, Utility: 12, Whimsy: 11
+    Descrição: Whether it was brought by the Corruption or a local plant was mutated by it, scumweed has appeared on the corrupted coastlines of Obojima and is creeping further inland along sloughs and marshes that are affected by the encroaching Corruption. Scumweed is slimy and thick. Dried scumweed can even make hardy armor in a pinch and more than a few monsters and witches have been known to use it for precisely that purpose.
+
+36. SLEEPING MERCHANT
+    Combat: 13, Utility: 13, Whimsy: 13
+    Descrição: Known for its naturally soporific effects, the sleeping merchant got its name through its use by traveling traders who traditionally drink its dried blossoms as a tea after a busy day of hocking their wares. This water lily can be identified by the nodding white blossom under a leafy umbrella. The sleeping merchant only grows in certain ponds and lakes which has made attempts to grow sleeping merchant plants in other bodies of water impossible. Thus, the demand for this plant is high among the tea vendors of Obojima.
+
+37. SPARK PLUG
+    Combat: 11, Utility: 17, Whimsy: 11
+    Descrição: Spark plugs are used by potion makers to add in a small charge of magic, just enough to be a catalyst for a specific reaction. Most Obojimans still have no idea what these strange items are, let alone where they come from but the rangers and rogues who do keep the information to themselves.
+
+38. SPIRIT TEA
+    Combat: 11, Utility: 11, Whimsy: 17
+    Descrição: There are many fine teas to be tried all over Obojima, but only a few are legendary. One such tea is made by the master tea blender, Chisuay. It is said that Chisuay leaves his body and brews this tea in the Spirit Realm, then, through powerful magic, he brings this delicate spiritual brew back into the Material Plane. Spirit tea can only be found at Chisuay's teahouse.
+
+39. SPRING
+    Combat: 14, Utility: 17, Whimsy: 15
+    Descrição: Springs come in various sizes from different machines. Because of their spiral shape and ferrous material, they are prized by magic users to channel energies into spells and potions. Merchants who deal in arcana are always looking for springs found within the ruins of those who came before.
+
+40. SUN SHROOM
+    Combat: 13, Utility: 16, Whimsy: 14
+    Descrição: Discovered by the wizard known as Karoglin the Sleepless, the sun shroom allows those who consume it to stay awake for long periods of time. Overuse can lead to extended bouts of uncontrollable laughter and eventually deep restless sleep. Sun shroom has a briny taste and is most commonly consumed by mixing it in tea. Sun shrooms tend to grow near the roots of trees in the Wandering Forest, a fact that has led some to speculate that energizing mushrooms are what keep the trees on the move.
+
+41. TOKA TRUFFLE
+    Combat: 15, Utility: 12, Whimsy: 14
+    Descrição: Toka truffles are the goal of every truffle hunter as their pungency and deliciousness are renowned. But it was only recently that potion makers discovered the magic properties of the truffle, making competition to find these valuable delicacies even more heated. Toka truffles are found underground near oak trees. Apart from magic spells or items, prized truffle hunting hogs are the best way to find these hidden treasures.
+
+42. VINYL RECORD
+    Combat: 15, Utility: 15, Whimsy: 15
+    Descrição: These black disks are covered in a continuous spiral that moves to the center of the disk—believed to be an ancient and lost way of recording knowledge. Some sages know how to unlock the messages within the grooves, while many Obojiman potion makers grind or melt these "records" to release the magic they contain. These objects are found in caches where they are often stacked like plates in a restaurant. But discoveries are few and far between, and merchants are sure to drive a hard bargain.
+
+43. WOLFENITE
+    Combat: 11, Utility: 17, Whimsy: 11
+    Descrição: Wolfenite is found high in the mountains in cracks and crevices between the granite boulders. For those who are more intrepid and willing to take the risk, sneaking into a howler den is another way to find a cache of this rare mineral as they are for some reason drawn to this rare mineral.
+
+44. WYCHWOOD
+    Combat: 14, Utility: 13, Whimsy: 15
+    Descrição: The twisted, spined branches of a wychwood tree are well known by wizards and those who practice magic involving spirits. Many warlocks and druids use wychwood wands for their spellcasting. It is said that wychwood trees only grow in a few groves where spirits are plentiful, places where magic flows from the ground, and where the light of the full moon can touch their branches.
+
+45. YELLOW SLIME
+    Combat: 17, Utility: 11, Whimsy: 11
+    Descrição: Only those with iron constitutions or equipped with the right protective gear can withstand the nausea often brought on by the slime's ripe, vinegary stench. Brewers have spent generations learning how to neutralize the unpleasant smell because yellow slime also possesses the ability to metabolize many venoms and poisons. The substance yellow slime is cultivated from larger, living omnivorous monsters of the same name.
+
+TOTAL: 45 ingredientes extraídos com sucesso!

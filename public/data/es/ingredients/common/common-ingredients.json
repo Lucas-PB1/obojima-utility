@@ -1,0 +1,558 @@
+{
+  "total": 69,
+  "descricao": "Ingredientes comunes de la isla de Obojima para la creación de pociones",
+  "ingredients": [
+    {
+      "id": 1,
+      "combat": 9,
+      "utility": 5,
+      "whimsy": 4,
+      "descricao": "Este trozo de savia de árbol petrificada es valorado por su color y brillo similar a una gema y se usa a menudo en joyería. Algunos joyeros arcanos afirman que posee propiedades especiales, especialmente si un insecto antiguo está atrapado dentro de él. El ámbar se puede encontrar en áreas rocosas donde se encuentra madera petrificada, y es conocido por aparecer en ciertas playas.",
+      "nome": "Amber"
+    },
+    {
+      "id": 2,
+      "combat": 0,
+      "utility": 3,
+      "whimsy": 1,
+      "descricao": "La Zanahoria Apper es bien conocida en toda Obojima como una variedad superior de zanahoria que tiene un sabor delicioso y un crujido robusto. Su parte superior bulbosa aparece del suelo cuando está lista para la cosecha, facilitando a los recolectores localizar Zanahorias Apper en la naturaleza. Se pueden encontrar en la mayoría de las áreas de tierras bajas cubiertas de hierba.",
+      "nome": "Apper Carrot"
+    },
+    {
+      "id": 3,
+      "combat": 3,
+      "utility": 3,
+      "whimsy": 3,
+      "descricao": "Usado en todo, desde material de construcción hasta recipientes para beber e instrumentos musicales, el bambú es quizás el material más versátil de la isla. Manchas de bambú se pueden encontrar en la mayoría de los lugares en Obojima, sin embargo, existen algunos bosques de bambú en las colinas y regiones montañosas donde puede crecer tan grueso como un árbol.",
+      "nome": "Bamboo"
+    },
+    {
+      "id": 4,
+      "combat": 2,
+      "utility": 0,
+      "whimsy": 0,
+      "descricao": "Este polvo rojizo está hecho de las vainas de semillas molidas del árbol bashu. El polvo de bashu es comúnmente usado por chefs que quieren agregar un sabor picante pero ahumado a sus platos. La mayoría de los Obojimans cree que el polvo de bashu también ayuda a aliviar males menores como tos y resfriados. Los árboles bashu se encuentran en el interior en las regiones cálidas y áridas de Obojima.",
+      "nome": "Bashu Powder"
+    },
+    {
+      "id": 5,
+      "combat": 3,
+      "utility": 4,
+      "whimsy": 7,
+      "descricao": "La carne marmoleada con grasa y deliciosa del salmón de lomo azul es un alimento básico en muchas aldeas de la isla. Un salmón completamente desarrollado puede alcanzar casi dos metros de longitud y cualquier pescador te dirá que son astutos, difíciles de atrapar, y pueden dar una mordida desagradable. Los salmones de lomo azul se encuentran en ríos por toda Obojima y en las partes más profundas del arrecife circundante.",
+      "nome": "Blue Back Salmon"
+    },
+    {
+      "id": 6,
+      "combat": 7,
+      "utility": 6,
+      "whimsy": 1,
+      "descricao": "Estas pequeñas bayas rojas son un dulce delicioso por aproximadamente tres semanas del año. Fuera de ese período, son bastante asquerosas y se dejan intactas por los habitantes del bosque. A menudo se encuentran cerca de la base de montañas o caras de acantilados.",
+      "nome": "Boom Beri"
+    },
+    {
+      "id": 7,
+      "combat": 4,
+      "utility": 8,
+      "whimsy": 3,
+      "descricao": "Estos escarabajos del tamaño de avellanas se pueden encontrar bebiendo la savia azucarada de los árboles o bebiendo el jugo de frutas demasiado maduras que cayeron al suelo del bosque. Los Obojimans aplastan escarabajos bora secos para producir un hermoso tinte turquesa. Los escarabajos bora se encuentran generalmente en o alrededor de cualquier árbol que produce frutos o una savia dulce.",
+      "nome": "Bora Bug"
+    },
+    {
+      "id": 8,
+      "combat": 1,
+      "utility": 10,
+      "whimsy": 6,
+      "descricao": "Además de hacer un cepillo de pelo elegante, el junco cepillo también es bien conocido por sus propiedades de fabricación de pociones. Los juncos cepillo se pueden encontrar junto a estanques y lagos en las áreas de tierras bajas.",
+      "nome": "Brush Reed"
+    },
+    {
+      "id": 9,
+      "combat": 1,
+      "utility": 1,
+      "whimsy": 2,
+      "descricao": "La madera aromática del árbol driko es un aroma común en templos, santuarios y mercados de aldeas en Obojima. Muchos leñadores secan pilas de ramas de driko al sol, haciendo que los meses de verano huelan fantástico. Además de poder obtener ramas de driko en casi cualquier aldea, hay una abundancia de árboles driko por toda la isla.",
+      "nome": "Bundle of Driko Twigs"
+    },
+    {
+      "id": 10,
+      "combat": 6,
+      "utility": 4,
+      "whimsy": 8,
+      "descricao": "Estos pequeños insectos esféricos están cubiertos por pelos rígidos que les permiten adherirse a tejidos e incluso a la piel. Son atraídos por el calor de fogatas y sacos de dormir; un hecho atestiguado por cualquiera que haya pasado más de unas pocas noches durmiendo bajo las estrellas.",
+      "nome": "Camp Mite"
+    },
+    {
+      "id": 11,
+      "combat": 1,
+      "utility": 1,
+      "whimsy": 2,
+      "descricao": "Aunque para algunos, un huevo es un huevo, existen granjeros de pollos Obojimans que pueden discutir hasta tarde en la noche las varias cualidades y virtudes del huevo perfecto.",
+      "nome": "Chicken Egg"
+    },
+    {
+      "id": 12,
+      "combat": 2,
+      "utility": 7,
+      "whimsy": 5,
+      "descricao": "Incluso fuera de los círculos de fabricación de pociones, las propiedades del Té Celestial de Chisuay se hablan en tonos reverentes, y hay muchas competiciones alrededor de la isla para ver quién hace la mejor mezcla de té, y la mezcla del Té Celestial de Chisuay siempre queda en primer lugar. Aunque el té salvaje se encuentra en toda la meseta de Obojima, el té de más alta calidad se encuentra en campos donde el té hereditario se cultiva y cría con gran atención y cuidado.",
+      "nome": "Chisuay's Heavenly Tea"
+    },
+    {
+      "id": 13,
+      "combat": 8,
+      "utility": 6,
+      "whimsy": 5,
+      "descricao": "Las serpientes de arcilla son bastante dóciles y no venenosas, lo que hace que capturar una sea una tarea bastante fácil. Las puntas de la cola de una serpiente de arcilla son muy buscadas por brujas y fabricantes de pociones, y afortunadamente para las serpientes de arcilla, sus colas vuelven a crecer en algunas semanas. Las serpientes de arcilla se encuentran en las orillas de ríos y lagos donde hay ricos depósitos de arcilla, pero las más deseables se encuentran en la Tierra de Agua Caliente.",
+      "nome": "Clay Snake Tail"
+    },
+    {
+      "id": 14,
+      "combat": 1,
+      "utility": 0,
+      "whimsy": 0,
+      "descricao": "Las flores del cuerno de nube florecen en primavera. En los meses de finales de verano, una vaina de semilla en el medio de la flor se abre y una pelusa ligera y fibrosa emerge—una pelusa que es muy buscada por fabricantes de pociones y cerveceros. Los cuernos de nube se encuentran generalmente en prados y pastizales, y prefieren climas secos.",
+      "nome": "Cloud Horn"
+    },
+    {
+      "id": 15,
+      "combat": 3,
+      "utility": 10,
+      "whimsy": 6,
+      "descricao": "Estos hongos coloridos están constantemente en movimiento, arrastrándose por el suelo del bosque. Nadie sabe exactamente qué están buscando, si es que están buscando algo, o si solo están esparciendo sus esporas.",
+      "nome": "Creeping Bolete"
+    },
+    {
+      "id": 16,
+      "combat": 7,
+      "utility": 8,
+      "whimsy": 4,
+      "descricao": "La placa de Dorrin es una piedra que ocurre naturalmente que puede romperse en grandes hojas y usarse como tejas, vajilla o material de construcción. Los fabricantes de pociones descubrieron que la placa de Dorrin está llena de cristales minúsculos que son buenos para mejorar propiedades mágicas. La placa de Dorrin se encuentra en formaciones rocosas cerca de la ciudad montañosa de Dorrin.",
+      "nome": "Dorrin Plate"
+    },
+    {
+      "id": 17,
+      "combat": 2,
+      "utility": 1,
+      "whimsy": 4,
+      "descricao": "La fruta seca es abundante en Obojima, pero existen ciertos artesanos que saben cómo preservar y concentrar el sabor y vitalidad de la fruta de una forma que bordea el misticismo. Aunque la fruta seca se puede comprar en mercados y de granjeros de toda Obojima, la mejor fruta seca para hacer pociones es de árboles frutales que crecen alrededor de la base del Monte Arbora.",
+      "nome": "Dried Fruit"
+    },
+    {
+      "id": 18,
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 0,
+      "descricao": "Una verdad desagradable es que el papel de la cera de oído en la fabricación de pociones es más importante de lo que a la gente le gusta discutir. Aunque la cera de oído es abundante, no es toda igual en términos de mezcla de pociones, y algunas variedades cuestan más caro que otras.",
+      "nome": "Earwax"
+    },
+    {
+      "id": 19,
+      "combat": 9,
+      "utility": 4,
+      "whimsy": 3,
+      "descricao": "Los dientes del pueblo pez han sido usados durante mucho tiempo por brujas en la fabricación de pociones, especialmente aquellas usadas para respirar bajo el agua. El pueblo pez pasa por muchos dientes en sus vidas y a lo largo de los siglos, miles de dientes descartados han sido arrastrados a la costa cerca de sus cuevas y grutas subacuáticas. Pero una palabra a los sabios, la mayoría del pueblo pez es muy territorial y no le gusta que intrusos vaguen ociosamente en sus playas.",
+      "nome": "Fish Folk Tooth"
+    },
+    {
+      "id": 20,
+      "combat": 4,
+      "utility": 5,
+      "whimsy": 4,
+      "descricao": "Para la fabricación de pociones, cualquier cabeza de pescado vieja y maloliente sirve.",
+      "nome": "Fish Head"
+    },
+    {
+      "id": 21,
+      "combat": 6,
+      "utility": 9,
+      "whimsy": 1,
+      "descricao": "Este papel altamente combustible puede obtenerse durante los numerosos festivales que las aldeas por toda Obojima celebran durante las varias estaciones. Debido a estos festivales, hay una tradición de hacer papel relámpago y cada aldea hace una variación diferente, desde aquellos que queman en colores brillantes y vivos hasta otros que chisporrotean y silban.",
+      "nome": "Flash Paper"
+    },
+    {
+      "id": 22,
+      "combat": 8,
+      "utility": 6,
+      "whimsy": 7,
+      "descricao": "El limo verde aparece como una masa verde viscosa con propiedades débilmente ácidas. Los curanderos favorecen el limo verde como ungüento en pomadas tópicas. Los aulladores a menudo mantienen glóbulos de limo verde metidos en sus mejillas. La sustancia limo verde se cultiva de monstruos omnívoros vivos más grandes del mismo nombre.",
+      "nome": "Green Slime"
+    },
+    {
+      "id": 23,
+      "combat": 3,
+      "utility": 2,
+      "whimsy": 3,
+      "descricao": "Por alguna razón, el arroz lustroso y regordete cultivado en la región de Gohaku es siempre de calidad y sabor excepcionales. En algún momento, las propiedades mágicas del arroz fueron descubiertas, un hecho que los granjeros de arroz de Gohaku hablan con una cierta dosis de orgullo.",
+      "nome": "Gohaku Rice"
+    },
+    {
+      "id": 24,
+      "combat": 5,
+      "utility": 1,
+      "whimsy": 9,
+      "descricao": "La albura de hakuma es una madera fragante y combustible que viene del centro del árbol hakuma. Se quema en santuarios y lugares sagrados por toda Obojima, entregando un incienso complejo y agradable que limpia la mente y calma el alma. Los árboles hakuma son bastante comunes por la isla, pero a menos que seas un sacerdote, druida, o conozcas los rituales apropiados, la mayoría de los Obojimans desaprueba tomar ramas de estos árboles.",
+      "nome": "Hakuma Sapwood"
+    },
+    {
+      "id": 25,
+      "combat": 9,
+      "utility": 3,
+      "whimsy": 8,
+      "descricao": "Pareciendo bellotas del tamaño de calabazas, los huevos de dragón de la colina pueden permanecer inactivos en el suelo por un año o más antes de eclosionar. Los huevos de dragón de la colina generalmente están enterrados fuera de la vista, pero ciertas flores gustan de crecer alrededor de tumbas, revelando sus posiciones, y cerdos cazadores de huevos pueden ser entrenados para olfatearlos. No conocidos por instintos maternales poderosos, los dragones de la colina ponen sus huevos en nidadas por todas las llanuras, valles y colinas ondulantes de Obojima.",
+      "nome": "Hill Dragon Egg"
+    },
+    {
+      "id": 26,
+      "combat": 10,
+      "utility": 5,
+      "whimsy": 4,
+      "descricao": "El pelaje de aullador tiene ciertas propiedades arcanas que son buscadas por brujas y brujos para sus varias pociones. Algunos Obojimans creen que un mechón de pelaje de aullador quemado en una chimenea puede alejar espíritus malignos. El pelaje de aullador puede encontrarse atrapado en matorrales de espinas, a lo largo de senderos de caza, y cerca de campamentos de aulladores dentro y alrededor de los bosques y cuevas donde habitan.",
+      "nome": "Howler Fur"
+    },
+    {
+      "id": 27,
+      "combat": 0,
+      "utility": 1,
+      "whimsy": 0,
+      "descricao": "Las bayas itchi pueden cosecharse en racimos de debajo de las hojas verdes vibrantes de la planta itchi, que son conocidas por causar erupciones severas en la piel expuesta. Las bayas en sí son inofensivas y se vuelven dulces cuando se reducen a mermelada. Las plantas itchi se encuentran con mayor frecuencia en las orillas de los ríos, sus hojas apuntando hacia el pico del Monte Arbora. Sabios han especulado sobre este fenómeno por generaciones, pero ninguna evidencia concluyente ha resuelto la cuestión.",
+      "nome": "Itchi Beri"
+    },
+    {
+      "id": 28,
+      "combat": 6,
+      "utility": 4,
+      "whimsy": 10,
+      "descricao": "Esta flor de colores brillantes es bien conocida en toda Obojima por la forma única en que propaga sus semillas. Cuando la flor de una planta hoguera saltarina es tocada por un transeúnte, sus pétalos comienzan a contorsionarse imitando llamas y las semillas dentro de ella disparan del tallo central con un sonido audible de estallido como troncos crujiendo en el fuego. La planta hoguera saltarina es el deleite de los niños por toda Obojima, y toda aldea seguramente tiene una.",
+      "nome": "Jumping Bonfire"
+    },
+    {
+      "id": 29,
+      "combat": 2,
+      "utility": 1,
+      "whimsy": 3,
+      "descricao": "Muchas brujas dicen que el proceso de tallar una calabaza de Halloween confiere una cierta cantidad de magia a la calabaza, y encender una vela dentro de ella absorbe la energía del tiempo especial de la estación de otoño cuando la mayoría de las brujas concuerda que la magia está en su más potente. Así, pedazos de una calabaza de Halloween están imbuidos de energías sobrenaturales que son clave para ciertas pociones y magias.",
+      "nome": "Jack-O'-Lantern Bits"
+    },
+    {
+      "id": 30,
+      "combat": 1,
+      "utility": 1,
+      "whimsy": 1,
+      "descricao": "Las sanguijuelas de tela son aproximadamente del tamaño de un pañuelo y vienen en una variedad de colores. Tienden a reunirse en grupos hechos de sanguijuelas de diferentes colores, formando lo que se asemeja a aglomerados de tela de retazos. Existen comunidades druídicas en los Campos de Vendaval que han aprendido a hacer ropa entera de sanguijuelas de tela entrenadas.",
+      "nome": "Kloth Leech"
+    },
+    {
+      "id": 31,
+      "combat": 1,
+      "utility": 1,
+      "whimsy": 1,
+      "descricao": "Existen muchos tipos diferentes de algas marinas en y alrededor de Obojima, la mayoría de las cuales son bastante sabrosas y nutritivas, pero ninguna es más buscada que el alga de hoja nudosa. Muchos cocineros usan alga de hoja nudosa en sus sopas y ensaladas, y existen algunas brujas y brujos que la usan para hechizos. El alga de hoja nudosa puede encontrarse lavada en las playas de Obojima y creciendo en densos lechos de algas a lo largo del fondo del mar alrededor de la isla.",
+      "nome": "Knobble Leaf Seaweed"
+    },
+    {
+      "id": 32,
+      "combat": 6,
+      "utility": 3,
+      "whimsy": 2,
+      "descricao": "Puedes encontrar raíz de kojo colgada dentro de cada santuario y templo en Obojima, ya que se considera buena suerte. La raíz de kojo seca también se muele en polvo y se usa como especia en muchos platos por la isla.",
+      "nome": "Kojo Root"
+    },
+    {
+      "id": 33,
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 2,
+      "descricao": "La vid de los amantes es en realidad dos vides distintas que desarrollaron una relación simbiótica donde una extrae nutrientes del suelo y la otra proporciona un tallo fuerte y capacidad de agarrar y escalar. Por separado, ninguna vid proporciona un efecto medicinal o mágico, pero cuando ambas se hierven juntas, sus propiedades mezcladas son verdaderamente potentes. La vid de los amantes puede encontrarse en la mayoría de los bosques, pero es especialmente aficionada a áreas pantanosas.",
+      "nome": "Lovers Vine"
+    },
+    {
+      "id": 34,
+      "combat": 8,
+      "utility": 5,
+      "whimsy": 2,
+      "descricao": "Esta raíz resistente es difícil de procesar y a menudo es hervida por horas antes de ser usada medicinalmente. Una vez ablandada, la raíz carmesí puede usarse en varios bálsamos y elixires. Frecuentemente se encuentra en áreas sombreadas cerca de la base de arbustos y árboles.",
+      "nome": "Mandrake Root"
+    },
+    {
+      "id": 35,
+      "combat": 4,
+      "utility": 8,
+      "whimsy": 7,
+      "descricao": "Entra en cualquier fuente termal o spa y el aroma de Mellowort seguramente estará flotando alrededor con su aroma calmante. Existen muchas canciones escritas por bardos sobre los beneficios y propiedades relajantes de esta planta florida. Mellowort es una planta alta y esbelta que se encuentra en las tierras bajas de Obojima.",
+      "nome": "Mellowort"
+    },
+    {
+      "id": 36,
+      "combat": 2,
+      "utility": 0,
+      "whimsy": 1,
+      "descricao": "La Espiral del Mono es una pequeña flor que brota un crecimiento espiralado tan apretado que solo puede ser forzado a abrir con fuerza tremenda. Entre un gremio local de sabios de las Tierras Altas Costeras, existen aquellos que afirman conocer el secreto de liberar la espiral de una forma menos forzada. La flor crece en un tipo de hiedra que conecta flores de espiral del mono en una celosía que los granjeros a menudo plantan en lugar de setos.",
+      "nome": "Monkey's Coil"
+    },
+    {
+      "id": 37,
+      "combat": 10,
+      "utility": 3,
+      "whimsy": 8,
+      "descricao": "En las manos de un artesano de pociones hábil, un buen pastel de estiércol de buey secado al sol tiene muchos usos. Los bueyes de la montaña vagan salvajes en las colinas y son bastante malhumorados, así que se aconseja precaución.",
+      "nome": "Mountain Ox Dung"
+    },
+    {
+      "id": 38,
+      "combat": 4,
+      "utility": 6,
+      "whimsy": 5,
+      "descricao": "A pesar de su nutrición general, la aspereza amarga de la nuez del árbol del ratón a menudo impide que sea comida como bocadillo por la mayoría de las personas. Sin embargo, la nuez del árbol del ratón es amada por la isla a causa de su cáscara, que se usa para hacer instrumentos como castañuelas o un tipo de flauta llamada \"besador de ratón\". Las nueces del árbol del ratón crecen en árboles robustos y nudosos que crecen en áreas normalmente inadecuadas, como lados de acantilados o dentro de edificios arruinados.",
+      "nome": "Mouse Tree Nut"
+    },
+    {
+      "id": 39,
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 0,
+      "descricao": "Estos deliciosos pasteles narutomaki se hacen en mercados y tabernas por toda la isla de Obojima. Muchas aldeas tienen competiciones de naruto para ver quién puede hacer los pasteles de naruto más sabrosos y estéticamente agradables, todo en honor al espíritu guardián local o para celebrar una buena temporada de pesca o una cosecha abundante.",
+      "nome": "Narutomaki"
+    },
+    {
+      "id": 40,
+      "combat": 3,
+      "utility": 1,
+      "whimsy": 2,
+      "descricao": "Nobblewort es un liquen bastante común cuya textura irregular y nudosa le da su nombre. A menudo puedes ver un manojo de nobblewort colgado en los aleros de muchas casas de aldea, ya que se dice que aleja la mala suerte y espíritus traviesos. Nobblewort puede encontrarse aferrado a la mayoría de los árboles caducifolios por la isla.",
+      "nome": "Nobblewort"
+    },
+    {
+      "id": 41,
+      "combat": 1,
+      "utility": 10,
+      "whimsy": 0,
+      "descricao": "Este vidrio translúcido puede encontrarse en muchos colores diferentes y a menudo es usado por espaderos como piedras de afilar debido a su alta durabilidad y pulido fino que deja en la hoja. A menudo se encuentra bajo el agua o en cuevas.",
+      "nome": "Oporion Glass"
+    },
+    {
+      "id": 42,
+      "combat": 6,
+      "utility": 0,
+      "whimsy": 10,
+      "descricao": "Magos Obojimans dicen que debido a su enfoque e intención, artistas de origami tejen energías sutiles en los pliegues y formas de sus creaciones, de modo que incluso una grulla simple contiene un poco de magia. Sin embargo, las mejores y más útiles grullas se encuentran en el valle del loro del cielo.",
+      "nome": "Origami Crane"
+    },
+    {
+      "id": 43,
+      "combat": 2,
+      "utility": 2,
+      "whimsy": 0,
+      "descricao": "Cera teñida de rosa es parte de la tradición de magia popular asociada más de cerca con las aldeas del Don de Shuritashi. De acuerdo con tales tradiciones, oraciones menores o bendiciones se inscriben en la cera. Cuando una vela hecha de cera rosa se enciende, se cree que la magia es liberada, aumentando la probabilidad de que la oración sea atendida. La práctica permanece común en comunidades rurales, mientras cerveceros por toda Obojima buscan la cera para su propio comercio. Cera de vela rosa se encuentra en la mayoría de las tiendas de herbolarios y magos.",
+      "nome": "Pink Candle Wax"
+    },
+    {
+      "id": 44,
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 1,
+      "descricao": "El sauce espía es conocido por sus peculiares flores espías, que tienen una semejanza perturbadora con globos oculares. A menos que secas, las flores son venenosas para comer. Los pétalos de \"párpado\" son valorados por sastres como fuente de tinte rojo profundo.",
+      "nome": "Peeping Willow"
+    },
+    {
+      "id": 45,
+      "combat": 9,
+      "utility": 8,
+      "whimsy": 0,
+      "descricao": "No hay nada como un buen veneno antiguo para sazonar una poción.",
+      "nome": "Poison"
+    },
+    {
+      "id": 46,
+      "combat": 5,
+      "utility": 7,
+      "whimsy": 5,
+      "descricao": "Recolectada de la costa en áreas corrompidas, esta espuma del mar es tóxica al tacto. Solo los más hábiles fabricantes de pociones pueden usar sus propiedades mágicas sin causar daño.",
+      "nome": "Pungent Sea Foam"
+    },
+    {
+      "id": 47,
+      "combat": 2,
+      "utility": 2,
+      "whimsy": 2,
+      "descricao": "Algunos druidas afirman que el melón pirámide obtiene su forma de las fuerzas que forman el cosmos, y contemplar el melón revelará secretos más allá del espacio y tiempo. La mayoría de los niños, sin embargo, simplemente disfrutan de la fruta agria y hacen un juego de escupir las semillas.",
+      "nome": "Pyramid Melon"
+    },
+    {
+      "id": 48,
+      "combat": 7,
+      "utility": 5,
+      "whimsy": 3,
+      "descricao": "Hace mucho tiempo, cuando los Nakudama gobernaban la tierra, se dice que la Reina Okumi fue engañada por una bestia malvada que buscaba robar su corazón. Cuando estaban a punto de casarse, un espíritu de hongo se sacrificó para envenenar a la bestia y revelar su verdadera naturaleza. A causa del coraje del hongo, la Reina Okumi esparció sus esporas por toda Obojima, y es por eso que los hongos del dilema de la reina son tan abundantes.",
+      "nome": "Queen's Dilemma"
+    },
+    {
+      "id": 49,
+      "combat": 4,
+      "utility": 10,
+      "whimsy": 0,
+      "descricao": "Una mezcla pulposa de hollín y el aceite prensado de las semillas de una planta raka, la pasta de raka es comúnmente usada para reparar vasos de cerámica rotos. Cuando seca, endurece en una sustancia vítrea brillante. Muchas casas tienen pasta de raka, que es comúnmente almacenada en un plato hexagonal raso y cubierta con una película de cera para evitar que seque.",
+      "nome": "Raka Paste"
+    },
+    {
+      "id": 50,
+      "combat": 10,
+      "utility": 8,
+      "whimsy": 7,
+      "descricao": "Las plantas de disparo de sonajero son buscadas por sus vainas de semillas que secan en el verano. Así que la primera lluvia viene, las semillas comienzan a sonar dentro de las vainas secas y entonces disparan en una lluvia de semillas que las esparce a una gran distancia. Las plantas de disparo de sonajero se encuentran principalmente en los Campos de Vendaval en el centro de la isla.",
+      "nome": "Rattle Shoot"
+    },
+    {
+      "id": 51,
+      "combat": 5,
+      "utility": 3,
+      "whimsy": 9,
+      "descricao": "La podredumbre de cinta es una cepa de moho morado que devora madera. Aldeanos Obojimans están siempre atentos a cualquier señal de esto, ya que la podredumbre de cinta puede rápidamente comer los soportes de una casa y derribar toda la estructura en cuestión de meses. La podredumbre de cinta puede encontrarse en casas antiguas y deterioradas y tocones dentro de bosques húmedos.",
+      "nome": "Ribbon Rot"
+    },
+    {
+      "id": 52,
+      "combat": 8,
+      "utility": 4,
+      "whimsy": 2,
+      "descricao": "Los cangrejos óxido son abundantes y malhumorados, haciéndolos un premio para pescadores, pero un cangrejo difícil de atrapar, ya que a menudo cortan jaulas con sus garras inusualmente fuertes. Los cangrejos óxido son bastante aficionados al pollo. Pueden encontrarse en las aguas alrededor de Obojima.",
+      "nome": "Rust Crab"
+    },
+    {
+      "id": 53,
+      "combat": 4,
+      "utility": 2,
+      "whimsy": 2,
+      "descricao": "Frutas escamosas son frutas del tamaño de un puño que están cubiertas por una cáscara gruesa y escamosa. Aunque el exterior de una fruta escamosa sea bastante poco apetitoso, el interior es dulce y delicioso, y es fácilmente excavado después que la fruta es cortada por la mitad. Muchos granjeros de frutas escamosas pueden ser fácilmente identificados, ya que siempre cargan un cuchillo afilado y una cuchara de metal. Los árboles de frutas escamosas se encuentran a lo largo de la costa, ya que aman suelo arenoso. Muchas aldeas costeras tienen sus propias versiones creativas de bebidas de frutas escamosas que sirven orgullosamente a los viajeros.",
+      "nome": "Scalefruit Rind"
+    },
+    {
+      "id": 54,
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 1,
+      "descricao": "Las playas de Obojima están cubiertas con diferentes tipos de conchas del mar. Muchos caminos y pasarelas en las aldeas costeras están cubiertos con conchas blancas simples. Algunas de las más decorativas se venden en tiendas.",
+      "nome": "Seashell"
+    },
+    {
+      "id": 55,
+      "combat": 1,
+      "utility": 0,
+      "whimsy": 0,
+      "descricao": "El agua del mar es un alimento básico en muchos procesos de fabricación de pociones, pero algunos maestros fabricantes de pociones exigirán agua del mar de ciertas áreas alrededor de Obojima debido a los elementos particulares, minerales y energías presentes en las aguas alrededor de esa región específica. Para aquellos aventureros con propensión para mentiras o deseo de dinero fácil, un maestro puede sentir la diferencia en las aguas alrededor de Obojima, así que no intentes engañarlos con solo cualquier agua del mar vieja.",
+      "nome": "Sea Water"
+    },
+    {
+      "id": 56,
+      "combat": 10,
+      "utility": 8,
+      "whimsy": 7,
+      "descricao": "La lana gruesa del dragón oveja ha sido usada por los Obojimans por siglos como ropa, mantas e incluso armadura de fieltro. Muchas aldeas tiñeron lana de dragón oveja en muchos colores vibrantes. Aunque la mayoría de los dragones oveja sean domesticados, aún existen dragones oveja salvajes vagando por los pastizales de Obojima.",
+      "nome": "Sheep Dragon Wool"
+    },
+    {
+      "id": 57,
+      "combat": 0,
+      "utility": 2,
+      "whimsy": 0,
+      "descricao": "Vides chasqueantes son plantas carnívoras con un tallo central grueso y muchos tentáculos más finos y agarraores, similares a ganchos, que usan para emboscar pájaros desprevenidos y pequeños roedores. La savia es un fluido viscoso naranja-rojizo.",
+      "nome": "Snap Vine Sap"
+    },
+    {
+      "id": 58,
+      "combat": 5,
+      "utility": 9,
+      "whimsy": 6,
+      "descricao": "Las telas sedosas y fuertes de las arañas de pierna huso son tejidas en redes gruesas similares a hamacas bajo arbustos y en hierba alta y densa. Las telas son lo suficientemente fuertes para atrapar pequeños animales que las arañas de tela huso envuelven y cuelgan en su despensa de seda. Las arañas de pierna huso se encuentran en bosques, bajo arbustos grandes, y en áreas donde la hierba crece alta.",
+      "nome": "Spindle Leg Spider Webs"
+    },
+    {
+      "id": 59,
+      "combat": 6,
+      "utility": 0,
+      "whimsy": 9,
+      "descricao": "La raíz de espíritu es llamada así porque muchos Obojimans creen que si la dejas bajo tu almohada por la noche, removerá cualquier espíritu malo—especialmente aquellos que atormentan niños con pesadillas. Algunos aldeanos también creen que raíces de espíritu son de donde los dara vienen. La raíz de espíritu puede encontrarse creciendo entre rocas en y alrededor de áreas montañosas y aparentemente desoladas.",
+      "nome": "Spirit Root"
+    },
+    {
+      "id": 60,
+      "combat": 4,
+      "utility": 9,
+      "whimsy": 7,
+      "descricao": "La tinta de calamar es muy buscada por calígrafos y sastres finos, ya que la tinta sirve como excelente tinta para escritura y un tinte rico y colorido para las ropas más finas. Algunos chefs también valoran la tinta para agregar color y un sabor único a sus sopas y platos. La tinta de calamar puede encontrarse en los muchos tipos diferentes de calamares que viven en las aguas alrededor de Obojima.",
+      "nome": "Squid Ink"
+    },
+    {
+      "id": 61,
+      "combat": 8,
+      "utility": 8,
+      "whimsy": 4,
+      "descricao": "Pescadores están en guerra constante con estas plantas, que atrapan líneas de pesca. Es comúnmente creído que la hierba enmarañada no es natural, sino es una especie hechizada por el pueblo pez para atormentar habitantes de la tierra que se acercan demasiado al agua. Esta especie invasora puede encontrarse agrupada por todo el Bajo.",
+      "nome": "Tangle Weed"
+    },
+    {
+      "id": 62,
+      "combat": 2,
+      "utility": 6,
+      "whimsy": 5,
+      "descricao": "El ube ha sido comido por mucho tiempo como alimento básico por los Obojimans y raramente hay una fiesta de festival que no presente ube cocido de varias maneras. Muchas aldeas tienen un santuario con ofrendas dedicadas al espíritu del ube, generalmente en la forma de un ñame espíritu alegre. Aunque el ube crezca salvaje, existen muchos granjeros que lo cultivan para crear nuevas variedades más deliciosas, especialmente en las colinas occidentales y tierras bajas donde el clima es perfecto.",
+      "nome": "Ube"
+    },
+    {
+      "id": 63,
+      "combat": 0,
+      "utility": 1,
+      "whimsy": 0,
+      "descricao": "Todo Obojiman tiene recuerdos cariñosos del aroma de varrow en los días de verano, ya que la planta secreta una resina fragante para proteger sus hojas en los días en que el sol está caliente. Muchos Obojimans usan varrow como especia en tés o como incienso, ya que su humo tiene un aroma distintivo y agradable. Junto con sus propiedades medicinales, varrow, fresco o seco, es una buena base para cualquier poción mágica. Varrow crece casi en todo lugar en Obojima, pero es comúnmente encontrado cerca de la costa.",
+      "nome": "Varrow"
+    },
+    {
+      "id": 64,
+      "combat": 9,
+      "utility": 2,
+      "whimsy": 8,
+      "descricao": "Nombrado después de un documento extraño encontrado en el observatorio antiguo, la rata mosca de Venus puede extraer sangre de una bestia desprevenida sin ninguna sensación, usando sus dientes afilados como agujas y saliva adormecedora. Enjambres de ratas mosca de Venus son conocidos por matar ganado, haciéndolos el flagelo de los granjeros en todos lados. Las ratas mosca de Venus viven en cuevas cerca del observatorio donde el primero de su especie fue encontrado. Se ecolocalizan en la oscuridad usando sus oídos y colas sensibles con puntas.",
+      "nome": "Venus Fly Rat"
+    },
+    {
+      "id": 65,
+      "combat": 6,
+      "utility": 7,
+      "whimsy": 0,
+      "descricao": "Estas flores minúsculas de olor dulce flotan en vastas nubes, permaneciendo en el aire por semanas montando corrientes de viento. No es inusual que nubes de flores del viento atraigan varios enjambres de insectos polinizadores. Aunque sean más comúnmente encontradas en su estado aéreo en los Campos de Vendaval y en la Tierra de Agua Caliente, las flores del viento se originan en las laderas del Monte Arbora, aferrándose a manchas dispersas de tierra.",
+      "nome": "Windbloom"
+    },
+    {
+      "id": 66,
+      "combat": 3,
+      "utility": 0,
+      "whimsy": 5,
+      "descricao": "Los tallos gruesos y rectos de la escoba de la bruja son perfectos para encantar, ya que no se deforman o rompen cuando imbuidos de magia poderosa—especialmente el tipo usado para escobas voladoras. Pero otras partes de la escoba de la bruja—las hojas y flores—también son usadas para hacer pociones y preparaciones de hierbas. La escoba de la bruja puede encontrarse en abundancia a lo largo de carreteras y caminos de Obojima.",
+      "nome": "Witch's Broom"
+    },
+    {
+      "id": 67,
+      "combat": 1,
+      "utility": 0,
+      "whimsy": 10,
+      "descricao": "Este coral es visto como un mal presagio por la mayoría de los pescadores Obojimans. Algunos dicen que un nuevo aglomerado de coral del ojo de la bruja crece toda vez que una maldición es proferida. El coral del ojo de la bruja puede encontrarse después de alguna búsqueda subacuática en la mayoría de las partes del Bajo.",
+      "nome": "Witch's Eye Coral"
+    },
+    {
+      "id": 68,
+      "combat": 0,
+      "utility": 4,
+      "whimsy": 2,
+      "descricao": "Aunque la savia de yugi sea comúnmente encontrada goteando de árboles de todas las especies, no es una sustancia que ocurre naturalmente. Espíritus que se retiran para un árbol tienen un efecto transformador en él. Las hojas pueden crecer en una forma o color diferente, o una nueva fruta deslumbrante puede emerger. Sin embargo, todo árbol habitado por un espíritu produce savia de yugi. Esta sustancia pegajosa es a menudo usada como endulzante. Sin embargo, algunos artesanos astutos conocen el secreto de hacer vasos fuertes similares a vidrio de ella.",
+      "nome": "Yugi Sap"
+    },
+    {
+      "id": 69,
+      "combat": 5,
+      "utility": 8,
+      "whimsy": 4,
+      "descricao": "Las hojas del arbusto yuma secretan un aceite fuerte y de olor agradable que es conocido por repeler insectos picadores y moscas. La mayoría de los fabricantes de jabón usa aceite de arbusto yuma en sus jabones, y perros y gatos son a menudo vistos con un aglomerado de hojas de yuma atado a sus collares para mantener pulgas y garrapatas alejadas. Una vez que el olor del arbusto yuma es experimentado, entonces son bastante fáciles de encontrar solo por el olor y pueden encontrarse por toda la isla.",
+      "nome": "Yuma Shrub"
+    }
+  ]
+}

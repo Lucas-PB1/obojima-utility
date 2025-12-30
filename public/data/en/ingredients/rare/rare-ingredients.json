@@ -1,0 +1,174 @@
+{
+  "total": 21,
+  "descricao": "Rare ingredients from Obojima island for potion creation",
+  "ingredients": [
+    {
+      "id": 1,
+      "combat": 18,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "There are three cryptic alchemical tomes on Obojima that speak of the arcane energies of the spirit vine and its uses. Only the most expert potion makers understand how to work with this plant, and of those, only a few can fully unleash its power. Spirit vine only grows in the Spirit Realm, where it is plentiful. However, what makes this plant unique is the flower. At any given time, there is only one flower in existence. When it wilts or is harvested, another one will form on another vine in a random location.",
+      "nome": "Blossom of Spirit Vine"
+    },
+    {
+      "id": 2,
+      "combat": 19,
+      "utility": 17,
+      "whimsy": 18,
+      "descricao": "Bottled lightning is created when a wizard or druid captures a bolt of lightning in a special bottle during a storm. The process is dangerous and requires considerable skill, as the lightning must be captured at the exact moment it strikes the ground. The bottles used for this purpose are made of special glass that can contain the electrical energy without shattering. Bottled lightning is extremely unstable and must be used quickly after capture.",
+      "nome": "Bottled Lightning"
+    },
+    {
+      "id": 3,
+      "combat": 16,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "This magical gum is made by the sprites of Obojima using a secret recipe that includes sap from ancient trees and stardust. When chewed, the gum can produce bubbles that float in the air and contain small magics. The bubbles can be popped to release minor magical effects, such as light, sound, or small illusions. The gum retains its magical properties for up to an hour after being chewed.",
+      "nome": "Bubble Gum"
+    },
+    {
+      "id": 4,
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 17,
+      "descricao": "The Wandering Line is a magical railroad that traverses Obojima in a constantly changing pattern. The coal used to power the locomotive of this railroad is special, as it is mined from mines that only exist when the railroad passes by them. This coal burns with a blue flame and produces smoke that can be used to create illusions. It is extremely rare to get this coal, as the railroad is unpredictable and the mines disappear when it moves.",
+      "nome": "Coal From The Wandering Line"
+    },
+    {
+      "id": 5,
+      "combat": 18,
+      "utility": 16,
+      "whimsy": 18,
+      "descricao": "This ink is produced by giant octopuses that live in the deep ocean around Obojima. Crimson octopuses are intelligent creatures that use their ink to create complex underwater art. The ink has unique magical properties and can be used to write spells that activate when the ink dries. It is collected with great care, as crimson octopuses are protective of their art and can become aggressive.",
+      "nome": "Crimson Octopus Ink"
+    },
+    {
+      "id": 6,
+      "combat": 20,
+      "utility": 15,
+      "whimsy": 17,
+      "descricao": "Yutro was an ancient dragon who lived in the mountains of Obojima thousands of years ago. When he died, his fangs scattered across the island and became objects of power. Each fang contains a fraction of Yutro's power and can be used to create extremely powerful potions. The fangs are sought after by collectors and potion makers, but they are extremely rare and valuable.",
+      "nome": "Dragon Fang of Yutro"
+    },
+    {
+      "id": 7,
+      "combat": 15,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "Fairy willows are special trees that grow only in glades where fairies dance in the moonlight. These trees are known for their healing properties and for harboring benevolent spirits. The leaves and bark of the fairy willow can be used to create powerful healing potions and to ward off evil spirits. The trees are protected by the fairies and can only be harvested with their permission.",
+      "nome": "Fairy Willow"
+    },
+    {
+      "id": 8,
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "Giant koi fish are magical creatures that live in the sacred lakes of Obojima. These koi are revered by the locals and are considered bringers of good luck. Their scales have unique magical properties and can be used to create potions that bring fortune and protection. The scales are collected only when the koi shed them naturally, as harming a giant koi fish is considered a great taboo.",
+      "nome": "Giant Koi Fish Scale"
+    },
+    {
+      "id": 9,
+      "combat": 16,
+      "utility": 20,
+      "whimsy": 16,
+      "descricao": "Golden root is an extremely rare plant that grows only on the roots of Obojima's oldest trees. This plant is known for its longevity properties and its ability to store magical energy. Golden root can be used to create potions that extend life and to store spells for later use. It is so rare that only a few people on Obojima have ever seen it.",
+      "nome": "Golden Root"
+    },
+    {
+      "id": 10,
+      "combat": 19,
+      "utility": 17,
+      "whimsy": 16,
+      "descricao": "Eryo was a powerful wizard who lived on Obojima centuries ago. When he died, his hand was preserved by magic and became a magical artifact. The Hand of Eryo can be used to cast spells without the need for material components and can store magical energy. It is one of the most powerful artifacts on Obojima and is sought after by wizards from all over the world.",
+      "nome": "Hand of Eryo"
+    },
+    {
+      "id": 11,
+      "combat": 18,
+      "utility": 19,
+      "whimsy": 17,
+      "descricao": "Irimbi chrysalises are formed by magical butterflies that live in the forests of Obojima. These butterflies undergo a special metamorphosis that transforms them into creatures of pure magical energy. The chrysalises contain this energy and can be used to create potions that transform the user temporarily. The collection process must be done with great care, as the chrysalises are fragile and can break easily.",
+      "nome": "Irimbi Chrysalis"
+    },
+    {
+      "id": 12,
+      "combat": 20,
+      "utility": 14,
+      "whimsy": 18,
+      "descricao": "Lionfish poison is extracted from the venomous spines of this dangerous marine creature. The poison is extremely potent and can be used to create powerful poisonous potions. However, it can also be used to create antidotes and healing potions when processed correctly. Collecting the poison is dangerous and meant for experts, as the lionfish is aggressive and its poison can be fatal.",
+      "nome": "Lionfish Poison"
+    },
+    {
+      "id": 13,
+      "combat": 19,
+      "utility": 16,
+      "whimsy": 17,
+      "descricao": "Orange slime is a magical creature that lives in the deep caves of Obojima. This slime is known for its intelligence and its ability to communicate telepathically. Orange slime can be used to create potions that allow mental communication and enhance psychic abilities. It is a peaceful creature that only becomes aggressive when threatened.",
+      "nome": "Orange Slime"
+    },
+    {
+      "id": 14,
+      "combat": 15,
+      "utility": 20,
+      "whimsy": 19,
+      "descricao": "Ota lantern oil is made from a secret recipe passed down through generations of the Ota family. This oil is used to fuel magical lanterns that can illuminate large areas and ward off creatures of darkness. The oil has purifying properties and can be used to cleanse areas contaminated by dark magic. The recipe is closely guarded by the Ota family.",
+      "nome": "Ota Lantern Oil"
+    },
+    {
+      "id": 15,
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "Running kirios are magical birds that live on the plains of Obojima. These birds are known for their incredible speed and their ability to run faster than the wind. Their feathers have magical properties that can be used to create speed and agility potions. The feathers are collected only when the birds shed them naturally during molting.",
+      "nome": "Plumage of a Running Kirio"
+    },
+    {
+      "id": 16,
+      "combat": 18,
+      "utility": 17,
+      "whimsy": 20,
+      "descricao": "Ronin neko figurines are made by specialized artisans on Obojima. These figurines represent samurai cats and are known for their magical properties. The figurines can be used to create potions that grant combat abilities and to summon samurai cat spirits. They are made with special materials and require years of training to be created correctly.",
+      "nome": "Ronin Neko Figurine"
+    },
+    {
+      "id": 17,
+      "combat": 16,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "Starstones are fragments of stars that fell on Obojima thousands of years ago. These stones contain pure cosmic energy and can be used to create potions that connect the user with the cosmos. Starstones are extremely rare and are sought after by astrologers and wizards who study the stars. They glow with a soft light even in total darkness.",
+      "nome": "Starstone"
+    },
+    {
+      "id": 18,
+      "combat": 17,
+      "utility": 20,
+      "whimsy": 18,
+      "descricao": "Tears of the moon are formed when the moon cries over Obojima during lunar eclipses. These tears are collected in special containers and have unique magical properties. Tears of the moon can be used to create potions that connect the user with the moon and to perform powerful lunar rituals. They are collected only during lunar eclipses, making them extremely rare.",
+      "nome": "Tears of the Moon"
+    },
+    {
+      "id": 19,
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 20,
+      "descricao": "In the heights beyond the snowline exists a barren realm where many magical beings reside. One of them is the legendary snow dragon, Nokumai, whose frozen breath is desired by all who deal in things of an arcane nature. It is said that Nokumai’s Frozen Breath never melts, and the great dragon only breathes it once every thousand years, though no one alive has actually seen Nokumai and the dragon may be long gone.",
+      "nome": "Nokumai's Frozen Breath"
+    },
+    {
+      "id": 20,
+      "combat": 18,
+      "utility": 20,
+      "whimsy": 0,
+      "descricao": "These beetles were made famous by the legendary sage, Arol, for his use of their mandibles as nibs for his quill. But potion makers began using the beetles for potion crafting when a witch of the Fish Head Coven started seeing the rare insect in her dreams. Sage Arol beetles live deep underground, fleeing from even the faintest light. On rare occasions, they come to the surface, though the reason remains a mystery.",
+      "nome": "Sage Arol's Beetle"
+    },
+    {
+      "id": 21,
+      "combat": 18,
+      "utility": 17,
+      "whimsy": 19,
+      "descricao": "Wufu whisky is distilled by the monks of Wufu Mountain using a secret recipe that includes magical herbs and sacred spring water. This whisky is known for its magical properties and its ability to open the mind to mystical visions. Wufu whisky can be used to create potions that enhance psychic abilities and to perform divination rituals. It is produced only once a year during the mountain festival.",
+      "nome": "Wufu Whisky"
+    }
+  ]
+}

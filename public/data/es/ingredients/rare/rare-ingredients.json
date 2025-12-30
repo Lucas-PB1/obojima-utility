@@ -1,0 +1,174 @@
+{
+  "total": 21,
+  "descricao": "Ingredientes raros de la isla de Obojima para la creación de pociones",
+  "ingredients": [
+    {
+      "id": 1,
+      "combat": 18,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "Hay tres tomos alquímicos crípticos en Obojima que hablan de las energías arcanas de la vid espiritual y sus usos. Solo los fabricantes de pociones más especializados entienden cómo trabajar con esta planta, y de esos, solo algunos pueden liberar completamente su poder. La vid espiritual solo crece en el Reino Espiritual, donde es abundante. Sin embargo, lo que hace única a esta planta es la flor. En cualquier momento, solo existe una flor. Cuando se marchita o es recolectada, otra se formará en otra vid en un lugar aleatorio.",
+      "nome": "Blossom of Spirit Vine"
+    },
+    {
+      "id": 2,
+      "combat": 19,
+      "utility": 17,
+      "whimsy": 18,
+      "descricao": "El rayo embotellado se crea cuando un mago o druida captura un rayo en una botella botella especial durante una tormenta. El proceso es peligroso y requiere una habilidad considerable, ya que el rayo debe ser capturado en el momento exacto en que golpea el suelo. Las botellas usadas para este propósito están hechas de vidrio especial que puede contener la energía eléctrica sin romperse. El rayo embotellado es extremadamente inestable y debe usarse rápidamente después de la captura.",
+      "nome": "Bottled Lightning"
+    },
+    {
+      "id": 3,
+      "combat": 16,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "Este chicle mágico es hecho por los duendes de Obojima usando una receta secreta que incluye savia de árboles antiguos y polvo de estrellas. Cuando se mastica, el chicle puede producir burbujas que flotan en el aire y contienen pequeñas magias. Las burbujas pueden explotarse para liberar efectos mágicos menores, como luz, sonido o pequeñas ilusiones. El chicle mantiene sus propiedades mágicas hasta por una hora después de ser masticado.",
+      "nome": "Bubble Gum"
+    },
+    {
+      "id": 4,
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 17,
+      "descricao": "La Línea Errante es un ferrocarril mágico que atraviesa Obojima en un patrón que cambia constantemente. El carbón usado para alimentar la locomotora de este ferrocarril es especial, ya que se extrae de minas que existen solo cuando el ferrocarril pasa por ellas. Este carbón arde con una llama azul y produce humo que puede usarse para crear ilusiones. Es extremadamente raro conseguir este carbón, ya que el ferrocarril es impredecible y las minas desaparecen cuando se mueve.",
+      "nome": "Coal From The Wandering Line"
+    },
+    {
+      "id": 5,
+      "combat": 18,
+      "utility": 16,
+      "whimsy": 18,
+      "descricao": "Esta tinta es producida por pulpos gigantes que viven en las profundidades del océano alrededor de Obojima. Los pulpos carmesí son criaturas inteligentes que usan su tinta para crear arte subacuático complejo. La tinta tiene propiedades mágicas únicas y puede usarse para escribir hechizos que se activan cuando la tinta se seca. Se recolecta con mucho cuidado, ya que los pulpos carmesí son protectores de su arte y pueden volverse agresivos.",
+      "nome": "Crimson Octopus Ink"
+    },
+    {
+      "id": 6,
+      "combat": 20,
+      "utility": 15,
+      "whimsy": 17,
+      "descricao": "Yutro era un dragón anciano que vivió en las montañas de Obojima hace miles de años. Cuando murió, sus colmillos se esparcieron por la isla y se convirtieron en objetos de poder. Cada colmillo contiene una fracción del poder de Yutro y puede usarse para crear pociones extremadamente poderosas. Los colmillos son buscados por coleccionistas y fabricantes de pociones, pero son extremadamente raros y valiosos.",
+      "nome": "Dragon Fang of Yutro"
+    },
+    {
+      "id": 7,
+      "combat": 15,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "Los sauces de las hadas son árboles especiales que crecen solo en claros donde las hadas bailan a la luz de la luna. Estos árboles son conocidos por sus propiedades curativas y por albergar espíritus benévolos. Las hojas y corteza del sauce de las hadas pueden usarse para crear pociones de curación poderosas y para alejar espíritus malignos. Los árboles están protegidos por las hadas y solo pueden ser cosechados con su permiso.",
+      "nome": "Fairy Willow"
+    },
+    {
+      "id": 8,
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "Las carpas koi gigantes son criaturas mágicas que viven en los lagos sagrados de Obojima. Estas carpas son veneradas por los habitantes locales y se consideran portadoras de buena suerte. Sus escamas tienen propiedades mágicas únicas y pueden usarse para crear pociones que traen fortuna y protección. Las escamas se recolectan solo cuando las carpas las pierden naturalmente, ya que lastimar a una carpa koi gigante se considera un gran tabú.",
+      "nome": "Giant Koi Fish Scale"
+    },
+    {
+      "id": 9,
+      "combat": 16,
+      "utility": 20,
+      "whimsy": 16,
+      "descricao": "La raíz dorada es una planta extremadamente rara que crece solo en las raíces de los árboles más antiguos de Obojima. Esta planta es conocida por sus propiedades de longevidad y por su capacidad de almacenar energía mágica. La raíz dorada puede usarse para crear pociones que extienden la vida y para almacenar hechizos para uso posterior. Es tan rara que solo algunas personas en Obojima la han visto.",
+      "nome": "Golden Root"
+    },
+    {
+      "id": 10,
+      "combat": 19,
+      "utility": 17,
+      "whimsy": 16,
+      "descricao": "Eryo era un mago poderoso que vivió en Obojima hace siglos. Cuando murió, su mano fue preservada por magia y se convirtió en un artefacto mágico. La mano de Eryo puede usarse para lanzar hechizos sin la necesidad de componentes materiales y puede almacenar energía mágica. Es uno de los artefactos más poderosos de Obojima y es buscado por magos de todo el mundo.",
+      "nome": "Hand of Eryo"
+    },
+    {
+      "id": 11,
+      "combat": 18,
+      "utility": 19,
+      "whimsy": 17,
+      "descricao": "Las crisálidas de Irimbi son formadas por mariposas mágicas que viven en los bosques de Obojima. Estas mariposas pasan por una metamorfosis especial que las transforma en criaturas de pura energía mágica. Las crisálidas contienen esta energía y pueden usarse para crear pociones que transforman al usuario temporalmente. El proceso de recolección debe hacerse con mucho cuidado, ya que las crisálidas son frágiles y pueden romperse fácilmente.",
+      "nome": "Irimbi Chrysalis"
+    },
+    {
+      "id": 12,
+      "combat": 20,
+      "utility": 14,
+      "whimsy": 18,
+      "descricao": "El veneno del pez león se extrae de las espinas venenosas de esta criatura marina peligrosa. El veneno es extremadamente potente y puede usarse para crear pociones venenosas poderosas. Sin embargo, también puede usarse para crear antídotos y pociones de curación cuando se procesa correctamente. La recolección del veneno es peligrosa y debe ser hecha por especialistas, ya que el pez león es agresivo y su veneno puede ser fatal.",
+      "nome": "Lionfish Poison"
+    },
+    {
+      "id": 13,
+      "combat": 19,
+      "utility": 16,
+      "whimsy": 17,
+      "descricao": "El limo naranja es una criatura mágica que vive en las cuevas profundas de Obojima. Este limo es conocido por su inteligencia y por su capacidad de comunicarse telepáticamente. El limo naranja puede usarse para crear pociones que permiten comunicación mental y para mejorar habilidades psíquicas. Es una criatura pacífica que solo se vuelve agresiva cuando es amenazada.",
+      "nome": "Orange Slime"
+    },
+    {
+      "id": 14,
+      "combat": 15,
+      "utility": 20,
+      "whimsy": 19,
+      "descricao": "El aceite de la linterna de Ota está hecho a partir de una receta secreta que fue pasada a través de generaciones de la familia Ota. Este aceite se usa para alimentar linternas mágicas que pueden iluminar áreas grandes y alejar criaturas de las tinieblas. El aceite tiene propiedades purificadoras y puede usarse para limpiar áreas contaminadas por magia negra. La receta es guardada bajo siete llaves por la familia Ota.",
+      "nome": "Ota Lantern Oil"
+    },
+    {
+      "id": 15,
+      "combat": 17,
+      "utility": 18,
+      "whimsy": 19,
+      "descricao": "Los kirios corredores son aves mágicas que viven en las llanuras de Obojima. Estas aves son conocidas por su velocidad increíble y por su capacidad de correr más rápido que el viento. Sus plumas tienen propiedades mágicas que pueden usarse para crear pociones de velocidad y agilidad. Las plumas se recolectan solo cuando las aves las pierden naturalmente durante la muda.",
+      "nome": "Plumage of a Running Kirio"
+    },
+    {
+      "id": 16,
+      "combat": 18,
+      "utility": 17,
+      "whimsy": 20,
+      "descricao": "Las estatuillas de neko ronin son hechas por artesanos especializados en Obojima. Estas estatuillas representan gatos samuráis y son conocidas por sus propiedades mágicas. Las estatuillas pueden usarse para crear pociones que conceden habilidades de combate y para invocar espíritos de gatos samuráis. Son hechas con materiales especiales y requieren años de entrenamiento para ser creadas correctamente.",
+      "nome": "Ronin Neko Figurine"
+    },
+    {
+      "id": 17,
+      "combat": 16,
+      "utility": 19,
+      "whimsy": 20,
+      "descricao": "Las piedras estrella son fragmentos de estrellas que cayeron en Obojima hace miles de años. Estas piedras contienen energía cósmica pura y pueden usarse para crear pociones que conectan al usuario con el cosmos. Las piedras estrella son extremadamente raras y son buscadas por astrólogos y magos que estudian las estrellas. Brillan con una luz suave incluso en la oscuridad total.",
+      "nome": "Starstone"
+    },
+    {
+      "id": 18,
+      "combat": 17,
+      "utility": 20,
+      "whimsy": 18,
+      "descricao": "Las lágrimas de la luna se forman cuando la luna llora sobre Obojima durante eclipses lunares. Estas lágrimas se recolectan en recipientes especiales y tienen propiedades mágicas únicas. Las lágrimas de la luna pueden usarse para crear pociones que conectan al usuario con la luna y para realizar rituales lunares poderosos. Se recolectan solo durante eclipses lunares, haciéndolas extremadamente raras.",
+      "nome": "Tears of the Moon"
+    },
+    {
+      "id": 19,
+      "combat": 0,
+      "utility": 0,
+      "whimsy": 20,
+      "descricao": "En las alturas más allá de la línea de nieve existe un reino árido donde muchos seres mágicos residen. Uno de ellos es el legendario dragón de nieve, Nokumai, cuyo aliento helado es deseado por todos los que tratan con cosas de naturaleza arcana. Se dice que el Aliento Congelado de Nokumai nunca se derrite, y el gran dragón solo respira una vez cada mil años, aunque nadie vivo ha visto realmente a Nokumai y el dragón puede haber desaparecido hace mucho tiempo.",
+      "nome": "Nokumai's Frozen Breath"
+    },
+    {
+      "id": 20,
+      "combat": 18,
+      "utility": 20,
+      "whimsy": 0,
+      "descricao": "Estos escarabajos fueron hechos famosos por el legendario sabio, Arol, por su uso de sus mandíbulas como plumas para su pluma. Pero los fabricantes de pociones comenzaron a usar los escarabajos para la creación de pociones cuando una bruja del Aquelarre Cabeza de Pez comenzó a ver el raro insecto en sus sueños. Los Escarabajos del Sabio Arol viven profundamente en el subsuelo, huyendo incluso de la luz más tenue. En raras ocasiones, vienen a la superficie, aunque la razón permanece un misterio.",
+      "nome": "Sage Arol's Beetle"
+    },
+    {
+      "id": 21,
+      "combat": 18,
+      "utility": 17,
+      "whimsy": 19,
+      "descricao": "El whisky Wufu es destilado por los monjes de la montaña Wufu usando una receta secreta que incluye hierbas mágicas y agua de manantial sagrado. Este whisky es conocido por sus propiedades mágicas y por su capacidad de abrir la mente a visiones místicas. El whisky Wufu puede usarse para crear pociones que mejoran habilidades psíquicas y para realizar rituales de adivinación. Se produce solo una vez al año durante el festival de la montaña.",
+      "nome": "Wufu Whisky"
+    }
+  ]
+}

@@ -28,13 +28,9 @@ export default function SimpleIngredientCard({
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-1">
           <h3 className="font-serif font-bold text-foreground text-base leading-tight group-hover:text-totoro-blue transition-colors">
-            {ingredient.nome_portugues}
+            {ingredient.nome}
           </h3>
         </div>
-
-        <p className="text-[10px] text-primary/60 mb-3 font-semibold uppercase tracking-widest font-sans">
-          {ingredient.nome_ingles}
-        </p>
 
         <p className="text-xs text-foreground/60 mb-5 line-clamp-2 leading-relaxed italic">
           &quot;{ingredient.descricao}&quot;

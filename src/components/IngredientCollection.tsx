@@ -41,9 +41,8 @@ export default function IngredientCollection() {
           </div>
           <div className="flex-1">
             <div className="font-medium text-totoro-gray hover:text-totoro-blue transition-colors">
-              {item.ingredient.nome_portugues}
+              {item.ingredient.nome}
             </div>
-            <div className="text-sm text-totoro-gray/60">{item.ingredient.nome_ingles}</div>
             <div className="text-xs text-totoro-blue mt-1">{t('ingredients.table.clickDetails')}</div>
           </div>
         </div>
@@ -144,8 +143,8 @@ export default function IngredientCollection() {
         data={displayIngredients}
         columns={columns}
         filters={INGREDIENT_COLLECTION_FILTERS}
-        searchKey="ingredient.nome_portugues"
-        searchPlaceholder="Buscar ingrediente..."
+        searchKey="ingredient.nome"
+        searchPlaceholder={t('ui.datatable.searchPlaceholder')}
         itemsPerPage={15}
         className="mb-8"
       />

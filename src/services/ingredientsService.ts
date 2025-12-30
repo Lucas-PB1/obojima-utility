@@ -10,84 +10,141 @@ import {
 } from '@/types/ingredients';
 
 class IngredientsService {
-  private ingredientsData: IngredientsData | null = null;
-  private commonIngredients: CommonIngredientsData | null = null;
-  private uncommonIngredients: UncommonIngredientsData | null = null;
-  private rareIngredients: { ingredientes: RareIngredient[] } | null = null;
-  private uniqueIngredients: { ingredientes: UniqueIngredientData[] } | null = null;
+  private ingredientsData: Record<string, IngredientsData> = {};
+  private commonIngredients: Record<string, CommonIngredientsData> = {};
+  private uncommonIngredients: Record<string, UncommonIngredientsData> = {};
+  private rareIngredients: Record<string, { ingredients: RareIngredient[] }> = {};
+  private uniqueIngredients: Record<string, { ingredients: UniqueIngredientData[] }> = {};
 
-  private async loadData<T>(url: string, cache: T | null): Promise<T> {
-    if (cache) return cache;
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+  private async loadData<T>(url: string, cache: Record<string, T>, language: string): Promise<T> {
+    if (cache[language]) return cache[language];
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            // Fallback to 'pt' if specific lang fails, or throw
+            if (language !== 'pt') {
+                const fallbackUrl = url.replace(`/data/${language}/`, '/data/pt/');
+                const fallbackResponse = await fetch(fallbackUrl);
+                if (fallbackResponse.ok) {
+                    const data = await fallbackResponse.json();
+                    cache[language] = data; // Cache fallback as current lang to avoid refetch
+                    return data;
+                }
+            }
+            throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        cache[language] = data;
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
-    return await response.json();
   }
 
-  async loadIngredientsData(): Promise<IngredientsData> {
-    this.ingredientsData = await this.loadData(
-      '/ingredientes/ingredientes-por-regiao.json',
-      this.ingredientsData
+  async loadIngredientsData(language: string = 'pt'): Promise<IngredientsData> {
+    return this.loadData(
+      `/data/${language}/ingredients/ingredients-by-region.json`,
+      this.ingredientsData,
+      language
     );
-    return this.ingredientsData;
   }
 
-  async loadCommonIngredients(): Promise<CommonIngredientsData> {
-    this.commonIngredients = await this.loadData(
-      '/ingredientes/ingredientes comums/ingredientes-comuns.json',
-      this.commonIngredients
+  async loadCommonIngredients(language: string = 'pt'): Promise<CommonIngredientsData> {
+    return this.loadData(
+      `/data/${language}/ingredients/common/common-ingredients.json`,
+      this.commonIngredients,
+      language
     );
-    return this.commonIngredients;
   }
 
-  async loadUncommonIngredients(): Promise<UncommonIngredientsData> {
-    this.uncommonIngredients = await this.loadData(
-      '/ingredientes/ingredientes incomuns/ingredientes-incomuns.json',
-      this.uncommonIngredients
+  async loadUncommonIngredients(language: string = 'pt'): Promise<UncommonIngredientsData> {
+    return this.loadData(
+      `/data/${language}/ingredients/uncommon/uncommon-ingredients.json`,
+      this.uncommonIngredients,
+      language
     );
-    return this.uncommonIngredients;
   }
 
-  async loadRareIngredients(): Promise<{ ingredientes: RareIngredient[] }> {
-    this.rareIngredients = await this.loadData(
-      '/ingredientes/ingredientes raros/ingredientes-raros.json',
-      this.rareIngredients
+  async loadRareIngredients(language: string = 'pt'): Promise<{ ingredients: RareIngredient[] }> {
+    return this.loadData(
+      `/data/${language}/ingredients/rare/rare-ingredients.json`,
+      this.rareIngredients,
+      language
     );
-    return this.rareIngredients;
   }
 
-  async loadUniqueIngredients(): Promise<{ ingredientes: UniqueIngredientData[] }> {
-    const data = await this.loadIngredientsData();
-    this.uniqueIngredients = { ingredientes: data.ingredientes_raros_unicos.ingredientes };
-    return this.uniqueIngredients;
+  async loadUniqueIngredients(language: string = 'pt'): Promise<{ ingredients: UniqueIngredientData[] }> {
+    const data = await this.loadIngredientsData(language);
+    // Note: Assuming unique_rare_ingredients exists in the JSON structure. 
+    // If not present in JSON, this will fail. Usage of safe navigation or partial implementation might be safer if unsure.
+    this.uniqueIngredients[language] = { ingredients: data.unique_rare_ingredients?.ingredients || [] };
+    return this.uniqueIngredients[language];
   }
 
-  async getRegionData(region: RegionKey): Promise<RegionData | null> {
-    const data = await this.loadIngredientsData();
-    return data.regioes[region] || null;
+  async getRegionData(region: RegionKey, language: string = 'pt'): Promise<RegionData | null> {
+    const data = await this.loadIngredientsData(language);
+    return data.regions[region] || null;
   }
 
-  async getIngredientById(id: number): Promise<Ingredient | null> {
-    const commonData = await this.loadCommonIngredients();
-    const commonIngredient = commonData.ingredientes.find((ing) => ing.id === id);
+  async getIngredientById(
+    id: number,
+    language: string = 'pt',
+    rarity?: 'comum' | 'incomum' | 'raro' | 'unico'
+  ): Promise<Ingredient | null> {
+    if (rarity === 'comum') {
+      const commonData = await this.loadCommonIngredients(language);
+      const commonIngredient = commonData.ingredients.find((ing) => ing.id === id);
+      return commonIngredient ? { ...commonIngredient, raridade: 'comum' } : null;
+    }
+
+    if (rarity === 'incomum') {
+      const uncommonData = await this.loadUncommonIngredients(language);
+      const uncommonIngredient = uncommonData.ingredients.find((ing) => ing.id === id);
+      return uncommonIngredient ? { ...uncommonIngredient, raridade: 'incomum' } : null;
+    }
+
+    if (rarity === 'raro') {
+      const rareData = await this.loadRareIngredients(language);
+      const rareIngredient = rareData.ingredients.find((ing) => ing.id === id);
+      return rareIngredient ? { ...rareIngredient, raridade: 'raro' } : null;
+    }
+
+    if (rarity === 'unico') {
+      const uniqueData = await this.loadUniqueIngredients(language);
+      const uniqueIngredient = uniqueData.ingredients.find((ing) => ing.id === id);
+      if (uniqueIngredient) {
+        return {
+          id: uniqueIngredient.id,
+          nome: uniqueIngredient.nome,
+          combat: 20,
+          utility: 20,
+          whimsy: 20,
+          descricao: `${uniqueIngredient.circunstancia}. Localização: ${uniqueIngredient.localizacao}`,
+          raridade: 'unico'
+        };
+      }
+      return null;
+    }
+
+    const commonData = await this.loadCommonIngredients(language);
+    const commonIngredient = commonData.ingredients.find((ing) => ing.id === id);
     if (commonIngredient) return { ...commonIngredient, raridade: 'comum' };
 
-    const uncommonData = await this.loadUncommonIngredients();
-    const uncommonIngredient = uncommonData.ingredientes.find((ing) => ing.id === id);
+    const uncommonData = await this.loadUncommonIngredients(language);
+    const uncommonIngredient = uncommonData.ingredients.find((ing) => ing.id === id);
     if (uncommonIngredient) return { ...uncommonIngredient, raridade: 'incomum' };
 
-    const rareData = await this.loadRareIngredients();
-    const rareIngredient = rareData.ingredientes.find((ing) => ing.id === id);
+    const rareData = await this.loadRareIngredients(language);
+    const rareIngredient = rareData.ingredients.find((ing) => ing.id === id);
     if (rareIngredient) return { ...rareIngredient, raridade: 'raro' };
 
-    const uniqueData = await this.loadUniqueIngredients();
-    const uniqueIngredient = uniqueData.ingredientes.find((ing) => ing.id === id);
+    const uniqueData = await this.loadUniqueIngredients(language);
+    const uniqueIngredient = uniqueData.ingredients.find((ing) => ing.id === id);
     if (uniqueIngredient) {
       return {
         id: uniqueIngredient.id,
-        nome_ingles: uniqueIngredient.nome_ingles,
-        nome_portugues: uniqueIngredient.nome_portugues,
+        nome: uniqueIngredient.nome,
         combat: 20,
         utility: 20,
         whimsy: 20,
@@ -101,49 +158,49 @@ class IngredientsService {
 
   async getRandomIngredientFromRegion(
     region: RegionKey,
-    rarity: 'comum' | 'incomum' | 'raro' | 'unico'
+    rarity: 'comum' | 'incomum' | 'raro' | 'unico',
+    language: string = 'pt'
   ): Promise<Ingredient | null> {
-    const regionData = await this.getRegionData(region);
+    const regionData = await this.getRegionData(region, language);
     if (!regionData) return null;
 
     const ingredientList =
-      rarity === 'comum' ? regionData.comum.ingredientes : regionData.incomum.ingredientes;
+      rarity === 'comum' ? regionData.common.ingredients : regionData.uncommon.ingredients;
 
     if (ingredientList.length === 0) return null;
 
     const randomIndex = Math.floor(Math.random() * ingredientList.length);
     const selectedIngredient = ingredientList[randomIndex];
 
-    return await this.getIngredientById(selectedIngredient.id);
+    return await this.getIngredientById(selectedIngredient.id, language);
   }
 
-  async getRandomUncommonIngredientFromAnyRegion(): Promise<Ingredient | null> {
-    const uncommonData = await this.loadUncommonIngredients();
-    if (uncommonData.ingredientes.length === 0) return null;
+  async getRandomUncommonIngredientFromAnyRegion(language: string = 'pt'): Promise<Ingredient | null> {
+    const uncommonData = await this.loadUncommonIngredients(language);
+    if (uncommonData.ingredients.length === 0) return null;
 
-    const randomIndex = Math.floor(Math.random() * uncommonData.ingredientes.length);
-    return { ...uncommonData.ingredientes[randomIndex], raridade: 'incomum' };
+    const randomIndex = Math.floor(Math.random() * uncommonData.ingredients.length);
+    return { ...uncommonData.ingredients[randomIndex], raridade: 'incomum' };
   }
 
-  async getRandomRareIngredient(): Promise<Ingredient | null> {
-    const rareData = await this.loadRareIngredients();
-    if (rareData.ingredientes.length === 0) return null;
+  async getRandomRareIngredient(language: string = 'pt'): Promise<Ingredient | null> {
+    const rareData = await this.loadRareIngredients(language);
+    if (rareData.ingredients.length === 0) return null;
 
-    const randomIndex = Math.floor(Math.random() * rareData.ingredientes.length);
-    return { ...rareData.ingredientes[randomIndex], raridade: 'raro' };
+    const randomIndex = Math.floor(Math.random() * rareData.ingredients.length);
+    return { ...rareData.ingredients[randomIndex], raridade: 'raro' };
   }
 
-  async getRandomUniqueIngredient(): Promise<Ingredient | null> {
-    const uniqueData = await this.loadUniqueIngredients();
-    if (uniqueData.ingredientes.length === 0) return null;
+  async getRandomUniqueIngredient(language: string = 'pt'): Promise<Ingredient | null> {
+    const uniqueData = await this.loadUniqueIngredients(language);
+    if (uniqueData.ingredients.length === 0) return null;
 
-    const randomIndex = Math.floor(Math.random() * uniqueData.ingredientes.length);
-    const uniqueDataItem = uniqueData.ingredientes[randomIndex];
+    const randomIndex = Math.floor(Math.random() * uniqueData.ingredients.length);
+    const uniqueDataItem = uniqueData.ingredients[randomIndex];
 
     return {
       id: uniqueDataItem.id,
-      nome_ingles: uniqueDataItem.nome_ingles,
-      nome_portugues: uniqueDataItem.nome_portugues,
+      nome: uniqueDataItem.nome,
       combat: 20,
       utility: 20,
       whimsy: 20,
@@ -152,14 +209,34 @@ class IngredientsService {
     };
   }
 
-  private static readonly REGION_NAMES: Record<RegionKey, string> = {
-    'Coastal Highlands': 'Terras Altas Costeiras',
-    'Gale Fields': 'Campos de Vendaval',
-    'Gift of Shuritashi': 'Dom de Shuritashi',
-    'Land of Hot Water': 'Terra da Água Quente',
-    'Mount Arbora': 'Monte Arbora',
-    Shallows: 'Raso',
-    'Brackwater Wetlands': 'Pântanos de Água Salobra'
+  private static readonly REGION_NAMES: Record<string, Record<RegionKey, string>> = {
+    pt: {
+        'Coastal Highlands': 'Terras Altas Costeiras',
+        'Gale Fields': 'Campos de Vendaval',
+        'Gift of Shuritashi': 'Dom de Shuritashi',
+        'Land of Hot Water': 'Terra da Água Quente',
+        'Mount Arbora': 'Monte Arbora',
+        'Shallows': 'Raso',
+        'Brackwater Wetlands': 'Pântanos de Água Salobra'
+    },
+    en: {
+        'Coastal Highlands': 'Coastal Highlands',
+        'Gale Fields': 'Gale Fields',
+        'Gift of Shuritashi': 'Gift of Shuritashi',
+        'Land of Hot Water': 'Land of Hot Water',
+        'Mount Arbora': 'Mount Arbora',
+        'Shallows': 'Shallows',
+        'Brackwater Wetlands': 'Brackwater Wetlands'
+    },
+    es: {
+        'Coastal Highlands': 'Tierras Altas Costeras',
+        'Gale Fields': 'Campos de Vendaval',
+        'Gift of Shuritashi': 'Don de Shuritashi',
+        'Land of Hot Water': 'Tierra de Agua Caliente',
+        'Mount Arbora': 'Monte Arbora',
+        'Shallows': 'Bajíos',
+        'Brackwater Wetlands': 'Humedales de Agua Estancada'
+    }
   };
 
   private static readonly REGION_KEYS: RegionKey[] = [
@@ -172,8 +249,9 @@ class IngredientsService {
     'Brackwater Wetlands'
   ];
 
-  getRegionDisplayName(region: RegionKey): string {
-    return IngredientsService.REGION_NAMES[region];
+  getRegionDisplayName(region: RegionKey, language: string = 'pt'): string {
+    const lang = (IngredientsService.REGION_NAMES[language]) ? language : 'pt';
+    return IngredientsService.REGION_NAMES[lang][region] || region;
   }
 
   getRegionKeys(): RegionKey[] {
