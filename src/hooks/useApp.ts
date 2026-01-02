@@ -45,15 +45,27 @@ export function useApp() {
     setActiveTab('collection');
   }, []);
 
-  const tabs: Tab[] = TABS_CONFIG.map(tab => {
+  const tabs: Tab[] = TABS_CONFIG.map((tab) => {
     let label = '';
-    switch(tab.id) {
-        case 'forage': label = t('menu.forage'); break;
-        case 'collection': label = t('menu.collection'); break;
-        case 'potions': label = t('menu.potions'); break;
-        case 'created-potions': label = t('menu.inventory'); break;
-        case 'recipes': label = t('menu.recipes'); break;
-        case 'log': label = t('menu.log'); break;
+    switch (tab.id) {
+      case 'forage':
+        label = t('menu.forage');
+        break;
+      case 'collection':
+        label = t('menu.collection');
+        break;
+      case 'potions':
+        label = t('menu.potions');
+        break;
+      case 'created-potions':
+        label = t('menu.inventory');
+        break;
+      case 'recipes':
+        label = t('menu.recipes');
+        break;
+      case 'log':
+        label = t('menu.log');
+        break;
     }
     return { ...tab, label };
   });

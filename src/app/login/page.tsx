@@ -25,9 +25,9 @@ export default function LoginPage() {
 
   if (!isInitialized) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center p-4">
-            <div className="text-3xl animate-bounce">🌿</div>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center p-4">
+        <div className="text-3xl animate-bounce">🌿</div>
+      </div>
     );
   }
 
@@ -87,7 +87,11 @@ export default function LoginPage() {
               }
               className="mt-6"
             >
-              {loading ? t('auth.submit.loading') : isLogin ? t('auth.submit.login') : t('auth.submit.register')}
+              {loading
+                ? t('auth.submit.loading')
+                : isLogin
+                  ? t('auth.submit.login')
+                  : t('auth.submit.register')}
             </Button>
           </form>
 
@@ -102,9 +106,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-6 text-center text-sm text-totoro-gray/70">
-          <p>
-            {t('auth.footer.sync')}
-          </p>
+          <p>{t('auth.footer.sync')}</p>
         </div>
       </div>
     </div>

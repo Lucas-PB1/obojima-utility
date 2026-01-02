@@ -17,7 +17,7 @@ export class DataTableService {
     return val.includes(term);
   }
 
-  static filterData<T extends Record<string, unknown>>(
+  static filterData<T>(
     data: T[],
     searchTerm: string,
     searchKeys: string[] | undefined,
@@ -46,10 +46,7 @@ export class DataTableService {
     return filtered;
   }
 
-  static sortData<T extends Record<string, unknown>>(
-    data: T[],
-    sortConfig: SortConfig<T> | null
-  ): T[] {
+  static sortData<T>(data: T[], sortConfig: SortConfig<T> | null): T[] {
     if (!sortConfig) return data;
 
     return [...data].sort((a, b) => {

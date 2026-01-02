@@ -1,18 +1,32 @@
 'use client';
 import { useState, useMemo, useCallback } from 'react';
 import { DataTableService, SortConfig } from '@/services/dataTableService';
+import { useTranslation } from './useTranslation';
+
+interface Filter {
+  key: string;
+  label: string;
+  type: 'select' | 'text' | 'date' | 'number';
+  options?: { value: string; label: string }[];
+  placeholder?: string;
+}
 
 interface UseDataTableProps<T> {
   data: T[];
   searchKeys?: string[];
   itemsPerPage?: number;
+  filters?: Filter[];
+  searchPlaceholder?: string;
 }
 
-export function useDataTable<T extends Record<string, unknown>>({
+export function useDataTable<T>({
   data,
   searchKeys,
-  itemsPerPage = 10
+  itemsPerPage = 10,
+  filters = [],
+  searchPlaceholder
 }: UseDataTableProps<T>) {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null);
@@ -37,6 +51,13 @@ export function useDataTable<T extends Record<string, unknown>>({
     setCurrentPage(1);
   }, []);
 
+  const removeFilter = useCallback(
+    (key: string) => {
+      handleFilterChange(key, '');
+    },
+    [handleFilterChange]
+  );
+
   const clearFilters = useCallback(() => {
     setActiveFilters({});
     setSearchTerm('');
@@ -52,6 +73,26 @@ export function useDataTable<T extends Record<string, unknown>>({
     setCurrentPage(1);
   }, []);
 
+  const getFilterLabel = useCallback(
+    (key: string, value: string) => {
+      const filterDef = filters.find((f) => f.key === key);
+      if (!filterDef) return value;
+
+      if (filterDef.type === 'select' && filterDef.options) {
+        const option = filterDef.options.find((opt) => opt.value === value);
+        return option ? t(option.label) : value;
+      }
+
+      return value;
+    },
+    [filters, t]
+  );
+
+  const effectiveSearchPlaceholder = useMemo(
+    () => searchPlaceholder || t('ui.datatable.searchPlaceholder'),
+    [searchPlaceholder, t]
+  );
+
   return {
     paginatedData: processedData.paginatedData,
     filteredData: data,
@@ -62,8 +103,11 @@ export function useDataTable<T extends Record<string, unknown>>({
     searchTerm,
     sortConfig,
     activeFilters,
+    effectiveSearchPlaceholder,
     handleSort,
     handleFilterChange,
+    removeFilter,
+    getFilterLabel,
     clearFilters,
     setPage,
     setSearch

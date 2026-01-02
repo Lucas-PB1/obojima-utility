@@ -53,7 +53,9 @@ export default function ForageResult({ result }: ForageResultProps) {
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center justify-center gap-8 bg-black/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 w-full max-w-sm shadow-2xl">
               <div className="text-center">
-                <p className="text-[10px] font-black uppercase opacity-60 mb-1">{t('forage.result.roll')}</p>
+                <p className="text-[10px] font-black uppercase opacity-60 mb-1">
+                  {t('forage.result.roll')}
+                </p>
                 <p
                   className={`text-5xl font-black ${result.success ? 'text-white' : 'text-totoro-orange'}`}
                 >
@@ -62,7 +64,9 @@ export default function ForageResult({ result }: ForageResultProps) {
               </div>
               <div className="h-12 w-[1px] bg-white/10"></div>
               <div className="text-center">
-                <p className="text-[10px] font-black uppercase opacity-60 mb-1">{t('forage.result.dc')}</p>
+                <p className="text-[10px] font-black uppercase opacity-60 mb-1">
+                  {t('forage.result.dc')}
+                </p>
                 <p className="text-5xl font-black text-white/40">{result.dc}</p>
               </div>
             </div>

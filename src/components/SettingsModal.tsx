@@ -24,24 +24,26 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       <div className="space-y-6">
         <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
           <div>
-            <h3 className="text-sm font-semibold text-foreground">{t('settings.appearance.title')}</h3>
+            <h3 className="text-sm font-semibold text-foreground">
+              {t('settings.appearance.title')}
+            </h3>
             <p className="text-xs text-foreground/50">{t('settings.appearance.desc')}</p>
           </div>
           <ThemeSwitch />
         </div>
 
         <div>
-           <h4 className="font-semibold text-foreground mb-3 flex items-center">
-             <span className="mr-2">🌍</span>
-             {t('settings.language.title')}
-           </h4>
-           <Select
-             value={settings.language}
-             onChange={(value) => updateSetting('language', value as Language)}
-             options={LANGUAGE_OPTIONS as unknown as { value: string; label: string }[]}
-             placeholder={t('settings.language.placeholder')}
-             label={t('settings.language.label')}
-           />
+          <h4 className="font-semibold text-foreground mb-3 flex items-center">
+            <span className="mr-2">🌍</span>
+            {t('settings.language.title')}
+          </h4>
+          <Select
+            value={settings.language}
+            onChange={(value) => updateSetting('language', value as Language)}
+            options={LANGUAGE_OPTIONS as unknown as { value: string; label: string }[]}
+            placeholder={t('settings.language.placeholder')}
+            label={t('settings.language.label')}
+          />
         </div>
 
         <div>
@@ -56,9 +58,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             placeholder={t('settings.modifier.placeholder')}
             label={t('settings.modifier.label')}
           />
-          <p className="text-sm text-foreground/60 mt-2">
-            {t('settings.modifier.desc')}
-          </p>
+          <p className="text-sm text-foreground/60 mt-2">{t('settings.modifier.desc')}</p>
         </div>
 
         <div>
@@ -87,9 +87,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             />
           </div>
 
-          <p className="text-sm text-foreground/60 mt-2">
-            {t('settings.bonus.desc')}
-          </p>
+          <p className="text-sm text-foreground/60 mt-2">{t('settings.bonus.desc')}</p>
         </div>
 
         <div>
@@ -101,7 +99,9 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-muted/30 border border-border rounded-lg">
               <div className="flex-1">
-                <h5 className="font-medium text-foreground mb-1">{t('settings.talents.doubleForage.title')}</h5>
+                <h5 className="font-medium text-foreground mb-1">
+                  {t('settings.talents.doubleForage.title')}
+                </h5>
                 <p className="text-sm text-foreground/70">
                   {t('settings.talents.doubleForage.desc')}
                 </p>
@@ -119,10 +119,10 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
             <div className="flex items-center justify-between p-4 bg-muted/30 border border-border rounded-lg">
               <div className="flex-1">
-                <h5 className="font-medium text-foreground mb-1">{t('settings.talents.cauldron.title')}</h5>
-                <p className="text-sm text-foreground/70">
-                  {t('settings.talents.cauldron.desc')}
-                </p>
+                <h5 className="font-medium text-foreground mb-1">
+                  {t('settings.talents.cauldron.title')}
+                </h5>
+                <p className="text-sm text-foreground/70">{t('settings.talents.cauldron.desc')}</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
@@ -138,7 +138,9 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <div className="p-4 bg-muted/30 border border-border rounded-lg">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex-1">
-                  <h5 className="font-medium text-foreground mb-1">{t('settings.talents.potionBrewer.title')}</h5>
+                  <h5 className="font-medium text-foreground mb-1">
+                    {t('settings.talents.potionBrewer.title')}
+                  </h5>
                   <p className="text-sm text-foreground/70">
                     {t('settings.talents.potionBrewer.desc')}
                   </p>
@@ -184,13 +186,16 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         </div>
 
         <div className="flex justify-between pt-4 border-t border-border">
-          <Button onClick={clearSettings} variant="danger" effect="shimmer">
-            {t('settings.actions.clear')}
-          </Button>
+          <button
+            onClick={clearSettings}
+            className="flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
+          >
+            {t('ui.actions.clear')}
+          </button>
 
-          <div className="space-x-3">
-            <Button onClick={onClose} variant="secondary" effect="ripple">
-              {t('settings.close')}
+          <div className="flex gap-2">
+            <Button variant="secondary" onClick={onClose}>
+              {t('ui.actions.close')}
             </Button>
           </div>
         </div>

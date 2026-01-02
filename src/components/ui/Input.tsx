@@ -23,7 +23,9 @@ export default function Input({
 }: InputProps) {
   return (
     <div className={className}>
-      {label && <label className="block text-sm font-medium text-foreground/80 mb-2">{label}</label>}
+      {label && (
+        <label className="block text-sm font-medium text-foreground/80 mb-2">{label}</label>
+      )}
       <input
         type={type}
         value={value}

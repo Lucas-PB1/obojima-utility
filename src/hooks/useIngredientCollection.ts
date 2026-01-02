@@ -32,7 +32,11 @@ export function useIngredientCollection() {
         label: t('activity.stats.ingredientsCollected'),
         color: 'totoro-green' as const
       },
-      { value: collectionStats.totalUsed, label: t('ingredients.table.used'), color: 'totoro-blue' as const },
+      {
+        value: collectionStats.totalUsed,
+        label: t('ingredients.table.used'),
+        color: 'totoro-blue' as const
+      },
       {
         value: collectionStats.totalAttempts,
         label: t('activity.stats.totalAttempts'),

@@ -23,10 +23,7 @@ const filterByRarity = (ingredients: CollectedIngredient[], rarityFilter: Rarity
 const searchIngredients = (ingredients: CollectedIngredient[], searchTerm: string) => {
   if (!searchTerm) return ingredients;
   const term = searchTerm.toLowerCase();
-  return ingredients.filter(
-    (ing) =>
-      ing.ingredient.nome.toLowerCase().includes(term)
-  );
+  return ingredients.filter((ing) => ing.ingredient.nome.toLowerCase().includes(term));
 };
 
 const sortIngredients = (ingredients: CollectedIngredient[], sortBy: SortType) => {

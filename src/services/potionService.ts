@@ -15,19 +15,35 @@ class PotionService extends BaseDataService {
   private whimsicalPotions: Record<string, PotionCategory> = {};
 
   constructor() {
-    super(); 
+    super();
   }
 
   private async loadPotionData(language: string = 'pt'): Promise<void> {
-    if (this.combatPotions[language] && this.utilityPotions[language] && this.whimsicalPotions[language]) {
-        return;
+    if (
+      this.combatPotions[language] &&
+      this.utilityPotions[language] &&
+      this.whimsicalPotions[language]
+    ) {
+      return;
     }
 
     try {
       const [combatResponse, utilityResponse, whimsicalResponse] = await Promise.all([
-        this.loadData(`/data/${language}/potions/combat/combat-potions.json`, this.combatPotions, language),
-        this.loadData(`/data/${language}/potions/utility/utility-potions.json`, this.utilityPotions, language),
-        this.loadData(`/data/${language}/potions/whimsical/whimsical-potions.json`, this.whimsicalPotions, language)
+        this.loadData(
+          `/data/${language}/potions/combat/combat-potions.json`,
+          this.combatPotions,
+          language
+        ),
+        this.loadData(
+          `/data/${language}/potions/utility/utility-potions.json`,
+          this.utilityPotions,
+          language
+        ),
+        this.loadData(
+          `/data/${language}/potions/whimsical/whimsical-potions.json`,
+          this.whimsicalPotions,
+          language
+        )
       ]);
     } catch (error) {
       console.error('Erro ao carregar dados das poções:', error);
@@ -157,7 +173,10 @@ class PotionService extends BaseDataService {
 
     if (cauldronBonus && isUncommonOrRare) {
       try {
-        const commonPotion = await this.generateCommonPotionFromRemains(recipe.winningAttribute, language);
+        const commonPotion = await this.generateCommonPotionFromRemains(
+          recipe.winningAttribute,
+          language
+        );
         if (commonPotion) {
           result.remainsPotion = commonPotion;
         }
@@ -186,9 +205,13 @@ class PotionService extends BaseDataService {
     return result;
   }
 
-  private selectPotion(attribute: 'combat' | 'utility' | 'whimsy', score: number, language: string): Potion | null {
+  private selectPotion(
+    attribute: 'combat' | 'utility' | 'whimsy',
+    score: number,
+    language: string
+  ): Potion | null {
     let potionCategory: PotionCategory | null = null;
-    
+
     if (!this.combatPotions[language]) return null;
 
     switch (attribute) {
@@ -233,7 +256,10 @@ class PotionService extends BaseDataService {
     };
   }
 
-  public async getPotionsByCategory(category: 'combat' | 'utility' | 'whimsy', language: string = 'pt'): Promise<Potion[]> {
+  public async getPotionsByCategory(
+    category: 'combat' | 'utility' | 'whimsy',
+    language: string = 'pt'
+  ): Promise<Potion[]> {
     await this.loadPotionData(language);
 
     switch (category) {
@@ -294,7 +320,7 @@ class PotionService extends BaseDataService {
     await this.loadPotionData(language);
 
     let potionCategory: PotionCategory | null = null;
-    
+
     if (!this.combatPotions[language]) return null;
 
     switch (winningAttribute) {

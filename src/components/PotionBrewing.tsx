@@ -44,11 +44,11 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
   } = usePotionBrewing({ onPotionCreated, onIngredientsUsed });
 
   const mappedSelectedIngredients = React.useMemo(() => {
-    return selectedIngredients.map(ing => localizeIngredient(ing));
+    return selectedIngredients.map((ing) => localizeIngredient(ing));
   }, [selectedIngredients, localizeIngredient]);
 
   const mappedAvailableIngredients = React.useMemo(() => {
-    return availableIngredients.map(ing => localizeIngredient(ing));
+    return availableIngredients.map((ing) => localizeIngredient(ing));
   }, [availableIngredients, localizeIngredient]);
 
   return (
@@ -56,10 +56,10 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
       <ContentCard>
         <div className="space-y-4">
           <div>
-            <h2 className="text-xl font-semibold text-foreground mb-2">{t('potions.create.title')}</h2>
-            <p className="text-foreground/60 text-sm">
-              {t('potions.create.subtitle')}
-            </p>
+            <h2 className="text-xl font-semibold text-foreground mb-2">
+              {t('potions.create.title')}
+            </h2>
+            <p className="text-foreground/60 text-sm">{t('potions.create.subtitle')}</p>
           </div>
 
           <div>
@@ -88,14 +88,18 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
           {previewScores && (
             <div className="bg-muted/30 p-4 rounded-lg border border-border/20">
-              <h4 className="text-sm font-medium text-foreground mb-3">{t('potions.create.preview')}</h4>
+              <h4 className="text-sm font-medium text-foreground mb-3">
+                {t('potions.create.preview')}
+              </h4>
               <div className="grid grid-cols-3 gap-4">
                 {(['combat', 'utility', 'whimsy'] as const).map((attr) => (
                   <div
                     key={attr}
                     className={`p-3 rounded-lg border ${POTION_CATEGORY_CONFIG[attr].classes} ${previewScores.winningAttribute === attr ? 'ring-2 ring-opacity-50 ring-current' : ''}`}
                   >
-                    <div className="text-xs font-medium">{t(POTION_CATEGORY_CONFIG[attr].label)}</div>
+                    <div className="text-xs font-medium">
+                      {t(POTION_CATEGORY_CONFIG[attr].label)}
+                    </div>
                     <div className="text-lg font-bold">
                       {attr === 'combat'
                         ? previewScores.combatScore
@@ -119,12 +123,11 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                     <span className="mr-2">🧪</span>
                     <span className="font-medium">{t('potions.create.brewerActive')}</span>
                   </div>
-                  <p className="text-xs text-purple-600 mt-1">
-                    {t('potions.create.brewerDesc')}
-                  </p>
+                  <p className="text-xs text-purple-600 mt-1">{t('potions.create.brewerDesc')}</p>
                   {chosenAttribute && (
                     <p className="text-xs text-purple-800 mt-1 font-medium">
-                      {t('potions.create.chosen')} {t(POTION_CATEGORY_CONFIG[chosenAttribute].label)}
+                      {t('potions.create.chosen')}{' '}
+                      {t(POTION_CATEGORY_CONFIG[chosenAttribute].label)}
                     </p>
                   )}
                 </div>
@@ -152,12 +155,12 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
       <ContentCard>
         <div>
-          <h3 className="text-lg font-medium text-foreground mb-4">{t('potions.create.available')}</h3>
+          <h3 className="text-lg font-medium text-foreground mb-4">
+            {t('potions.create.available')}
+          </h3>
 
           {mappedAvailableIngredients.length === 0 ? (
-            <div className="text-gray-500 text-center py-8">
-              {t('potions.create.noAvailable')}
-            </div>
+            <div className="text-gray-500 text-center py-8">{t('potions.create.noAvailable')}</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {mappedAvailableIngredients.map((ingredient, index) => {
@@ -188,15 +191,19 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         <Modal
           isOpen={showResultModal}
           onClose={closeResultModal}
-          title={brewingResult.success ? t('potions.result.success.title') : t('potions.result.failure.title')}
+          title={
+            brewingResult.success
+              ? t('potions.result.success.title')
+              : t('potions.result.failure.title')
+          }
         >
           <div className="space-y-4">
             {brewingResult.success ? (
               <>
                 <div className="text-center">
                   <span className="font-bold text-lg">
-                  {brewingResult.recipe.resultingPotion.nome}
-                </span>
+                    {brewingResult.recipe.resultingPotion.nome}
+                  </span>
 
                   <div
                     className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
@@ -215,8 +222,12 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="mt-6 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
                     <div className="text-center mb-3">
                       <div className="text-lg mb-2">✨</div>
-                      <h4 className="font-bold text-green-800 text-lg mb-2">{t('potions.result.remains.title')}</h4>
-                      <p className="text-green-700 text-sm mb-3">{t('potions.result.remains.desc')}</p>
+                      <h4 className="font-bold text-green-800 text-lg mb-2">
+                        {t('potions.result.remains.title')}
+                      </h4>
+                      <p className="text-green-700 text-sm mb-3">
+                        {t('potions.result.remains.desc')}
+                      </p>
                     </div>
 
                     <div className="bg-muted/30 rounded-lg p-4 border border-green-200/20">
@@ -239,7 +250,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
                     <div className="text-center mb-3">
                       <div className="text-lg mb-2">🧪</div>
-                      <h4 className="font-bold text-purple-800 text-lg mb-2">{t('potions.result.second.title')}</h4>
+                      <h4 className="font-bold text-purple-800 text-lg mb-2">
+                        {t('potions.result.second.title')}
+                      </h4>
                       <p className="text-purple-700 text-sm mb-3">
                         {t('potions.result.second.desc', brewingResult.percentageRoll ?? 0)}
                       </p>
@@ -273,7 +286,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                   <div className="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-4">
                     <div className="text-center">
                       <div className="text-lg mb-2">🧪</div>
-                      <h4 className="font-bold text-gray-700 text-lg mb-2">{t('potions.result.brewer.failure.title')}</h4>
+                      <h4 className="font-bold text-gray-700 text-lg mb-2">
+                        {t('potions.result.brewer.failure.title')}
+                      </h4>
                       <p className="text-gray-600 text-sm">
                         {t('potions.result.brewer.failure.desc', brewingResult.percentageRoll ?? 0)}
                       </p>
@@ -282,7 +297,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                 )}
 
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-medium text-gray-900 mb-2">{t('potions.result.description')}</h4>
+                  <h4 className="font-medium text-gray-900 mb-2">{t('ui.labels.description')}:</h4>
                   <p className="text-sm text-gray-700">
                     {brewingResult.recipe.resultingPotion.descricao}
                   </p>
@@ -318,7 +333,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
             )}
 
             <div className="flex justify-end">
-              <Button onClick={closeResultModal}>{t('potions.result.close')}</Button>
+              <Button onClick={closeResultModal}>{t('ui.actions.close')}</Button>
             </div>
           </div>
         </Modal>
@@ -332,9 +347,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
         >
           <div className="space-y-4">
             <div className="text-center">
-              <p className="text-gray-600 mb-4">
-                {t('potions.choice.desc')}
-              </p>
+              <p className="text-gray-600 mb-4">{t('potions.choice.desc')}</p>
             </div>
 
             <div className="space-y-3">
@@ -373,7 +386,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
 
             <div className="flex justify-end pt-4 border-t border-gray-200">
               <Button onClick={closeScoreChoiceModal} variant="secondary">
-                {t('potions.choice.cancel')}
+                {t('ui.actions.cancel')}
               </Button>
             </div>
           </div>

@@ -20,7 +20,9 @@ export function ThemeSwitch() {
 
   return (
     <div className="flex items-center gap-3">
-      <span className={`text-xs font-medium transition-colors ${!isDark ? 'text-totoro-blue' : 'text-foreground/40'}`}>
+      <span
+        className={`text-xs font-medium transition-colors ${!isDark ? 'text-totoro-blue' : 'text-foreground/40'}`}
+      >
         {t('ui.theme.light')}
       </span>
       <button
@@ -45,7 +47,9 @@ export function ThemeSwitch() {
           )}
         </div>
       </button>
-      <span className={`text-xs font-medium transition-colors ${isDark ? 'text-totoro-blue' : 'text-foreground/40'}`}>
+      <span
+        className={`text-xs font-medium transition-colors ${isDark ? 'text-totoro-blue' : 'text-foreground/40'}`}
+      >
         {t('ui.theme.dark')}
       </span>
     </div>

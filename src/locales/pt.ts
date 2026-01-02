@@ -17,23 +17,23 @@ export const pt = {
   'settings.bonus.desc': 'Configure um dado bônus que será usado automaticamente',
   'settings.talents.title': 'Talentos Especiais',
   'settings.talents.doubleForage.title': 'Forrageamento Duplo',
-  'settings.talents.doubleForage.desc': 'Quando ativo, você coleta o dobro de ingredientes comuns e incomuns',
+  'settings.talents.doubleForage.desc':
+    'Quando ativo, você coleta o dobro de ingredientes comuns e incomuns',
   'settings.talents.cauldron.title': 'Caldeirão Especial',
-  'settings.talents.cauldron.desc': 'Ao criar poções incomuns ou raras, você também gera uma poção comum do mesmo tipo',
+  'settings.talents.cauldron.desc':
+    'Ao criar poções incomuns ou raras, você também gera uma poção comum do mesmo tipo',
   'settings.talents.potionBrewer.title': 'Potion Brewer',
-  'settings.talents.potionBrewer.desc': 'Permite escolher o segundo maior modificador e tem chance de gerar duas poções',
+  'settings.talents.potionBrewer.desc':
+    'Permite escolher o segundo maior modificador e tem chance de gerar duas poções',
   'settings.talents.potionBrewer.level.label': 'Level do Potion Brewer (1-20)',
   'settings.talents.potionBrewer.level.placeholder': 'Ex: 5',
   'settings.talents.potionBrewer.level.desc': 'Chance de {0}% de gerar uma segunda poção',
   'settings.howItWorks.title': '💡 Como Funciona',
-  'settings.howItWorks.item1': '• Os valores padrão serão aplicados automaticamente ao abrir a página',
+  'settings.howItWorks.item1':
+    '• Os valores padrão serão aplicados automaticamente ao abrir a página',
   'settings.howItWorks.item2': '• Você ainda pode alterar os valores individualmente',
   'settings.howItWorks.item3': '• As configurações são salvas automaticamente',
   'settings.actions.clear': '🗑️ Limpar Configurações',
-  'settings.actions.cancel': 'Cancelar',
-  'settings.actions.save': '💾 Salvar',
-  'settings.actions.saving': 'Salvando...',
-  'settings.close': 'Fechar',
 
   // Constants
   'constants.forage.testType.nature': 'Natureza',
@@ -50,7 +50,20 @@ export const pt = {
   'constants.ingredients.filters.placeholder.status': 'Todos',
   'constants.ingredients.filters.placeholder.values': '0',
 
-  // Shared UI
+  // Shared UI Actions
+  'ui.actions.save': '💾 Salvar',
+  'ui.actions.saving': 'Salvando...',
+  'ui.actions.cancel': 'Cancelar',
+  'ui.actions.clear': 'Limpar',
+  'ui.actions.delete': 'Excluir',
+  'ui.actions.edit': 'Editar',
+  'ui.actions.close': 'Fechar',
+  'ui.actions.back': 'Voltar',
+  'ui.actions.view': 'Visualizar',
+  'ui.actions.create': 'Criar',
+  'ui.actions.update': 'Atualizar',
+
+  // Shared UI Labels
   'ui.theme.light': 'Claro',
   'ui.theme.dark': 'Escuro',
   'ui.theme.toggle': 'Alternar tema',
@@ -62,8 +75,13 @@ export const pt = {
   'ui.datatable.page': 'Página {0} de {1}',
   'ui.datatable.previous': 'Anterior',
   'ui.datatable.next': 'Próxima',
-  'ui.datatable.clear': 'Limpar',
+  'ui.datatable.clear': 'Limpar Filtros',
   'ui.datatable.all': 'Todos os {0}',
+  'ui.labels.description': 'Descrição',
+  'ui.labels.total': 'Total',
+  'ui.labels.available': 'Disponíveis',
+  'ui.labels.used': 'Usadas',
+  'ui.labels.date': 'Data',
 
   // Forage System
   'forage.title': 'Sistema de Forrageamento de Obojima',
@@ -106,9 +124,10 @@ export const pt = {
   'potions.category.combat.label': 'Combate',
   'potions.category.utility.label': 'Utilidade',
   'potions.category.whimsy.label': 'Caprichoso',
-  
+
   'potions.create.title': 'Criação de Poções',
-  'potions.create.subtitle': 'Selecione exatamente 3 ingredientes únicos para criar uma poção. O tipo de poção será determinado pelos atributos dos ingredientes.',
+  'potions.create.subtitle':
+    'Selecione exatamente 3 ingredientes únicos para criar uma poção. O tipo de poção será determinado pelos atributos dos ingredientes.',
   'potions.create.selected': 'Ingredientes Selecionados ({0}/3)',
   'potions.create.noneSelected': 'Nenhum ingrediente selecionado',
   'potions.create.preview': 'Preview da Receita',
@@ -129,23 +148,19 @@ export const pt = {
   'potions.result.second.desc': 'Gerada pelo Potion Brewer (Rolagem: {0}%)',
   'potions.result.brewer.failure.title': 'Potion Brewer',
   'potions.result.brewer.failure.desc': 'Rolagem: {0}% - Não foi possível gerar uma segunda poção',
-  'potions.result.description': 'Descrição:',
   'potions.result.scores': 'Scores da Receita:',
   'potions.result.error': 'Erro',
-  'potions.result.close': 'Fechar',
   'potions.choice.title': '🧪 Escolher Tipo de Poção',
-  'potions.choice.desc': 'O talento Potion Brewer permite escolher entre o 1º e 2º maior score. Qual tipo de poção você deseja criar?',
+  'potions.choice.desc':
+    'O talento Potion Brewer permite escolher entre o 1º e 2º maior score. Qual tipo de poção você deseja criar?',
   'potions.choice.rank': '{0}º Maior Score',
-  'potions.choice.cancel': 'Cancelar',
 
   'potions.collection.title': 'Poções Criadas',
   'potions.collection.subtitle': 'Gerencie suas poções criadas e use-as quando necessário',
-  'potions.collection.stats.total': 'Total',
-  'potions.collection.stats.available': 'Disponíveis',
-  'potions.collection.stats.used': 'Usadas',
   'potions.collection.stats.recent': 'Recentes',
   'potions.collection.myPotions': 'Minhas Poções ({0})',
-  'potions.collection.empty.all': 'Nenhuma poção criada ainda. Vá para a aba Poções para criar sua primeira poção!',
+  'potions.collection.empty.all':
+    'Nenhuma poção criada ainda. Vá para a aba Poções para criar sua primeira poção!',
   'potions.collection.empty.available': 'Nenhuma poção disponível. Crie mais poções na aba Poções!',
   'potions.collection.empty.used': 'Nenhuma poção usada ainda.',
   'potions.card.available': '{0} disponível(is)',
@@ -158,8 +173,6 @@ export const pt = {
   'potions.details.desc.arcane': 'Descrição Arcana',
   'potions.details.status': 'Status da Unidade',
   'potions.details.lastUse': 'Último uso: {0}',
-  'potions.details.delete': '🗑️ Excluir do Registro',
-  'potions.details.close': 'Fechar Detalhes',
 
   // Ingredients Collection
   'ingredients.collection.title': 'Coleção de Ingredientes',
@@ -175,18 +188,16 @@ export const pt = {
   'ingredients.table.used': 'Usado',
   'ingredients.table.use': 'Usar 1',
   'ingredients.table.usedAt': 'Usado em: {0}',
-  'ingredients.modal.description': 'Descrição',
   'ingredients.modal.id': 'ID do Ingrediente',
   'ingredients.modal.totalPoints': 'Total de Pontos',
-  'ingredients.modal.close': 'Fechar',
   'ingredients.search.placeholder': 'Buscar por nome, descrição ou raridade...',
 
   // Recipes Collection
   'recipes.collection.title': 'Coleção de Receitas',
   'recipes.collection.subtitle': 'Visualize e gerencie suas receitas de poções criadas',
-  'recipes.stats.total': 'Total',
   'recipes.myRecipes': 'Minhas Receitas ({0})',
-  'recipes.empty.all': 'Nenhuma receita criada ainda. Vá para a aba Poções para criar sua primeira receita!',
+  'recipes.empty.all':
+    'Nenhuma receita criada ainda. Vá para a aba Poções para criar sua primeira receita!',
   'recipes.empty.filtered': 'Nenhuma receita de {0} encontrada.',
   'recipes.card.created': 'Criada em {0}',
   'recipes.details.title': 'Detalhes da Receita',
@@ -195,7 +206,6 @@ export const pt = {
   'recipes.details.potential': 'Potencial Místico',
   'recipes.details.predictedDomain': 'Domínio Previsto:',
   'recipes.details.delete': '🗑️ Excluir Receita',
-  'recipes.details.close': 'Fechar',
 
   // Activity Log
   'activity.title': 'Log de Atividades',
@@ -239,7 +249,7 @@ export const pt = {
   'app.notification.viewCollection': 'VER COLEÇÃO →',
   'app.user.logout': 'SAIR',
   'app.footer.text': 'Obojima Utilities • Arcana System',
-  'menu.forage': 'Forragear',
+  'menu.forage': 'Foragear',
   'menu.collection': 'Coleção',
   'menu.potions': 'Poções',
   'menu.inventory': 'Inventário',
@@ -257,5 +267,44 @@ export const pt = {
   'auth.submit.loading': 'Carregando...',
   'auth.toggle.toRegister': 'Não tem uma conta? Criar conta',
   'auth.toggle.toLogin': 'Já tem uma conta? Fazer login',
-  'auth.footer.sync': 'Seus dados serão sincronizados na nuvem e estarão disponíveis em qualquer dispositivo.'
+  'auth.footer.sync':
+    'Seus dados serão sincronizados na nuvem e estarão disponíveis em qualquer dispositivo.',
+
+  // Admin
+  'admin.title': 'Painel Administrativo',
+  'admin.subtitle': 'Gerencie usuários, funções e configurações do sistema',
+  'admin.stats.users': 'Total de Usuários',
+  'admin.stats.sessions': 'Sessões Ativas',
+  'admin.stats.reviews': 'Análises Pendentes',
+  'admin.stats.status': 'Status do Sistema',
+  'admin.users.title': 'Gerenciamento de Usuários ({0})',
+  'admin.users.search': 'Buscar usuários...',
+  'admin.users.col.name': 'Nome',
+  'admin.users.col.email': 'Email',
+  'admin.users.col.role': 'Função',
+  'admin.users.col.lastLogin': 'Último Login',
+  'admin.users.role.change.confirm': 'Tem certeza que deseja alterar a função de {0} para {1}?',
+  'admin.users.role.update.error': 'Falha ao atualizar função',
+  'admin.users.role.admin': 'ADMIN',
+  'admin.users.role.user': 'USUÁRIO',
+  'admin.users.sync': 'Sincronizar Usuários',
+  'admin.users.sync.success': 'Usuários sincronizados com sucesso!',
+  'admin.users.sync.error': 'Erro ao sincronizar usuários',
+  'admin.users.col.status': 'Status',
+  'admin.users.status.active': 'ATIVO',
+  'admin.users.status.orphaned': 'ÓRFÃO',
+  'admin.users.status.disabled': 'DESATIVADO',
+  'admin.users.actions': 'Ações',
+  'admin.users.action.edit': 'Editar',
+  'admin.users.action.delete': 'Excluir',
+  'admin.users.action.disable': 'Desativar',
+  'admin.users.action.enable': 'Ativar',
+  'admin.users.noName': 'Sem nome',
+  'admin.users.noEmail': 'Sem email',
+  'admin.users.fallbackName': 'Usuário',
+  'admin.users.delete.confirm':
+    'TEM CERTEZA? Isso excluirá permanentemente o usuário {0} do sistema e do Firebase Auth. Esta ação não pode ser desfeita.',
+  'admin.users.update.success': 'Usuário atualizado com sucesso!',
+  'admin.users.delete.success': 'Usuário excluído com sucesso!',
+  'admin.users.delete.error': 'Erro ao excluir usuário'
 };

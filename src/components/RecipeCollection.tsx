@@ -25,7 +25,7 @@ export const RecipeCollection: React.FC = () => {
   } = useRecipeCollection();
 
   const statsData = [
-    { value: stats.total, label: t('recipes.stats.total'), color: 'totoro-gray' as const },
+    { value: stats.total, label: t('ui.labels.total'), color: 'totoro-gray' as const },
     ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => ({
       value: stats.byCategory[key as keyof typeof stats.byCategory],
       label: t(config.label),
@@ -76,7 +76,15 @@ export const RecipeCollection: React.FC = () => {
             <p className="text-sm font-medium">
               {filter === 'all'
                 ? t('recipes.empty.all')
-                : t('recipes.empty.filtered', POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG]?.label ? t(POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG].label) : '')}
+                : t(
+                    'recipes.empty.filtered',
+                    POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG]?.label
+                      ? t(
+                          POTION_CATEGORY_CONFIG[filter as keyof typeof POTION_CATEGORY_CONFIG]
+                            .label
+                        )
+                      : ''
+                  )}
             </p>
           </div>
         ) : (
@@ -93,7 +101,6 @@ export const RecipeCollection: React.FC = () => {
                     <h4 className="font-serif font-bold text-foreground text-lg leading-tight group-hover:text-totoro-blue transition-colors">
                       {recipe.resultingPotion.nome}
                     </h4>
-
                   </div>
 
                   <div
@@ -104,7 +111,9 @@ export const RecipeCollection: React.FC = () => {
 
                   <div className="grid grid-cols-3 gap-3 py-3 border-y border-totoro-blue/5">
                     <div className="text-center">
-                      <div className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</div>
+                      <div className="text-[9px] font-bold text-totoro-orange/60 uppercase">
+                        Cbt
+                      </div>
                       <div className="text-lg font-black text-totoro-orange font-mono">
                         {recipe.combatScore}
                       </div>
@@ -116,7 +125,9 @@ export const RecipeCollection: React.FC = () => {
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-[9px] font-bold text-totoro-yellow/60 uppercase">Why</div>
+                      <div className="text-[9px] font-bold text-totoro-yellow/60 uppercase">
+                        Why
+                      </div>
                       <div className="text-lg font-black text-totoro-yellow font-mono">
                         {recipe.whimsyScore}
                       </div>
@@ -222,8 +233,12 @@ export const RecipeCollection: React.FC = () => {
               >
                 {t('recipes.details.delete')}
               </Button>
-              <Button onClick={closeModal} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
-                {t('recipes.details.close')}
+              <Button
+                onClick={closeModal}
+                variant="secondary"
+                className="flex-1 !rounded-2xl !font-bold"
+              >
+                {t('ui.actions.close')}
               </Button>
             </div>
           </div>

@@ -18,7 +18,6 @@ class IngredientsService extends BaseDataService {
   private rareIngredients: Record<string, { ingredients: RareIngredient[] }> = {};
   private uniqueIngredients: Record<string, { ingredients: UniqueIngredientData[] }> = {};
 
-
   async loadIngredientsData(language: string = 'pt'): Promise<IngredientsData> {
     return this.loadData(
       `/data/${language}/ingredients/ingredients-by-region.json`,
@@ -51,9 +50,13 @@ class IngredientsService extends BaseDataService {
     );
   }
 
-  async loadUniqueIngredients(language: string = 'pt'): Promise<{ ingredients: UniqueIngredientData[] }> {
+  async loadUniqueIngredients(
+    language: string = 'pt'
+  ): Promise<{ ingredients: UniqueIngredientData[] }> {
     const data = await this.loadIngredientsData(language);
-    this.uniqueIngredients[language] = { ingredients: data.unique_rare_ingredients?.ingredients || [] };
+    this.uniqueIngredients[language] = {
+      ingredients: data.unique_rare_ingredients?.ingredients || []
+    };
     return this.uniqueIngredients[language];
   }
 
@@ -150,7 +153,9 @@ class IngredientsService extends BaseDataService {
     return await this.getIngredientById(selectedIngredient.id, language);
   }
 
-  async getRandomUncommonIngredientFromAnyRegion(language: string = 'pt'): Promise<Ingredient | null> {
+  async getRandomUncommonIngredientFromAnyRegion(
+    language: string = 'pt'
+  ): Promise<Ingredient | null> {
     const uncommonData = await this.loadUncommonIngredients(language);
     if (uncommonData.ingredients.length === 0) return null;
 
@@ -186,31 +191,31 @@ class IngredientsService extends BaseDataService {
 
   private static readonly REGION_NAMES: Record<string, Record<RegionKey, string>> = {
     pt: {
-        'Coastal Highlands': 'Terras Altas Costeiras',
-        'Gale Fields': 'Campos de Vendaval',
-        'Gift of Shuritashi': 'Dom de Shuritashi',
-        'Land of Hot Water': 'Terra da Água Quente',
-        'Mount Arbora': 'Monte Arbora',
-        'Shallows': 'Raso',
-        'Brackwater Wetlands': 'Pântanos de Água Salobra'
+      'Coastal Highlands': 'Terras Altas Costeiras',
+      'Gale Fields': 'Campos de Vendaval',
+      'Gift of Shuritashi': 'Dom de Shuritashi',
+      'Land of Hot Water': 'Terra da Água Quente',
+      'Mount Arbora': 'Monte Arbora',
+      Shallows: 'Raso',
+      'Brackwater Wetlands': 'Pântanos de Água Salobra'
     },
     en: {
-        'Coastal Highlands': 'Coastal Highlands',
-        'Gale Fields': 'Gale Fields',
-        'Gift of Shuritashi': 'Gift of Shuritashi',
-        'Land of Hot Water': 'Land of Hot Water',
-        'Mount Arbora': 'Mount Arbora',
-        'Shallows': 'Shallows',
-        'Brackwater Wetlands': 'Brackwater Wetlands'
+      'Coastal Highlands': 'Coastal Highlands',
+      'Gale Fields': 'Gale Fields',
+      'Gift of Shuritashi': 'Gift of Shuritashi',
+      'Land of Hot Water': 'Land of Hot Water',
+      'Mount Arbora': 'Mount Arbora',
+      Shallows: 'Shallows',
+      'Brackwater Wetlands': 'Brackwater Wetlands'
     },
     es: {
-        'Coastal Highlands': 'Tierras Altas Costeras',
-        'Gale Fields': 'Campos de Vendaval',
-        'Gift of Shuritashi': 'Don de Shuritashi',
-        'Land of Hot Water': 'Tierra de Agua Caliente',
-        'Mount Arbora': 'Monte Arbora',
-        'Shallows': 'Bajíos',
-        'Brackwater Wetlands': 'Humedales de Agua Estancada'
+      'Coastal Highlands': 'Tierras Altas Costeras',
+      'Gale Fields': 'Campos de Vendaval',
+      'Gift of Shuritashi': 'Don de Shuritashi',
+      'Land of Hot Water': 'Tierra de Agua Caliente',
+      'Mount Arbora': 'Monte Arbora',
+      Shallows: 'Bajíos',
+      'Brackwater Wetlands': 'Humedales de Agua Estancada'
     }
   };
 
@@ -225,7 +230,7 @@ class IngredientsService extends BaseDataService {
   ];
 
   getRegionDisplayName(region: RegionKey, language: string = 'pt'): string {
-    const lang = (IngredientsService.REGION_NAMES[language]) ? language : 'pt';
+    const lang = IngredientsService.REGION_NAMES[language] ? language : 'pt';
     return IngredientsService.REGION_NAMES[lang][region] || region;
   }
 

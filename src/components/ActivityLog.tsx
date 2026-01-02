@@ -17,13 +17,9 @@ export default function ActivityLog() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title={t('activity.title')}
-        subtitle={t('activity.subtitle')}
-        icon="📋"
-      />
+      <PageHeader title={t('activity.title')} subtitle={t('activity.subtitle')} icon="📋" />
 
-      <StatsGrid title={t('activity.stats.title')} stats={statsData} className="mb-8" /> 
+      <StatsGrid title={t('activity.stats.title')} stats={statsData} className="mb-8" />
 
       <ActivityFilters attempts={attempts} onFilteredAttempts={setFilteredAttempts} />
 
@@ -77,13 +73,20 @@ export default function ActivityLog() {
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
-                        <span className="font-medium text-foreground/70">{t('activity.card.region')}</span>
+                        <span className="font-medium text-foreground/70">
+                          {t('activity.card.region')}
+                        </span>
                         <p className="text-foreground/60">
-                          {ingredientsService.getRegionDisplayName(attempt.region, settings.language)}
+                          {ingredientsService.getRegionDisplayName(
+                            attempt.region,
+                            settings.language
+                          )}
                         </p>
                       </div>
                       <div>
-                        <span className="font-medium text-foreground/70">{t('activity.card.test')}</span>
+                        <span className="font-medium text-foreground/70">
+                          {t('activity.card.test')}
+                        </span>
                         <p className="text-foreground/60 capitalize">
                           {attempt.testType === 'natureza'
                             ? `🌱 ${t('constants.forage.testType.nature')}`
@@ -91,13 +94,17 @@ export default function ActivityLog() {
                         </p>
                       </div>
                       <div>
-                        <span className="font-medium text-foreground/70">{t('activity.card.roll')}</span>
+                        <span className="font-medium text-foreground/70">
+                          {t('activity.card.roll')}
+                        </span>
                         <p className="text-foreground/60">
                           {attempt.roll} (DC {attempt.dcRange})
                         </p>
                       </div>
                       <div>
-                        <span className="font-medium text-foreground/70">{t('activity.card.date')}</span>
+                        <span className="font-medium text-foreground/70">
+                          {t('activity.card.date')}
+                        </span>
                         <p className="text-foreground/60">
                           {attempt.timestamp.toLocaleString('pt-BR')}
                         </p>
@@ -106,7 +113,11 @@ export default function ActivityLog() {
 
                     <div className="mt-3 flex flex-wrap gap-2">
                       <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs">
-                        {t('activity.card.bonus', attempt.modifier > 0 ? '+' : '', attempt.modifier)}
+                        {t(
+                          'activity.card.bonus',
+                          attempt.modifier > 0 ? '+' : '',
+                          attempt.modifier
+                        )}
                       </span>
                       {attempt.bonusDice && (
                         <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs">

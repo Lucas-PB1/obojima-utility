@@ -26,10 +26,14 @@ export const CreatedPotionCollection: React.FC = () => {
   } = useCreatedPotionCollection();
 
   const statsData = [
-    { value: stats.total, label: t('potions.collection.stats.total'), color: 'totoro-gray' as const },
-    { value: stats.available, label: t('potions.collection.stats.available'), color: 'totoro-green' as const },
-    { value: stats.used, label: t('potions.collection.stats.used'), color: 'totoro-gray' as const },
-    { value: stats.recent, label: t('potions.collection.stats.recent'), color: 'totoro-blue' as const }
+    { value: stats.total, label: t('ui.labels.total'), color: 'totoro-gray' as const },
+    { value: stats.available, label: t('ui.labels.available'), color: 'totoro-green' as const },
+    { value: stats.used, label: t('ui.labels.used'), color: 'totoro-gray' as const },
+    {
+      value: stats.recent,
+      label: t('potions.collection.stats.recent'),
+      color: 'totoro-blue' as const
+    }
   ];
 
   return (
@@ -40,7 +44,7 @@ export const CreatedPotionCollection: React.FC = () => {
         icon="🧪"
       />
 
-      <StatsGrid title={`📊 ${t('potions.collection.stats.total')}`} stats={statsData} />
+      <StatsGrid title={`📊 ${t('ui.labels.total')}`} stats={statsData} />
 
       <ContentCard>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -90,7 +94,6 @@ export const CreatedPotionCollection: React.FC = () => {
                     <h4 className="font-serif font-bold text-foreground text-lg leading-tight group-hover:text-totoro-blue transition-colors">
                       {potion.potion.nome}
                     </h4>
-
                   </div>
 
                   <div className="flex gap-2">
@@ -120,7 +123,9 @@ export const CreatedPotionCollection: React.FC = () => {
                           : 'bg-muted text-foreground/40 border-border/40'
                       }`}
                     >
-                      {potion.quantity > 0 ? t('potions.card.available', potion.quantity) : t('potions.card.used')}
+                      {potion.quantity > 0
+                        ? t('potions.card.available', potion.quantity)
+                        : t('potions.card.used')}
                     </span>
 
                     {potion.quantity > 0 && (
@@ -267,10 +272,14 @@ export const CreatedPotionCollection: React.FC = () => {
                 variant="ghost"
                 className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-2xl !font-bold"
               >
-                {t('potions.details.delete')}
+                {t('ui.actions.delete')}
               </Button>
-              <Button onClick={closeModal} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
-                {t('potions.details.close')}
+              <Button
+                onClick={closeModal}
+                variant="secondary"
+                className="flex-1 !rounded-2xl !font-bold"
+              >
+                {t('ui.actions.close')}
               </Button>
             </div>
           </div>

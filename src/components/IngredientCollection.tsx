@@ -11,7 +11,6 @@ import { useIngredientCollection } from '@/hooks/useIngredientCollection';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 
-
 export default function IngredientCollection() {
   const { t } = useTranslation();
   const { localizeIngredient } = useLocalizedIngredients();
@@ -49,7 +48,9 @@ export default function IngredientCollection() {
               <div className="font-medium text-totoro-gray hover:text-totoro-blue transition-colors">
                 {mappedIngredient.nome}
               </div>
-              <div className="text-xs text-totoro-blue mt-1">{t('ingredients.table.clickDetails')}</div>
+              <div className="text-xs text-totoro-blue mt-1">
+                {t('ingredients.table.clickDetails')}
+              </div>
             </div>
           </div>
         );
@@ -114,7 +115,9 @@ export default function IngredientCollection() {
                   : 'bg-totoro-green/20 text-totoro-green'
               }`}
             >
-              {item.used ? t('ingredients.table.used') : t('ingredients.table.available', item.quantity)}
+              {item.used
+                ? t('ingredients.table.used')
+                : t('ingredients.table.available', item.quantity)}
             </span>
           </div>
           {!item.used && (
@@ -129,7 +132,10 @@ export default function IngredientCollection() {
           )}
           {item.used && (
             <span className="text-xs text-totoro-gray/60">
-              {t('ingredients.table.usedAt', item.usedAt ? new Date(item.usedAt).toLocaleDateString('pt-BR') : 'N/A')}
+              {t(
+                'ingredients.table.usedAt',
+                item.usedAt ? new Date(item.usedAt).toLocaleDateString('pt-BR') : 'N/A'
+              )}
             </span>
           )}
         </div>

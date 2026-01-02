@@ -2,6 +2,9 @@
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { authService } from '@/services/authService';
+import { UserUtils } from '@/lib/userUtils';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/config/firebase';
 
 export function useLogin() {
   const router = useRouter();
@@ -51,7 +54,16 @@ export function useLogin() {
           return;
         }
 
-        await authService.register(email, password);
+        const cred = await authService.register(email, password);
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          uid: cred.user.uid,
+          email: email,
+          displayName: UserUtils.getFallbackName(email),
+          role: 'user',
+          createdAt: new Date().toISOString(),
+          lastLogin: new Date().toISOString()
+        });
+
         router.push('/');
       }
     } catch (err: unknown) {

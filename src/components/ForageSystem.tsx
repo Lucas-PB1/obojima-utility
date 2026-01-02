@@ -78,7 +78,9 @@ export default function ForageSystem({ onIngredientCollected }: ForageSystemProp
               <span className="text-lg group-hover:rotate-90 transition-transform duration-500">
                 ⚙️
               </span>
-              <span className="text-[10px] font-black uppercase tracking-widest ml-1">{t('forage.settings.button')}</span>
+              <span className="text-[10px] font-black uppercase tracking-widest ml-1">
+                {t('forage.settings.button')}
+              </span>
             </Button>
           </div>
         }

@@ -49,19 +49,19 @@ export default function ForageForm({
     label: ingredientsService.getRegionDisplayName(key, settings.language)
   }));
 
-  const translatedTestTypeOptions = TEST_TYPE_OPTIONS.map(opt => ({
-      ...opt,
-      label: t(opt.label)
+  const translatedTestTypeOptions = TEST_TYPE_OPTIONS.map((opt) => ({
+    ...opt,
+    label: t(opt.label)
   }));
 
-  const translatedAdvantageOptions = ADVANTAGE_OPTIONS.map(opt => ({
-      ...opt,
-      label: t(opt.label)
+  const translatedAdvantageOptions = ADVANTAGE_OPTIONS.map((opt) => ({
+    ...opt,
+    label: t(opt.label)
   }));
-  
-  const translatedDiceOptions = DICE_OPTIONS.map(opt => ({
-      ...opt,
-      label: opt.label
+
+  const translatedDiceOptions = DICE_OPTIONS.map((opt) => ({
+    ...opt,
+    label: opt.label
   }));
 
   return (
@@ -103,7 +103,10 @@ export default function ForageForm({
                   setBonusDice(null);
                 }
               }}
-              options={[{ value: '', label: t('forage.form.bonusDice.none') }, ...translatedDiceOptions]}
+              options={[
+                { value: '', label: t('forage.form.bonusDice.none') },
+                ...translatedDiceOptions
+              ]}
               className="flex-1"
             />
             {bonusDice && (

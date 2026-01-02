@@ -1,6 +1,14 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode, useRef } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  ReactNode,
+  useRef
+} from 'react';
 import { SettingsState, DEFAULT_SETTINGS } from '@/constants/settings';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 import { useAuth } from '@/hooks/useAuth';
@@ -17,7 +25,6 @@ interface SettingsContextType {
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
-
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const { isAuthenticated, loading: authLoading } = useAuth();
   const [settings, setSettings] = useState<SettingsState>(DEFAULT_SETTINGS);
@@ -28,8 +35,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedLanguage = localStorage.getItem('obojima_language');
-      if (savedLanguage && (savedLanguage === 'pt' || savedLanguage === 'en' || savedLanguage === 'es')) {
-        setSettings(prev => ({ ...prev, language: savedLanguage }));
+      if (
+        savedLanguage &&
+        (savedLanguage === 'pt' || savedLanguage === 'en' || savedLanguage === 'es')
+      ) {
+        setSettings((prev) => ({ ...prev, language: savedLanguage }));
       }
       setIsInitialized(true);
       setIsLoading(false);
@@ -41,17 +51,17 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
     if (!isAuthenticated) {
       if (typeof window !== 'undefined' && isInitialized) {
-          setSettings(prev => ({ ...DEFAULT_SETTINGS, language: prev.language }));
+        setSettings((prev) => ({ ...DEFAULT_SETTINGS, language: prev.language }));
       } else {
-           setSettings(DEFAULT_SETTINGS);
+        setSettings(DEFAULT_SETTINGS);
       }
       return;
     }
 
     const unsubscribe = firebaseSettingsService.subscribeToSettings((firestoreSettings) => {
-      setSettings(current => {
+      setSettings((current) => {
         if (firestoreSettings.language) {
-             localStorage.setItem('obojima_language', firestoreSettings.language);
+          localStorage.setItem('obojima_language', firestoreSettings.language);
         }
 
         return {
@@ -72,9 +82,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe();
   }, [isAuthenticated, authLoading, isInitialized]);
 
-  const loadSettings = useCallback(async () => {
-      // Re-fetch logic if needed
-  }, []);
+  const loadSettings = useCallback(async () => {}, []);
 
   const clearSettings = useCallback(async () => {
     if (!isAuthenticated) return;
@@ -94,43 +102,52 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     <K extends keyof SettingsState>(key: K, value: SettingsState[K]) => {
       setSettings((prev) => {
         const newSettings = { ...prev, [key]: value };
-        
+
         if (key === 'language') {
-             localStorage.setItem('obojima_language', value as string);
+          localStorage.setItem('obojima_language', value as string);
         }
 
         const save = async () => {
-             if (!isAuthenticated) return;
-             try {
-                if (key === 'language') await firebaseSettingsService.setLanguage(value as any);
-                else if (key === 'doubleForageTalent') await firebaseSettingsService.setDoubleForageTalent(value as boolean);
-                else if (key === 'cauldronBonus') await firebaseSettingsService.setCauldronBonus(value as boolean);
-                else if (key === 'potionBrewerTalent') await firebaseSettingsService.setPotionBrewerTalent(value as boolean);
-                else if (key === 'defaultModifier') await firebaseSettingsService.setDefaultModifier(value as number | '');
-                else if (key === 'potionBrewerLevel') await firebaseSettingsService.setPotionBrewerLevel(value as number);
-                else {
-                     if (key === 'defaultBonusType' || key === 'defaultBonusValue') {
-                         const bonusValue = key === 'defaultBonusValue' ? value as number : newSettings.defaultBonusValue;
-                         const bonusType = key === 'defaultBonusType' ? value as string : newSettings.defaultBonusType;
-                         
-                         const bonusDice = bonusType && bonusValue > 0 
-                            ? { type: bonusType as DiceType, value: bonusValue } 
-                            : null;
-                         await firebaseSettingsService.setDefaultBonusDice(bonusDice);
-                     }
-                }
-            } catch (e) {
-                console.error("Auto-save failed", e);
+          if (!isAuthenticated) return;
+          try {
+            if (key === 'language') await firebaseSettingsService.setLanguage(value as any);
+            else if (key === 'doubleForageTalent')
+              await firebaseSettingsService.setDoubleForageTalent(value as boolean);
+            else if (key === 'cauldronBonus')
+              await firebaseSettingsService.setCauldronBonus(value as boolean);
+            else if (key === 'potionBrewerTalent')
+              await firebaseSettingsService.setPotionBrewerTalent(value as boolean);
+            else if (key === 'defaultModifier')
+              await firebaseSettingsService.setDefaultModifier(value as number | '');
+            else if (key === 'potionBrewerLevel')
+              await firebaseSettingsService.setPotionBrewerLevel(value as number);
+            else {
+              if (key === 'defaultBonusType' || key === 'defaultBonusValue') {
+                const bonusValue =
+                  key === 'defaultBonusValue' ? (value as number) : newSettings.defaultBonusValue;
+                const bonusType =
+                  key === 'defaultBonusType' ? (value as string) : newSettings.defaultBonusType;
+
+                const bonusDice =
+                  bonusType && bonusValue > 0
+                    ? { type: bonusType as DiceType, value: bonusValue }
+                    : null;
+                await firebaseSettingsService.setDefaultBonusDice(bonusDice);
+              }
             }
+          } catch (e) {
+            console.error('Auto-save failed', e);
+          }
         };
 
-        const isDebouncedField = key === 'defaultModifier' || key === 'potionBrewerLevel' || key === 'defaultBonusValue';
+        const isDebouncedField =
+          key === 'defaultModifier' || key === 'potionBrewerLevel' || key === 'defaultBonusValue';
 
         if (isDebouncedField) {
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(save, 800);
+          if (timeoutRef.current) clearTimeout(timeoutRef.current);
+          timeoutRef.current = setTimeout(save, 800);
         } else {
-            save();
+          save();
         }
 
         return newSettings;
@@ -140,7 +157,16 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <SettingsContext.Provider value={{ settings, isLoading: isLoading || authLoading, isInitialized, updateSetting, clearSettings, loadSettings }}>
+    <SettingsContext.Provider
+      value={{
+        settings,
+        isLoading: isLoading || authLoading,
+        isInitialized,
+        updateSetting,
+        clearSettings,
+        loadSettings
+      }}
+    >
       {children}
     </SettingsContext.Provider>
   );
@@ -153,4 +179,3 @@ export function useSettingsContext() {
   }
   return context;
 }
-

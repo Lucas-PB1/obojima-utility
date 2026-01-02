@@ -10,4 +10,3 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
   en,
   es
 };
-

@@ -1,0 +1,81 @@
+import { useState, useEffect, useCallback } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/config/firebase';
+import { UserProfile } from '@/types/auth';
+import { adminService } from '@/services/adminService';
+import { useTranslation } from '@/hooks/useTranslation';
+
+export function useAdminUsers() {
+  const [users, setUsers] = useState<UserProfile[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
+
+  const fetchUsers = useCallback(async () => {
+    try {
+      setLoading(true);
+      const querySnapshot = await getDocs(collection(db, 'users'));
+      const usersData = querySnapshot.docs.map((doc) => doc.data() as UserProfile);
+      setUsers(usersData);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  const handleSync = async () => {
+    try {
+      setLoading(true);
+      await adminService.syncUsers();
+      alert(t('admin.users.sync.success'));
+      await fetchUsers();
+    } catch (error: any) {
+      console.error('Error syncing users:', error);
+      alert(error.message || t('admin.users.sync.error'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdate = async (uid: string, updates: Partial<UserProfile>) => {
+    try {
+      setLoading(true);
+      await adminService.updateUser(uid, updates);
+      setUsers((prev) => prev.map((u) => (u.uid === uid ? { ...u, ...updates } : u)));
+    } catch (error: any) {
+      console.error('Error updating user:', error);
+      alert(error.message || t('admin.users.role.update.error'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (uid: string, name: string) => {
+    if (!confirm(t('admin.users.delete.confirm', name))) return;
+
+    try {
+      setLoading(true);
+      await adminService.deleteUser(uid);
+      setUsers((prev) => prev.filter((u) => u.uid !== uid));
+      alert(t('admin.users.delete.success'));
+    } catch (error: any) {
+      console.error('Error deleting user:', error);
+      alert(error.message || t('admin.users.delete.error'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    users,
+    loading,
+    handleSync,
+    handleUpdate,
+    handleDelete,
+    refresh: fetchUsers
+  };
+}
