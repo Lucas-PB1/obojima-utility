@@ -1,50 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { socialService } from '@/services/socialService';
 import Button from '@/components/ui/Button';
-import { UserProfile } from '@/types/auth';
+import { useUserSearch } from '@/hooks/useUserSearch';
+import Input from '@/components/ui/Input';
+import Image from 'next/image';
 
 export default function UserSearch() {
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState<UserProfile[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [sentRequests, setSentRequests] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(async () => {
-      if (searchTerm.length >= 3) {
-        setLoading(true);
-        try {
-          const users = await socialService.searchUsers(searchTerm);
-          setResults(users);
-        } catch {
-          setResults([]);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setResults([]);
-      }
-    }, 500);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm]);
-
-  const handleAddFriend = async (userId: string) => {
-    await socialService.sendFriendRequest(userId);
-    setSentRequests((prev) => new Set(prev).add(userId));
-  };
+  const { searchTerm, setSearchTerm, results, loading, sentRequests, handleAddFriend } = useUserSearch();
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex gap-2">
-        <input
-          type="text"
+        <Input
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(String(e))}
           placeholder={t('social.search.placeholder')}
-          className="flex-1 bg-white/50 border border-totoro-blue/20 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-totoro-blue/50"
+          className="flex-1"
         />
       </div>
 
@@ -58,14 +30,13 @@ export default function UserSearch() {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-totoro-blue/10 flex items-center justify-center text-lg">
                 {user.photoURL ? (
-                  <>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={user.photoURL}
-                      alt={user.displayName || 'User'}
-                      className="rounded-full"
-                    />
-                  </>
+                  <Image
+                    src={user.photoURL}
+                    alt={user.displayName || 'User'}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
                 ) : (
                   '👤'
                 )}

@@ -375,5 +375,15 @@ export const pt = {
   'social.trade.error': 'Erro ao enviar item',
   'social.trade.type.potion': 'Poções',
   'social.trade.type.ingredient': 'Ingredientes',
-  'social.trade.noItems': 'Nenhum item disponível'
+  'social.trade.noItems': 'Nenhum item disponível',
+  
+  // Migration
+  'admin.migration.title': 'Sincronizar Perfis Públicos',
+  'admin.migration.description': 'Use isso para popular a coleção \'public_users\' baseada nos usuários existentes. Necessário para a busca de amigos funcionar para usuários antigos.',
+  'admin.migration.action': 'Executar Migração',
+  'admin.migration.confirm': 'Isso irá ler todos os usuários e recriar os perfis públicos. Continuar?',
+  'admin.migration.status.starting': 'Iniciando migração via servidor...',
+  'admin.migration.status.success': 'Sucesso: {0}',
+  'admin.migration.status.error': 'Erro: {0}',
+  'admin.tools.title': 'Ferramentas de Sistema'
 };

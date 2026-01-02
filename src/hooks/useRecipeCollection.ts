@@ -1,10 +1,12 @@
-'use client';
 import { PotionRecipe } from '@/types/ingredients';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { firebaseRecipeService } from '@/services/firebaseRecipeService';
 import { potionService } from '@/services/potionService';
+import { useTranslation } from '@/hooks/useTranslation';
+import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 
 export function useRecipeCollection() {
+  const { t } = useTranslation();
   const [recipes, setRecipes] = useState<PotionRecipe[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<PotionRecipe | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -101,6 +103,34 @@ export function useRecipeCollection() {
     });
   }, [recipes, filter]);
 
+  const statsData = useMemo(() => {
+    return [
+      {
+        value: stats.progress?.total.total > 0
+          ? `${stats.progress.total.collected} / ${stats.progress.total.total} (${stats.progress.total.percentage}%)`
+          : stats.total,
+        label: t('ui.labels.total'),
+        color: 'totoro-gray' as const
+      },
+      ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => {
+        const categoryKey = key as keyof typeof stats.byCategory;
+        const categoryProgress = stats.progress?.[categoryKey as 'combat' | 'utility' | 'whimsy'];
+        
+        return {
+          value: categoryProgress?.total > 0
+            ? `${categoryProgress.collected} / ${categoryProgress.total}`
+            : stats.byCategory[categoryKey],
+          label: t(config.label),
+          color: (key === 'combat'
+            ? 'totoro-orange'
+            : key === 'utility'
+              ? 'totoro-blue'
+              : 'totoro-yellow') as 'totoro-orange' | 'totoro-blue' | 'totoro-yellow'
+        };
+      })
+    ];
+  }, [stats, t]);
+
   const handleRecipeClick = useCallback((recipe: PotionRecipe) => {
     setSelectedRecipe(recipe);
     setShowModal(true);
@@ -130,6 +160,7 @@ export function useRecipeCollection() {
     filter,
     setFilter,
     stats,
+    statsData,
     handleRecipeClick,
     handleDeleteRecipe,
     loadRecipes

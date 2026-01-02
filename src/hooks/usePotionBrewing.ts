@@ -6,13 +6,19 @@ import { firebaseRecipeService } from '@/services/firebaseRecipeService';
 import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 import { Ingredient, PotionRecipe, PotionBrewingResult, Potion } from '@/types/ingredients';
 import { logger } from '@/utils/logger';
+import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 
 interface UsePotionBrewingProps {
   onPotionCreated?: (recipe: PotionRecipe) => void;
   onIngredientsUsed?: (ingredientIds: number[]) => void;
 }
 
-export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePotionBrewingProps) {
+export function usePotionBrewing({
+  onPotionCreated,
+  onIngredientsUsed,
+  availableIngredients = []
+}: UsePotionBrewingProps & { availableIngredients?: Ingredient[] }) {
+  const { localizeIngredient } = useLocalizedIngredients();
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
   const [brewingResult, setBrewingResult] = useState<PotionBrewingResult | null>(null);
   const [isBrewing, setIsBrewing] = useState(false);
@@ -22,6 +28,14 @@ export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePoti
   );
   const [showScoreChoice, setShowScoreChoice] = useState(false);
   const { settings } = useSettings();
+
+  const localizedSelectedIngredients = useMemo(() => {
+    return selectedIngredients.map((ing) => localizeIngredient(ing));
+  }, [selectedIngredients, localizeIngredient]);
+
+  const localizedAvailableIngredients = useMemo(() => {
+    return availableIngredients.map((ing) => localizeIngredient(ing));
+  }, [availableIngredients, localizeIngredient]);
 
   const previewScores = useMemo(() => {
     if (selectedIngredients.length !== 3) return null;
@@ -193,7 +207,8 @@ export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePoti
   const closeScoreChoiceModal = useCallback(() => setShowScoreChoice(false), []);
 
   return {
-    selectedIngredients,
+    selectedIngredients: localizedSelectedIngredients,
+    availableIngredients: localizedAvailableIngredients,
     brewingResult,
     isBrewing,
     showResultModal,

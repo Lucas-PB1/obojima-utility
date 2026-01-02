@@ -372,5 +372,15 @@ export const en = {
   'social.trade.error': 'Error sending item',
   'social.trade.type.potion': 'Potions',
   'social.trade.type.ingredient': 'Ingredients',
-  'social.trade.noItems': 'No items available'
+  'social.trade.noItems': 'No items available',
+
+  // Migration
+  'admin.migration.title': 'Sync Public Profiles',
+  'admin.migration.description': 'Use this to populate the \'public_users\' collection based on existing users. Required for friend search to work for old users.',
+  'admin.migration.action': 'Run Migration',
+  'admin.migration.confirm': 'This will read all users and recreate public profiles. Continue?',
+  'admin.migration.status.starting': 'Starting migration via server...',
+  'admin.migration.status.success': 'Success: {0}',
+  'admin.migration.status.error': 'Error: {0}',
+  'admin.tools.title': 'System Tools'
 };

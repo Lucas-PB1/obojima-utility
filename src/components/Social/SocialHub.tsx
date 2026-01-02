@@ -1,39 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { useAuth } from '@/hooks/useAuth';
-import { socialService } from '@/services/socialService';
-import { Friend, FriendRequest } from '@/types/social';
+import { SocialTab } from '@/types/social';
 import UserSearch from '@/components/Social/UserSearch';
 import FriendList from '@/components/Social/FriendList';
 import FriendRequestList from '@/components/Social/FriendRequestList';
 import ChatWindow from '@/components/Social/ChatWindow';
-
-type SocialTab = 'friends' | 'search' | 'requests' | 'chat';
+import { useSocialHub } from '@/hooks/useSocialHub';
 
 export default function SocialHub() {
   const { t } = useTranslation();
-  const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<SocialTab>('friends');
-  const [friends, setFriends] = useState<Friend[]>([]);
-  const [requests, setRequests] = useState<FriendRequest[]>([]);
-  const [activeChatFriend, setActiveChatFriend] = useState<Friend | null>(null);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const unsubscribeFriends = socialService.subscribeToFriends(setFriends);
-    const unsubscribeRequests = socialService.subscribeToFriendRequests(setRequests);
-
-    return () => {
-      unsubscribeFriends();
-      unsubscribeRequests();
-    };
-  }, [user?.uid]);
-
-  const handleStartChat = (friend: Friend) => {
-    setActiveChatFriend(friend);
-    setActiveTab('chat');
-  };
+  const {
+    activeTab,
+    setActiveTab,
+    friends,
+    requests,
+    activeChatFriend,
+    handleStartChat
+  } = useSocialHub();
 
   const renderContent = () => {
     if (activeTab === 'chat' && activeChatFriend) {

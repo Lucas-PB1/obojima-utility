@@ -201,3 +201,10 @@ export interface PotionBrewingResult {
   secondPotion?: Potion;
   percentageRoll?: number;
 }
+
+export interface PotionScores {
+  combatScore: number;
+  utilityScore: number;
+  whimsyScore: number;
+  winningAttribute: 'combat' | 'utility' | 'whimsy';
+}

@@ -45,3 +45,5 @@ export interface TradeTransaction {
   timestamp: Date;
   status: 'completed';
 }
+
+export type SocialTab = 'friends' | 'search' | 'requests' | 'chat';

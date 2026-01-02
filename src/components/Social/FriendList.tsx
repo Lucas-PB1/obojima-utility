@@ -3,6 +3,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { Friend } from '@/types/social';
 import Button from '@/components/ui/Button';
 import TradeModal from '@/components/Social/TradeModal';
+import Image from 'next/image';
 
 interface FriendListProps {
   friends: Friend[];
@@ -30,14 +31,13 @@ export default function FriendList({ friends, onChat }: FriendListProps) {
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-totoro-blue/20 to-totoro-green/20 flex items-center justify-center text-xl shadow-inner">
               {friend.photoURL ? (
-                <>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={friend.photoURL}
-                    alt={friend.displayName}
-                    className="rounded-full w-full h-full object-cover"
-                  />
-                </>
+                <Image
+                  src={friend.photoURL}
+                  alt={friend.displayName}
+                  width={48}
+                  height={48}
+                  className="rounded-full w-full h-full object-cover"
+                />
               ) : (
                 '👤'
               )}

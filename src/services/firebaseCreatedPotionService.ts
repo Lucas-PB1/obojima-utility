@@ -1,11 +1,5 @@
 import {
   collection,
-  doc,
-  getDocs,
-  getDoc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
   query,
   orderBy,
   onSnapshot,
@@ -50,40 +44,31 @@ class FirebaseCreatedPotionService {
     return new Date();
   }
 
-  private convertDateToTimestamp(date: Date): Timestamp {
-    return Timestamp.fromDate(date);
-  }
-
   async addCreatedPotion(recipe: PotionRecipe, uid?: string): Promise<CreatedPotion> {
-    if (!this.isClient() || (!this.getUserId() && !uid)) {
+    const userId = uid || this.getUserId();
+    if (!this.isClient() || !userId) {
       throw new Error('Usuário não autenticado');
     }
 
-    const createdPotion: Omit<CreatedPotion, 'id'> = {
-      potion: recipe.resultingPotion,
-      recipe: {
-        ...recipe,
-        createdAt: recipe.createdAt
-      },
-      quantity: 1,
-      createdAt: new Date(),
-      used: false
-    };
-
     try {
-      const potionsRef = collection(db, this.getPotionsPath());
-      const docRef = await addDoc(potionsRef, {
-        ...createdPotion,
-        recipe: {
-          ...createdPotion.recipe,
-          createdAt: this.convertDateToTimestamp(createdPotion.recipe.createdAt)
-        },
-        createdAt: this.convertDateToTimestamp(createdPotion.createdAt)
+      const response = await fetch('/api/potions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid: userId, recipe })
       });
 
+      if (!response.ok) throw new Error('Failed to create potion');
+
+      const result = await response.json();
+      const data = result.data;
+
       return {
-        ...createdPotion,
-        id: docRef.id
+        ...data,
+        createdAt: this.convertTimestampToDate(data.createdAt),
+        recipe: {
+          ...data.recipe,
+          createdAt: this.convertTimestampToDate(data.recipe.createdAt)
+        }
       };
     } catch (error) {
       logger.error('Erro ao adicionar poção criada:', error);
@@ -92,25 +77,23 @@ class FirebaseCreatedPotionService {
   }
 
   async getAllCreatedPotions(uid?: string): Promise<CreatedPotion[]> {
-    if (!this.isClient() || (!this.getUserId() && !uid)) return [];
+    const userId = uid || this.getUserId();
+    if (!this.isClient() || !userId) return [];
 
     try {
-      const potionsRef = collection(db, this.getPotionsPath(uid));
-      const snapshot = await getDocs(potionsRef);
+      const response = await fetch(`/api/potions?uid=${userId}`);
+      if (!response.ok) return [];
 
-      return snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          ...data,
-          id: doc.id,
-          createdAt: this.convertTimestampToDate(data.createdAt),
-          usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
-          recipe: {
-            ...data.recipe,
-            createdAt: this.convertTimestampToDate(data.recipe.createdAt)
-          }
-        } as CreatedPotion;
-      });
+      const result = await response.json();
+      return result.data.map((data: any) => ({
+        ...data,
+        createdAt: this.convertTimestampToDate(data.createdAt),
+        usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
+        recipe: {
+          ...data.recipe,
+          createdAt: this.convertTimestampToDate(data.recipe.createdAt)
+        }
+      }));
     } catch (error) {
       logger.error('Erro ao carregar poções criadas:', error);
       return [];
@@ -170,30 +153,17 @@ class FirebaseCreatedPotionService {
   }
 
   async usePotion(potionId: string, uid?: string): Promise<boolean> {
-    if (!this.isClient() || (!this.getUserId() && !uid)) return false;
+    const userId = uid || this.getUserId();
+    if (!this.isClient() || !userId) return false;
 
     try {
-      const potion = await this.getPotionById(potionId, uid);
+      const response = await fetch(`/api/potions/${potionId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid: userId, action: 'use' })
+      });
 
-      if (!potion || potion.quantity <= 0) {
-        return false;
-      }
-
-      const newQuantity = potion.quantity - 1;
-      const potionRef = doc(db, this.getPotionsPath(uid), potionId);
-
-      if (newQuantity === 0) {
-        await updateDoc(potionRef, {
-          quantity: 0,
-          used: true,
-          usedAt: this.convertDateToTimestamp(new Date())
-        });
-      } else {
-        await updateDoc(potionRef, {
-          quantity: newQuantity
-        });
-      }
-
+      if (!response.ok) return false;
       return true;
     } catch (error) {
       logger.error('Erro ao usar poção:', error);
@@ -202,11 +172,15 @@ class FirebaseCreatedPotionService {
   }
 
   async removePotion(potionId: string, uid?: string): Promise<void> {
-    if (!this.isClient() || (!this.getUserId() && !uid)) return;
+    const userId = uid || this.getUserId();
+    if (!this.isClient() || !userId) return;
 
     try {
-      const potionRef = doc(db, this.getPotionsPath(uid), potionId);
-      await deleteDoc(potionRef);
+      const response = await fetch(`/api/potions/${potionId}?uid=${userId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) throw new Error('Failed to delete potion');
     } catch (error) {
       logger.error('Erro ao remover poção:', error);
       throw error;
@@ -214,27 +188,25 @@ class FirebaseCreatedPotionService {
   }
 
   async getPotionById(potionId: string, uid?: string): Promise<CreatedPotion | null> {
-    if (!this.isClient() || (!this.getUserId() && !uid)) return null;
+    const userId = uid || this.getUserId();
+    if (!this.isClient() || !userId) return null;
 
     try {
-      const potionRef = doc(db, this.getPotionsPath(uid), potionId);
-      const snapshot = await getDoc(potionRef);
+      const response = await fetch(`/api/potions/${potionId}?uid=${userId}`);
+      if (!response.ok) return null;
 
-      if (snapshot.exists()) {
-        const data = snapshot.data();
-        return {
-          ...data,
-          id: snapshot.id,
-          createdAt: this.convertTimestampToDate(data.createdAt),
-          usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
-          recipe: {
-            ...data.recipe,
-            createdAt: this.convertTimestampToDate(data.recipe.createdAt)
-          }
-        } as CreatedPotion;
-      }
+      const result = await response.json();
+      const data = result.data;
 
-      return null;
+      return {
+        ...data,
+        createdAt: this.convertTimestampToDate(data.createdAt),
+        usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
+        recipe: {
+          ...data.recipe,
+          createdAt: this.convertTimestampToDate(data.recipe.createdAt)
+        }
+      };
     } catch (error) {
       logger.error('Erro ao buscar poção:', error);
       return null;
@@ -245,6 +217,7 @@ class FirebaseCreatedPotionService {
     const potions = await this.getAllCreatedPotions();
     return potions.filter((potion) => potion.recipe.winningAttribute === category);
   }
+  
   async getPotionStats(): Promise<{
     total: number;
     available: number;
