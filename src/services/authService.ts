@@ -46,7 +46,6 @@ class AuthService {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       if (userCredential.user) {
-        console.log('[AuthService] Syncing public profile for:', userCredential.user.email);
         await socialService.ensurePublicProfile({
           uid: userCredential.user.uid,
           email: userCredential.user.email || '',

@@ -60,6 +60,22 @@ class IngredientsService extends BaseDataService {
     return this.uniqueIngredients[language];
   }
 
+  async getTotalIngredientsCount(language: string = 'pt'): Promise<number> {
+    const [common, uncommon, rare, unique] = await Promise.all([
+      this.loadCommonIngredients(language),
+      this.loadUncommonIngredients(language),
+      this.loadRareIngredients(language),
+      this.loadUniqueIngredients(language)
+    ]);
+
+    return (
+      (common.total || common.ingredients.length) +
+      (uncommon.total || uncommon.ingredients.length) +
+      (rare.ingredients.length) +
+      (unique.ingredients.length || 0)
+    );
+  }
+
   async getRegionData(region: RegionKey, language: string = 'pt'): Promise<RegionData | null> {
     const data = await this.loadIngredientsData(language);
     return data.regions[region] || null;

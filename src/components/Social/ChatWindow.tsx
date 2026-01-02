@@ -30,12 +30,8 @@ export default function ChatWindow({ friend, onClose }: ChatWindowProps) {
     e.preventDefault();
     if (!newMessage.trim()) return;
 
-    try {
-      await socialService.sendMessage(friend.userId, newMessage);
-      setNewMessage('');
-    } catch (error) {
-      console.error(error);
-    }
+    await socialService.sendMessage(friend.userId, newMessage);
+    setNewMessage('');
   };
 
   return (

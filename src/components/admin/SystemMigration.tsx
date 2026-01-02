@@ -24,7 +24,6 @@ export default function SystemMigration() {
 
       setStatus(`Sucesso: ${data.message}`);
     } catch (error) {
-      console.error('Erro na migração:', error);
       const message = error instanceof Error ? error.message : 'Erro desconhecido';
       setStatus(`Erro: ${message}`);
     } finally {

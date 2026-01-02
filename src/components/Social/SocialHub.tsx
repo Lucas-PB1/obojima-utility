@@ -28,7 +28,7 @@ export default function SocialHub() {
       unsubscribeFriends();
       unsubscribeRequests();
     };
-  }, [user]);
+  }, [user?.uid]);
 
   const handleStartChat = (friend: Friend) => {
     setActiveChatFriend(friend);

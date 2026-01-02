@@ -100,8 +100,7 @@ export function AdminUserDetailsModal({
       setIngredients(fetchedIngredients);
       setPotions(fetchedPotions);
       setAttempts(fetchedAttempts);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
+    } catch {
     } finally {
       setLoading(false);
     }
@@ -123,12 +122,8 @@ export function AdminUserDetailsModal({
       handleDeleteIngredient(id, 'Item');
       return;
     }
-    try {
-      await firebaseStorageService.updateCollectedIngredient(id, { quantity: newQty }, user.uid);
-      setIngredients((prev) => prev.map((i) => (i.id === id ? { ...i, quantity: newQty } : i)));
-    } catch (error) {
-      console.error('Error updating quantity:', error);
-    }
+    await firebaseStorageService.updateCollectedIngredient(id, { quantity: newQty }, user.uid);
+    setIngredients((prev) => prev.map((i) => (i.id === id ? { ...i, quantity: newQty } : i)));
   };
 
   const handleAddItem = async () => {
@@ -166,7 +161,6 @@ export function AdminUserDetailsModal({
       setSelectedUniqueKey('');
       setAddQuantity(1);
     } catch (error) {
-      console.error('Error adding item:', error);
       alert(t('admin.modal.actions.add_error'));
     }
   };
@@ -177,7 +171,6 @@ export function AdminUserDetailsModal({
         await firebaseStorageService.removeCollectedIngredient(id, user.uid);
         setIngredients((prev) => prev.filter((i) => i.id !== id));
       } catch (error) {
-        console.error('Error removing ingredient:', error);
         alert(t('admin.modal.actions.remove_ingredient_error'));
       }
     }
@@ -189,7 +182,6 @@ export function AdminUserDetailsModal({
         await firebaseCreatedPotionService.removePotion(id, user.uid);
         setPotions((prev) => prev.filter((p) => p.id !== id));
       } catch (error) {
-        console.error('Error removing potion:', error);
         alert(t('admin.modal.actions.remove_potion_error'));
       }
     }

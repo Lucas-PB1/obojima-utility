@@ -75,19 +75,22 @@ export default function IngredientCollection() {
       label: t('ingredients.table.collectedAt'),
       sortable: false,
       width: '25%',
-      render: (_, item) => (
-        <div className="flex space-x-2">
-          <span className="bg-totoro-orange/20 text-totoro-orange px-2 py-1 rounded text-xs">
-            ⚔️ {item.ingredient.combat}
-          </span>
-          <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs">
-            🛠️ {item.ingredient.utility}
-          </span>
-          <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs">
-            ✨ {item.ingredient.whimsy}
-          </span>
-        </div>
-      )
+      render: (_, item) => {
+        const localized = localizeIngredient(item.ingredient);
+        return (
+          <div className="flex space-x-2">
+            <span className="bg-totoro-orange/20 text-totoro-orange px-2 py-1 rounded text-xs">
+              ⚔️ {localized.combat}
+            </span>
+            <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs">
+              🛠️ {localized.utility}
+            </span>
+            <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs">
+              ✨ {localized.whimsy}
+            </span>
+          </div>
+        );
+      }
     },
     {
       key: 'used' as keyof CollectedIngredient,

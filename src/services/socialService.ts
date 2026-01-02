@@ -12,7 +12,8 @@ import {
   Unsubscribe,
   setDoc,
   runTransaction,
-  getDoc
+  getDoc,
+  limit
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
@@ -33,59 +34,80 @@ class SocialService {
     user: Pick<UserProfile, 'uid' | 'displayName' | 'email' | 'photoURL'>
   ): Promise<void> {
     if (!this.isClient() || !user.uid) return;
-    try {
-      const publicRef = doc(db, 'public_users', user.uid);
-      await setDoc(
-        publicRef,
-        {
-          uid: user.uid,
-          displayName: user.displayName,
+    
+    const publicRef = doc(db, 'public_users', user.uid);
+    await setDoc(
+      publicRef,
+      {
+        uid: user.uid,
+        displayName: user.displayName,
           searchName: (user.displayName || '').toLowerCase(),
           email: user.email,
           photoURL: user.photoURL,
           lastSeen: Timestamp.now()
         },
         { merge: true }
-      );
-    } catch (error) {
-      console.warn('Error syncing public profile:', error);
-    }
+    );
   }
 
   async searchUsers(searchTerm: string): Promise<UserProfile[]> {
+    console.log(`[SocialService] searchUsers triggered with: ${searchTerm}`);
     if (!this.isClient() || !searchTerm || searchTerm.length < 3) return [];
-
-    console.log(`[SocialService] Searching for: "${searchTerm}"`);
 
     try {
       const usersRef = collection(db, 'public_users');
       const termLowerCase = searchTerm.toLowerCase();
-      let q;
 
-      if (termLowerCase.includes('@')) {
-        q = query(usersRef, where('email', '==', termLowerCase));
-      } else {
-        q = query(
-          usersRef,
-          where('searchName', '>=', termLowerCase),
-          where('searchName', '<=', termLowerCase + '\uf8ff'),
-          orderBy('searchName')
-        );
-      }
+      // Busca por nome (prefixo)
+      const nameQuery = query(
+        usersRef,
+        where('searchName', '>=', termLowerCase),
+        where('searchName', '<=', termLowerCase + '\uf8ff'),
+        orderBy('searchName'),
+        limit(10)
+      );
 
-      const snapshot = await getDocs(q);
-      console.log(`[SocialService] Found ${snapshot.size} documents`);
+      // Busca por email (prefixo)
+      const emailQuery = query(
+        usersRef,
+        where('email', '>=', termLowerCase),
+        where('email', '<=', termLowerCase + '\uf8ff'),
+        orderBy('email'),
+        limit(10)
+      );
 
-      const users = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return { uid: doc.id, ...data } as UserProfile;
+      // Fallback: Busca por displayName (case-sensitive, para usuários antigos sem searchName)
+      const displayQuery = query(
+        usersRef,
+        where('displayName', '>=', searchTerm),
+        where('displayName', '<=', searchTerm + '\uf8ff'),
+        orderBy('displayName'),
+        limit(10)
+      );
+
+      const [nameSnapshot, emailSnapshot, displaySnapshot] = await Promise.all([
+        getDocs(nameQuery),
+        getDocs(emailQuery),
+        getDocs(displayQuery)
+      ]);
+
+      const usersMap = new Map<string, UserProfile>();
+
+      nameSnapshot.docs.forEach((doc) => {
+        usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as UserProfile);
       });
 
-      console.log('[SocialService] Mapped users:', users);
+      emailSnapshot.docs.forEach((doc) => {
+        usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as UserProfile);
+      });
 
-      return users.slice(0, 10);
+      displaySnapshot.docs.forEach((doc) => {
+        usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as UserProfile);
+      });
+
+      return Array.from(usersMap.values()).slice(0, 10);
     } catch (error) {
-      console.error('[SocialService] Error searching users:', error);
+      console.error('Error searching users:', error);
       return [];
     }
   }
@@ -336,6 +358,8 @@ class SocialService {
 
     await runTransaction(db, async (transaction) => {
       const senderDoc = await transaction.get(senderDocRef);
+      const receiverDoc = await transaction.get(receiverDocRef);
+
       if (!senderDoc.exists()) throw new Error('Item disappeared');
 
       const sData = senderDoc.data();
@@ -348,7 +372,6 @@ class SocialService {
         transaction.update(senderDocRef, { quantity: newSenderQty });
       }
 
-      const receiverDoc = await transaction.get(receiverDocRef);
       if (receiverDoc.exists()) {
         const rData = receiverDoc.data();
         transaction.update(receiverDocRef, { quantity: rData.quantity + item.quantity });

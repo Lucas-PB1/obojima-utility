@@ -12,11 +12,7 @@ export default function FriendRequestList({ requests }: FriendRequestListProps) 
   const { t } = useTranslation();
 
   const handleRespond = async (requestId: string, accept: boolean) => {
-    try {
-      await socialService.respondToFriendRequest(requestId, accept);
-    } catch (error) {
-      console.error(error);
-    }
+    await socialService.respondToFriendRequest(requestId, accept);
   };
 
   return (

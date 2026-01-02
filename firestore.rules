@@ -9,7 +9,7 @@ service cloud.firestore {
       allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
       
       match /collectedIngredients/{ingredientId} {
-        allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+        allow read, write: if request.auth != null;
       }
       
       match /forageAttempts/{attemptId} {
@@ -21,7 +21,7 @@ service cloud.firestore {
       }
       
       match /createdPotions/{potionId} {
-        allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+        allow read, write: if request.auth != null;
       }
     }
     
@@ -59,6 +59,10 @@ service cloud.firestore {
        match /messages/{messageId} {
           allow read, write: if request.auth != null; // Parent check is enough typically if structure is robust
        }
+    }
+    
+    match /trades/{tradeId} {
+      allow read, write: if request.auth != null;
     }
   }
 }

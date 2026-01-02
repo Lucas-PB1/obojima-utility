@@ -7,7 +7,7 @@ import { logger } from '@/utils/logger';
 export function useLocalizedIngredients() {
   const { language } = useTranslation();
   const [ingredientsMap, setIngredientsMap] = React.useState<
-    Record<number, { nome: string; descricao: string }>
+    Record<number, { nome: string; descricao: string; combat: number; utility: number; whimsy: number }>
   >({});
 
   React.useEffect(() => {
@@ -19,10 +19,40 @@ export function useLocalizedIngredients() {
           ingredientsService.loadRareIngredients(language)
         ]);
 
-        const map: Record<number, { nome: string; descricao: string }> = {};
-        common.ingredients.forEach((i) => (map[i.id] = { nome: i.nome, descricao: i.descricao }));
-        uncommon.ingredients.forEach((i) => (map[i.id] = { nome: i.nome, descricao: i.descricao }));
-        rare.ingredients.forEach((i) => (map[i.id] = { nome: i.nome, descricao: i.descricao }));
+        const map: Record<
+          number,
+          { nome: string; descricao: string; combat: number; utility: number; whimsy: number }
+        > = {};
+        common.ingredients.forEach(
+          (i) =>
+            (map[i.id] = {
+              nome: i.nome,
+              descricao: i.descricao,
+              combat: i.combat,
+              utility: i.utility,
+              whimsy: i.whimsy
+            })
+        );
+        uncommon.ingredients.forEach(
+          (i) =>
+            (map[i.id] = {
+              nome: i.nome,
+              descricao: i.descricao,
+              combat: i.combat,
+              utility: i.utility,
+              whimsy: i.whimsy
+            })
+        );
+        rare.ingredients.forEach(
+          (i) =>
+            (map[i.id] = {
+              nome: i.nome,
+              descricao: i.descricao,
+              combat: i.combat,
+              utility: i.utility,
+              whimsy: i.whimsy
+            })
+        );
 
         setIngredientsMap(map);
       } catch (error) {
@@ -40,7 +70,10 @@ export function useLocalizedIngredients() {
       return {
         ...ingredient,
         nome: localized.nome || ingredient.nome,
-        descricao: localized.descricao || ingredient.descricao
+        descricao: localized.descricao || ingredient.descricao,
+        combat: localized.combat ?? ingredient.combat,
+        utility: localized.utility ?? ingredient.utility,
+        whimsy: localized.whimsy ?? ingredient.whimsy
       };
     },
     [ingredientsMap]

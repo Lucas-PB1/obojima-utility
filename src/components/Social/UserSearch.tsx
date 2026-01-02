@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { socialService } from '@/services/socialService';
 import Button from '@/components/ui/Button';
@@ -11,40 +11,34 @@ export default function UserSearch() {
   const [loading, setLoading] = useState(false);
   const [sentRequests, setSentRequests] = useState<Set<string>>(new Set());
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.error('[UserSearch] handleSearch triggered with:', searchTerm);
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (searchTerm.length >= 3) {
+        setLoading(true);
+        try {
+          const users = await socialService.searchUsers(searchTerm);
+          setResults(users);
+        } catch {
+          setResults([]);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setResults([]);
+      }
+    }, 500);
 
-    if (!searchTerm.trim()) {
-      console.error('[UserSearch] Search term empty');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      console.error('[UserSearch] Calling socialService.searchUsers...');
-      const users = await socialService.searchUsers(searchTerm);
-      console.error('[UserSearch] Got results:', users);
-      setResults(users);
-    } catch (error) {
-      console.error('[UserSearch] Error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   const handleAddFriend = async (userId: string) => {
-    try {
-      await socialService.sendFriendRequest(userId);
-      setSentRequests((prev) => new Set(prev).add(userId));
-    } catch (error) {
-      console.error('Error sending request', error);
-    }
+    await socialService.sendFriendRequest(userId);
+    setSentRequests((prev) => new Set(prev).add(userId));
   };
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <form onSubmit={handleSearch} className="flex gap-2">
+      <div className="flex gap-2">
         <input
           type="text"
           value={searchTerm}
@@ -52,10 +46,7 @@ export default function UserSearch() {
           placeholder={t('social.search.placeholder')}
           className="flex-1 bg-white/50 border border-totoro-blue/20 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-totoro-blue/50"
         />
-        <Button type="submit" disabled={loading || searchTerm.length < 3}>
-          {t('social.tabs.search')}
-        </Button>
-      </form>
+      </div>
 
       <div className="space-y-4">
         {results.length === 0 && !loading && searchTerm.length >= 3 && (

@@ -284,6 +284,26 @@ class PotionService extends BaseDataService {
     return potions.find((potion) => potion.id === id) || null;
   }
 
+  public async getTotalPotionsCount(language: string = 'pt'): Promise<{
+    combat: number;
+    utility: number;
+    whimsy: number;
+    total: number;
+  }> {
+    await this.loadPotionData(language);
+
+    const combatCount = this.combatPotions[language]?.total || 0;
+    const utilityCount = this.utilityPotions[language]?.total || 0;
+    const whimsyCount = this.whimsicalPotions[language]?.total || 0;
+
+    return {
+      combat: combatCount,
+      utility: utilityCount,
+      whimsy: whimsyCount,
+      total: combatCount + utilityCount + whimsyCount
+    };
+  }
+
   public calculateScores(ingredients: Ingredient[]): {
     combatScore: number;
     utilityScore: number;

@@ -371,5 +371,6 @@ export const en = {
   'social.trade.success': 'Item sent successfully!',
   'social.trade.error': 'Error sending item',
   'social.trade.type.potion': 'Potions',
-  'social.trade.type.ingredient': 'Ingredients'
+  'social.trade.type.ingredient': 'Ingredients',
+  'social.trade.noItems': 'No items available'
 };

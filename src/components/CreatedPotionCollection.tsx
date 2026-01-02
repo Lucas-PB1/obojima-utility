@@ -26,14 +26,32 @@ export const CreatedPotionCollection: React.FC = () => {
   } = useCreatedPotionCollection();
 
   const statsData = [
-    { value: stats.total, label: t('ui.labels.total'), color: 'totoro-gray' as const },
+    {
+      value: stats.progress?.total.total > 0
+        ? `${stats.progress.total.collected} / ${stats.progress.total.total} (${stats.progress.total.percentage}%)`
+        : stats.total,
+      label: t('ui.labels.total'),
+      color: 'totoro-gray' as const
+    },
     { value: stats.available, label: t('ui.labels.available'), color: 'totoro-green' as const },
     { value: stats.used, label: t('ui.labels.used'), color: 'totoro-gray' as const },
-    {
-      value: stats.recent,
-      label: t('potions.collection.stats.recent'),
-      color: 'totoro-blue' as const
-    }
+    
+    ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => {
+      const categoryKey = key as keyof typeof stats.byCategory;
+      const categoryProgress = stats.progress?.[categoryKey as 'combat' | 'utility' | 'whimsy'];
+      
+      return {
+        value: categoryProgress?.total > 0
+          ? `${categoryProgress.collected} / ${categoryProgress.total}`
+          : stats.byCategory[categoryKey],
+        label: t(config.label),
+        color: (key === 'combat'
+          ? 'totoro-orange'
+          : key === 'utility'
+            ? 'totoro-blue'
+            : 'totoro-yellow') as 'totoro-orange' | 'totoro-blue' | 'totoro-yellow'
+      };
+    })
   ];
 
   return (
@@ -100,7 +118,7 @@ export const CreatedPotionCollection: React.FC = () => {
                     <div
                       className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].classes}`}
                     >
-                      {t(POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].label)}
+                      #{potion.potion.id} - {t(POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].label)}
                     </div>
                     <div
                       className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${
@@ -239,29 +257,106 @@ export const CreatedPotionCollection: React.FC = () => {
                 {t('potions.result.scores')}
               </h4>
               <div className="grid grid-cols-3 gap-6 relative z-10">
-                <div className="text-center group">
-                  <div className="text-[9px] font-bold text-totoro-orange/60 uppercase tracking-widest mb-1">
+                {/* Combat Score */}
+                <div
+                  className={`text-center transition-all duration-300 ${
+                    selectedPotion.recipe.winningAttribute === 'combat'
+                      ? 'scale-110 opacity-100'
+                      : 'scale-90 opacity-50 grayscale'
+                  }`}
+                >
+                  <div
+                    className={`text-[9px] font-bold uppercase tracking-widest mb-1 ${
+                      selectedPotion.recipe.winningAttribute === 'combat'
+                        ? 'text-totoro-orange'
+                        : 'text-totoro-orange/60'
+                    }`}
+                  >
                     Cbt
                   </div>
-                  <div className="text-3xl font-black text-totoro-orange font-mono">
+                  <div
+                    className={`text-3xl font-black font-mono relative inline-block ${
+                      selectedPotion.recipe.winningAttribute === 'combat'
+                        ? 'text-totoro-orange drop-shadow-lg'
+                        : 'text-totoro-orange/60'
+                    }`}
+                  >
                     {selectedPotion.recipe.combatScore}
+                    {selectedPotion.recipe.winningAttribute === 'combat' && (
+                      <div className="absolute -top-3 -right-3 text-xs">👑</div>
+                    )}
                   </div>
+                  {selectedPotion.recipe.winningAttribute === 'combat' && (
+                    <div className="mt-1 h-1 w-full bg-totoro-orange rounded-full opacity-50"></div>
+                  )}
                 </div>
-                <div className="text-center group">
-                  <h4 className="text-[9px] font-bold text-totoro-blue/60 uppercase tracking-widest mb-1">
+
+                {/* Utility Score */}
+                <div
+                  className={`text-center transition-all duration-300 ${
+                    selectedPotion.recipe.winningAttribute === 'utility'
+                      ? 'scale-110 opacity-100'
+                      : 'scale-90 opacity-50 grayscale'
+                  }`}
+                >
+                  <div
+                    className={`text-[9px] font-bold uppercase tracking-widest mb-1 ${
+                      selectedPotion.recipe.winningAttribute === 'utility'
+                        ? 'text-totoro-blue'
+                        : 'text-totoro-blue/60'
+                    }`}
+                  >
                     Utl
-                  </h4>
-                  <div className="text-3xl font-black text-totoro-blue font-mono">
+                  </div>
+                  <div
+                    className={`text-3xl font-black font-mono relative inline-block ${
+                      selectedPotion.recipe.winningAttribute === 'utility'
+                        ? 'text-totoro-blue drop-shadow-lg'
+                        : 'text-totoro-blue/60'
+                    }`}
+                  >
                     {selectedPotion.recipe.utilityScore}
+                    {selectedPotion.recipe.winningAttribute === 'utility' && (
+                      <div className="absolute -top-3 -right-3 text-xs">👑</div>
+                    )}
                   </div>
+                  {selectedPotion.recipe.winningAttribute === 'utility' && (
+                    <div className="mt-1 h-1 w-full bg-totoro-blue rounded-full opacity-50"></div>
+                  )}
                 </div>
-                <div className="text-center group">
-                  <h4 className="text-[9px] font-bold text-totoro-yellow/60 uppercase tracking-widest mb-1">
+
+                {/* Whimsy Score */}
+                <div
+                  className={`text-center transition-all duration-300 ${
+                    selectedPotion.recipe.winningAttribute === 'whimsy'
+                      ? 'scale-110 opacity-100'
+                      : 'scale-90 opacity-50 grayscale'
+                  }`}
+                >
+                  <div
+                    className={`text-[9px] font-bold uppercase tracking-widest mb-1 ${
+                      selectedPotion.recipe.winningAttribute === 'whimsy'
+                        ? 'text-totoro-yellow'
+                        : 'text-totoro-yellow/60'
+                    }`}
+                  >
                     Why
-                  </h4>
-                  <div className="text-3xl font-black text-totoro-yellow font-mono">
-                    {selectedPotion.recipe.whimsyScore}
                   </div>
+                  <div
+                    className={`text-3xl font-black font-mono relative inline-block ${
+                      selectedPotion.recipe.winningAttribute === 'whimsy'
+                        ? 'text-totoro-yellow drop-shadow-lg'
+                        : 'text-totoro-yellow/60'
+                    }`}
+                  >
+                    {selectedPotion.recipe.whimsyScore}
+                    {selectedPotion.recipe.winningAttribute === 'whimsy' && (
+                      <div className="absolute -top-3 -right-3 text-xs">👑</div>
+                    )}
+                  </div>
+                  {selectedPotion.recipe.winningAttribute === 'whimsy' && (
+                    <div className="mt-1 h-1 w-full bg-totoro-yellow rounded-full opacity-50"></div>
+                  )}
                 </div>
               </div>
             </div>

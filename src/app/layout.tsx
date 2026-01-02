@@ -11,13 +11,15 @@ const outfit = Outfit({
 const bitter = Bitter({
   variable: '--font-bitter',
   subsets: ['latin'],
-  display: 'swap'
+  display: 'swap',
+  preload: false
 });
 
 const quicksand = Quicksand({
   variable: '--font-quicksand',
   subsets: ['latin'],
-  display: 'swap'
+  display: 'swap',
+  preload: false
 });
 
 export const metadata: Metadata = {

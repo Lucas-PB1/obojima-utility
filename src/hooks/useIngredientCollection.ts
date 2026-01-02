@@ -1,6 +1,7 @@
 'use client';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { StatsService } from '@/services/statsService';
+import { ingredientsService } from '@/services/ingredientsService';
 import { useIngredients } from '@/hooks/useIngredients';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -18,6 +19,13 @@ export function useIngredientCollection() {
     [ingredients]
   );
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  const [totalIngredientsCount, setTotalIngredientsCount] = useState(0);
+
+  useEffect(() => {
+    ingredientsService.getTotalIngredientsCount().then(setTotalIngredientsCount);
+  }, []);
+
   const collectionStats = useMemo(
     () => StatsService.calculateCollectionStats(displayIngredients, attempts),
     [displayIngredients, attempts]
@@ -25,10 +33,17 @@ export function useIngredientCollection() {
 
   const { t } = useTranslation();
 
+  const uniqueCollectedCount = displayIngredients.length;
+  const progressPercentage = totalIngredientsCount > 0 
+    ? Math.round((uniqueCollectedCount / totalIngredientsCount) * 100) 
+    : 0;
+
   const statsData = useMemo(
     () => [
       {
-        value: collectionStats.totalCollected,
+        value: totalIngredientsCount > 0 
+          ? `${uniqueCollectedCount} / ${totalIngredientsCount} (${progressPercentage}%)`
+          : collectionStats.totalCollected,
         label: t('activity.stats.ingredientsCollected'),
         color: 'totoro-green' as const
       },
@@ -48,7 +63,7 @@ export function useIngredientCollection() {
         color: 'totoro-orange' as const
       }
     ],
-    [collectionStats, t]
+    [collectionStats, t, uniqueCollectedCount, totalIngredientsCount, progressPercentage]
   );
 
   const handleMarkAsUsed = useCallback(

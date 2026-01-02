@@ -2,6 +2,7 @@
 import { PotionRecipe } from '@/types/ingredients';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { firebaseRecipeService } from '@/services/firebaseRecipeService';
+import { potionService } from '@/services/potionService';
 
 export function useRecipeCollection() {
   const [recipes, setRecipes] = useState<PotionRecipe[]>([]);
@@ -11,7 +12,13 @@ export function useRecipeCollection() {
   const [stats, setStats] = useState({
     total: 0,
     byCategory: { combat: 0, utility: 0, whimsy: 0 },
-    recent: 0
+    recent: 0,
+    progress: {
+      total: { collected: 0, total: 0, percentage: 0 },
+      combat: { collected: 0, total: 0 },
+      utility: { collected: 0, total: 0 },
+      whimsy: { collected: 0, total: 0 }
+    }
   });
 
   useEffect(() => {
@@ -25,7 +32,47 @@ export function useRecipeCollection() {
   useEffect(() => {
     const loadStats = async () => {
       const statsData = await firebaseRecipeService.getRecipeStats();
-      setStats(statsData);
+      
+      // Calculate progress stats
+      const totalPotionsData = await potionService.getTotalPotionsCount();
+      
+      // Count unique potions collected by ID
+      const uniquePotions = new Set<string>();
+      const uniqueCombat = new Set<string>();
+      const uniqueUtility = new Set<string>();
+      const uniqueWhimsy = new Set<string>();
+
+      recipes.forEach(recipe => {
+        const potionId = `${recipe.resultingPotion.id}-${recipe.winningAttribute}`;
+        uniquePotions.add(potionId);
+        
+        if (recipe.winningAttribute === 'combat') uniqueCombat.add(potionId);
+        if (recipe.winningAttribute === 'utility') uniqueUtility.add(potionId);
+        if (recipe.winningAttribute === 'whimsy') uniqueWhimsy.add(potionId);
+      });
+
+      setStats({
+        ...statsData,
+        progress: {
+          total: {
+            collected: uniquePotions.size,
+            total: totalPotionsData.total,
+            percentage: Math.round((uniquePotions.size / totalPotionsData.total) * 100)
+          },
+          combat: {
+            collected: uniqueCombat.size,
+            total: totalPotionsData.combat
+          },
+          utility: {
+            collected: uniqueUtility.size,
+            total: totalPotionsData.utility
+          },
+          whimsy: {
+            collected: uniqueWhimsy.size,
+            total: totalPotionsData.whimsy
+          }
+        }
+      });
     };
     loadStats();
   }, [recipes]);
@@ -36,9 +83,21 @@ export function useRecipeCollection() {
   }, []);
 
   const filteredRecipes = useMemo(() => {
-    return recipes.filter((recipe) => {
+    const result = recipes.filter((recipe) => {
       if (filter === 'all') return true;
       return recipe.winningAttribute === filter;
+    });
+
+    return result.sort((a, b) => {
+      // Sort by Category Order
+      const categoryOrder = { combat: 1, utility: 2, whimsy: 3 };
+      const catA = categoryOrder[a.winningAttribute as keyof typeof categoryOrder] || 99;
+      const catB = categoryOrder[b.winningAttribute as keyof typeof categoryOrder] || 99;
+      
+      if (catA !== catB) return catA - catB;
+      
+      // Sort by ID (Number)
+      return a.resultingPotion.id - b.resultingPotion.id;
     });
   }, [recipes, filter]);
 

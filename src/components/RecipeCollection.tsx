@@ -25,16 +25,29 @@ export const RecipeCollection: React.FC = () => {
   } = useRecipeCollection();
 
   const statsData = [
-    { value: stats.total, label: t('ui.labels.total'), color: 'totoro-gray' as const },
-    ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => ({
-      value: stats.byCategory[key as keyof typeof stats.byCategory],
-      label: t(config.label),
-      color: (key === 'combat'
-        ? 'totoro-orange'
-        : key === 'utility'
-          ? 'totoro-blue'
-          : 'totoro-yellow') as 'totoro-orange' | 'totoro-blue' | 'totoro-yellow'
-    }))
+    {
+      value: stats.progress?.total.total > 0
+        ? `${stats.progress.total.collected} / ${stats.progress.total.total} (${stats.progress.total.percentage}%)`
+        : stats.total,
+      label: t('ui.labels.total'),
+      color: 'totoro-gray' as const
+    },
+    ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => {
+      const categoryKey = key as keyof typeof stats.byCategory;
+      const categoryProgress = stats.progress?.[categoryKey as 'combat' | 'utility' | 'whimsy'];
+      
+      return {
+        value: categoryProgress?.total > 0
+          ? `${categoryProgress.collected} / ${categoryProgress.total}`
+          : stats.byCategory[categoryKey],
+        label: t(config.label),
+        color: (key === 'combat'
+          ? 'totoro-orange'
+          : key === 'utility'
+            ? 'totoro-blue'
+            : 'totoro-yellow') as 'totoro-orange' | 'totoro-blue' | 'totoro-yellow'
+      };
+    })
   ];
 
   return (
@@ -106,7 +119,7 @@ export const RecipeCollection: React.FC = () => {
                   <div
                     className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${POTION_CATEGORY_CONFIG[recipe.winningAttribute].classes}`}
                   >
-                    {t(POTION_CATEGORY_CONFIG[recipe.winningAttribute].label)}
+                    #{recipe.resultingPotion.id} - {t(POTION_CATEGORY_CONFIG[recipe.winningAttribute].label)}
                   </div>
 
                   <div className="grid grid-cols-3 gap-3 py-3 border-y border-totoro-blue/5">
@@ -192,29 +205,106 @@ export const RecipeCollection: React.FC = () => {
                 {t('recipes.details.potential')}
               </h4>
               <div className="grid grid-cols-3 gap-6 relative z-10">
-                <div className="text-center group">
-                  <div className="text-[9px] font-bold text-totoro-orange/60 uppercase tracking-widest mb-1">
+                {/* Combat Score */}
+                <div
+                  className={`text-center transition-all duration-300 ${
+                    selectedRecipe.winningAttribute === 'combat'
+                      ? 'scale-110 opacity-100'
+                      : 'scale-90 opacity-50 grayscale'
+                  }`}
+                >
+                  <div
+                    className={`text-[9px] font-bold uppercase tracking-widest mb-1 ${
+                      selectedRecipe.winningAttribute === 'combat'
+                        ? 'text-totoro-orange'
+                        : 'text-totoro-orange/60'
+                    }`}
+                  >
                     Cbt
                   </div>
-                  <div className="text-3xl font-black text-totoro-orange font-mono">
+                  <div
+                    className={`text-3xl font-black font-mono relative inline-block ${
+                      selectedRecipe.winningAttribute === 'combat'
+                        ? 'text-totoro-orange drop-shadow-lg'
+                        : 'text-totoro-orange/60'
+                    }`}
+                  >
                     {selectedRecipe.combatScore}
+                    {selectedRecipe.winningAttribute === 'combat' && (
+                      <div className="absolute -top-3 -right-3 text-xs">👑</div>
+                    )}
                   </div>
+                  {selectedRecipe.winningAttribute === 'combat' && (
+                    <div className="mt-1 h-1 w-full bg-totoro-orange rounded-full opacity-50"></div>
+                  )}
                 </div>
-                <div className="text-center group">
-                  <h4 className="text-[9px] font-bold text-totoro-blue/60 uppercase tracking-widest mb-1">
+
+                {/* Utility Score */}
+                <div
+                  className={`text-center transition-all duration-300 ${
+                    selectedRecipe.winningAttribute === 'utility'
+                      ? 'scale-110 opacity-100'
+                      : 'scale-90 opacity-50 grayscale'
+                  }`}
+                >
+                  <div
+                    className={`text-[9px] font-bold uppercase tracking-widest mb-1 ${
+                      selectedRecipe.winningAttribute === 'utility'
+                        ? 'text-totoro-blue'
+                        : 'text-totoro-blue/60'
+                    }`}
+                  >
                     Utl
-                  </h4>
-                  <div className="text-3xl font-black text-totoro-blue font-mono">
+                  </div>
+                  <div
+                    className={`text-3xl font-black font-mono relative inline-block ${
+                      selectedRecipe.winningAttribute === 'utility'
+                        ? 'text-totoro-blue drop-shadow-lg'
+                        : 'text-totoro-blue/60'
+                    }`}
+                  >
                     {selectedRecipe.utilityScore}
+                    {selectedRecipe.winningAttribute === 'utility' && (
+                      <div className="absolute -top-3 -right-3 text-xs">👑</div>
+                    )}
                   </div>
+                  {selectedRecipe.winningAttribute === 'utility' && (
+                    <div className="mt-1 h-1 w-full bg-totoro-blue rounded-full opacity-50"></div>
+                  )}
                 </div>
-                <div className="text-center group">
-                  <h4 className="text-[9px] font-bold text-totoro-yellow/60 uppercase tracking-widest mb-1">
+
+                {/* Whimsy Score */}
+                <div
+                  className={`text-center transition-all duration-300 ${
+                    selectedRecipe.winningAttribute === 'whimsy'
+                      ? 'scale-110 opacity-100'
+                      : 'scale-90 opacity-50 grayscale'
+                  }`}
+                >
+                  <div
+                    className={`text-[9px] font-bold uppercase tracking-widest mb-1 ${
+                      selectedRecipe.winningAttribute === 'whimsy'
+                        ? 'text-totoro-yellow'
+                        : 'text-totoro-yellow/60'
+                    }`}
+                  >
                     Why
-                  </h4>
-                  <div className="text-3xl font-black text-totoro-yellow font-mono">
-                    {selectedRecipe.whimsyScore}
                   </div>
+                  <div
+                    className={`text-3xl font-black font-mono relative inline-block ${
+                      selectedRecipe.winningAttribute === 'whimsy'
+                        ? 'text-totoro-yellow drop-shadow-lg'
+                        : 'text-totoro-yellow/60'
+                    }`}
+                  >
+                    {selectedRecipe.whimsyScore}
+                    {selectedRecipe.winningAttribute === 'whimsy' && (
+                      <div className="absolute -top-3 -right-3 text-xs">👑</div>
+                    )}
+                  </div>
+                  {selectedRecipe.winningAttribute === 'whimsy' && (
+                    <div className="mt-1 h-1 w-full bg-totoro-yellow rounded-full opacity-50"></div>
+                  )}
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-totoro-blue/5 text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">

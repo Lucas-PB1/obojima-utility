@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Friend, TradeItem, TradeItemType } from '@/types/social';
 import { socialService } from '@/services/socialService';
 import { useIngredients } from '@/hooks/useIngredients';
+import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 import { useCreatedPotionCollection } from '@/hooks/useCreatedPotionCollection';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
@@ -15,6 +17,7 @@ interface TradeModalProps {
 export default function TradeModal({ friend, onClose }: TradeModalProps) {
   const { t } = useTranslation();
   const { ingredients } = useIngredients();
+  const { localizeIngredient } = useLocalizedIngredients();
   const { potions } = useCreatedPotionCollection();
 
   const [itemType, setItemType] = useState<TradeItemType>('ingredient');
@@ -51,7 +54,7 @@ export default function TradeModal({ friend, onClose }: TradeModalProps) {
         id: selectedItemId,
         name:
           itemType === 'ingredient'
-            ? (selectedItem as { ingredient: { nome: string } }).ingredient.nome
+            ? localizeIngredient((selectedItem as { ingredient: any }).ingredient).nome
             : (selectedItem as { potion: { nome: string } }).potion.nome,
         quantity: quantity
       };
@@ -60,8 +63,11 @@ export default function TradeModal({ friend, onClose }: TradeModalProps) {
       setMessage({ type: 'success', text: t('social.trade.success') });
       setTimeout(() => onClose(), 2000);
     } catch (error) {
-      console.error(error);
-      setMessage({ type: 'error', text: t('social.trade.error') });
+      console.error('Trade error:', error);
+      setMessage({ 
+        type: 'error', 
+        text: error instanceof Error ? error.message : t('social.trade.error') 
+      });
     } finally {
       setLoading(false);
     }
@@ -71,7 +77,13 @@ export default function TradeModal({ friend, onClose }: TradeModalProps) {
     <Modal
       isOpen={true}
       onClose={onClose}
-      title={`${t('social.trade.title')} -> ${friend.displayName}`}
+      title={
+        <div className="flex items-center gap-2">
+          <span>{t('social.trade.title')}</span>
+          <ArrowRight className="w-5 h-5 text-totoro-blue" />
+          <span className="text-totoro-blue">{friend.displayName}</span>
+        </div>
+      }
     >
       <div className="space-y-4">
         {/* Type Selector */}
@@ -114,7 +126,7 @@ export default function TradeModal({ friend, onClose }: TradeModalProps) {
                                     `}
                   >
                     <span className="text-sm font-bold text-totoro-gray">
-                      {ing.ingredient.nome}
+                      {localizeIngredient(ing.ingredient).nome}
                     </span>
                     <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
                       {ing.quantity}x
