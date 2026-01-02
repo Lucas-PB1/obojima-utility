@@ -1,4 +1,4 @@
-import { collection, getCountFromServer } from 'firebase/firestore';
+import { collection, getCountFromServer, getDocs } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { UserProfile } from '@/types/auth';
 
@@ -7,6 +7,12 @@ class AdminService {
     const coll = collection(db, 'users');
     const snapshot = await getCountFromServer(coll);
     return snapshot.data().count;
+  }
+
+  async getAllUsers(): Promise<UserProfile[]> {
+    const coll = collection(db, 'users');
+    const snapshot = await getDocs(coll);
+    return snapshot.docs.map(doc => doc.data() as UserProfile);
   }
 
   async syncUsers() {

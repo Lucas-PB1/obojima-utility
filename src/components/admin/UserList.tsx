@@ -1,36 +1,62 @@
-'use client';
+import React, { useState } from 'react';
 import DataTable from '@/components/ui/DataTable';
 import { useTranslation } from '@/hooks/useTranslation';
 import Button from '@/components/ui/Button';
 import { useAdminUsers } from '@/hooks/useAdminUsers';
 import { useUserTableColumns } from '@/hooks/useUserTableColumns';
+import { AdminUserDetailsModal } from '@/components/admin/AdminUserDetailsModal';
+import { UserProfile } from '@/types/auth';
 
 export default function UserList() {
   const { t } = useTranslation();
   const { users, loading, handleSync, handleUpdate, handleDelete } = useAdminUsers();
+  const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const columns = useUserTableColumns({
     onUpdate: handleUpdate,
     onDelete: handleDelete
   });
 
+  const handleRowClick = (user: UserProfile) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
+  };
+
   if (loading && users.length === 0) return <div>Loading users...</div>;
 
   return (
-    <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-sm border border-white/20">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-totoro-green">
-          {t('admin.users.title', users.length)}
-        </h2>
-        <Button onClick={handleSync} variant="primary" size="sm" disabled={loading}>
-          {t('admin.users.sync')}
-        </Button>
+    <>
+      <div className="glass-panel rounded-2xl p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold text-totoro-green">
+            {t('admin.users.title', users.length)}
+          </h2>
+          <Button onClick={handleSync} variant="primary" size="sm" disabled={loading}>
+            {t('admin.users.sync')}
+          </Button>
+        </div>
+        <DataTable
+          data={users}
+          columns={columns}
+          searchKeys={['displayName', 'email', 'role', 'isAuthActive']}
+          searchPlaceholder={t('admin.users.search')}
+          onRowClick={handleRowClick}
+        />
       </div>
-      <DataTable
-        data={users}
-        columns={columns}
-        searchKeys={['displayName', 'email', 'role', 'isAuthActive']}
-        searchPlaceholder={t('admin.users.search')}
+
+      <AdminUserDetailsModal
+        user={selectedUser}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onUpdate={handleUpdate}
+        onDelete={handleDelete}
       />
-    </div>
+    </>
   );
 }

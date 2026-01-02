@@ -18,9 +18,6 @@ export default function AdminRoute({ children }: { children: React.ReactNode }) 
 
   return (
     <>
-      <div className="bg-red-50 border-b border-red-100 p-2 text-center text-xs text-red-600 font-mono">
-        ADMIN MODE ACTIVE
-      </div>
       {children}
     </>
   );

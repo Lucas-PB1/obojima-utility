@@ -30,14 +30,14 @@ class FirebaseStorageService {
     return authService.getUserId();
   }
 
-  private getCollectedIngredientsPath(): string {
-    const userId = this.getUserId();
+  private getCollectedIngredientsPath(uid?: string): string {
+    const userId = uid || this.getUserId();
     if (!userId) throw new Error('Usuário não autenticado');
     return `users/${userId}/collectedIngredients`;
   }
 
-  private getForageAttemptsPath(): string {
-    const userId = this.getUserId();
+  private getForageAttemptsPath(uid?: string): string {
+    const userId = uid || this.getUserId();
     if (!userId) throw new Error('Usuário não autenticado');
     return `users/${userId}/forageAttempts`;
   }
@@ -62,11 +62,11 @@ class FirebaseStorageService {
     return Timestamp.fromDate(date);
   }
 
-  async getCollectedIngredients(): Promise<CollectedIngredient[]> {
-    if (!this.isClient() || !this.getUserId()) return [];
+  async getCollectedIngredients(uid?: string): Promise<CollectedIngredient[]> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return [];
 
     try {
-      const ingredientsRef = collection(db, this.getCollectedIngredientsPath());
+      const ingredientsRef = collection(db, this.getCollectedIngredientsPath(uid));
       const snapshot = await getDocs(ingredientsRef);
 
       return snapshot.docs.map((doc) => {
@@ -129,15 +129,15 @@ class FirebaseStorageService {
     }
   }
 
-  async addCollectedIngredient(ingredient: CollectedIngredient): Promise<void> {
-    if (!this.isClient() || !this.getUserId()) return;
+  async addCollectedIngredient(ingredient: CollectedIngredient, uid?: string): Promise<void> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
-      const current = await this.getCollectedIngredients();
+      const current = await this.getCollectedIngredients(uid);
       const existing = current.find((ing) => ing.ingredient.id === ingredient.ingredient.id);
 
       if (existing) {
-        const existingRef = doc(db, this.getCollectedIngredientsPath(), existing.id);
+        const existingRef = doc(db, this.getCollectedIngredientsPath(uid), existing.id);
         await updateDoc(existingRef, {
           quantity: existing.quantity + ingredient.quantity,
           collectedAt: this.convertDateToTimestamp(new Date()),
@@ -145,7 +145,7 @@ class FirebaseStorageService {
           usedAt: null
         });
       } else {
-        const ingredientsRef = collection(db, this.getCollectedIngredientsPath());
+        const ingredientsRef = collection(db, this.getCollectedIngredientsPath(uid));
         await addDoc(ingredientsRef, {
           ...ingredient,
           collectedAt: this.convertDateToTimestamp(ingredient.collectedAt),
@@ -162,12 +162,13 @@ class FirebaseStorageService {
 
   async updateCollectedIngredient(
     id: string,
-    updates: Partial<CollectedIngredient>
+    updates: Partial<CollectedIngredient>,
+    uid?: string
   ): Promise<void> {
-    if (!this.isClient() || !this.getUserId()) return;
+    if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
-      const ingredientRef = doc(db, this.getCollectedIngredientsPath(), id);
+      const ingredientRef = doc(db, this.getCollectedIngredientsPath(uid), id);
       const updateData: Record<string, unknown> = { ...updates };
 
       if (updates.collectedAt) {
@@ -184,16 +185,16 @@ class FirebaseStorageService {
     }
   }
 
-  async markIngredientAsUsed(id: string): Promise<void> {
-    if (!this.isClient() || !this.getUserId()) return;
+  async markIngredientAsUsed(id: string, uid?: string): Promise<void> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
-      const ingredients = await this.getCollectedIngredients();
+      const ingredients = await this.getCollectedIngredients(uid);
       const ingredient = ingredients.find((ing) => ing.id === id);
 
       if (ingredient && ingredient.quantity > 0) {
         const newQuantity = ingredient.quantity - 1;
-        const ingredientRef = doc(db, this.getCollectedIngredientsPath(), id);
+        const ingredientRef = doc(db, this.getCollectedIngredientsPath(uid), id);
 
         if (newQuantity === 0) {
           await updateDoc(ingredientRef, {
@@ -213,11 +214,11 @@ class FirebaseStorageService {
     }
   }
 
-  async removeCollectedIngredient(id: string): Promise<void> {
-    if (!this.isClient() || !this.getUserId()) return;
+  async removeCollectedIngredient(id: string, uid?: string): Promise<void> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
-      const ingredientRef = doc(db, this.getCollectedIngredientsPath(), id);
+      const ingredientRef = doc(db, this.getCollectedIngredientsPath(uid), id);
       await deleteDoc(ingredientRef);
     } catch (error) {
       logger.error('Erro ao remover ingrediente coletado:', error);
@@ -225,11 +226,11 @@ class FirebaseStorageService {
     }
   }
 
-  async getForageAttempts(): Promise<ForageAttempt[]> {
-    if (!this.isClient() || !this.getUserId()) return [];
+  async getForageAttempts(uid?: string): Promise<ForageAttempt[]> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return [];
 
     try {
-      const attemptsRef = collection(db, this.getForageAttemptsPath());
+      const attemptsRef = collection(db, this.getForageAttemptsPath(uid));
       const snapshot = await getDocs(attemptsRef);
 
       return snapshot.docs.map((doc) => {

@@ -38,7 +38,12 @@ export default function StatsGrid({ title, stats, className = '' }: StatsGridPro
         <span className="w-1.5 h-6 bg-totoro-blue rounded-full"></span>
         {title}
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+      <div 
+        className="grid gap-4 relative z-10"
+        style={{
+          gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`
+        }}
+      >
         {stats.map((stat, index) => (
           <div key={index} className={`text-center p-4 ${colorClasses[stat.color]} rounded-lg`}>
             <div className={`text-2xl font-bold ${colorClasses[stat.color].split(' ')[1]}`}>

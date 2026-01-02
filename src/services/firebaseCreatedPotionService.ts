@@ -28,8 +28,8 @@ class FirebaseCreatedPotionService {
     return authService.getUserId();
   }
 
-  private getPotionsPath(): string {
-    const userId = this.getUserId();
+  private getPotionsPath(uid?: string): string {
+    const userId = uid || this.getUserId();
     if (!userId) throw new Error('Usuário não autenticado');
     return `users/${userId}/createdPotions`;
   }
@@ -54,8 +54,8 @@ class FirebaseCreatedPotionService {
     return Timestamp.fromDate(date);
   }
 
-  async addCreatedPotion(recipe: PotionRecipe): Promise<CreatedPotion> {
-    if (!this.isClient() || !this.getUserId()) {
+  async addCreatedPotion(recipe: PotionRecipe, uid?: string): Promise<CreatedPotion> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) {
       throw new Error('Usuário não autenticado');
     }
 
@@ -91,11 +91,11 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  async getAllCreatedPotions(): Promise<CreatedPotion[]> {
-    if (!this.isClient() || !this.getUserId()) return [];
+  async getAllCreatedPotions(uid?: string): Promise<CreatedPotion[]> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return [];
 
     try {
-      const potionsRef = collection(db, this.getPotionsPath());
+      const potionsRef = collection(db, this.getPotionsPath(uid));
       const snapshot = await getDocs(potionsRef);
 
       return snapshot.docs.map((doc) => {
@@ -169,18 +169,18 @@ class FirebaseCreatedPotionService {
     return potions.filter((potion) => potion.quantity > 0);
   }
 
-  async usePotion(potionId: string): Promise<boolean> {
-    if (!this.isClient() || !this.getUserId()) return false;
+  async usePotion(potionId: string, uid?: string): Promise<boolean> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return false;
 
     try {
-      const potion = await this.getPotionById(potionId);
+      const potion = await this.getPotionById(potionId, uid);
 
       if (!potion || potion.quantity <= 0) {
         return false;
       }
 
       const newQuantity = potion.quantity - 1;
-      const potionRef = doc(db, this.getPotionsPath(), potionId);
+      const potionRef = doc(db, this.getPotionsPath(uid), potionId);
 
       if (newQuantity === 0) {
         await updateDoc(potionRef, {
@@ -201,11 +201,11 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  async removePotion(potionId: string): Promise<void> {
-    if (!this.isClient() || !this.getUserId()) return;
+  async removePotion(potionId: string, uid?: string): Promise<void> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
-      const potionRef = doc(db, this.getPotionsPath(), potionId);
+      const potionRef = doc(db, this.getPotionsPath(uid), potionId);
       await deleteDoc(potionRef);
     } catch (error) {
       logger.error('Erro ao remover poção:', error);
@@ -213,11 +213,11 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  async getPotionById(potionId: string): Promise<CreatedPotion | null> {
-    if (!this.isClient() || !this.getUserId()) return null;
+  async getPotionById(potionId: string, uid?: string): Promise<CreatedPotion | null> {
+    if (!this.isClient() || (!this.getUserId() && !uid)) return null;
 
     try {
-      const potionRef = doc(db, this.getPotionsPath(), potionId);
+      const potionRef = doc(db, this.getPotionsPath(uid), potionId);
       const snapshot = await getDoc(potionRef);
 
       if (snapshot.exists()) {

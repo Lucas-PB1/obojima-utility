@@ -103,52 +103,7 @@ export function useUserTableColumns({ onUpdate, onDelete }: UseUserTableColumnsP
         </div>
       )
     },
-    {
-      key: 'uid',
-      label: t('admin.users.actions'),
-      sortable: false,
-      render: (_, item) => (
-        <div className="flex gap-2">
-          {/* Botão Editar Nome */}
-          <button
-            onClick={() => {
-              const newName = prompt(t('admin.users.action.edit'), item.displayName || '');
-              if (newName !== null && newName !== item.displayName) {
-                onUpdate(item.uid, { displayName: newName });
-              }
-            }}
-            className="p-1.5 text-totoro-blue hover:bg-totoro-blue/10 rounded transition-colors"
-            title={t('admin.users.action.edit')}
-          >
-            ✏️
-          </button>
 
-          {/* Botão Desativar/Ativar */}
-          <button
-            onClick={() => onUpdate(item.uid, { disabled: !item.disabled })}
-            className={`p-1.5 rounded transition-colors ${
-              item.disabled
-                ? 'text-green-600 hover:bg-green-50'
-                : 'text-amber-600 hover:bg-amber-50'
-            }`}
-            title={item.disabled ? t('admin.users.action.enable') : t('admin.users.action.disable')}
-          >
-            {item.disabled ? '✅' : '🚫'}
-          </button>
-
-          {/* Botão Excluir */}
-          <button
-            onClick={() =>
-              onDelete(item.uid, item.displayName || item.email || t('admin.users.fallbackName'))
-            }
-            className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors"
-            title={t('admin.users.action.delete')}
-          >
-            🗑️
-          </button>
-        </div>
-      )
-    }
   ];
 
   return columns;

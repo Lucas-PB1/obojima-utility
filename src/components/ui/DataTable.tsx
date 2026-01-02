@@ -17,6 +17,7 @@ interface DataTableProps<T> {
   searchPlaceholder?: string;
   itemsPerPage?: number;
   className?: string;
+  onRowClick?: (item: T) => void;
 }
 
 export default function DataTable<T>({
@@ -26,7 +27,8 @@ export default function DataTable<T>({
   searchKeys,
   searchPlaceholder,
   itemsPerPage = 10,
-  className = ''
+  className = '',
+  onRowClick
 }: DataTableProps<T>) {
   const { t } = useTranslation();
   const {
@@ -94,6 +96,7 @@ export default function DataTable<T>({
         onSort={handleSort}
         startIndex={startIndex}
         itemsPerPage={itemsPerPage}
+        onRowClick={onRowClick}
       />
 
       <DataTablePagination

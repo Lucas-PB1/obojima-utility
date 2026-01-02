@@ -10,6 +10,7 @@ interface DataTableContentProps<T> {
   onSort: (key: keyof T) => void;
   startIndex: number;
   itemsPerPage: number;
+  onRowClick?: (item: T) => void;
 }
 
 export function DataTableContent<T>({
@@ -19,7 +20,8 @@ export function DataTableContent<T>({
   sortConfig,
   onSort,
   startIndex,
-  itemsPerPage
+  itemsPerPage,
+  onRowClick
 }: DataTableContentProps<T>) {
   const { t } = useTranslation();
 
@@ -81,7 +83,11 @@ export function DataTableContent<T>({
             </tr>
           ) : (
             paginatedData.map((item, index) => (
-              <tr key={index} className="hover:bg-muted/10 transition-colors">
+              <tr 
+                key={index} 
+                className={`transition-colors ${onRowClick ? 'cursor-pointer hover:bg-muted/10' : 'hover:bg-muted/5'}`}
+                onClick={() => onRowClick && onRowClick(item)}
+              >
                 {columns.map((column) => (
                   <td
                     key={String(column.key)}
