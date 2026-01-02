@@ -13,7 +13,7 @@ interface TabNavigationProps<T = string> {
   className?: string;
 }
 
-export default function TabNavigation<T = string>({
+export function TabNavigation<T = string>({
   tabs,
   activeTab,
   onTabChange,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTranslation } from '@/hooks/useTranslation';
 import { CreatedPotion } from '@/types/ingredients';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface AdminUserPotionsTabProps {
   data: {
@@ -19,9 +19,7 @@ export function AdminUserPotionsTab({ data }: AdminUserPotionsTabProps) {
           {t('admin.modal.potions.title')}
         </div>
         {data.potions.length === 0 ? (
-          <p className="text-center text-gray-500 py-8">
-            {t('admin.modal.empty.potions')}
-          </p>
+          <p className="text-center text-gray-500 py-8">{t('admin.modal.empty.potions')}</p>
         ) : (
           data.potions.map((potion) => (
             <div

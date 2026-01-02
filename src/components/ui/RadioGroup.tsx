@@ -14,13 +14,7 @@ interface RadioGroupProps {
   className?: string;
 }
 
-export default function RadioGroup({
-  value,
-  onChange,
-  options,
-  label,
-  className = ''
-}: RadioGroupProps) {
+export function RadioGroup({ value, onChange, options, label, className = '' }: RadioGroupProps) {
   return (
     <div className={className}>
       {label && <label className="block text-sm font-medium text-totoro-gray mb-2">{label}</label>}

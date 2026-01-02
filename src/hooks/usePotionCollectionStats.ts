@@ -1,10 +1,10 @@
 'use client';
 import { CreatedPotion } from '@/types/ingredients';
-import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 import { useState, useEffect, useMemo } from 'react';
-import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
-import { potionService } from '@/services/potionService';
 import { useTranslation } from '@/hooks/useTranslation';
+import { potionService } from '@/services/potionService';
+import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
+import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 
 export function usePotionCollectionStats(potions: CreatedPotion[]) {
   const { t } = useTranslation();
@@ -32,10 +32,10 @@ export function usePotionCollectionStats(potions: CreatedPotion[]) {
       const uniqueUtility = new Set<string>();
       const uniqueWhimsy = new Set<string>();
 
-      potions.forEach(potion => {
+      potions.forEach((potion) => {
         const potionId = `${potion.recipe.resultingPotion.id}-${potion.recipe.winningAttribute}`;
         uniquePotions.add(potionId);
-        
+
         if (potion.recipe.winningAttribute === 'combat') uniqueCombat.add(potionId);
         if (potion.recipe.winningAttribute === 'utility') uniqueUtility.add(potionId);
         if (potion.recipe.winningAttribute === 'whimsy') uniqueWhimsy.add(potionId);
@@ -70,23 +70,25 @@ export function usePotionCollectionStats(potions: CreatedPotion[]) {
   const statsData = useMemo(() => {
     return [
       {
-        value: stats.progress?.total.total > 0
-          ? `${stats.progress.total.collected} / ${stats.progress.total.total} (${stats.progress.total.percentage}%)`
-          : stats.total,
+        value:
+          stats.progress?.total.total > 0
+            ? `${stats.progress.total.collected} / ${stats.progress.total.total} (${stats.progress.total.percentage}%)`
+            : stats.total,
         label: t('ui.labels.total'),
         color: 'totoro-gray' as const
       },
       { value: stats.available, label: t('ui.labels.available'), color: 'totoro-green' as const },
       { value: stats.used, label: t('ui.labels.used'), color: 'totoro-gray' as const },
-      
+
       ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => {
         const categoryKey = key as keyof typeof stats.byCategory;
         const categoryProgress = stats.progress?.[categoryKey as 'combat' | 'utility' | 'whimsy'];
-        
+
         return {
-          value: categoryProgress?.total > 0
-            ? `${categoryProgress.collected} / ${categoryProgress.total}`
-            : stats.byCategory[categoryKey],
+          value:
+            categoryProgress?.total > 0
+              ? `${categoryProgress.collected} / ${categoryProgress.total}`
+              : stats.byCategory[categoryKey],
           label: t(config.label),
           color: (key === 'combat'
             ? 'totoro-orange'

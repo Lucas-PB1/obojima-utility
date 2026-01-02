@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from 'react';
 import { Ingredient } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';

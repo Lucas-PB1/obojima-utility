@@ -3,10 +3,7 @@ import { adminDb } from '@/config/firebase-admin';
 import { logger } from '@/utils/logger';
 import { Timestamp } from 'firebase-admin/firestore';
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const { searchParams } = new URL(req.url);
@@ -35,8 +32,7 @@ export async function GET(
       usedAt: data?.usedAt?.toDate?.()?.toISOString() || data?.usedAt,
       recipe: {
         ...data?.recipe,
-        createdAt:
-          data?.recipe?.createdAt?.toDate?.()?.toISOString() || data?.recipe?.createdAt
+        createdAt: data?.recipe?.createdAt?.toDate?.()?.toISOString() || data?.recipe?.createdAt
       }
     };
 
@@ -47,10 +43,7 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const { searchParams } = new URL(req.url);
@@ -60,12 +53,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Missing uid' }, { status: 400 });
     }
 
-    await adminDb
-      .collection('users')
-      .doc(uid)
-      .collection('createdPotions')
-      .doc(id)
-      .delete();
+    await adminDb.collection('users').doc(uid).collection('createdPotions').doc(id).delete();
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -74,10 +62,7 @@ export async function DELETE(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const body = await req.json();
@@ -87,11 +72,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Missing uid' }, { status: 400 });
     }
 
-    const potionRef = adminDb
-      .collection('users')
-      .doc(uid)
-      .collection('createdPotions')
-      .doc(id);
+    const potionRef = adminDb.collection('users').doc(uid).collection('createdPotions').doc(id);
 
     if (action === 'use') {
       const docSnap = await potionRef.get();

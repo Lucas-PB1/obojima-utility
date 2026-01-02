@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { CollectedIngredient } from '@/types/ingredients';
 
 interface IngredientCardProps {
@@ -9,7 +9,7 @@ interface IngredientCardProps {
   showActions?: boolean;
 }
 
-export default function IngredientCard({
+export function IngredientCard({
   ingredient,
   onMarkAsUsed,
   onRemove,

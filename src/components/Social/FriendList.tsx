@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { useTranslation } from '@/hooks/useTranslation';
-import { Friend } from '@/types/social';
-import Button from '@/components/ui/Button';
-import TradeModal from '@/components/Social/TradeModal';
+"use client"
 import Image from 'next/image';
+import React, { useState } from 'react';
+import { Friend } from '@/types/social';
+import { Button } from '@/components/ui';
+import { TradeModal } from '@/components/Social';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface FriendListProps {
   friends: Friend[];
   onChat: (friend: Friend) => void;
 }
 
-export default function FriendList({ friends, onChat }: FriendListProps) {
+export function FriendList({ friends, onChat }: FriendListProps) {
   const { t } = useTranslation();
   const [tradeFriend, setTradeFriend] = useState<Friend | null>(null);
 

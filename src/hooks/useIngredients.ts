@@ -1,9 +1,9 @@
 'use client';
+import { logger } from '@/utils/logger';
 import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
-import { logger } from '@/utils/logger';
 
 export function useIngredients() {
   const { isAuthenticated, loading: authLoading } = useAuth();

@@ -1,22 +1,13 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { SocialTab } from '@/types/social';
-import UserSearch from '@/components/Social/UserSearch';
-import FriendList from '@/components/Social/FriendList';
-import FriendRequestList from '@/components/Social/FriendRequestList';
-import ChatWindow from '@/components/Social/ChatWindow';
+import { UserSearch, FriendList, FriendRequestList, ChatWindow } from '@/components/Social';
 import { useSocialHub } from '@/hooks/useSocialHub';
 
-export default function SocialHub() {
+export function SocialHub() {
   const { t } = useTranslation();
-  const {
-    activeTab,
-    setActiveTab,
-    friends,
-    requests,
-    activeChatFriend,
-    handleStartChat
-  } = useSocialHub();
+  const { activeTab, setActiveTab, friends, requests, activeChatFriend, handleStartChat } =
+    useSocialHub();
 
   const renderContent = () => {
     if (activeTab === 'chat' && activeChatFriend) {

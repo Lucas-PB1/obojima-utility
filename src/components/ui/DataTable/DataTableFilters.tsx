@@ -1,7 +1,5 @@
 import React from 'react';
-import Input from '@/components/ui/Input';
-import Select from '@/components/ui/Select';
-import Button from '@/components/ui/Button';
+import { Input, Select, Button } from '@/components/ui';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Filter } from './types';
 

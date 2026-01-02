@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTranslation } from '@/hooks/useTranslation';
 import { ForageAttempt } from '@/types/ingredients';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface AdminUserHistoryTabProps {
   data: {
@@ -20,9 +20,7 @@ export function AdminUserHistoryTab({ data }: AdminUserHistoryTabProps) {
               <th className="px-4 py-3 font-medium">{t('ui.labels.date')}</th>
               <th className="px-4 py-3 font-medium">{t('forage.form.region')}</th>
               <th className="px-4 py-3 font-medium">{t('activity.card.roll')}</th>
-              <th className="px-4 py-3 font-medium">
-                {t('activity.filters.result.label')}
-              </th>
+              <th className="px-4 py-3 font-medium">{t('activity.filters.result.label')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200/50">

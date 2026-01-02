@@ -7,7 +7,7 @@ interface EmptyStateProps {
   className?: string;
 }
 
-export default function EmptyState({ icon, title, description, className = '' }: EmptyStateProps) {
+export function EmptyState({ icon, title, description, className = '' }: EmptyStateProps) {
   return (
     <div className={`text-center py-16 animate-bounce-in ${className}`}>
       <div className="text-7xl mb-6 animate-float">{icon}</div>

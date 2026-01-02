@@ -28,7 +28,7 @@ const textColorClasses = {
   'totoro-orange': 'text-totoro-orange'
 };
 
-export default function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
+export function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
   return (
     <div
       className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-8 border border-border/40 relative overflow-hidden group ${className}`}

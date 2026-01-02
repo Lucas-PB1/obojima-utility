@@ -11,7 +11,7 @@ interface InputProps {
   max?: number;
 }
 
-export default function Input({
+export function Input({
   type = 'text',
   value,
   onChange,

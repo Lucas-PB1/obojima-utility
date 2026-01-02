@@ -1,4 +1,9 @@
 'use client';
+import { logger } from '@/utils/logger';
+import { useAuth } from '@/hooks/useAuth';
+import { DiceType } from '@/types/ingredients';
+import { firebaseSettingsService } from '@/services/firebaseSettingsService';
+import { SettingsState, DEFAULT_SETTINGS, Language } from '@/constants/settings';
 
 import React, {
   createContext,
@@ -9,11 +14,6 @@ import React, {
   ReactNode,
   useRef
 } from 'react';
-import { SettingsState, DEFAULT_SETTINGS, Language } from '@/constants/settings';
-import { firebaseSettingsService } from '@/services/firebaseSettingsService';
-import { useAuth } from '@/hooks/useAuth';
-import { DiceType } from '@/types/ingredients';
-import { logger } from '@/utils/logger';
 
 interface SettingsContextType {
   settings: SettingsState;

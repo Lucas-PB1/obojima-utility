@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import Button from '@/components/ui/Button';
-import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
+import { Button, SimpleIngredientCard } from '@/components/ui';
 import { Ingredient, PotionScores } from '@/types/ingredients';
 import { ScorePreview } from './ScorePreview';
 
@@ -31,9 +30,7 @@ export function BrewingArea({
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-xl font-semibold text-foreground mb-2">
-          {t('potions.create.title')}
-        </h2>
+        <h2 className="text-xl font-semibold text-foreground mb-2">{t('potions.create.title')}</h2>
         <p className="text-foreground/60 text-sm">{t('potions.create.subtitle')}</p>
       </div>
 

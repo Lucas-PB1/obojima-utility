@@ -1,7 +1,8 @@
+'use client';
 import { useState, useCallback } from 'react';
 import { CreatedPotion } from '@/types/ingredients';
-import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 import { useTranslation } from '@/hooks/useTranslation';
+import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 
 export function useUserPotions(userId: string | undefined) {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ export function useUserPotions(userId: string | undefined) {
       try {
         await firebaseCreatedPotionService.removePotion(id, userId);
         setPotions((prev) => prev.filter((p) => p.id !== id));
-      } catch (error) {
+      } catch {
         alert(t('admin.modal.actions.remove_potion_error'));
       }
     }

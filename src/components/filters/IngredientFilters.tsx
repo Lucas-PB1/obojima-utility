@@ -1,9 +1,6 @@
 import React from 'react';
-import Input from '@/components/ui/Input';
-import Select from '@/components/ui/Select';
-import Button from '@/components/ui/Button';
+import { Input, Select, Button, FilterSection } from '@/components/ui';
 import { useIngredientFilters } from '@/hooks/useFilters';
-import FilterSection from '@/components/ui/FilterSection';
 import { CollectedIngredient } from '@/types/ingredients';
 import { FILTER_OPTIONS, RARITY_OPTIONS, SORT_OPTIONS } from '@/constants/filters/ingredients';
 
@@ -12,10 +9,7 @@ interface IngredientFiltersProps {
   onFilteredIngredients: (ingredients: CollectedIngredient[]) => void;
 }
 
-export default function IngredientFilters({
-  ingredients,
-  onFilteredIngredients
-}: IngredientFiltersProps) {
+export function IngredientFilters({ ingredients, onFilteredIngredients }: IngredientFiltersProps) {
   const {
     filter,
     setFilter,

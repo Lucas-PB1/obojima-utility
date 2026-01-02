@@ -1,8 +1,10 @@
+"use client";
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Friend, TradeItem, TradeItemType } from '@/types/social';
-import { socialService } from '@/services/socialService';
 import { useIngredients } from '@/hooks/useIngredients';
+import { socialService } from '@/services/socialService';
+import { Friend, TradeItem, TradeItemType } from '@/types/social';
+import { CollectedIngredient, CreatedPotion } from '@/types/ingredients';
 import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 import { useCreatedPotionCollection } from '@/hooks/useCreatedPotionCollection';
 
@@ -46,8 +48,8 @@ export function useTrade(friend: Friend, onClose: () => void) {
         id: selectedItemId,
         name:
           itemType === 'ingredient'
-            ? localizeIngredient((selectedItem as { ingredient: any }).ingredient).nome
-            : (selectedItem as { potion: { nome: string } }).potion.nome,
+            ? localizeIngredient((selectedItem as CollectedIngredient).ingredient).nome
+            : (selectedItem as CreatedPotion).potion.nome,
         quantity: quantity
       };
 
@@ -56,9 +58,9 @@ export function useTrade(friend: Friend, onClose: () => void) {
       setTimeout(() => onClose(), 2000);
     } catch (error) {
       console.error('Trade error:', error);
-      setMessage({ 
-        type: 'error', 
-        text: error instanceof Error ? error.message : t('social.trade.error') 
+      setMessage({
+        type: 'error',
+        text: error instanceof Error ? error.message : t('social.trade.error')
       });
     } finally {
       setLoading(false);

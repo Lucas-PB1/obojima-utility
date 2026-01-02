@@ -34,19 +34,19 @@ class SocialService {
     user: Pick<UserProfile, 'uid' | 'displayName' | 'email' | 'photoURL'>
   ): Promise<void> {
     if (!this.isClient() || !user.uid) return;
-    
+
     const publicRef = doc(db, 'public_users', user.uid);
     await setDoc(
       publicRef,
       {
         uid: user.uid,
         displayName: user.displayName,
-          searchName: (user.displayName || '').toLowerCase(),
-          email: user.email,
-          photoURL: user.photoURL,
-          lastSeen: Timestamp.now()
-        },
-        { merge: true }
+        searchName: (user.displayName || '').toLowerCase(),
+        email: user.email,
+        photoURL: user.photoURL,
+        lastSeen: Timestamp.now()
+      },
+      { merge: true }
     );
   }
 

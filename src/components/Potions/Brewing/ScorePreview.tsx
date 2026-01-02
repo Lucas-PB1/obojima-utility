@@ -9,23 +9,23 @@ interface ScorePreviewProps {
   chosenAttribute: 'combat' | 'utility' | 'whimsy' | null;
 }
 
-export function ScorePreview({ previewScores, availableScores, chosenAttribute }: ScorePreviewProps) {
+export function ScorePreview({
+  previewScores,
+  availableScores,
+  chosenAttribute
+}: ScorePreviewProps) {
   const { t } = useTranslation();
 
   return (
     <div className="bg-muted/30 p-4 rounded-lg border border-border/20">
-      <h4 className="text-sm font-medium text-foreground mb-3">
-        {t('potions.create.preview')}
-      </h4>
+      <h4 className="text-sm font-medium text-foreground mb-3">{t('potions.create.preview')}</h4>
       <div className="grid grid-cols-3 gap-4">
         {(['combat', 'utility', 'whimsy'] as const).map((attr) => (
           <div
             key={attr}
             className={`p-3 rounded-lg border ${POTION_CATEGORY_CONFIG[attr].classes} ${previewScores.winningAttribute === attr ? 'ring-2 ring-opacity-50 ring-current' : ''}`}
           >
-            <div className="text-xs font-medium">
-              {t(POTION_CATEGORY_CONFIG[attr].label)}
-            </div>
+            <div className="text-xs font-medium">{t(POTION_CATEGORY_CONFIG[attr].label)}</div>
             <div className="text-lg font-bold">
               {attr === 'combat'
                 ? previewScores.combatScore
@@ -52,8 +52,7 @@ export function ScorePreview({ previewScores, availableScores, chosenAttribute }
           <p className="text-xs text-purple-600 mt-1">{t('potions.create.brewerDesc')}</p>
           {chosenAttribute && (
             <p className="text-xs text-purple-800 mt-1 font-medium">
-              {t('potions.create.chosen')}{' '}
-              {t(POTION_CATEGORY_CONFIG[chosenAttribute].label)}
+              {t('potions.create.chosen')} {t(POTION_CATEGORY_CONFIG[chosenAttribute].label)}
             </p>
           )}
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { useTranslation } from '@/hooks/useTranslation';
 
 interface DataTablePaginationProps {

@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
-import Modal from '@/components/ui/Modal';
-import { UserProfile } from '@/types/auth';
-import { useTranslation } from '@/hooks/useTranslation';
 import { Loader2 } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { UserProfile } from '@/types/auth';
+import { Modal } from '@/components/ui';
+import { useTranslation } from '@/hooks/useTranslation';
 import { useAdminUserDetails } from '@/hooks/useAdminUserDetails';
 
-// Sub-components
-import { AdminUserOverviewTab } from './modal/AdminUserOverviewTab';
-import { AdminUserInventoryTab } from './modal/AdminUserInventoryTab';
-import { AdminUserPotionsTab } from './modal/AdminUserPotionsTab';
-import { AdminUserHistoryTab } from './modal/AdminUserHistoryTab';
+import {
+  AdminUserPotionsTab,
+  AdminUserHistoryTab,
+  AdminUserOverviewTab,
+  AdminUserInventoryTab
+} from '@/components/Admin/modal';
 
 interface AdminUserDetailsModalProps {
   user: UserProfile | null;
@@ -27,7 +28,7 @@ export function AdminUserDetailsModal({
   onDelete
 }: AdminUserDetailsModalProps) {
   const { t } = useTranslation();
-  
+
   const {
     activeTab,
     setActiveTab,
@@ -106,17 +107,11 @@ export function AdminUserDetailsModal({
                   />
                 )}
 
-                {activeTab === 'inventory' && (
-                  <AdminUserInventoryTab data={ingredientsData} />
-                )}
+                {activeTab === 'inventory' && <AdminUserInventoryTab data={ingredientsData} />}
 
-                {activeTab === 'potions' && (
-                  <AdminUserPotionsTab data={potionsData} />
-                )}
+                {activeTab === 'potions' && <AdminUserPotionsTab data={potionsData} />}
 
-                {activeTab === 'history' && (
-                  <AdminUserHistoryTab data={historyData} />
-                )}
+                {activeTab === 'history' && <AdminUserHistoryTab data={historyData} />}
               </>
             )}
           </div>
@@ -125,4 +120,3 @@ export function AdminUserDetailsModal({
     </Modal>
   );
 }
-

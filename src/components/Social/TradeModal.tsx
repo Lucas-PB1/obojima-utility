@@ -2,8 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Friend } from '@/types/social';
-import Button from '@/components/ui/Button';
-import Modal from '@/components/ui/Modal';
+import { Button, Modal } from '@/components/ui';
 import { useTrade } from '@/hooks/useTrade';
 
 interface TradeModalProps {
@@ -11,7 +10,7 @@ interface TradeModalProps {
   onClose: () => void;
 }
 
-export default function TradeModal({ friend, onClose }: TradeModalProps) {
+export function TradeModal({ friend, onClose }: TradeModalProps) {
   const { t } = useTranslation();
   const {
     itemType,

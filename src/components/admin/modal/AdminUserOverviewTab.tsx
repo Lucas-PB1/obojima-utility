@@ -38,9 +38,7 @@ export function AdminUserOverviewTab({ user, stats, actions }: AdminUserOverview
               onClick={actions.handleToggleStatus}
               className={`px-3 py-1 text-xs font-bold rounded-lg transition-colors ${user.disabled ? 'text-green-600 bg-green-100 hover:bg-green-600 hover:text-white' : 'text-amber-600 bg-amber-100 hover:bg-amber-600 hover:text-white'}`}
             >
-              {user.disabled
-                ? t('admin.users.action.enable')
-                : t('admin.users.action.disable')}
+              {user.disabled ? t('admin.users.action.enable') : t('admin.users.action.disable')}
             </button>
             <button
               onClick={actions.handleDeleteUser}
@@ -53,23 +51,15 @@ export function AdminUserOverviewTab({ user, stats, actions }: AdminUserOverview
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-sm text-gray-500">
-              {t('admin.users.col.name')}
-            </label>
-            <p className="font-medium">
-              {user.displayName || t('admin.users.noName')}
-            </p>
+            <label className="text-sm text-gray-500">{t('admin.users.col.name')}</label>
+            <p className="font-medium">{user.displayName || t('admin.users.noName')}</p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">
-              {t('admin.users.col.email')}
-            </label>
+            <label className="text-sm text-gray-500">{t('admin.users.col.email')}</label>
             <p className="font-medium">{user.email || t('admin.users.noEmail')}</p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">
-              {t('admin.users.col.role')}
-            </label>
+            <label className="text-sm text-gray-500">{t('admin.users.col.role')}</label>
             <div className="flex items-center gap-2">
               <select
                 value={user.role}
@@ -86,15 +76,11 @@ export function AdminUserOverviewTab({ user, stats, actions }: AdminUserOverview
             <p className="font-medium text-xs font-mono">{user.uid}</p>
           </div>
           <div>
-            <label className="text-sm text-gray-500">
-              {t('admin.users.col.status')}
-            </label>
+            <label className="text-sm text-gray-500">{t('admin.users.col.status')}</label>
             <span
               className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${user.disabled ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}
             >
-              {user.disabled
-                ? t('admin.users.status.disabled')
-                : t('admin.users.status.active')}
+              {user.disabled ? t('admin.users.status.disabled') : t('admin.users.status.active')}
             </span>
           </div>
         </div>
@@ -106,28 +92,16 @@ export function AdminUserOverviewTab({ user, stats, actions }: AdminUserOverview
         </h3>
         <div className="grid grid-cols-3 gap-4 text-center">
           <div className="p-3 bg-white/50 rounded-lg">
-            <div className="text-2xl font-bold text-totoro-green">
-              {stats.ingredientsCount}
-            </div>
-            <div className="text-xs text-gray-600">
-              {t('admin.modal.tabs.inventory')}
-            </div>
+            <div className="text-2xl font-bold text-totoro-green">{stats.ingredientsCount}</div>
+            <div className="text-xs text-gray-600">{t('admin.modal.tabs.inventory')}</div>
           </div>
           <div className="p-3 bg-white/50 rounded-lg">
-            <div className="text-2xl font-bold text-totoro-blue">
-              {stats.potionsCount}
-            </div>
-            <div className="text-xs text-gray-600">
-              {t('admin.modal.tabs.potions')}
-            </div>
+            <div className="text-2xl font-bold text-totoro-blue">{stats.potionsCount}</div>
+            <div className="text-xs text-gray-600">{t('admin.modal.tabs.potions')}</div>
           </div>
           <div className="p-3 bg-white/50 rounded-lg">
-            <div className="text-2xl font-bold text-totoro-orange">
-              {stats.attemptsCount}
-            </div>
-            <div className="text-xs text-gray-600">
-              {t('admin.modal.tabs.history')}
-            </div>
+            <div className="text-2xl font-bold text-totoro-orange">{stats.attemptsCount}</div>
+            <div className="text-xs text-gray-600">{t('admin.modal.tabs.history')}</div>
           </div>
         </div>
       </div>

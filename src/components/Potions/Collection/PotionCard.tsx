@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { CreatedPotion } from '@/types/ingredients';
 import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 
 interface PotionCardProps {
   potion: CreatedPotion;

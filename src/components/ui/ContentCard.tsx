@@ -6,7 +6,7 @@ interface ContentCardProps {
   className?: string;
 }
 
-export default function ContentCard({ children, title, className = '' }: ContentCardProps) {
+export function ContentCard({ children, title, className = '' }: ContentCardProps) {
   return (
     <div
       className={`glass-panel rounded-3xl p-8 border border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] relative overflow-hidden group ${className}`}

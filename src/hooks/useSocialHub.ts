@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+'use client';
 import { useAuth } from '@/hooks/useAuth';
+import { useState, useEffect } from 'react';
 import { socialService } from '@/services/socialService';
 import { Friend, FriendRequest, SocialTab } from '@/types/social';
 
@@ -20,7 +21,7 @@ export function useSocialHub() {
       unsubscribeFriends();
       unsubscribeRequests();
     };
-  }, [user?.uid]);
+  }, [user]);
 
   const handleStartChat = (friend: Friend) => {
     setActiveChatFriend(friend);

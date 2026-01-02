@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import Button from '@/components/ui/Button';
+import { Button, Input } from '@/components/ui';
 import { useUserSearch } from '@/hooks/useUserSearch';
-import Input from '@/components/ui/Input';
 import Image from 'next/image';
 
-export default function UserSearch() {
+export function UserSearch() {
   const { t } = useTranslation();
-  const { searchTerm, setSearchTerm, results, loading, sentRequests, handleAddFriend } = useUserSearch();
+  const { searchTerm, setSearchTerm, results, loading, sentRequests, handleAddFriend } =
+    useUserSearch();
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">

@@ -1,17 +1,14 @@
 'use client';
 import React from 'react';
-import Button from '@/components/ui/Button';
-import StatsGrid from '@/components/ui/StatsGrid';
-import PageHeader from '@/components/ui/PageHeader';
+import { Button, StatsGrid, PageHeader, DataTable, Column } from '@/components/ui';
 import { CollectedIngredient } from '@/types/ingredients';
-import IngredientModal from '@/components/IngredientModal';
-import DataTable, { Column } from '@/components/ui/DataTable';
+import { IngredientModal } from './IngredientModal';
 import { INGREDIENT_COLLECTION_FILTERS } from '@/constants/ingredients';
 import { useIngredientCollection } from '@/hooks/useIngredientCollection';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 
-export default function IngredientCollection() {
+export function IngredientCollection() {
   const { t } = useTranslation();
   const { localizeIngredient } = useLocalizedIngredients();
 
@@ -31,7 +28,7 @@ export default function IngredientCollection() {
       label: t('ingredients.table.ingredient'),
       sortable: true,
       width: '30%',
-      render: (_, item) => {
+      render: (_, item: CollectedIngredient) => {
         const mappedIngredient = localizeIngredient(item.ingredient);
 
         return (
@@ -62,7 +59,7 @@ export default function IngredientCollection() {
       label: t('ingredients.table.quantity'),
       sortable: true,
       width: '15%',
-      render: (_, item) => (
+      render: (_, item: CollectedIngredient) => (
         <div className="flex items-center space-x-2">
           <span className="bg-totoro-green/20 text-totoro-green px-2 py-1 rounded-full text-sm font-medium">
             {item.quantity}
@@ -75,7 +72,7 @@ export default function IngredientCollection() {
       label: t('ingredients.table.collectedAt'),
       sortable: false,
       width: '25%',
-      render: (_, item) => {
+      render: (_, item: CollectedIngredient) => {
         const localized = localizeIngredient(item.ingredient);
         return (
           <div className="flex space-x-2">
@@ -97,7 +94,7 @@ export default function IngredientCollection() {
       label: t('ingredients.table.date'),
       sortable: true,
       width: '15%',
-      render: (_, item) => (
+      render: (_, item: CollectedIngredient) => (
         <div className="text-sm text-totoro-gray">
           {new Date(item.collectedAt).toLocaleDateString('pt-BR')}
         </div>
@@ -108,7 +105,7 @@ export default function IngredientCollection() {
       label: t('ingredients.table.actions'),
       sortable: true,
       width: '20%',
-      render: (_, item) => (
+      render: (_, item: CollectedIngredient) => (
         <div className="flex flex-col space-y-2">
           <div className="flex items-center space-x-2">
             <span

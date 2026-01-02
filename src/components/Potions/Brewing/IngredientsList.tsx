@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
+import { SimpleIngredientCard } from '@/components/ui';
 import { Ingredient } from '@/types/ingredients';
 
 interface IngredientsListProps {
@@ -9,14 +9,16 @@ interface IngredientsListProps {
   onSelect: (ingredient: Ingredient) => void;
 }
 
-export function IngredientsList({ ingredients, selectedIngredients, onSelect }: IngredientsListProps) {
+export function IngredientsList({
+  ingredients,
+  selectedIngredients,
+  onSelect
+}: IngredientsListProps) {
   const { t } = useTranslation();
 
   return (
     <div>
-      <h3 className="text-lg font-medium text-foreground mb-4">
-        {t('potions.create.available')}
-      </h3>
+      <h3 className="text-lg font-medium text-foreground mb-4">{t('potions.create.available')}</h3>
 
       {ingredients.length === 0 ? (
         <div className="text-gray-500 text-center py-8">{t('potions.create.noAvailable')}</div>

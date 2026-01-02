@@ -1,3 +1,5 @@
+'use client';
+import { logger } from '@/utils/logger';
 import { useSettings } from '@/hooks/useSettings';
 import { GAME_CONFIG } from '@/config/gameConfig';
 import { diceService } from '@/services/diceService';
@@ -5,7 +7,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { ingredientsService } from '@/services/ingredientsService';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
-import { logger } from '@/utils/logger';
 
 import {
   RegionKey,

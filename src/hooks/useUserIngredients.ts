@@ -1,15 +1,15 @@
+'use client';
 import { useState, useCallback } from 'react';
-import { CollectedIngredient, Ingredient } from '@/types/ingredients';
-import { firebaseStorageService } from '@/services/firebaseStorageService';
 import { useTranslation } from '@/hooks/useTranslation';
 import { AvailableIngredient } from './useIngredientsCatalog';
+import { CollectedIngredient, Ingredient } from '@/types/ingredients';
+import { firebaseStorageService } from '@/services/firebaseStorageService';
 
 export function useUserIngredients(userId: string | undefined) {
   const { t } = useTranslation();
   const [ingredients, setIngredients] = useState<CollectedIngredient[]>([]);
   const [loading, setLoading] = useState(false);
-  
-  // Form State
+
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [selectedUniqueKey, setSelectedUniqueKey] = useState<string>('');
   const [addQuantity, setAddQuantity] = useState(1);
@@ -33,7 +33,7 @@ export function useUserIngredients(userId: string | undefined) {
       try {
         await firebaseStorageService.removeCollectedIngredient(id, userId);
         setIngredients((prev) => prev.filter((i) => i.id !== id));
-      } catch (error) {
+      } catch {
         alert(t('admin.modal.actions.remove_ingredient_error'));
       }
     }
@@ -49,8 +49,8 @@ export function useUserIngredients(userId: string | undefined) {
     try {
       await firebaseStorageService.updateCollectedIngredient(id, { quantity: newQty }, userId);
       setIngredients((prev) => prev.map((i) => (i.id === id ? { ...i, quantity: newQty } : i)));
-    } catch(error) {
-        console.error('Error updating quantity', error);
+    } catch (error) {
+      console.error('Error updating quantity', error);
     }
   };
 
@@ -81,7 +81,7 @@ export function useUserIngredients(userId: string | undefined) {
       };
 
       await firebaseStorageService.addCollectedIngredient(newIngredient, userId);
-      
+
       // Re-fetch to ensure sync and get IDs
       const updatedIngredients = await firebaseStorageService.getCollectedIngredients(userId);
       setIngredients(updatedIngredients);
@@ -89,7 +89,7 @@ export function useUserIngredients(userId: string | undefined) {
       setIsAddingItem(false);
       setSelectedUniqueKey('');
       setAddQuantity(1);
-    } catch (error) {
+    } catch {
       alert(t('admin.modal.actions.add_error'));
     }
   };

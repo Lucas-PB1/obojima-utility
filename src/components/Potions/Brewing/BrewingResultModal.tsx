@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
+import { Modal, Button } from '@/components/ui';
 import { PotionBrewingResult } from '@/types/ingredients';
 import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 
@@ -20,19 +19,13 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={
-        result.success
-          ? t('potions.result.success.title')
-          : t('potions.result.failure.title')
-      }
+      title={result.success ? t('potions.result.success.title') : t('potions.result.failure.title')}
     >
       <div className="space-y-4">
         {result.success ? (
           <>
             <div className="text-center">
-              <span className="font-bold text-lg">
-                {result.recipe.resultingPotion.nome}
-              </span>
+              <span className="font-bold text-lg">{result.recipe.resultingPotion.nome}</span>
 
               <div
                 className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
@@ -54,9 +47,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                   <h4 className="font-bold text-green-800 text-lg mb-2">
                     {t('potions.result.remains.title')}
                   </h4>
-                  <p className="text-green-700 text-sm mb-3">
-                    {t('potions.result.remains.desc')}
-                  </p>
+                  <p className="text-green-700 text-sm mb-3">{t('potions.result.remains.desc')}</p>
                 </div>
 
                 <div className="bg-muted/30 rounded-lg p-4 border border-green-200/20">
@@ -67,9 +58,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                     <div className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-3">
                       {result.remainsPotion.raridade}
                     </div>
-                    <p className="text-xs text-gray-700">
-                      {result.remainsPotion.descricao}
-                    </p>
+                    <p className="text-xs text-gray-700">{result.remainsPotion.descricao}</p>
                   </div>
                 </div>
               </div>
@@ -103,9 +92,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                     >
                       {result.secondPotion.raridade}
                     </div>
-                    <p className="text-xs text-gray-700">
-                      {result.secondPotion.descricao}
-                    </p>
+                    <p className="text-xs text-gray-700">{result.secondPotion.descricao}</p>
                   </div>
                 </div>
               </div>
@@ -127,9 +114,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
 
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-900 mb-2">{t('ui.labels.description')}:</h4>
-              <p className="text-sm text-gray-700">
-                {result.recipe.resultingPotion.descricao}
-              </p>
+              <p className="text-sm text-gray-700">{result.recipe.resultingPotion.descricao}</p>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg">

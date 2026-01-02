@@ -1,13 +1,17 @@
+'use client';
 import React from 'react';
-import { useTranslation } from '@/hooks/useTranslation';
-import { Ingredient } from '@/types/ingredients';
-import { ingredientsService } from '@/services/ingredientsService';
 import { logger } from '@/utils/logger';
+import { Ingredient } from '@/types/ingredients';
+import { useTranslation } from '@/hooks/useTranslation';
+import { ingredientsService } from '@/services/ingredientsService';
 
 export function useLocalizedIngredients() {
   const { language } = useTranslation();
   const [ingredientsMap, setIngredientsMap] = React.useState<
-    Record<number, { nome: string; descricao: string; combat: number; utility: number; whimsy: number }>
+    Record<
+      number,
+      { nome: string; descricao: string; combat: number; utility: number; whimsy: number }
+    >
   >({});
 
   React.useEffect(() => {

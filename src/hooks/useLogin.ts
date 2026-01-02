@@ -1,10 +1,10 @@
 'use client';
+import { db } from '@/config/firebase';
+import { UserUtils } from '@/lib/userUtils';
 import { useRouter } from 'next/navigation';
+import { doc, setDoc } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { authService } from '@/services/authService';
-import { UserUtils } from '@/lib/userUtils';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '@/config/firebase';
 
 export function useLogin() {
   const router = useRouter();

@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '@/components/ui/Modal';
+import { Modal } from '@/components/ui';
 import { Ingredient } from '@/types/ingredients';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
@@ -10,7 +10,7 @@ interface IngredientModalProps {
   onClose: () => void;
 }
 
-export default function IngredientModal({ ingredient, isOpen, onClose }: IngredientModalProps) {
+export function IngredientModal({ ingredient, isOpen, onClose }: IngredientModalProps) {
   const { t } = useTranslation();
   const { localizeIngredient } = useLocalizedIngredients();
 

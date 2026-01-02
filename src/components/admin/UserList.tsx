@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import DataTable from '@/components/ui/DataTable';
-import { useTranslation } from '@/hooks/useTranslation';
-import Button from '@/components/ui/Button';
-import { useAdminUsers } from '@/hooks/useAdminUsers';
-import { useUserTableColumns } from '@/hooks/useUserTableColumns';
-import { AdminUserDetailsModal } from '@/components/admin/AdminUserDetailsModal';
 import { UserProfile } from '@/types/auth';
+import { Button, DataTable } from '@/components/ui';
+import { useAdminUsers } from '@/hooks/useAdminUsers';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useUserTableColumns } from '@/hooks/useUserTableColumns';
+import { AdminUserDetailsModal } from '@/components/Admin';
 
-export default function UserList() {
+export function UserList() {
   const { t } = useTranslation();
   const { users, loading, handleSync, handleUpdate, handleDelete } = useAdminUsers();
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);

@@ -1,7 +1,7 @@
 'use client';
 import { useAdminGuard } from '@/hooks/useAdminGuard';
 
-export default function AdminRoute({ children }: { children: React.ReactNode }) {
+export function AdminRoute({ children }: { children: React.ReactNode }) {
   const { isAuthorized, isLoading } = useAdminGuard();
 
   if (isLoading) {

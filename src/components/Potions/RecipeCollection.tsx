@@ -1,12 +1,10 @@
 import React from 'react';
-import PageHeader from '@/components/ui/PageHeader';
-import StatsGrid from '@/components/ui/StatsGrid';
-import ContentCard from '@/components/ui/ContentCard';
+import { PageHeader, StatsGrid, ContentCard } from '@/components/ui';
 import { useRecipeCollection } from '@/hooks/useRecipeCollection';
 import { useTranslation } from '@/hooks/useTranslation';
-import { RecipeFilter } from './Potions/Recipes/RecipeFilter';
-import { RecipeList } from './Potions/Recipes/RecipeList';
-import { RecipeDetailsModal } from './Potions/Recipes/RecipeDetailsModal';
+import { RecipeFilter } from './Recipes/RecipeFilter';
+import { RecipeList } from './Recipes/RecipeList';
+import { RecipeDetailsModal } from './Recipes/RecipeDetailsModal';
 
 export const RecipeCollection: React.FC = () => {
   const { t } = useTranslation();
@@ -38,12 +36,8 @@ export const RecipeCollection: React.FC = () => {
           setFilter={setFilter}
           filteredCount={filteredRecipes.length}
         />
-        
-        <RecipeList
-          recipes={filteredRecipes}
-          filter={filter}
-          onRecipeClick={handleRecipeClick}
-        />
+
+        <RecipeList recipes={filteredRecipes} filter={filter} onRecipeClick={handleRecipeClick} />
       </ContentCard>
 
       <RecipeDetailsModal

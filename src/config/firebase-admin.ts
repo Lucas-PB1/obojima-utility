@@ -7,7 +7,7 @@ if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount as admin.ServiceAccount)
     });
-    logger.info('[Firebase Admin]: Inicializado com sucesso usando arquivo de service account');
+
   } catch (error) {
     logger.error('[Firebase Admin]: Erro crítico na inicialização:', error);
     throw error;

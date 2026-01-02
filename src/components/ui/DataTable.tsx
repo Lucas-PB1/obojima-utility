@@ -20,7 +20,7 @@ interface DataTableProps<T> {
   onRowClick?: (item: T) => void;
 }
 
-export default function DataTable<T>({
+export function DataTable<T>({
   data,
   columns,
   filters = [],

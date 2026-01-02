@@ -273,6 +273,8 @@ export const en = {
   'admin.title': 'Admin Console',
   'admin.subtitle': 'Manage users, roles and system settings',
   'admin.stats.users': 'Total Users',
+  'admin.stats.admins': 'Administrators',
+  'admin.stats.active': 'Active Accounts',
   'admin.stats.sessions': 'Active Sessions',
   'admin.stats.reviews': 'Pending Reviews',
   'admin.stats.status': 'System Status',
@@ -376,7 +378,8 @@ export const en = {
 
   // Migration
   'admin.migration.title': 'Sync Public Profiles',
-  'admin.migration.description': 'Use this to populate the \'public_users\' collection based on existing users. Required for friend search to work for old users.',
+  'admin.migration.description':
+    "Use this to populate the 'public_users' collection based on existing users. Required for friend search to work for old users.",
   'admin.migration.action': 'Run Migration',
   'admin.migration.confirm': 'This will read all users and recreate public profiles. Continue?',
   'admin.migration.status.starting': 'Starting migration via server...',

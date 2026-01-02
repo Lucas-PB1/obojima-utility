@@ -1,7 +1,7 @@
 'use client';
+import { useState, useMemo } from 'react';
 import { CreatedPotion } from '@/types/ingredients';
 import { PotionFilterType } from '@/constants/potions';
-import { useState, useMemo } from 'react';
 
 export function usePotionFilter(potions: CreatedPotion[]) {
   const [filter, setFilter] = useState<PotionFilterType>('all');
@@ -19,9 +19,9 @@ export function usePotionFilter(potions: CreatedPotion[]) {
       const categoryOrder = { combat: 1, utility: 2, whimsy: 3 };
       const catA = categoryOrder[a.recipe.winningAttribute as keyof typeof categoryOrder] || 99;
       const catB = categoryOrder[b.recipe.winningAttribute as keyof typeof categoryOrder] || 99;
-      
+
       if (catA !== catB) return catA - catB;
-      
+
       // Sort by ID (Number)
       return a.potion.id - b.potion.id;
     });

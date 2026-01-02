@@ -1,12 +1,13 @@
+"use client";
 import { User } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
+import { db } from '@/config/firebase';
+import { logger } from '@/utils/logger';
+import { UserProfile } from '@/types/auth';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { UserUtils } from '@/lib/userUtils';
 import { authService } from '@/services/authService';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '@/config/firebase';
-import { UserProfile } from '@/types/auth';
-import { UserUtils } from '@/lib/userUtils';
-import { logger } from '@/utils/logger';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);

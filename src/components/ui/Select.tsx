@@ -14,7 +14,7 @@ interface SelectProps {
   label?: string;
 }
 
-export default function Select({
+export function Select({
   value,
   onChange,
   options,

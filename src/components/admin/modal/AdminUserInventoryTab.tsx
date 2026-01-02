@@ -50,9 +50,7 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
               value={data.selectedUniqueKey}
               onChange={(e) => data.setSelectedUniqueKey(e.target.value)}
             >
-              <option value="">
-                {t('admin.modal.inventory.add.select_placeholder')}
-              </option>
+              <option value="">{t('admin.modal.inventory.add.select_placeholder')}</option>
               {data.availableIngredients.map((ing) => (
                 <option key={ing.uniqueKey} value={ing.uniqueKey}>
                   {ing.nome} ({ing.raridade})
@@ -85,20 +83,12 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
       <div className="space-y-2">
         <div className="grid grid-cols-12 gap-2 px-2 py-1 text-xs font-medium text-gray-500 uppercase">
           <div className="col-span-4">{t('admin.modal.inventory.table.item')}</div>
-          <div className="col-span-3 text-center">
-            {t('admin.modal.inventory.table.status')}
-          </div>
-          <div className="col-span-3">
-            {t('admin.modal.inventory.table.acquired')}
-          </div>
-          <div className="col-span-2 text-right">
-            {t('admin.modal.inventory.table.actions')}
-          </div>
+          <div className="col-span-3 text-center">{t('admin.modal.inventory.table.status')}</div>
+          <div className="col-span-3">{t('admin.modal.inventory.table.acquired')}</div>
+          <div className="col-span-2 text-right">{t('admin.modal.inventory.table.actions')}</div>
         </div>
         {data.ingredients.length === 0 ? (
-          <p className="text-center text-gray-500 py-8">
-            {t('admin.modal.empty.ingredients')}
-          </p>
+          <p className="text-center text-gray-500 py-8">{t('admin.modal.empty.ingredients')}</p>
         ) : (
           data.ingredients.map((item) => {
             const localized = localizeIngredient(item.ingredient);
@@ -109,10 +99,7 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
               >
                 <div className="col-span-4 flex items-center gap-2 overflow-hidden">
                   <span className="text-xl">🌿</span>
-                  <span
-                    className="font-medium truncate text-sm"
-                    title={localized.nome}
-                  >
+                  <span className="font-medium truncate text-sm" title={localized.nome}>
                     {localized.nome}
                   </span>
                 </div>
@@ -126,9 +113,7 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
                   </span>
                 </div>
                 <div className="col-span-3 text-xs text-gray-600 truncate">
-                  {item.collectedAt
-                    ? new Date(item.collectedAt).toLocaleDateString()
-                    : '-'}
+                  {item.collectedAt ? new Date(item.collectedAt).toLocaleDateString() : '-'}
                 </div>
                 <div className="col-span-2 flex items-center justify-end gap-1">
                   <div className="flex items-center bg-white/50 rounded overflow-hidden">

@@ -1,14 +1,10 @@
 'use client';
 import React from 'react';
-import Button from '@/components/ui/Button';
-import PageHeader from '@/components/ui/PageHeader';
-import ContentCard from '@/components/ui/ContentCard';
-import SettingsModal from '@/components/SettingsModal';
-import ForageForm from '@/components/forage/ForageForm';
+import { Button, PageHeader, ContentCard, IngredientCard } from '@/components/ui';
+import { ForageForm, ForageResult } from '@/components/Forage';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useForageSystem } from '@/hooks/useForageSystem';
-import ForageResult from '@/components/forage/ForageResult';
-import IngredientCard from '@/components/ui/IngredientCard';
+import { SettingsModal } from '@/components/System';
 
 interface ForageSystemProps {
   onIngredientCollected?: (ingredient: CollectedIngredient) => void;
@@ -16,7 +12,7 @@ interface ForageSystemProps {
 
 import { useTranslation } from '@/hooks/useTranslation';
 
-export default function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
+export function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
   const { t } = useTranslation();
   const {
     region,

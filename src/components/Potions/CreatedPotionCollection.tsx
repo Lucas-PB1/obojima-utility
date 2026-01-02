@@ -1,13 +1,11 @@
 'use client';
 import React from 'react';
-import PageHeader from '@/components/ui/PageHeader';
-import StatsGrid from '@/components/ui/StatsGrid';
-import ContentCard from '@/components/ui/ContentCard';
+import { PageHeader, StatsGrid, ContentCard } from '@/components/ui';
 import { useCreatedPotionCollection } from '@/hooks/useCreatedPotionCollection';
 import { useTranslation } from '@/hooks/useTranslation';
-import { PotionFilter } from './Potions/Collection/PotionFilter';
-import { PotionList } from './Potions/Collection/PotionList';
-import { PotionDetailsModal } from './Potions/Collection/PotionDetailsModal';
+import { PotionFilter } from './Collection/PotionFilter';
+import { PotionList } from './Collection/PotionList';
+import { PotionDetailsModal } from './Collection/PotionDetailsModal';
 
 export const CreatedPotionCollection: React.FC = () => {
   const { t } = useTranslation();
@@ -40,7 +38,7 @@ export const CreatedPotionCollection: React.FC = () => {
           setFilter={setFilter}
           filteredCount={filteredPotions.length}
         />
-        
+
         <PotionList
           potions={filteredPotions}
           filter={filter}

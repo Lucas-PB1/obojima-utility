@@ -6,10 +6,7 @@ interface SimpleIngredientCardProps {
   className?: string;
 }
 
-export default function SimpleIngredientCard({
-  ingredient,
-  className = ''
-}: SimpleIngredientCardProps) {
+export function SimpleIngredientCard({ ingredient, className = '' }: SimpleIngredientCardProps) {
   const maxAttr = Math.max(ingredient.combat, ingredient.utility, ingredient.whimsy);
 
   const getBadgeClass = () => {

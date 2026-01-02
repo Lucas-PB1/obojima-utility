@@ -1,6 +1,7 @@
+'use client';
 import { UserProfile, UserRole } from '@/types/auth';
-import { Column } from '@/components/ui/DataTable/types';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Column } from '@/components/ui/DataTable/types';
 
 interface UseUserTableColumnsProps {
   onUpdate: (uid: string, updates: Partial<UserProfile>) => void;

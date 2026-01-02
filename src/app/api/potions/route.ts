@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { adminDb } from '@/config/firebase-admin';
 import { logger } from '@/utils/logger';
-import { PotionRecipe } from '@/types/ingredients';
+import { adminDb } from '@/config/firebase-admin';
 import { Timestamp } from 'firebase-admin/firestore';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
@@ -59,11 +58,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Missing uid' }, { status: 400 });
     }
 
-    const snapshot = await adminDb
-      .collection('users')
-      .doc(uid)
-      .collection('createdPotions')
-      .get();
+    const snapshot = await adminDb.collection('users').doc(uid).collection('createdPotions').get();
 
     const potions = snapshot.docs.map((doc) => {
       const data = doc.data();

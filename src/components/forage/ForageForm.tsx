@@ -1,9 +1,5 @@
 import React from 'react';
-import Input from '@/components/ui/Input';
-import Button from '@/components/ui/Button';
-import Select from '@/components/ui/Select';
-import RadioGroup from '@/components/ui/RadioGroup';
-import ContentCard from '@/components/ui/ContentCard';
+import { Input, Button, Select, RadioGroup, ContentCard } from '@/components/ui';
 import { ingredientsService } from '@/services/ingredientsService';
 import { RegionKey, TestType, DiceType, AdvantageType } from '@/types/ingredients';
 import { DICE_OPTIONS, TEST_TYPE_OPTIONS, ADVANTAGE_OPTIONS } from '@/constants/forage';
@@ -27,7 +23,7 @@ interface ForageFormProps {
 import { useTranslation } from '@/hooks/useTranslation';
 import { useSettings } from '@/hooks/useSettings';
 
-export default function ForageForm({
+export function ForageForm({
   region,
   setRegion,
   testType,

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   }
 };
 
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeProvider } from '@/components/System';
 
 import { SettingsProvider } from '@/contexts/SettingsContext';
 

@@ -2,13 +2,13 @@ import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { FriendRequest } from '@/types/social';
 import { socialService } from '@/services/socialService';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 
 interface FriendRequestListProps {
   requests: FriendRequest[];
 }
 
-export default function FriendRequestList({ requests }: FriendRequestListProps) {
+export function FriendRequestList({ requests }: FriendRequestListProps) {
   const { t } = useTranslation();
 
   const handleRespond = async (requestId: string, accept: boolean) => {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
-import SimpleIngredientCard from '@/components/ui/SimpleIngredientCard';
+import { Modal, Button, SimpleIngredientCard } from '@/components/ui';
 import { PotionRecipe } from '@/types/ingredients';
 import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 
@@ -110,9 +108,7 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
             >
               <div
                 className={`text-[9px] font-bold uppercase tracking-widest mb-1 ${
-                  recipe.winningAttribute === 'utility'
-                    ? 'text-totoro-blue'
-                    : 'text-totoro-blue/60'
+                  recipe.winningAttribute === 'utility' ? 'text-totoro-blue' : 'text-totoro-blue/60'
                 }`}
               >
                 Utl
@@ -184,11 +180,7 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
           >
             {t('recipes.details.delete')}
           </Button>
-          <Button
-            onClick={onClose}
-            variant="secondary"
-            className="flex-1 !rounded-2xl !font-bold"
-          >
+          <Button onClick={onClose} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
             {t('ui.actions.close')}
           </Button>
         </div>

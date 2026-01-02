@@ -1,11 +1,4 @@
-import {
-  collection,
-  query,
-  orderBy,
-  onSnapshot,
-  Timestamp,
-  Unsubscribe
-} from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, Timestamp, Unsubscribe } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { CreatedPotion, PotionRecipe } from '@/types/ingredients';
@@ -85,7 +78,7 @@ class FirebaseCreatedPotionService {
       if (!response.ok) return [];
 
       const result = await response.json();
-      return result.data.map((data: any) => ({
+      return result.data.map((data: CreatedPotion) => ({
         ...data,
         createdAt: this.convertTimestampToDate(data.createdAt),
         usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
@@ -217,7 +210,7 @@ class FirebaseCreatedPotionService {
     const potions = await this.getAllCreatedPotions();
     return potions.filter((potion) => potion.recipe.winningAttribute === category);
   }
-  
+
   async getPotionStats(): Promise<{
     total: number;
     available: number;

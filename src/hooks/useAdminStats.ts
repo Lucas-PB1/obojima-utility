@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { adminService } from '@/services/adminService';
-import { useTranslation } from './useTranslation';
+"use client";
 import { logger } from '@/utils/logger';
 import { UserProfile } from '@/types/auth';
+import { useState, useEffect } from 'react';
+import { adminService } from '@/services/adminService';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function useAdminStats() {
   const { t } = useTranslation();

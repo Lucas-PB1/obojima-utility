@@ -2,8 +2,7 @@ import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { CreatedPotion } from '@/types/ingredients';
 import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
-import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
+import { Modal, Button } from '@/components/ui';
 
 interface PotionDetailsModalProps {
   isOpen: boolean;
@@ -222,11 +221,7 @@ export function PotionDetailsModal({
           >
             {t('ui.actions.delete')}
           </Button>
-          <Button
-            onClick={onClose}
-            variant="secondary"
-            className="flex-1 !rounded-2xl !font-bold"
-          >
+          <Button onClick={onClose} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
             {t('ui.actions.close')}
           </Button>
         </div>

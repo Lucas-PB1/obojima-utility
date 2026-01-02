@@ -1,13 +1,11 @@
-import { useState, useEffect } from 'react';
+"use client";
 import { UserProfile } from '@/types/auth';
-import { useTranslation } from '@/hooks/useTranslation';
-
-// Custom Hooks
-import { useIngredientsCatalog } from './useIngredientsCatalog';
-import { useUserIngredients } from './useUserIngredients';
-import { useUserPotions } from './useUserPotions';
-import { useUserHistory } from './useUserHistory';
-import { useUserProfileManagement } from './useUserProfileManagement';
+import { useState, useEffect } from 'react';
+import { useUserPotions } from '@/hooks/useUserPotions';
+import { useUserHistory } from '@/hooks/useUserHistory';
+import { useUserIngredients } from '@/hooks/useUserIngredients';
+import { useIngredientsCatalog } from '@/hooks/useIngredientsCatalog';
+import { useUserProfileManagement } from '@/hooks/useUserProfileManagement';
 
 interface UseAdminUserDetailsProps {
   user: UserProfile | null;
@@ -24,17 +22,16 @@ export function useAdminUserDetails({
   onDelete,
   onClose
 }: UseAdminUserDetailsProps) {
-  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('overview');
-  
+
   // Custom Hooks
   const { availableIngredients } = useIngredientsCatalog();
-  const { 
-    ingredients, 
-    loading: ingredientsLoading, 
-    fetchIngredients, 
-    handleDeleteIngredient, 
-    handleUpdateQuantity, 
+  const {
+    ingredients,
+    loading: ingredientsLoading,
+    fetchIngredients,
+    handleDeleteIngredient,
+    handleUpdateQuantity,
     handleAddItem,
     isAddingItem,
     setIsAddingItem,
@@ -42,32 +39,24 @@ export function useAdminUserDetails({
     setSelectedUniqueKey,
     addQuantity,
     setAddQuantity
-   } = useUserIngredients(user?.uid);
-
-  const { 
-    potions, 
-    loading: potionsLoading, 
-    fetchPotions, 
-    handleDeletePotion 
-  } = useUserPotions(user?.uid);
-
-  const { 
-    attempts, 
-    loading: historyLoading, 
-    fetchHistory 
-  } = useUserHistory(user?.uid);
+  } = useUserIngredients(user?.uid);
 
   const {
-    handleEditName,
-    handleToggleStatus,
-    handleChangeRole,
-    handleDeleteUser
-  } = useUserProfileManagement({
-    user,
-    onUpdate,
-    onDelete,
-    onClose
-  });
+    potions,
+    loading: potionsLoading,
+    fetchPotions,
+    handleDeletePotion
+  } = useUserPotions(user?.uid);
+
+  const { attempts, loading: historyLoading, fetchHistory } = useUserHistory(user?.uid);
+
+  const { handleEditName, handleToggleStatus, handleChangeRole, handleDeleteUser } =
+    useUserProfileManagement({
+      user,
+      onUpdate,
+      onDelete,
+      onClose
+    });
 
   // Aggregate Loading State
   const loading = ingredientsLoading || potionsLoading || historyLoading;
@@ -85,7 +74,7 @@ export function useAdminUserDetails({
     activeTab,
     setActiveTab,
     loading,
-    
+
     ingredientsData: {
       availableIngredients,
       isAddingItem,
@@ -97,25 +86,23 @@ export function useAdminUserDetails({
       ingredients,
       handleDeleteIngredient,
       handleUpdateQuantity,
-      handleAddItem: () => handleAddItem(availableIngredients),
+      handleAddItem: () => handleAddItem(availableIngredients)
     },
 
     potionsData: {
       potions,
-      handleDeletePotion,
+      handleDeletePotion
     },
 
     historyData: {
-      attempts,
+      attempts
     },
 
     userActions: {
       handleEditName,
       handleToggleStatus,
       handleChangeRole,
-      handleDeleteUser,
+      handleDeleteUser
     }
   };
 }
-
-

@@ -1,5 +1,6 @@
-import { useTranslation } from '@/hooks/useTranslation';
+'use client';
 import { UserProfile } from '@/types/auth';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface UseUserProfileManagementProps {
   user: UserProfile | null;

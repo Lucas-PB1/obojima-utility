@@ -1,17 +1,12 @@
 'use client';
-import { CreatedPotion } from '@/types/ingredients';
 import { useState, useCallback } from 'react';
-import { useCreatedPotionsData } from './useCreatedPotionsData';
-import { usePotionFilter } from './usePotionFilter';
-import { usePotionCollectionStats } from './usePotionCollectionStats';
+import { CreatedPotion } from '@/types/ingredients';
+import { usePotionFilter } from '@/hooks/usePotionFilter';
+import { useCreatedPotionsData } from '@/hooks/useCreatedPotionsData';
+import { usePotionCollectionStats } from '@/hooks/usePotionCollectionStats';
 
 export function useCreatedPotionCollection() {
-  const { 
-    potions, 
-    handleUsePotion, 
-    handleDeletePotion, 
-    loadPotions 
-  } = useCreatedPotionsData();
+  const { potions, handleUsePotion, handleDeletePotion, loadPotions } = useCreatedPotionsData();
 
   const { filteredPotions, filter, setFilter } = usePotionFilter(potions);
   const { stats, statsData } = usePotionCollectionStats(potions);

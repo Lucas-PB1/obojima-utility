@@ -1,15 +1,13 @@
 'use client';
 import React from 'react';
-import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
-import ContentCard from '@/components/ui/ContentCard';
+import { Modal, Button, ContentCard } from '@/components/ui';
 import { usePotionBrewing } from '@/hooks/usePotionBrewing';
 import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 import { Ingredient, PotionRecipe } from '@/types/ingredients';
 import { useTranslation } from '@/hooks/useTranslation';
-import { BrewingResultModal } from './Potions/Brewing/BrewingResultModal';
-import { BrewingArea } from './Potions/Brewing/BrewingArea';
-import { IngredientsList } from './Potions/Brewing/IngredientsList';
+import { BrewingResultModal } from './Brewing/BrewingResultModal';
+import { BrewingArea } from './Brewing/BrewingArea';
+import { IngredientsList } from './Brewing/IngredientsList';
 
 interface PotionBrewingProps {
   availableIngredients: Ingredient[];

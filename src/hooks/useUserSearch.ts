@@ -1,6 +1,7 @@
+"use client";
+import { UserProfile } from '@/types/auth';
 import { useState, useEffect } from 'react';
 import { socialService } from '@/services/socialService';
-import { UserProfile } from '@/types/auth';
 
 export function useUserSearch() {
   const [searchTerm, setSearchTerm] = useState('');

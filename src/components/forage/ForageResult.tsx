@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { ForageAttempt } from '@/types/ingredients';
-import ContentCard from '@/components/ui/ContentCard';
+import { ContentCard } from '@/components/ui';
 import { useForageResult } from '@/hooks/useForageResult';
 
 interface ForageResultProps {
@@ -10,7 +10,7 @@ interface ForageResultProps {
 
 import { useTranslation } from '@/hooks/useTranslation';
 
-export default function ForageResult({ result }: ForageResultProps) {
+export function ForageResult({ result }: ForageResultProps) {
   const { regionDisplayName, particles, showDoubleForage } = useForageResult(result);
   const { t } = useTranslation();
 

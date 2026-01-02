@@ -1,18 +1,16 @@
 import React from 'react';
-import Select from '@/components/ui/Select';
-import Button from '@/components/ui/Button';
+import { Select, Button, FilterSection } from '@/components/ui';
 import { ForageAttempt } from '@/types/ingredients';
-import FilterSection from '@/components/ui/FilterSection';
+import { useTranslation } from '@/hooks/useTranslation';
 import { RESULT_OPTIONS, DATE_OPTIONS } from '@/constants/filters/activity';
 import { useActivityFilters, ResultFilterType, DateFilterType } from '@/hooks/useFilters';
-import { useTranslation } from '@/hooks/useTranslation';
 
 interface ActivityFiltersProps {
   attempts: ForageAttempt[];
   onFilteredAttempts: (attempts: ForageAttempt[]) => void;
 }
 
-export default function ActivityFilters({ attempts, onFilteredAttempts }: ActivityFiltersProps) {
+export function ActivityFilters({ attempts, onFilteredAttempts }: ActivityFiltersProps) {
   const { t } = useTranslation();
   const {
     filter,

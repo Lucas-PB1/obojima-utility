@@ -1,9 +1,10 @@
+'use client';
 import { PotionRecipe } from '@/types/ingredients';
+import { useTranslation } from '@/hooks/useTranslation';
+import { potionService } from '@/services/potionService';
+import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { firebaseRecipeService } from '@/services/firebaseRecipeService';
-import { potionService } from '@/services/potionService';
-import { useTranslation } from '@/hooks/useTranslation';
-import { POTION_CATEGORY_CONFIG } from '@/constants/potions';
 
 export function useRecipeCollection() {
   const { t } = useTranslation();
@@ -34,20 +35,20 @@ export function useRecipeCollection() {
   useEffect(() => {
     const loadStats = async () => {
       const statsData = await firebaseRecipeService.getRecipeStats();
-      
+
       // Calculate progress stats
       const totalPotionsData = await potionService.getTotalPotionsCount();
-      
+
       // Count unique potions collected by ID
       const uniquePotions = new Set<string>();
       const uniqueCombat = new Set<string>();
       const uniqueUtility = new Set<string>();
       const uniqueWhimsy = new Set<string>();
 
-      recipes.forEach(recipe => {
+      recipes.forEach((recipe) => {
         const potionId = `${recipe.resultingPotion.id}-${recipe.winningAttribute}`;
         uniquePotions.add(potionId);
-        
+
         if (recipe.winningAttribute === 'combat') uniqueCombat.add(potionId);
         if (recipe.winningAttribute === 'utility') uniqueUtility.add(potionId);
         if (recipe.winningAttribute === 'whimsy') uniqueWhimsy.add(potionId);
@@ -95,9 +96,9 @@ export function useRecipeCollection() {
       const categoryOrder = { combat: 1, utility: 2, whimsy: 3 };
       const catA = categoryOrder[a.winningAttribute as keyof typeof categoryOrder] || 99;
       const catB = categoryOrder[b.winningAttribute as keyof typeof categoryOrder] || 99;
-      
+
       if (catA !== catB) return catA - catB;
-      
+
       // Sort by ID (Number)
       return a.resultingPotion.id - b.resultingPotion.id;
     });
@@ -106,20 +107,22 @@ export function useRecipeCollection() {
   const statsData = useMemo(() => {
     return [
       {
-        value: stats.progress?.total.total > 0
-          ? `${stats.progress.total.collected} / ${stats.progress.total.total} (${stats.progress.total.percentage}%)`
-          : stats.total,
+        value:
+          stats.progress?.total.total > 0
+            ? `${stats.progress.total.collected} / ${stats.progress.total.total} (${stats.progress.total.percentage}%)`
+            : stats.total,
         label: t('ui.labels.total'),
         color: 'totoro-gray' as const
       },
       ...Object.entries(POTION_CATEGORY_CONFIG).map(([key, config]) => {
         const categoryKey = key as keyof typeof stats.byCategory;
         const categoryProgress = stats.progress?.[categoryKey as 'combat' | 'utility' | 'whimsy'];
-        
+
         return {
-          value: categoryProgress?.total > 0
-            ? `${categoryProgress.collected} / ${categoryProgress.total}`
-            : stats.byCategory[categoryKey],
+          value:
+            categoryProgress?.total > 0
+              ? `${categoryProgress.collected} / ${categoryProgress.total}`
+              : stats.byCategory[categoryKey],
           label: t(config.label),
           color: (key === 'combat'
             ? 'totoro-orange'

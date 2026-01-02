@@ -8,13 +8,7 @@ interface PageHeaderProps {
   action?: React.ReactNode;
 }
 
-export default function PageHeader({
-  title,
-  subtitle,
-  icon,
-  className = '',
-  action
-}: PageHeaderProps) {
+export function PageHeader({ title, subtitle, icon, className = '', action }: PageHeaderProps) {
   return (
     <div className={`mb-10 ${className}`}>
       <div className="relative overflow-hidden rounded-3xl glass-panel border border-border/40 shadow-xl">

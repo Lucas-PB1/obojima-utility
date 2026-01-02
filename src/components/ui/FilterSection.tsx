@@ -5,7 +5,7 @@ interface FilterSectionProps {
   className?: string;
 }
 
-export default function FilterSection({ children, className = '' }: FilterSectionProps) {
+export function FilterSection({ children, className = '' }: FilterSectionProps) {
   return (
     <div
       className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-8 border border-white/40 relative overflow-hidden ${className}`}

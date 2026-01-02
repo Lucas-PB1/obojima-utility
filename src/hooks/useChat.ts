@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+"use client";
 import { ChatMessage } from '@/types/social';
 import { socialService } from '@/services/socialService';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export function useChat(friendId: string) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -44,6 +45,6 @@ export function useChat(friendId: string) {
     newMessage,
     setNewMessage,
     messagesEndRef,
-    handleSend,
+    handleSend
   };
 }

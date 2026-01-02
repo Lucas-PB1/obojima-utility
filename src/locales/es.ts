@@ -276,6 +276,8 @@ export const es = {
   'admin.title': 'Panel Administrativo',
   'admin.subtitle': 'Gestiona usuarios, roles y configuraciones del sistema',
   'admin.stats.users': 'Total de Usuarios',
+  'admin.stats.admins': 'Administradores',
+  'admin.stats.active': 'Cuentas Activas',
   'admin.stats.sessions': 'Sesiones Activas',
   'admin.stats.reviews': 'Revisiones Pendientes',
   'admin.stats.status': 'Estado del Sistema',
@@ -379,9 +381,11 @@ export const es = {
 
   // Migration
   'admin.migration.title': 'Sincronizar Perfiles Públicos',
-  'admin.migration.description': 'Usa esto para poblar la colección \'public_users\' basada en usuarios existentes. Necesario para que la búsqueda de amigos funcione para usuarios antiguos.',
+  'admin.migration.description':
+    "Usa esto para poblar la colección 'public_users' basada en usuarios existentes. Necesario para que la búsqueda de amigos funcione para usuarios antiguos.",
   'admin.migration.action': 'Ejecutar Migración',
-  'admin.migration.confirm': 'Esto leerá todos los usuarios y recreará los perfiles públicos. ¿Continuar?',
+  'admin.migration.confirm':
+    'Esto leerá todos los usuarios y recreará los perfiles públicos. ¿Continuar?',
   'admin.migration.status.starting': 'Iniciando migración vía servidor...',
   'admin.migration.status.success': 'Éxito: {0}',
   'admin.migration.status.error': 'Error: {0}',

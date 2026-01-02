@@ -1,7 +1,7 @@
 'use client';
 import { useState, useMemo, useCallback } from 'react';
+import { useTranslation } from '@/hooks/useTranslation';
 import { DataTableService, SortConfig } from '@/services/dataTableService';
-import { useTranslation } from './useTranslation';
 
 interface Filter {
   key: string;

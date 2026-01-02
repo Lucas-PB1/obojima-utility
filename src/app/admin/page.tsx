@@ -1,30 +1,5 @@
-'use client';
-
-import AdminRoute from '@/components/admin/AdminRoute';
-import UserList from '@/components/admin/UserList';
-import PageHeader from '@/components/ui/PageHeader';
-import StatsGrid from '@/components/ui/StatsGrid';
-import SystemMigration from '@/components/admin/SystemMigration';
-import { useTranslation } from '@/hooks/useTranslation';
-import { useAdminStats } from '@/hooks/useAdminStats';
+import AdminContent from '@/components/Admin/AdminContent';
 
 export default function AdminPage() {
-  const { t } = useTranslation();
-  const { stats } = useAdminStats();
-
-  return (
-    <AdminRoute>
-      <div className="min-h-screen bg-mesh p-8 pt-24 font-sans text-foreground animate-in fade-in duration-500">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <PageHeader title={t('admin.title')} subtitle={t('admin.subtitle')} icon="🛡️" />
-
-          <div className="space-y-8">
-            <StatsGrid title={t('admin.stats.status')} stats={stats} />
-            <SystemMigration />
-            <UserList />
-          </div>
-        </div>
-      </div>
-    </AdminRoute>
-  );
+  return <AdminContent />;
 }

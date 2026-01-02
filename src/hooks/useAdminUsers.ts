@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+"use client";
 import { db } from '@/config/firebase';
+import { logger } from '@/utils/logger';
 import { UserProfile } from '@/types/auth';
 import { adminService } from '@/services/adminService';
 import { useTranslation } from '@/hooks/useTranslation';
-import { logger } from '@/utils/logger';
+import { collection, getDocs } from 'firebase/firestore';
+import { useState, useEffect, useCallback } from 'react';
 
 export function useAdminUsers() {
   const [users, setUsers] = useState<UserProfile[]>([]);

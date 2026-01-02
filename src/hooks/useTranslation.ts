@@ -1,6 +1,7 @@
-import { useSettings } from './useSettings';
-import { translations } from '@/constants/translations';
+'use client';
 import { useCallback } from 'react';
+import { useSettings } from '@/hooks/useSettings';
+import { translations } from '@/constants/translations';
 
 export function useTranslation() {
   const { settings } = useSettings();

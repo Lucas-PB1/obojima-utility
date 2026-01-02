@@ -1,19 +1,16 @@
+'use client';
 import React from 'react';
-import Modal from '@/components/ui/Modal';
-import Input from '@/components/ui/Input';
-import Button from '@/components/ui/Button';
-import Select from '@/components/ui/Select';
 import { useSettings } from '@/hooks/useSettings';
-import { DICE_OPTIONS, LANGUAGE_OPTIONS, Language } from '@/constants/settings';
-import { ThemeSwitch } from '@/components/ui/ThemeSwitch';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Modal, Input, Button, Select, ThemeSwitch } from '@/components/ui';
+import { DICE_OPTIONS, LANGUAGE_OPTIONS, Language } from '@/constants/settings';
 
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
+export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { settings, clearSettings, updateSetting } = useSettings();
   const { t } = useTranslation();
 

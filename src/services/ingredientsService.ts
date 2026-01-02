@@ -71,7 +71,7 @@ class IngredientsService extends BaseDataService {
     return (
       (common.total || common.ingredients.length) +
       (uncommon.total || uncommon.ingredients.length) +
-      (rare.ingredients.length) +
+      rare.ingredients.length +
       (unique.ingredients.length || 0)
     );
   }

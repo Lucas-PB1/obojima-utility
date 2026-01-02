@@ -33,12 +33,7 @@ export function PotionList({ potions, filter, onPotionClick, onUsePotion }: Poti
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {potions.map((potion) => (
-        <PotionCard
-          key={potion.id}
-          potion={potion}
-          onClick={onPotionClick}
-          onUse={onUsePotion}
-        />
+        <PotionCard key={potion.id} potion={potion} onClick={onPotionClick} onUse={onUsePotion} />
       ))}
     </div>
   );
