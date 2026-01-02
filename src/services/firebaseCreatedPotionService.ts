@@ -15,6 +15,7 @@ import {
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { CreatedPotion, PotionRecipe } from '@/types/ingredients';
+import { logger } from '@/utils/logger';
 
 class FirebaseCreatedPotionService {
   private potionsUnsubscribe: Unsubscribe | null = null;
@@ -85,7 +86,7 @@ class FirebaseCreatedPotionService {
         id: docRef.id
       };
     } catch (error) {
-      console.error('Erro ao adicionar poção criada:', error);
+      logger.error('Erro ao adicionar poção criada:', error);
       throw error;
     }
   }
@@ -111,7 +112,7 @@ class FirebaseCreatedPotionService {
         } as CreatedPotion;
       });
     } catch (error) {
-      console.error('Erro ao carregar poções criadas:', error);
+      logger.error('Erro ao carregar poções criadas:', error);
       return [];
     }
   }
@@ -145,7 +146,7 @@ class FirebaseCreatedPotionService {
           callback(potions);
         },
         (error) => {
-          console.error('Erro ao observar poções:', error);
+          logger.error('Erro ao observar poções:', error);
           callback([]);
         }
       );
@@ -157,7 +158,7 @@ class FirebaseCreatedPotionService {
         }
       };
     } catch (error) {
-      console.error('Erro ao criar subscription de poções:', error);
+      logger.error('Erro ao criar subscription de poções:', error);
       callback([]);
       return () => {};
     }
@@ -195,7 +196,7 @@ class FirebaseCreatedPotionService {
 
       return true;
     } catch (error) {
-      console.error('Erro ao usar poção:', error);
+      logger.error('Erro ao usar poção:', error);
       return false;
     }
   }
@@ -207,7 +208,7 @@ class FirebaseCreatedPotionService {
       const potionRef = doc(db, this.getPotionsPath(), potionId);
       await deleteDoc(potionRef);
     } catch (error) {
-      console.error('Erro ao remover poção:', error);
+      logger.error('Erro ao remover poção:', error);
       throw error;
     }
   }
@@ -235,7 +236,7 @@ class FirebaseCreatedPotionService {
 
       return null;
     } catch (error) {
-      console.error('Erro ao buscar poção:', error);
+      logger.error('Erro ao buscar poção:', error);
       return null;
     }
   }

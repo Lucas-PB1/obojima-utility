@@ -1,6 +1,7 @@
 import { doc, getDoc, setDoc, onSnapshot, Unsubscribe } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
+import { logger } from '@/utils/logger';
 
 interface Settings {
   defaultModifier: number | '';
@@ -61,7 +62,7 @@ class FirebaseSettingsService {
       await this.saveSettings(defaultSettings);
       return defaultSettings;
     } catch (error) {
-      console.error('Erro ao carregar configurações:', error);
+      logger.error('Erro ao carregar configurações:', error);
       return defaultSettings;
     }
   }
@@ -73,7 +74,7 @@ class FirebaseSettingsService {
       const userRef = doc(db, this.getSettingsPath());
       await setDoc(userRef, { [this.getSettingsFieldPath()]: settings }, { merge: true });
     } catch (error) {
-      console.error('Erro ao salvar configurações:', error);
+      logger.error('Erro ao salvar configurações:', error);
       throw error;
     }
   }
@@ -103,7 +104,7 @@ class FirebaseSettingsService {
           }
         },
         (error) => {
-          console.error('Erro ao observar configurações:', error);
+          logger.error('Erro ao observar configurações:', error);
           callback(defaultSettings);
         }
       );
@@ -115,7 +116,7 @@ class FirebaseSettingsService {
         }
       };
     } catch (error) {
-      console.error('Erro ao criar subscription de configurações:', error);
+      logger.error('Erro ao criar subscription de configurações:', error);
       callback(defaultSettings);
       return () => {};
     }
@@ -205,7 +206,7 @@ class FirebaseSettingsService {
       const userRef = doc(db, this.getSettingsPath());
       await setDoc(userRef, { [this.getSettingsFieldPath()]: defaultSettings }, { merge: true });
     } catch (error) {
-      console.error('Erro ao limpar configurações:', error);
+      logger.error('Erro ao limpar configurações:', error);
       throw error;
     }
   }

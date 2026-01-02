@@ -4,13 +4,19 @@ export interface SortConfig<T> {
 }
 
 export class DataTableService {
-  private static getNestedValue<T>(item: T, key: string): unknown {
+  private static getNestedValue<T>(
+    item: T,
+    key: string
+  ): string | number | boolean | object | null | undefined {
     return key.includes('.')
-      ? key.split('.').reduce((obj: unknown, k) => (obj as Record<string, unknown>)?.[k], item)
-      : item[key as keyof T];
+      ? key.split('.').reduce((obj: any, k) => (obj as Record<string, any>)?.[k], item)
+      : (item[key as keyof T] as string | number | boolean | object | null | undefined);
   }
 
-  private static matchesSearch(value: unknown, searchTerm: string): boolean {
+  private static matchesSearch(
+    value: string | number | boolean | object | null | undefined,
+    searchTerm: string
+  ): boolean {
     if (!searchTerm) return true;
     const term = String(searchTerm).toLowerCase();
     const val = String(value ?? '').toLowerCase();

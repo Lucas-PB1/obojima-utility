@@ -15,6 +15,7 @@ import {
 import { GAME_CONFIG } from '@/config/gameConfig';
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
+import { logger } from '@/utils/logger';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 
 class FirebaseStorageService {
@@ -78,7 +79,7 @@ class FirebaseStorageService {
         } as CollectedIngredient;
       });
     } catch (error) {
-      console.error('Erro ao carregar ingredientes coletados:', error);
+      logger.error('Erro ao carregar ingredientes coletados:', error);
       return [];
     }
   }
@@ -110,7 +111,7 @@ class FirebaseStorageService {
           callback(ingredients);
         },
         (error) => {
-          console.error('Erro ao observar ingredientes:', error);
+          logger.error('Erro ao observar ingredientes:', error);
           callback([]);
         }
       );
@@ -122,7 +123,7 @@ class FirebaseStorageService {
         }
       };
     } catch (error) {
-      console.error('Erro ao criar subscription de ingredientes:', error);
+      logger.error('Erro ao criar subscription de ingredientes:', error);
       callback([]);
       return () => {};
     }
@@ -152,9 +153,9 @@ class FirebaseStorageService {
         });
       }
 
-      console.log('Ingrediente adicionado à coleção:', ingredient.ingredient.nome);
+      logger.info('Ingrediente adicionado à coleção:', ingredient.ingredient.nome);
     } catch (error) {
-      console.error('Erro ao adicionar ingrediente coletado:', error);
+      logger.error('Erro ao adicionar ingrediente coletado:', error);
       throw error;
     }
   }
@@ -178,7 +179,7 @@ class FirebaseStorageService {
 
       await updateDoc(ingredientRef, updateData);
     } catch (error) {
-      console.error('Erro ao atualizar ingrediente coletado:', error);
+      logger.error('Erro ao atualizar ingrediente coletado:', error);
       throw error;
     }
   }
@@ -207,7 +208,7 @@ class FirebaseStorageService {
         }
       }
     } catch (error) {
-      console.error('Erro ao marcar ingrediente como usado:', error);
+      logger.error('Erro ao marcar ingrediente como usado:', error);
       throw error;
     }
   }
@@ -219,7 +220,7 @@ class FirebaseStorageService {
       const ingredientRef = doc(db, this.getCollectedIngredientsPath(), id);
       await deleteDoc(ingredientRef);
     } catch (error) {
-      console.error('Erro ao remover ingrediente coletado:', error);
+      logger.error('Erro ao remover ingrediente coletado:', error);
       throw error;
     }
   }
@@ -240,7 +241,7 @@ class FirebaseStorageService {
         } as ForageAttempt;
       });
     } catch (error) {
-      console.error('Erro ao carregar tentativas de forrageamento:', error);
+      logger.error('Erro ao carregar tentativas de forrageamento:', error);
       return [];
     }
   }
@@ -269,7 +270,7 @@ class FirebaseStorageService {
           callback(attempts);
         },
         (error) => {
-          console.error('Erro ao observar tentativas:', error);
+          logger.error('Erro ao observar tentativas:', error);
           callback([]);
         }
       );
@@ -281,7 +282,7 @@ class FirebaseStorageService {
         }
       };
     } catch (error) {
-      console.error('Erro ao criar subscription de tentativas:', error);
+      logger.error('Erro ao criar subscription de tentativas:', error);
       callback([]);
       return () => {};
     }
@@ -301,7 +302,7 @@ class FirebaseStorageService {
 
       await addDoc(attemptsRef, dataToSave);
     } catch (error) {
-      console.error('Erro ao adicionar tentativa de forrageamento:', error);
+      logger.error('Erro ao adicionar tentativa de forrageamento:', error);
       throw error;
     }
   }
@@ -324,7 +325,7 @@ class FirebaseStorageService {
 
       return Math.max(0, GAME_CONFIG.DAILY_FORAGE_LIMIT - usedToday);
     } catch (error) {
-      console.error('Erro ao verificar tentativas restantes:', error);
+      logger.error('Erro ao verificar tentativas restantes:', error);
       return 0;
     }
   }

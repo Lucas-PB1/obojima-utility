@@ -66,7 +66,7 @@ export function useLogin() {
 
         router.push('/');
       }
-    } catch (err: unknown) {
+    } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Erro ao autenticar';
       setError(errorMessage);
       setLoading(false);

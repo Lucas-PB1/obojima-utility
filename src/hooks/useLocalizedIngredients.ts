@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Ingredient } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
+import { logger } from '@/utils/logger';
 
 export function useLocalizedIngredients() {
   const { language } = useTranslation();
@@ -25,7 +26,7 @@ export function useLocalizedIngredients() {
 
         setIngredientsMap(map);
       } catch (error) {
-        console.error('Failed to load ingredients map', error);
+        logger.error('Failed to load ingredients map', error);
       }
     };
 

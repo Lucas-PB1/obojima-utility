@@ -40,7 +40,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <Select
             value={settings.language}
             onChange={(value) => updateSetting('language', value as Language)}
-            options={LANGUAGE_OPTIONS as unknown as { value: string; label: string }[]}
+            options={[...LANGUAGE_OPTIONS]}
             placeholder={t('settings.language.placeholder')}
             label={t('settings.language.label')}
           />
@@ -71,7 +71,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             <Select
               value={settings.defaultBonusType}
               onChange={(value) => updateSetting('defaultBonusType', value)}
-              options={DICE_OPTIONS as unknown as { value: string; label: string }[]}
+              options={[...DICE_OPTIONS]}
               placeholder={t('settings.bonus.select.placeholder')}
               label={t('settings.bonus.select.label')}
             />

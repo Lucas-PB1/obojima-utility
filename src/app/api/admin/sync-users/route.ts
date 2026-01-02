@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { adminAuth, adminDb } from '@/config/firebase-admin';
 import { AdminLogic } from '@/lib/admin/adminLogic';
+import { logger } from '@/utils/logger';
 
 export async function POST() {
   try {
@@ -43,10 +44,10 @@ export async function POST() {
       success: true,
       message: `Sync completo: ${createdCount} novos, ${updatedCount} atualizados, ${orphanedCount} órfãos. Total Auth: ${authUsers.length}.`
     });
-  } catch (error: any) {
-    console.error('Error syncing users:', error);
+  } catch (error) {
+    logger.error('Error syncing users:', error);
 
-    let errorMessage = error.message;
+    let errorMessage = error instanceof Error ? error.message : 'Unknown error';
     if (errorMessage.includes('The default Firebase app does not exist')) {
       errorMessage =
         'Firebase Admin não inicializado. Verifique se as variáveis FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL e FIREBASE_PRIVATE_KEY estão corretamente configuradas no seu .env.local.';
@@ -57,7 +58,8 @@ export async function POST() {
         success: false,
         error: 'Falha ao sincronizar usuários',
         details: errorMessage,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        stack:
+          process.env.NODE_ENV === 'development' && error instanceof Error ? error.stack : undefined
       },
       { status: 500 }
     );

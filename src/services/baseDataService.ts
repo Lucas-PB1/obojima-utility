@@ -1,3 +1,5 @@
+import { logger } from '@/utils/logger';
+
 export abstract class BaseDataService {
   protected async loadData<T>(url: string, cache: Record<string, T>, language: string): Promise<T> {
     if (cache[language]) return cache[language];
@@ -19,7 +21,7 @@ export abstract class BaseDataService {
       cache[language] = data;
       return data;
     } catch (error) {
-      console.error(error);
+      logger.error('Erro ao carregar dados:', error);
       throw error;
     }
   }

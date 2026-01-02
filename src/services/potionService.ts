@@ -8,6 +8,7 @@ import {
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 
 import { BaseDataService } from './baseDataService';
+import { logger } from '@/utils/logger';
 
 class PotionService extends BaseDataService {
   private combatPotions: Record<string, PotionCategory> = {};
@@ -46,7 +47,7 @@ class PotionService extends BaseDataService {
         )
       ]);
     } catch (error) {
-      console.error('Erro ao carregar dados das poções:', error);
+      logger.error('Erro ao carregar dados das poções:', error);
     }
   }
 
@@ -181,7 +182,7 @@ class PotionService extends BaseDataService {
           result.remainsPotion = commonPotion;
         }
       } catch (error) {
-        console.error('Erro ao gerar poção dos restos:', error);
+        logger.error('Erro ao gerar poção dos restos:', error);
       }
     }
 

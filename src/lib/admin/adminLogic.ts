@@ -29,7 +29,7 @@ export const AdminLogic = {
   /**
    * Sincroniza um usuário específico ou novo no Firestore
    */
-  async syncUserToFirestore(authUser: admin.auth.UserRecord, existingData?: any) {
+  async syncUserToFirestore(authUser: admin.auth.UserRecord, existingData?: UserProfile) {
     const userRef = adminDb.collection('users').doc(authUser.uid);
     const userData = this.formatUserProfile(authUser);
 
@@ -41,7 +41,7 @@ export const AdminLogic = {
       });
       return 'created';
     } else {
-      const updates: any = {};
+      const updates: Partial<UserProfile> = {};
       if (existingData.email !== userData.email) updates.email = userData.email;
       if (existingData.displayName !== userData.displayName)
         updates.displayName = userData.displayName;

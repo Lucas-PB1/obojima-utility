@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
+import { logger } from '@/utils/logger';
 
 export function useIngredients() {
   const { isAuthenticated, loading: authLoading } = useAuth();
@@ -25,7 +26,7 @@ export function useIngredients() {
       setIngredients(collectedIngredients);
       setAttempts(forageAttempts);
     } catch (error) {
-      console.error('Erro ao carregar dados:', error);
+      logger.error('Erro ao carregar dados:', error);
     } finally {
       setLoading(false);
     }
@@ -64,7 +65,7 @@ export function useIngredients() {
       try {
         await firebaseStorageService.markIngredientAsUsed(id);
       } catch (error) {
-        console.error('Erro ao marcar ingrediente como usado:', error);
+        logger.error('Erro ao marcar ingrediente como usado:', error);
       }
     },
     [isAuthenticated]
@@ -76,7 +77,7 @@ export function useIngredients() {
       try {
         await firebaseStorageService.removeCollectedIngredient(id);
       } catch (error) {
-        console.error('Erro ao remover ingrediente:', error);
+        logger.error('Erro ao remover ingrediente:', error);
       }
     },
     [isAuthenticated]
@@ -88,7 +89,7 @@ export function useIngredients() {
       try {
         await firebaseStorageService.addCollectedIngredient(ingredient);
       } catch (error) {
-        console.error('Erro ao adicionar ingrediente:', error);
+        logger.error('Erro ao adicionar ingrediente:', error);
       }
     },
     [isAuthenticated]
@@ -100,7 +101,7 @@ export function useIngredients() {
       try {
         await firebaseStorageService.addForageAttempt(attempt);
       } catch (error) {
-        console.error('Erro ao adicionar tentativa:', error);
+        logger.error('Erro ao adicionar tentativa:', error);
       }
     },
     [isAuthenticated]

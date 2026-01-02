@@ -1,4 +1,5 @@
 import { auth } from '@/config/firebase';
+import { logger } from '@/utils/logger';
 
 import {
   createUserWithEmailAndPassword,
@@ -9,6 +10,8 @@ import {
   UserCredential
 } from 'firebase/auth';
 
+type AuthError = Error | { code: string; message?: string };
+
 class AuthService {
   async register(email: string, password: string): Promise<UserCredential> {
     if (typeof window === 'undefined') {
@@ -18,8 +21,8 @@ class AuthService {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       return userCredential;
-    } catch (error: unknown) {
-      console.error('Erro ao registrar usuário:', error);
+    } catch (error) {
+      logger.error('Erro ao registrar usuário:', error);
       throw this.handleAuthError(error);
     }
   }
@@ -32,8 +35,8 @@ class AuthService {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential;
-    } catch (error: unknown) {
-      console.error('Erro ao fazer login:', error);
+    } catch (error) {
+      logger.error('Erro ao fazer login:', error);
       throw this.handleAuthError(error);
     }
   }
@@ -44,7 +47,7 @@ class AuthService {
     try {
       await signOut(auth);
     } catch (error) {
-      console.error('Erro ao fazer logout:', error);
+      logger.error('Erro ao fazer logout:', error);
       throw error;
     }
   }

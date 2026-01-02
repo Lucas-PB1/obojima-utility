@@ -6,6 +6,7 @@ import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { UserProfile } from '@/types/auth';
 import { UserUtils } from '@/lib/userUtils';
+import { logger } from '@/utils/logger';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -56,7 +57,7 @@ export function useAuth() {
             setUserProfile(newProfile);
           }
         } catch (error) {
-          console.error('Error fetching/creating user profile:', error);
+          logger.error('Error fetching/creating user profile:', error);
         }
       } else {
         setUserProfile(null);
@@ -73,7 +74,7 @@ export function useAuth() {
       await authService.logout();
       router.push('/login');
     } catch (error) {
-      console.error('Erro ao fazer logout:', error);
+      logger.error('Erro ao fazer logout:', error);
     }
   };
 

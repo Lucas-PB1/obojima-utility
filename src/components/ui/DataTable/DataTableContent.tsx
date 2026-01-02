@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Column } from './types';
+import { Column, SortConfig } from './types';
 
 interface DataTableContentProps<T> {
   columns: Column<T>[];
   data: T[];
   paginatedData: T[];
-  sortConfig: any;
+  sortConfig: SortConfig<T> | null;
   onSort: (key: keyof T) => void;
   startIndex: number;
   itemsPerPage: number;

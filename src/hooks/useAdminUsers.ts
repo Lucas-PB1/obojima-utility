@@ -4,6 +4,7 @@ import { db } from '@/config/firebase';
 import { UserProfile } from '@/types/auth';
 import { adminService } from '@/services/adminService';
 import { useTranslation } from '@/hooks/useTranslation';
+import { logger } from '@/utils/logger';
 
 export function useAdminUsers() {
   const [users, setUsers] = useState<UserProfile[]>([]);
@@ -17,7 +18,7 @@ export function useAdminUsers() {
       const usersData = querySnapshot.docs.map((doc) => doc.data() as UserProfile);
       setUsers(usersData);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      logger.error('Error fetching users:', error);
     } finally {
       setLoading(false);
     }
@@ -33,9 +34,10 @@ export function useAdminUsers() {
       await adminService.syncUsers();
       alert(t('admin.users.sync.success'));
       await fetchUsers();
-    } catch (error: any) {
-      console.error('Error syncing users:', error);
-      alert(error.message || t('admin.users.sync.error'));
+    } catch (error) {
+      logger.error('Error syncing users:', error);
+      const errorMessage = error instanceof Error ? error.message : t('admin.users.sync.error');
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -46,9 +48,11 @@ export function useAdminUsers() {
       setLoading(true);
       await adminService.updateUser(uid, updates);
       setUsers((prev) => prev.map((u) => (u.uid === uid ? { ...u, ...updates } : u)));
-    } catch (error: any) {
-      console.error('Error updating user:', error);
-      alert(error.message || t('admin.users.role.update.error'));
+    } catch (error) {
+      logger.error('Error updating user:', error);
+      const errorMessage =
+        error instanceof Error ? error.message : t('admin.users.role.update.error');
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -62,9 +66,10 @@ export function useAdminUsers() {
       await adminService.deleteUser(uid);
       setUsers((prev) => prev.filter((u) => u.uid !== uid));
       alert(t('admin.users.delete.success'));
-    } catch (error: any) {
-      console.error('Error deleting user:', error);
-      alert(error.message || t('admin.users.delete.error'));
+    } catch (error) {
+      logger.error('Error deleting user:', error);
+      const errorMessage = error instanceof Error ? error.message : t('admin.users.delete.error');
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }

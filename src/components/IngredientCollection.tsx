@@ -62,10 +62,10 @@ export default function IngredientCollection() {
       label: t('ingredients.table.quantity'),
       sortable: true,
       width: '15%',
-      render: (value: unknown) => (
+      render: (_, item) => (
         <div className="flex items-center space-x-2">
           <span className="bg-totoro-green/20 text-totoro-green px-2 py-1 rounded-full text-sm font-medium">
-            {String(value)}
+            {item.quantity}
           </span>
         </div>
       )

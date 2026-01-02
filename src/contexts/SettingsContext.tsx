@@ -9,10 +9,11 @@ import React, {
   ReactNode,
   useRef
 } from 'react';
-import { SettingsState, DEFAULT_SETTINGS } from '@/constants/settings';
+import { SettingsState, DEFAULT_SETTINGS, Language } from '@/constants/settings';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
 import { useAuth } from '@/hooks/useAuth';
 import { DiceType } from '@/types/ingredients';
+import { logger } from '@/utils/logger';
 
 interface SettingsContextType {
   settings: SettingsState;
@@ -91,7 +92,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       await firebaseSettingsService.clearSettings();
       setSettings(DEFAULT_SETTINGS);
     } catch (error) {
-      console.error('Erro ao limpar configurações:', error);
+      logger.error('Erro ao limpar configurações:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -110,7 +111,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         const save = async () => {
           if (!isAuthenticated) return;
           try {
-            if (key === 'language') await firebaseSettingsService.setLanguage(value as any);
+            if (key === 'language') await firebaseSettingsService.setLanguage(value as Language);
             else if (key === 'doubleForageTalent')
               await firebaseSettingsService.setDoubleForageTalent(value as boolean);
             else if (key === 'cauldronBonus')
@@ -136,7 +137,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
               }
             }
           } catch (e) {
-            console.error('Auto-save failed', e);
+            logger.error('Auto-save failed', e);
           }
         };
 

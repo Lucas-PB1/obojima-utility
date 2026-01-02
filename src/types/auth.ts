@@ -10,4 +10,5 @@ export interface UserProfile {
   lastLogin?: string;
   isAuthActive?: boolean;
   disabled?: boolean;
+  updatedAt?: string;
 }

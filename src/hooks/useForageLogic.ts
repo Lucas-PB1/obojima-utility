@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { ingredientsService } from '@/services/ingredientsService';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
+import { logger } from '@/utils/logger';
 
 import {
   RegionKey,
@@ -188,7 +189,7 @@ export function useForageLogic() {
         const remaining = await firebaseStorageService.getRemainingAttemptsToday();
         setRemainingAttempts(remaining);
       } catch (error) {
-        console.error('Erro no forrageamento:', error);
+        logger.error('Erro no forrageamento:', error);
       } finally {
         setIsLoading(false);
       }

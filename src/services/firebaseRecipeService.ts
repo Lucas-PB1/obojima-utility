@@ -15,6 +15,7 @@ import {
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { PotionRecipe } from '@/types/ingredients';
+import { logger } from '@/utils/logger';
 
 class FirebaseRecipeService {
   private recipesUnsubscribe: Unsubscribe | null = null;
@@ -63,7 +64,7 @@ class FirebaseRecipeService {
         createdAt: this.convertDateToTimestamp(recipe.createdAt)
       });
     } catch (error) {
-      console.error('Erro ao salvar receita:', error);
+      logger.error('Erro ao salvar receita:', error);
       throw error;
     }
   }
@@ -84,7 +85,7 @@ class FirebaseRecipeService {
         } as PotionRecipe;
       });
     } catch (error) {
-      console.error('Erro ao carregar receitas:', error);
+      logger.error('Erro ao carregar receitas:', error);
       return [];
     }
   }
@@ -113,7 +114,7 @@ class FirebaseRecipeService {
           callback(recipes);
         },
         (error) => {
-          console.error('Erro ao observar receitas:', error);
+          logger.error('Erro ao observar receitas:', error);
           callback([]);
         }
       );
@@ -125,7 +126,7 @@ class FirebaseRecipeService {
         }
       };
     } catch (error) {
-      console.error('Erro ao criar subscription de receitas:', error);
+      logger.error('Erro ao criar subscription de receitas:', error);
       callback([]);
       return () => {};
     }
@@ -138,7 +139,7 @@ class FirebaseRecipeService {
       const recipeRef = doc(db, this.getRecipesPath(), recipeId);
       await deleteDoc(recipeRef);
     } catch (error) {
-      console.error('Erro ao remover receita:', error);
+      logger.error('Erro ao remover receita:', error);
       throw error;
     }
   }
@@ -161,7 +162,7 @@ class FirebaseRecipeService {
 
       return null;
     } catch (error) {
-      console.error('Erro ao buscar receita:', error);
+      logger.error('Erro ao buscar receita:', error);
       return null;
     }
   }
@@ -187,7 +188,7 @@ class FirebaseRecipeService {
         } as PotionRecipe;
       });
     } catch (error) {
-      console.error('Erro ao buscar receitas por categoria:', error);
+      logger.error('Erro ao buscar receitas por categoria:', error);
       return [];
     }
   }

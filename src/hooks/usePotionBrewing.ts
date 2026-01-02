@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { firebaseRecipeService } from '@/services/firebaseRecipeService';
 import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 import { Ingredient, PotionRecipe, PotionBrewingResult, Potion } from '@/types/ingredients';
+import { logger } from '@/utils/logger';
 
 interface UsePotionBrewingProps {
   onPotionCreated?: (recipe: PotionRecipe) => void;
@@ -99,7 +100,7 @@ export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePoti
         await firebaseRecipeService.saveRecipe(additionalRecipe);
         await firebaseCreatedPotionService.addCreatedPotion(additionalRecipe);
       } catch (error) {
-        console.error(`Erro ao gerar poção adicional (${prefix}):`, error);
+        logger.error(`Erro ao gerar poção adicional (${prefix}):`, error);
       }
     },
     []
@@ -154,7 +155,7 @@ export function usePotionBrewing({ onPotionCreated, onIngredientsUsed }: UsePoti
       setSelectedIngredients([]);
       onPotionCreated?.(result.recipe);
     } catch (error) {
-      console.error('Erro ao criar poção:', error);
+      logger.error('Erro ao criar poção:', error);
       setBrewingResult({
         recipe: {
           id: '',

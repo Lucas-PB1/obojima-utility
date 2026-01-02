@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { adminService } from '@/services/adminService';
 import { useTranslation } from './useTranslation';
+import { logger } from '@/utils/logger';
 
 export function useAdminStats() {
   const { t } = useTranslation();
@@ -11,11 +12,11 @@ export function useAdminStats() {
     async function fetchDashboardData() {
       try {
         setLoading(true);
-        await adminService.syncUsers().catch((err) => console.error('Auto-sync failed:', err));
+        await adminService.syncUsers().catch((err) => logger.error('Auto-sync failed:', err));
         const count = await adminService.getUserCount();
         setUserCount(count);
       } catch (error) {
-        console.error('Error fetching admin dashboard stats:', error);
+        logger.error('Error fetching admin dashboard stats:', error);
       } finally {
         setLoading(false);
       }

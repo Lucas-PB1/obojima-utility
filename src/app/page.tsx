@@ -13,6 +13,7 @@ import Button from '@/components/ui/Button';
 import { useHome } from '@/hooks/useHome';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useSettings } from '@/hooks/useSettings';
+import { logger } from '@/utils/logger';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -156,7 +157,7 @@ export default function Home() {
             <PotionBrewing
               availableIngredients={availableIngredients}
               onPotionCreated={(recipe) => {
-                console.log('Poção criada:', recipe);
+                logger.info('Poção criada:', JSON.stringify(recipe));
               }}
               onIngredientsUsed={handleIngredientsUsed}
             />

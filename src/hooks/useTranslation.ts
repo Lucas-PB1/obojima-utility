@@ -8,8 +8,7 @@ export function useTranslation() {
 
   const t = useCallback(
     (key: string, ...args: (string | number)[]) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let text = (translations[language] as any)[key] || key;
+      let text = (translations[language] as Record<string, string>)[key] || key;
 
       args.forEach((arg, index) => {
         text = text.replace(`{${index}}`, String(arg));
