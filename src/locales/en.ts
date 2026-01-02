@@ -306,7 +306,7 @@ export const en = {
   'admin.users.update.success': 'User updated successfully!',
   'admin.users.delete.success': 'User deleted successfully!',
   'admin.users.delete.error': 'Error deleting user',
-  
+
   // Admin App Modal
   'admin.modal.tabs.overview': 'Overview',
   'admin.modal.tabs.inventory': 'Inventory',
@@ -341,5 +341,35 @@ export const en = {
   'admin.modal.actions.remove_potion_confirm': 'Remove {0} from potions?',
   'admin.modal.actions.add_error': 'Failed to add item',
   'admin.modal.actions.remove_ingredient_error': 'Failed to remove ingredient',
-  'admin.modal.actions.remove_potion_error': 'Failed to remove potion'
+  'admin.modal.actions.remove_potion_error': 'Failed to remove potion',
+
+  // Social
+  'menu.social': 'Social',
+  'social.title': 'Social Hub',
+  'social.subtitle': 'Connect with other travelers in Obojima',
+  'social.tabs.friends': 'Friends',
+  'social.tabs.search': 'Search',
+  'social.tabs.requests': 'Requests',
+  'social.search.placeholder': 'Search travelers...',
+  'social.search.noResults': 'No travelers found',
+  'social.search.addFriend': 'Add Friend',
+  'social.search.requestSent': 'Request Sent',
+  'social.friends.empty': 'You have no friends yet. Use search to find travelers!',
+  'social.friends.status.online': 'Online',
+  'social.friends.status.offline': 'Offline',
+  'social.requests.empty': 'No pending requests',
+  'social.requests.accept': 'Accept',
+  'social.requests.reject': 'Reject',
+  'social.chat.placeholder': 'Type a message...',
+  'social.chat.send': 'Send',
+  'social.trade.button': 'Trade Item',
+  'social.trade.title': 'Send Item',
+  'social.trade.selectItem': 'Select Item',
+  'social.trade.quantity': 'Quantity',
+  'social.trade.send': 'Send',
+  'social.trade.cancel': 'Cancel',
+  'social.trade.success': 'Item sent successfully!',
+  'social.trade.error': 'Error sending item',
+  'social.trade.type.potion': 'Potions',
+  'social.trade.type.ingredient': 'Ingredients'
 };

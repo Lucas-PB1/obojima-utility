@@ -9,7 +9,13 @@ export class DataTableService {
     key: string
   ): string | number | boolean | object | null | undefined {
     return key.includes('.')
-      ? key.split('.').reduce((obj: any, k) => (obj as Record<string, any>)?.[k], item)
+      ? (key.split('.').reduce((obj: unknown, k) => (obj as Record<string, unknown>)?.[k], item) as
+          | string
+          | number
+          | boolean
+          | object
+          | null
+          | undefined)
       : (item[key as keyof T] as string | number | boolean | object | null | undefined);
   }
 

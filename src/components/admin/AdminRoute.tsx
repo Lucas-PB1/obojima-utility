@@ -16,9 +16,5 @@ export default function AdminRoute({ children }: { children: React.ReactNode }) 
     return null;
   }
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

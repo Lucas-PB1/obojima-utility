@@ -1,4 +1,4 @@
-import { adminAuth, adminDb } from '@/config/firebase-admin';
+import { adminDb } from '@/config/firebase-admin';
 import { UserProfile } from '@/types/auth';
 import * as admin from 'firebase-admin';
 import { UserUtils } from '../userUtils';

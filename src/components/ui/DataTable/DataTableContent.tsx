@@ -19,8 +19,6 @@ export function DataTableContent<T>({
   paginatedData,
   sortConfig,
   onSort,
-  startIndex,
-  itemsPerPage,
   onRowClick
 }: DataTableContentProps<T>) {
   const { t } = useTranslation();
@@ -83,8 +81,8 @@ export function DataTableContent<T>({
             </tr>
           ) : (
             paginatedData.map((item, index) => (
-              <tr 
-                key={index} 
+              <tr
+                key={index}
                 className={`transition-colors ${onRowClick ? 'cursor-pointer hover:bg-muted/10' : 'hover:bg-muted/5'}`}
                 onClick={() => onRowClick && onRowClick(item)}
               >

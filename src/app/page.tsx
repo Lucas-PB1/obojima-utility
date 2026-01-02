@@ -6,6 +6,8 @@ import IngredientCollection from '@/components/IngredientCollection';
 import { PotionBrewing } from '@/components/PotionBrewing';
 import { CreatedPotionCollection } from '@/components/CreatedPotionCollection';
 import { RecipeCollection } from '@/components/RecipeCollection';
+
+import SocialHub from '@/components/Social/SocialHub';
 import ActivityLog from '@/components/ActivityLog';
 
 import PageLayout from '@/components/ui/PageLayout';
@@ -164,6 +166,7 @@ export default function Home() {
           )}
           {activeTab === 'created-potions' && <CreatedPotionCollection />}
           {activeTab === 'recipes' && <RecipeCollection />}
+          {activeTab === 'social' && <SocialHub />}
           {activeTab === 'log' && <ActivityLog />}
         </PageLayout>
       </div>

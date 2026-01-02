@@ -38,7 +38,7 @@ export default function StatsGrid({ title, stats, className = '' }: StatsGridPro
         <span className="w-1.5 h-6 bg-totoro-blue rounded-full"></span>
         {title}
       </h2>
-      <div 
+      <div
         className="grid gap-4 relative z-10"
         style={{
           gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`

@@ -7,7 +7,7 @@ interface UseUserTableColumnsProps {
   onDelete: (uid: string, name: string) => void;
 }
 
-export function useUserTableColumns({ onUpdate, onDelete }: UseUserTableColumnsProps) {
+export function useUserTableColumns({ onUpdate }: UseUserTableColumnsProps) {
   const { t } = useTranslation();
 
   const columns: Column<UserProfile>[] = [
@@ -19,6 +19,7 @@ export function useUserTableColumns({ onUpdate, onDelete }: UseUserTableColumnsP
       render: (val) => (
         <div className="w-8 h-8 rounded-full bg-totoro-gray/10 overflow-hidden">
           {val ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img src={val as string} alt="Avatar" className="w-full h-full object-cover" />
           ) : null}
         </div>
@@ -102,8 +103,7 @@ export function useUserTableColumns({ onUpdate, onDelete }: UseUserTableColumnsP
           )}
         </div>
       )
-    },
-
+    }
   ];
 
   return columns;

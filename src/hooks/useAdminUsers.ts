@@ -15,10 +15,13 @@ export function useAdminUsers() {
     try {
       setLoading(true);
       const querySnapshot = await getDocs(collection(db, 'users'));
-      const usersData = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        uid: doc.id
-      } as UserProfile));
+      const usersData = querySnapshot.docs.map(
+        (doc) =>
+          ({
+            ...doc.data(),
+            uid: doc.id
+          }) as UserProfile
+      );
       setUsers(usersData);
     } catch (error) {
       logger.error('Error fetching users:', error);

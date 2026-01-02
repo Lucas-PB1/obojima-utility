@@ -53,7 +53,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ u
 
     try {
       await adminAuth.deleteUser(uid);
-    } catch (e) {
+    } catch {
       logger.warn(`User ${uid} not found in Auth, continuing with Firestore cleanup.`);
     }
 

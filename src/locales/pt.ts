@@ -309,7 +309,7 @@ export const pt = {
   'admin.users.update.success': 'Usuário atualizado com sucesso!',
   'admin.users.delete.success': 'Usuário excluído com sucesso!',
   'admin.users.delete.error': 'Erro ao excluir usuário',
-  
+
   // Admin App Modal
   'admin.modal.tabs.overview': 'Visão Geral',
   'admin.modal.tabs.inventory': 'Inventário',
@@ -344,5 +344,35 @@ export const pt = {
   'admin.modal.actions.remove_potion_confirm': 'Remover {0} das poções?',
   'admin.modal.actions.add_error': 'Falha ao adicionar item',
   'admin.modal.actions.remove_ingredient_error': 'Falha ao remover ingrediente',
-  'admin.modal.actions.remove_potion_error': 'Falha ao remover poção'
+  'admin.modal.actions.remove_potion_error': 'Falha ao remover poção',
+
+  // Social
+  'menu.social': 'Social',
+  'social.title': 'Social Hub',
+  'social.subtitle': 'Conecte-se com outros viajantes em Obojima',
+  'social.tabs.friends': 'Amigos',
+  'social.tabs.search': 'Buscar',
+  'social.tabs.requests': 'Solicitações',
+  'social.search.placeholder': 'Buscar viajantes...',
+  'social.search.noResults': 'Nenhum viajante encontrado',
+  'social.search.addFriend': 'Adicionar Amigo',
+  'social.search.requestSent': 'Solicitação Enviada',
+  'social.friends.empty': 'Você ainda não tem amigos. Use a busca para encontrar viajantes!',
+  'social.friends.status.online': 'Online',
+  'social.friends.status.offline': 'Offline',
+  'social.requests.empty': 'Nenhuma solicitação pendente',
+  'social.requests.accept': 'Aceitar',
+  'social.requests.reject': 'Recusar',
+  'social.chat.placeholder': 'Digite uma mensagem...',
+  'social.chat.send': 'Enviar',
+  'social.trade.button': 'Trocar Item',
+  'social.trade.title': 'Enviar Item',
+  'social.trade.selectItem': 'Selecione o Item',
+  'social.trade.quantity': 'Quantidade',
+  'social.trade.send': 'Enviar',
+  'social.trade.cancel': 'Cancelar',
+  'social.trade.success': 'Item enviado com sucesso!',
+  'social.trade.error': 'Erro ao enviar item',
+  'social.trade.type.potion': 'Poções',
+  'social.trade.type.ingredient': 'Ingredientes'
 };

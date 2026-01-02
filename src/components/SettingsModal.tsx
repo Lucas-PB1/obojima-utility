@@ -14,7 +14,7 @@ interface SettingsModalProps {
 }
 
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
-  const { settings, isLoading, clearSettings, updateSetting } = useSettings();
+  const { settings, clearSettings, updateSetting } = useSettings();
   const { t } = useTranslation();
 
   if (!isOpen) return null;

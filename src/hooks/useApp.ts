@@ -2,7 +2,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient } from '@/types/ingredients';
 
-export type TabType = 'forage' | 'collection' | 'potions' | 'created-potions' | 'recipes' | 'log';
+export type TabType =
+  | 'forage'
+  | 'collection'
+  | 'potions'
+  | 'created-potions'
+  | 'recipes'
+  | 'social'
+  | 'log';
 
 export interface Tab {
   id: TabType;
@@ -16,6 +23,7 @@ const TABS_CONFIG: Omit<Tab, 'label'>[] = [
   { id: 'potions', icon: '🧪' },
   { id: 'created-potions', icon: '⚗️' },
   { id: 'recipes', icon: '📜' },
+  { id: 'social', icon: '👥' },
   { id: 'log', icon: '📋' }
 ];
 
@@ -65,6 +73,9 @@ export function useApp() {
         break;
       case 'log':
         label = t('menu.log');
+        break;
+      case 'social':
+        label = t('menu.social');
         break;
     }
     return { ...tab, label };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import Modal from '@/components/ui/Modal';
 import { Ingredient } from '@/types/ingredients';
 import { useTranslation } from '@/hooks/useTranslation';

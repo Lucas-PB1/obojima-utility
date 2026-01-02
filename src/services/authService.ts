@@ -10,7 +10,7 @@ import {
   UserCredential
 } from 'firebase/auth';
 
-type AuthError = Error | { code: string; message?: string };
+import { socialService } from '@/services/socialService';
 
 class AuthService {
   async register(email: string, password: string): Promise<UserCredential> {
@@ -20,6 +20,16 @@ class AuthService {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+      if (userCredential.user) {
+        await socialService.ensurePublicProfile({
+          uid: userCredential.user.uid,
+          email: userCredential.user.email || '',
+          displayName: userCredential.user.displayName || 'User',
+          photoURL: userCredential.user.photoURL || null
+        });
+      }
+
       return userCredential;
     } catch (error) {
       logger.error('Erro ao registrar usuário:', error);
@@ -34,6 +44,17 @@ class AuthService {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      if (userCredential.user) {
+        console.log('[AuthService] Syncing public profile for:', userCredential.user.email);
+        await socialService.ensurePublicProfile({
+          uid: userCredential.user.uid,
+          email: userCredential.user.email || '',
+          displayName: userCredential.user.displayName || 'User',
+          photoURL: userCredential.user.photoURL || null
+        });
+      }
+
       return userCredential;
     } catch (error) {
       logger.error('Erro ao fazer login:', error);

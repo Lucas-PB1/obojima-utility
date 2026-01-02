@@ -29,7 +29,7 @@ class PotionService extends BaseDataService {
     }
 
     try {
-      const [combatResponse, utilityResponse, whimsicalResponse] = await Promise.all([
+      await Promise.all([
         this.loadData(
           `/data/${language}/potions/combat/combat-potions.json`,
           this.combatPotions,

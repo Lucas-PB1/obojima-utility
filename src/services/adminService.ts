@@ -12,7 +12,7 @@ class AdminService {
   async getAllUsers(): Promise<UserProfile[]> {
     const coll = collection(db, 'users');
     const snapshot = await getDocs(coll);
-    return snapshot.docs.map(doc => doc.data() as UserProfile);
+    return snapshot.docs.map((doc) => doc.data() as UserProfile);
   }
 
   async syncUsers() {
