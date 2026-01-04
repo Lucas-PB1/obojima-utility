@@ -6,6 +6,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateProfile,
+  updatePassword,
   User,
   UserCredential
 } from 'firebase/auth';
@@ -137,6 +139,41 @@ class AuthService {
     }
 
     return new Error(message);
+  }
+
+  async updateProfile(displayName: string, photoURL: string | null): Promise<void> {
+    const user = this.getCurrentUser();
+    if (!user) throw new Error('Usuário não autenticado');
+
+    try {
+      await updateProfile(user, {
+        displayName,
+        photoURL
+      });
+
+      await socialService.ensurePublicProfile({
+        uid: user.uid,
+        displayName: displayName || 'User',
+        email: user.email || '',
+        photoURL: photoURL
+      });
+      
+    } catch (error) {
+      logger.error('Erro ao atualizar perfil:', error);
+      throw this.handleAuthError(error);
+    }
+  }
+
+  async updatePassword(newPassword: string): Promise<void> {
+    const user = this.getCurrentUser();
+    if (!user) throw new Error('Usuário não autenticado');
+
+    try {
+      await updatePassword(user, newPassword);
+    } catch (error) {
+      logger.error('Erro ao atualizar senha:', error);
+      throw this.handleAuthError(error);
+    }
   }
 }
 

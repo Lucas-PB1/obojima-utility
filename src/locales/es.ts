@@ -34,6 +34,15 @@ export const es = {
   'settings.howItWorks.item2': '• Aún puedes cambiar los valores individualmente',
   'settings.howItWorks.item3': '• Las configuraciones se guardan automáticamente',
   'settings.actions.clear': '🗑️ Borrar Configuraciones',
+  'settings.tabs.profile': 'Perfil',
+  'settings.tabs.preferences': 'Preferencias',
+  'settings.profile.info': 'Información Personal',
+  'settings.profile.displayName': 'Nombre para Mostrar',
+  'settings.profile.photoURL': 'URL de la Foto',
+  'settings.profile.security': 'Seguridad',
+  'settings.profile.newPassword': 'Nueva Contraseña',
+  'settings.profile.confirmPassword': 'Confirmar Contraseña',
+  'settings.profile.save': 'Guardar Cambios',
 
   // Constants
   'constants.forage.testType.nature': 'Naturaleza',

@@ -34,6 +34,15 @@ export const en = {
   'settings.howItWorks.item2': '• You can still change values individually',
   'settings.howItWorks.item3': '• Settings are saved automatically',
   'settings.actions.clear': '🗑️ Clear Settings',
+  'settings.tabs.profile': 'Profile',
+  'settings.tabs.preferences': 'Preferences',
+  'settings.profile.info': 'Personal Information',
+  'settings.profile.displayName': 'Display Name',
+  'settings.profile.photoURL': 'Photo URL',
+  'settings.profile.security': 'Security',
+  'settings.profile.newPassword': 'New Password',
+  'settings.profile.confirmPassword': 'Confirm Password',
+  'settings.profile.save': 'Save Changes',
 
   // Constants
   'constants.forage.testType.nature': 'Nature',
