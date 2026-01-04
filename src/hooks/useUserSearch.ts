@@ -7,6 +7,7 @@ export function useUserSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
   const [sentRequests, setSentRequests] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -30,8 +31,13 @@ export function useUserSearch() {
   }, [searchTerm]);
 
   const handleAddFriend = async (userId: string) => {
-    await socialService.sendFriendRequest(userId);
-    setSentRequests((prev) => new Set(prev).add(userId));
+    setLoadingMap((prev) => ({ ...prev, [userId]: true }));
+    try {
+      await socialService.sendFriendRequest(userId);
+      setSentRequests((prev) => new Set(prev).add(userId));
+    } finally {
+      setLoadingMap((prev) => ({ ...prev, [userId]: false }));
+    }
   };
 
   return {
@@ -39,6 +45,7 @@ export function useUserSearch() {
     setSearchTerm,
     results,
     loading,
+    loadingMap,
     sentRequests,
     handleAddFriend
   };

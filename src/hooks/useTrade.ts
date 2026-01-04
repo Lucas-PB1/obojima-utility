@@ -19,6 +19,7 @@ export function useTrade(friend: Friend, onClose: () => void) {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [cart, setCart] = useState<TradeItem[]>([]);
 
   const availableIngredients = ingredients.filter((i) => !i.used && i.quantity > 0);
   const availablePotions = potions.filter((p) => !p.used && p.quantity > 0);
@@ -33,17 +34,36 @@ export function useTrade(friend: Friend, onClose: () => void) {
 
   const selectedItem = getSelectedItem();
 
-  const handleSend = async () => {
-    if (!selectedItem) {
-      setMessage({ type: 'error', text: t('social.trade.error') });
+  const existingItemIndex = cart.findIndex((item) => item.id === selectedItemId && item.type === itemType);
+  const quantityInCart = existingItemIndex >= 0 ? cart[existingItemIndex].quantity : 0;
+  const maxAddable = selectedItem ? Math.max(0, selectedItem.quantity - quantityInCart) : 0;
+
+  const addToCart = () => {
+    if (!selectedItem) return;
+
+    const existingItemIndex = cart.findIndex((item) => item.id === selectedItemId && item.type === itemType);
+    const quantityInCart = existingItemIndex >= 0 ? cart[existingItemIndex].quantity : 0;
+
+    if (quantityInCart + quantity > selectedItem.quantity) {
+      setMessage({ 
+        type: 'error', 
+        text: t('social.trade.errorQuantityExceeds', selectedItem.quantity) 
+      });
+      setTimeout(() => setMessage(null), 3000);
       return;
     }
 
-    setLoading(true);
-    setMessage(null);
-
-    try {
-      const tradeItem: TradeItem = {
+    if (existingItemIndex >= 0) {
+      setCart((prev) => {
+        const newCart = [...prev];
+        newCart[existingItemIndex] = {
+          ...newCart[existingItemIndex],
+          quantity: newCart[existingItemIndex].quantity + quantity
+        };
+        return newCart;
+      });
+    } else {
+      const newItem: TradeItem = {
         type: itemType,
         id: selectedItemId,
         name:
@@ -52,8 +72,29 @@ export function useTrade(friend: Friend, onClose: () => void) {
             : (selectedItem as CreatedPotion).potion.nome,
         quantity: quantity
       };
+      setCart((prev) => [...prev, newItem]);
+    }
 
-      await socialService.sendItem(friend.userId, tradeItem);
+    setMessage(null);
+    setSelectedItemId('');
+    setQuantity(1);
+  };
+
+  const removeFromCart = (index: number) => {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSend = async () => {
+    if (cart.length === 0) {
+      setMessage({ type: 'error', text: t('social.trade.error') });
+      return;
+    }
+
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      await socialService.sendItems(friend.userId, cart);
       setMessage({ type: 'success', text: t('social.trade.success') });
       setTimeout(() => onClose(), 2000);
     } catch (error) {
@@ -79,7 +120,11 @@ export function useTrade(friend: Friend, onClose: () => void) {
     availableIngredients,
     availablePotions,
     selectedItem,
+    cart,
+    addToCart,
+    removeFromCart,
     handleSend,
-    localizeIngredient
+    localizeIngredient,
+    maxAddable
   };
 }

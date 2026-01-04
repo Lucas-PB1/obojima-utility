@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from '@/components/System';
+import { PresenceManager } from '@/components/System/PresenceManager';
 
 import { SettingsProvider } from '@/contexts/SettingsContext';
 
@@ -52,7 +53,10 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <SettingsProvider>{children}</SettingsProvider>
+          <SettingsProvider>
+            <PresenceManager />
+            {children}
+          </SettingsProvider>
         </ThemeProvider>
       </body>
     </html>

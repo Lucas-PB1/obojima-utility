@@ -7,6 +7,7 @@ interface InputProps {
   placeholder?: string;
   label?: string;
   className?: string;
+  inputClassName?: string;
   min?: number;
   max?: number;
 }
@@ -18,6 +19,7 @@ export function Input({
   placeholder = '',
   label,
   className = '',
+  inputClassName = '',
   min,
   max
 }: InputProps) {
@@ -45,7 +47,7 @@ export function Input({
         placeholder={placeholder}
         min={min}
         max={max}
-        className="w-full p-3 border border-border/50 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-[var(--input-bg)] text-foreground placeholder-foreground/30 shadow-sm transition-all duration-200 hover:border-totoro-blue/40"
+        className={`w-full p-3 border border-border/50 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-[var(--input-bg)] text-foreground placeholder-foreground/30 shadow-sm transition-all duration-200 hover:border-totoro-blue/40 ${inputClassName}`}
         style={{
           WebkitAppearance: 'none',
           MozAppearance: 'none',

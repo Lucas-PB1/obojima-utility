@@ -62,6 +62,8 @@ export const pt = {
   'ui.actions.view': 'Visualizar',
   'ui.actions.create': 'Criar',
   'ui.actions.update': 'Atualizar',
+  'common.cancel': 'Cancelar',
+  'common.confirm': 'Confirmar',
 
   // Shared UI Labels
   'ui.theme.light': 'Claro',
@@ -365,6 +367,8 @@ export const pt = {
   'social.requests.reject': 'Recusar',
   'social.chat.placeholder': 'Digite uma mensagem...',
   'social.chat.send': 'Enviar',
+  'social.chat.open': 'Abrir chat',
+  'social.friends.remove': 'Remover amigo',
   'social.trade.button': 'Trocar Item',
   'social.trade.title': 'Enviar Item',
   'social.trade.selectItem': 'Selecione o Item',
@@ -373,9 +377,20 @@ export const pt = {
   'social.trade.cancel': 'Cancelar',
   'social.trade.success': 'Item enviado com sucesso!',
   'social.trade.error': 'Erro ao enviar item',
+  'social.trade.maxInCart': 'Max no carrinho',
+  'social.trade.available': 'Disponível: {0}',
+  'social.trade.addToCart': 'Adicionar',
+  'social.trade.itemsToSend': 'Itens para Enviar',
+  'social.trade.itemsCount': '{0} itens',
+  'social.trade.noItemsSelected': 'Nenhum item selecionado',
+  'social.trade.sending': 'Enviando...',
   'social.trade.type.potion': 'Poções',
   'social.trade.type.ingredient': 'Ingredientes',
   'social.trade.noItems': 'Nenhum item disponível',
+  'social.trade.errorQuantityExceeds': 'Quantidade excede o disponível em inventário (Máx: {0})',
+  'social.friends.removeTitle': 'Remover Amigo',
+  'social.friends.removeConfirm': 'Tem certeza que deseja remover {name} da sua lista de amigos?',
+  'social.requests.confirmReject': 'Tem certeza?',
 
   // Migration
   'admin.migration.title': 'Sincronizar Perfis Públicos',

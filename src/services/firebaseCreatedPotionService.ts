@@ -69,6 +69,26 @@ class FirebaseCreatedPotionService {
     }
   }
 
+  private normalizePotionData(data: any): CreatedPotion {
+    const potionData = data.potion || {};
+    const normalizedPotion = {
+      ...potionData,
+      nome: potionData.nome || potionData.nome_portugues || potionData.nome_ingles || 'Poção sem nome'
+    };
+
+    return {
+      ...data,
+      createdAt: this.convertTimestampToDate(data.createdAt),
+      usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
+      potion: normalizedPotion,
+      recipe: {
+        ...data.recipe,
+        createdAt: this.convertTimestampToDate(data.recipe.createdAt),
+        resultingPotion: normalizedPotion
+      }
+    } as CreatedPotion;
+  }
+
   async getAllCreatedPotions(uid?: string): Promise<CreatedPotion[]> {
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) return [];
@@ -78,15 +98,7 @@ class FirebaseCreatedPotionService {
       if (!response.ok) return [];
 
       const result = await response.json();
-      return result.data.map((data: CreatedPotion) => ({
-        ...data,
-        createdAt: this.convertTimestampToDate(data.createdAt),
-        usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
-        recipe: {
-          ...data.recipe,
-          createdAt: this.convertTimestampToDate(data.recipe.createdAt)
-        }
-      }));
+      return result.data.map((data: any) => this.normalizePotionData(data));
     } catch (error) {
       logger.error('Erro ao carregar poções criadas:', error);
       return [];
@@ -109,15 +121,9 @@ class FirebaseCreatedPotionService {
           const potions = snapshot.docs.map((doc) => {
             const data = doc.data();
             return {
-              ...data,
-              id: doc.id,
-              createdAt: this.convertTimestampToDate(data.createdAt),
-              usedAt: data.usedAt ? this.convertTimestampToDate(data.usedAt) : undefined,
-              recipe: {
-                ...data.recipe,
-                createdAt: this.convertTimestampToDate(data.recipe.createdAt)
-              }
-            } as CreatedPotion;
+              ...this.normalizePotionData(data),
+              id: doc.id
+            };
           });
           callback(potions);
         },
