@@ -20,11 +20,11 @@ export function useEnglishIngredientNames() {
         if (!mounted) return;
 
         const names: Record<string, string> = {};
-        
-        common.ingredients.forEach(i => (names[`comum-${i.id}`] = i.nome));
-        uncommon.ingredients.forEach(i => (names[`incomum-${i.id}`] = i.nome));
-        rare.ingredients.forEach(i => (names[`raro-${i.id}`] = i.nome));
-        unique.ingredients.forEach(i => (names[`unico-${i.id}`] = i.nome));
+
+        common.ingredients.forEach((i) => (names[`comum-${i.id}`] = i.nome));
+        uncommon.ingredients.forEach((i) => (names[`incomum-${i.id}`] = i.nome));
+        rare.ingredients.forEach((i) => (names[`raro-${i.id}`] = i.nome));
+        unique.ingredients.forEach((i) => (names[`unico-${i.id}`] = i.nome));
 
         setEnglishNames(names);
       } catch (error) {
@@ -44,7 +44,7 @@ export function useEnglishIngredientNames() {
   const getEnglishName = (id: number, rarity?: string) => {
     // If no rarity provided, try to find in common first (backwards compatibilityish, but risky)
     // Better to require it, but for now defaults to 'comum' if undefined to match previous behavior logic which likely assumed common or just collided.
-    const key = `${rarity || 'comum'}-${id}`; 
+    const key = `${rarity || 'comum'}-${id}`;
     return englishNames[key];
   };
 

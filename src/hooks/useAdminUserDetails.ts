@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useUserPotions } from '@/hooks/useUserPotions';
 import { useUserHistory } from '@/hooks/useUserHistory';
 import { useUserIngredients } from '@/hooks/useUserIngredients';
-import { useIngredientsCatalog, AvailableIngredient } from '@/hooks/useIngredientsCatalog';
-import { usePotionsCatalog, AvailablePotion } from '@/hooks/usePotionsCatalog';
+import { useIngredientsCatalog } from '@/hooks/useIngredientsCatalog';
+import { usePotionsCatalog } from '@/hooks/usePotionsCatalog';
 import { useUserProfileManagement } from '@/hooks/useUserProfileManagement';
 
 interface UseAdminUserDetailsProps {
@@ -58,7 +58,7 @@ export function useAdminUserDetails({
     setAddQuantity: setAddPotionQuantity,
     submitting: submittingPotion
   } = useUserPotions(user?.uid);
-  
+
   const { availablePotions } = usePotionsCatalog();
 
   const { attempts, loading: historyLoading, fetchHistory } = useUserHistory(user?.uid);

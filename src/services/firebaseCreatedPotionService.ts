@@ -53,7 +53,11 @@ class FirebaseCreatedPotionService {
     return new Date();
   }
 
-  async addCreatedPotion(recipe: PotionRecipe, uid?: string, quantity: number = 1): Promise<CreatedPotion> {
+  async addCreatedPotion(
+    recipe: PotionRecipe,
+    uid?: string,
+    quantity: number = 1
+  ): Promise<CreatedPotion> {
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) {
       throw new Error('Usuário não autenticado');

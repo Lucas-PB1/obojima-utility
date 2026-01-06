@@ -111,16 +111,16 @@ export function AdminUserPotionsTab({ data }: AdminUserPotionsTabProps) {
             <Loader2 className="w-8 h-8 animate-spin text-totoro-blue" />
           </div>
         )}
-        
+
         {data.potions.length === 0 ? (
           <p className="text-center text-gray-500 py-8">{t('admin.modal.empty.potions')}</p>
         ) : (
           data.potions.map((potion) => {
-             const category = potion.recipe.winningAttribute;
-             const potionId = potion.recipe.resultingPotion.id;
-             const englishName = getEnglishName(category, potionId);
+            const category = potion.recipe.winningAttribute;
+            const potionId = potion.recipe.resultingPotion.id;
+            const englishName = getEnglishName(category, potionId);
 
-             return (
+            return (
               <div
                 key={potion.id}
                 className="bg-white/40 p-3 rounded-lg flex items-center justify-between group hover:bg-white/60 transition-colors"
@@ -134,9 +134,7 @@ export function AdminUserPotionsTab({ data }: AdminUserPotionsTabProps) {
                       {potion.recipe.resultingPotion.nome}
                     </h4>
                     {englishName && (
-                      <p className="text-xs text-gray-400 italic truncate">
-                        {englishName}
-                      </p>
+                      <p className="text-xs text-gray-400 italic truncate">{englishName}</p>
                     )}
                     <div className="flex gap-3 text-xs text-gray-500 mt-1">
                       <span className="font-mono bg-gray-100 px-1.5 rounded">ID: {potionId}</span>
@@ -167,7 +165,10 @@ export function AdminUserPotionsTab({ data }: AdminUserPotionsTabProps) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      data.handleDeletePotion(potion.id, `${potion.recipe.resultingPotion.nome} (${englishName || ''})`);
+                      data.handleDeletePotion(
+                        potion.id,
+                        `${potion.recipe.resultingPotion.nome} (${englishName || ''})`
+                      );
                     }}
                     className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
                     title={t('admin.modal.actions.remove')}

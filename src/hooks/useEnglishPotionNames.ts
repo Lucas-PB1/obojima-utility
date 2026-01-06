@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Potion } from '@/types/ingredients';
 import { potionService } from '@/services/potionService';
 
 export function useEnglishPotionNames() {
@@ -19,9 +20,9 @@ export function useEnglishPotionNames() {
         if (!mounted) return;
 
         const names: Record<string, string> = {};
-        
-        const processPotions = (potions: any[], category: string) => {
-          potions.forEach(p => {
+
+        const processPotions = (potions: Potion[], category: string) => {
+          potions.forEach((p) => {
             names[`${category}-${p.id}`] = p.nome;
           });
         };

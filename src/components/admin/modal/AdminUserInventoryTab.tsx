@@ -99,7 +99,7 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
           <div className="col-span-3">{t('admin.modal.inventory.table.acquired')}</div>
           <div className="col-span-2 text-right">{t('admin.modal.inventory.table.actions')}</div>
         </div>
-        
+
         {data.ingredients.length === 0 ? (
           <p className="text-center text-gray-500 py-8">{t('admin.modal.empty.ingredients')}</p>
         ) : (
@@ -154,7 +154,10 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      data.handleDeleteIngredient(item.id, `${localized.nome} (${getEnglishName(item.ingredient.id) || ''})`);
+                      data.handleDeleteIngredient(
+                        item.id,
+                        `${localized.nome} (${getEnglishName(item.ingredient.id) || ''})`
+                      );
                     }}
                     className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
                     title={t('admin.modal.actions.remove')}

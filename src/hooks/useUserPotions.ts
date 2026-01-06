@@ -3,6 +3,7 @@ import { useState, useCallback } from 'react';
 import { CreatedPotion } from '@/types/ingredients';
 import { useTranslation } from '@/hooks/useTranslation';
 import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
+import { AvailablePotion } from './usePotionsCatalog';
 
 export function useUserPotions(userId: string | undefined) {
   const { t } = useTranslation();
@@ -41,24 +42,26 @@ export function useUserPotions(userId: string | undefined) {
   const handleUpdateQuantity = async (id: string, current: number, change: number) => {
     if (!userId) return;
     try {
-       await firebaseCreatedPotionService.updatePotionQuantity(id, change, userId);
-       
-       // Optimistic update
-       setPotions(prev => prev.map(p => {
-         if (p.id === id) {
-           return { ...p, quantity: (p.quantity || 0) + change };
-         }
-         return p;
-       }).filter(p => p.quantity > 0));
+      await firebaseCreatedPotionService.updatePotionQuantity(id, change, userId);
 
-    } catch(err) {
-       console.error("Failed to update quantity", err);
-       fetchPotions(); // Revert on error
+      // Optimistic update
+      setPotions((prev) =>
+        prev
+          .map((p) => {
+            if (p.id === id) {
+              return { ...p, quantity: (p.quantity || 0) + change };
+            }
+            return p;
+          })
+          .filter((p) => p.quantity > 0)
+      );
+    } catch (err) {
+      console.error('Failed to update quantity', err);
+      fetchPotions(); // Revert on error
     }
   };
 
-
-  const handleAddItem = async (availablePotions: any[]) => {
+  const handleAddItem = async (availablePotions: AvailablePotion[]) => {
     if (!userId) return;
     const potionToAdd = availablePotions.find((p) => p.uniqueKey === selectedUniqueKey);
     if (!potionToAdd) return;
@@ -68,11 +71,12 @@ export function useUserPotions(userId: string | undefined) {
       // Check if user already has this specific potion (by ID of the resulting potion and winning attribute)
       // Since "Standard" potions have a specific ID in the json, we can check that.
       // However, "CreatedPotion" entries are unique.
-      
+
       // Strategy: Look for an existing potion with same resultingPotion.id and winningAttribute.
-      const existing = potions.find(p => 
-        p.recipe.resultingPotion.id === potionToAdd.id && 
-        p.recipe.winningAttribute === potionToAdd.winningAttribute
+      const existing = potions.find(
+        (p) =>
+          p.recipe.resultingPotion.id === potionToAdd.id &&
+          p.recipe.winningAttribute === potionToAdd.winningAttribute
       );
 
       if (existing) {
@@ -80,19 +84,19 @@ export function useUserPotions(userId: string | undefined) {
       } else {
         // Create new
         const recipe = {
-             id: '', // Will be generated
-             ingredients: [],
-             combatScore: 0,
-             utilityScore: 0,
-             whimsyScore: 0,
-             winningAttribute: potionToAdd.winningAttribute,
-             resultingPotion: potionToAdd,
-             createdAt: new Date()
+          id: '', // Will be generated
+          ingredients: [],
+          combatScore: 0,
+          utilityScore: 0,
+          whimsyScore: 0,
+          winningAttribute: potionToAdd.winningAttribute,
+          resultingPotion: potionToAdd,
+          createdAt: new Date()
         };
 
         await firebaseCreatedPotionService.addCreatedPotion(recipe, userId, addQuantity);
       }
-      
+
       await fetchPotions();
 
       setIsAddingItem(false);

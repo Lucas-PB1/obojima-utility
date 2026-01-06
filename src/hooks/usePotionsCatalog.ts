@@ -4,7 +4,10 @@ import { Potion } from '@/types/ingredients';
 import { potionService } from '@/services/potionService';
 import { useTranslation } from '@/hooks/useTranslation';
 
-export type AvailablePotion = Potion & { uniqueKey: string; winningAttribute: 'combat' | 'utility' | 'whimsy' };
+export type AvailablePotion = Potion & {
+  uniqueKey: string;
+  winningAttribute: 'combat' | 'utility' | 'whimsy';
+};
 
 export function usePotionsCatalog() {
   const [availablePotions, setAvailablePotions] = useState<AvailablePotion[]>([]);
