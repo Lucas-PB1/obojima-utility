@@ -2,7 +2,7 @@
 import React from 'react';
 import { StatsGrid, EmptyState, PageHeader, ContentCard } from '@/components/ui';
 import { useActivityLog } from '@/hooks/useActivityLog';
-import { ActivityFilters } from '@/components/Filters';
+import { ActivityFilters } from '../Filters/ActivityFilters';
 import { ingredientsService } from '@/services/ingredientsService';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useSettings } from '@/hooks/useSettings';

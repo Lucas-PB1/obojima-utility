@@ -6,7 +6,7 @@ import { AdminRoute } from './AdminRoute';
 import { SystemMigration } from './SystemMigration';
 import { useTranslation } from '@/hooks/useTranslation';
 
-export default function AdminContent() {
+export function AdminContent() {
   const { t } = useTranslation();
   const { stats } = useAdminStats();
 
