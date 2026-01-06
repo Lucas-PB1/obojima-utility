@@ -1,3 +1,4 @@
+'use client';
 import { Loader2 } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { UserProfile } from '@/types/auth';

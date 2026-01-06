@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { UserProfile } from '@/types/auth';
 import { Button, DataTable } from '@/components/ui';
