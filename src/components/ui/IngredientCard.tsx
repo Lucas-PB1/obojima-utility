@@ -9,12 +9,15 @@ interface IngredientCardProps {
   showActions?: boolean;
 }
 
+import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
+
 export function IngredientCard({
   ingredient,
   onMarkAsUsed,
   onRemove,
   showActions = true
 }: IngredientCardProps) {
+  const { getEnglishName } = useEnglishIngredientNames();
   const maxAttr = Math.max(
     ingredient.ingredient.combat,
     ingredient.ingredient.utility,
@@ -37,9 +40,14 @@ export function IngredientCard({
       <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="font-serif font-bold text-foreground text-xl leading-tight group-hover:text-totoro-blue transition-colors">
-            {ingredient.ingredient.nome}
-          </h3>
+          <div>
+            <h3 className="font-serif font-bold text-foreground text-xl leading-tight group-hover:text-totoro-blue transition-colors">
+              {ingredient.ingredient.nome}
+            </h3>
+            <span className="text-xs text-foreground/50 italic font-medium block mt-0.5">
+              {getEnglishName(ingredient.ingredient.id, ingredient.ingredient.raridade)}
+            </span>
+          </div>
           <span
             className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border font-sans ${
               ingredient.used

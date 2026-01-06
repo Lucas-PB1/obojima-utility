@@ -63,16 +63,16 @@ export async function GET(req: NextRequest) {
     const potions = snapshot.docs.map((doc) => {
       const data = doc.data();
 
-      return {
-        ...data,
-        id: doc.id,
-        createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
-        usedAt: data.usedAt?.toDate?.()?.toISOString() || data.usedAt,
-        recipe: {
-          ...data.recipe,
-          createdAt: data.recipe.createdAt?.toDate?.()?.toISOString() || data.recipe.createdAt
-        }
-      };
+        return {
+          ...data,
+          id: doc.id,
+          createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
+          usedAt: data.usedAt?.toDate?.()?.toISOString() || data.usedAt,
+          recipe: {
+            ...data.recipe,
+            createdAt: data.recipe?.createdAt?.toDate?.()?.toISOString() || data.recipe?.createdAt
+          }
+        };
     });
 
     return NextResponse.json({ success: true, data: potions });

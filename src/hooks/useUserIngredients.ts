@@ -11,6 +11,7 @@ export function useUserIngredients(userId: string | undefined) {
   const [loading, setLoading] = useState(false);
 
   const [isAddingItem, setIsAddingItem] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [selectedUniqueKey, setSelectedUniqueKey] = useState<string>('');
   const [addQuantity, setAddQuantity] = useState(1);
 
@@ -60,6 +61,7 @@ export function useUserIngredients(userId: string | undefined) {
     const ingredientToAdd = availableIngredients.find((i) => i.uniqueKey === selectedUniqueKey);
     if (!ingredientToAdd) return;
 
+    setSubmitting(true);
     try {
       const cleanIngredient: Ingredient = {
         id: ingredientToAdd.id,
@@ -89,8 +91,11 @@ export function useUserIngredients(userId: string | undefined) {
       setIsAddingItem(false);
       setSelectedUniqueKey('');
       setAddQuantity(1);
+      alert(t('admin.modal.actions.add_success', ingredientToAdd.nome));
     } catch {
       alert(t('admin.modal.actions.add_error'));
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -106,6 +111,7 @@ export function useUserIngredients(userId: string | undefined) {
     selectedUniqueKey,
     setSelectedUniqueKey,
     addQuantity,
-    setAddQuantity
+    setAddQuantity,
+    submitting
   };
 }

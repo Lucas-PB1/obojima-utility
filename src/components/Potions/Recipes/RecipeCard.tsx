@@ -8,8 +8,11 @@ interface RecipeCardProps {
   onClick: (recipe: PotionRecipe) => void;
 }
 
+import { useEnglishPotionNames } from '@/hooks/useEnglishPotionNames';
+
 export function RecipeCard({ recipe, onClick }: RecipeCardProps) {
   const { t } = useTranslation();
+  const { getEnglishName } = useEnglishPotionNames();
 
   return (
     <div
@@ -22,6 +25,9 @@ export function RecipeCard({ recipe, onClick }: RecipeCardProps) {
           <h4 className="font-serif font-bold text-foreground text-lg leading-tight group-hover:text-totoro-blue transition-colors">
             {recipe.resultingPotion.nome}
           </h4>
+          <span className="text-xs text-totoro-gray/50 italic font-medium block mt-1">
+            {getEnglishName(recipe.winningAttribute, recipe.resultingPotion.id)}
+          </span>
         </div>
 
         <div

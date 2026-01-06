@@ -18,12 +18,16 @@ interface AdminUserInventoryTabProps {
     handleAddItem: () => void;
     handleUpdateQuantity: (id: string, current: number, change: number) => void;
     handleDeleteIngredient: (id: string, name: string) => void;
+    submitting?: boolean;
   };
 }
+
+import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
 
 export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
   const { t } = useTranslation();
   const { localizeIngredient } = useLocalizedIngredients();
+  const { getEnglishName } = useEnglishIngredientNames();
 
   return (
     <div className="glass-panel p-4">
@@ -72,10 +76,10 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
           </div>
           <button
             onClick={data.handleAddItem}
-            disabled={!data.selectedUniqueKey}
-            className="bg-totoro-green text-white px-4 py-2 rounded text-sm font-medium disabled:opacity-50"
+            disabled={!data.selectedUniqueKey || data.submitting}
+            className="bg-totoro-green text-white px-4 py-2 rounded text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {t('admin.modal.inventory.add.confirm')}
+            {data.submitting ? t('ui.states.loading') : t('admin.modal.inventory.add.confirm')}
           </button>
         </div>
       )}
@@ -99,9 +103,14 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
               >
                 <div className="col-span-4 flex items-center gap-2 overflow-hidden">
                   <span className="text-xl">🌿</span>
-                  <span className="font-medium truncate text-sm" title={localized.nome}>
-                    {localized.nome}
-                  </span>
+                  <div className="flex flex-col overflow-hidden">
+                    <span className="font-medium truncate text-sm" title={localized.nome}>
+                      {localized.nome}
+                    </span>
+                    <span className="text-[10px] text-gray-400 italic truncate">
+                      {getEnglishName(item.ingredient.id, item.ingredient.raridade)}
+                    </span>
+                  </div>
                 </div>
                 <div className="col-span-3 flex justify-center">
                   <span
@@ -136,7 +145,7 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      data.handleDeleteIngredient(item.id, localized.nome);
+                      data.handleDeleteIngredient(item.id, `${localized.nome} (${getEnglishName(item.ingredient.id) || ''})`);
                     }}
                     className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
                     title={t('admin.modal.actions.remove')}

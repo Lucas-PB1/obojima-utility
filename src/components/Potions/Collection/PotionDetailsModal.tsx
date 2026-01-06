@@ -12,6 +12,8 @@ interface PotionDetailsModalProps {
   onDelete: (potionId: string) => void;
 }
 
+import { useEnglishPotionNames } from '@/hooks/useEnglishPotionNames';
+
 export function PotionDetailsModal({
   isOpen,
   onClose,
@@ -20,6 +22,7 @@ export function PotionDetailsModal({
   onDelete
 }: PotionDetailsModalProps) {
   const { t } = useTranslation();
+  const { getEnglishName } = useEnglishPotionNames();
 
   if (!potion) return null;
 
@@ -30,6 +33,9 @@ export function PotionDetailsModal({
           <h1 className="text-3xl font-serif font-bold text-foreground mb-1">
             {potion.potion.nome}
           </h1>
+          <p className="text-sm text-muted-foreground italic mb-4">
+            {getEnglishName(potion.recipe.winningAttribute, potion.potion.id)}
+          </p>
 
           <div className="flex justify-center gap-3">
             <div

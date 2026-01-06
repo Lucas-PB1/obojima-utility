@@ -10,8 +10,13 @@ interface TradeModalProps {
   onClose: () => void;
 }
 
+import { useEnglishPotionNames } from '@/hooks/useEnglishPotionNames';
+import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
+
 export function TradeModal({ friend, onClose }: TradeModalProps) {
   const { t } = useTranslation();
+  const { getEnglishName: getPotionEnglishName } = useEnglishPotionNames();
+  const { getEnglishName: getIngredientEnglishName } = useEnglishIngredientNames();
   const {
     itemType,
     setItemType,
@@ -83,9 +88,14 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                         ${selectedItemId === ing.id ? 'bg-totoro-blue/10 border-totoro-blue/50 shadow-sm' : 'bg-white/5 border-transparent hover:bg-white/10'}
                       `}
                     >
-                      <span className="text-sm font-bold text-totoro-gray">
-                        {localizeIngredient(ing.ingredient).nome}
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-totoro-gray">
+                          {localizeIngredient(ing.ingredient).nome}
+                        </span>
+                        <span className="text-[10px] text-totoro-gray/50 italic">
+                          {getIngredientEnglishName(ing.ingredient.id, ing.ingredient.raridade)}
+                        </span>
+                      </div>
                       <div className="flex items-center gap-2">
                         <span className="text-[10px] text-totoro-gray/40 uppercase font-bold">
                           {ing.ingredient.raridade || 'comum'}
@@ -111,7 +121,12 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                       ${selectedItemId === pot.id ? 'bg-totoro-blue/10 border-totoro-blue/50 shadow-sm' : 'bg-white/5 border-transparent hover:bg-white/10'}
                     `}
                   >
-                    <span className="text-sm font-bold text-totoro-gray">{pot.potion.nome}</span>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold text-totoro-gray">{pot.potion.nome}</span>
+                      <span className="text-[10px] text-totoro-gray/50 italic">
+                        {getPotionEnglishName(pot.recipe.winningAttribute, pot.potion.id)}
+                      </span>
+                    </div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] text-totoro-gray/40 uppercase font-bold">
                         {pot.potion.raridade}

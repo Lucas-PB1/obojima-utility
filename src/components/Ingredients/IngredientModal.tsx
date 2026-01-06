@@ -10,16 +10,34 @@ interface IngredientModalProps {
   onClose: () => void;
 }
 
+import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
+
 export function IngredientModal({ ingredient, isOpen, onClose }: IngredientModalProps) {
   const { t } = useTranslation();
   const { localizeIngredient } = useLocalizedIngredients();
+  const { getEnglishName } = useEnglishIngredientNames();
 
   const localizedIngredient = ingredient ? localizeIngredient(ingredient) : null;
 
   if (!localizedIngredient) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={`🌿 ${localizedIngredient.nome}`} size="lg">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            <span>🌿</span>
+            <span>{localizedIngredient.nome}</span>
+          </div>
+          <span className="text-xs font-normal text-muted-foreground italic ml-6">
+            {getEnglishName(localizedIngredient.id, localizedIngredient.raridade)}
+          </span>
+        </div>
+      }
+      size="lg"
+    >
       <div className="space-y-6">
         <div className="text-center">
           <div className="w-16 h-1 bg-gradient-to-r from-totoro-green to-totoro-blue mx-auto rounded-full"></div>

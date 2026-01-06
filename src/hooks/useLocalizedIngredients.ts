@@ -9,7 +9,7 @@ export function useLocalizedIngredients() {
   const { language } = useTranslation();
   const [ingredientsMap, setIngredientsMap] = React.useState<
     Record<
-      number,
+      string,
       { nome: string; descricao: string; combat: number; utility: number; whimsy: number }
     >
   >({});
@@ -24,12 +24,12 @@ export function useLocalizedIngredients() {
         ]);
 
         const map: Record<
-          number,
+          string,
           { nome: string; descricao: string; combat: number; utility: number; whimsy: number }
         > = {};
         common.ingredients.forEach(
           (i) =>
-            (map[i.id] = {
+            (map[`comum-${i.id}`] = {
               nome: i.nome,
               descricao: i.descricao,
               combat: i.combat,
@@ -39,7 +39,7 @@ export function useLocalizedIngredients() {
         );
         uncommon.ingredients.forEach(
           (i) =>
-            (map[i.id] = {
+            (map[`incomum-${i.id}`] = {
               nome: i.nome,
               descricao: i.descricao,
               combat: i.combat,
@@ -49,7 +49,7 @@ export function useLocalizedIngredients() {
         );
         rare.ingredients.forEach(
           (i) =>
-            (map[i.id] = {
+            (map[`raro-${i.id}`] = {
               nome: i.nome,
               descricao: i.descricao,
               combat: i.combat,
@@ -69,7 +69,8 @@ export function useLocalizedIngredients() {
 
   const localizeIngredient = React.useCallback(
     (ingredient: Ingredient) => {
-      const localized = ingredientsMap[ingredient.id];
+      const key = `${ingredient.raridade || 'comum'}-${ingredient.id}`;
+      const localized = ingredientsMap[key];
       if (!localized) return ingredient;
       return {
         ...ingredient,

@@ -38,7 +38,8 @@ export function useAdminUserDetails({
     selectedUniqueKey,
     setSelectedUniqueKey,
     addQuantity,
-    setAddQuantity
+    setAddQuantity,
+    submitting
   } = useUserIngredients(user?.uid);
 
   const {
@@ -86,7 +87,8 @@ export function useAdminUserDetails({
       ingredients,
       handleDeleteIngredient,
       handleUpdateQuantity,
-      handleAddItem: () => handleAddItem(availableIngredients)
+      handleAddItem: () => handleAddItem(availableIngredients),
+      submitting
     },
 
     potionsData: {

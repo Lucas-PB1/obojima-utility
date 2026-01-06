@@ -134,7 +134,11 @@ class FirebaseStorageService {
 
     try {
       const current = await this.getCollectedIngredients(uid);
-      const existing = current.find((ing) => ing.ingredient.id === ingredient.ingredient.id);
+      const existing = current.find(
+        (ing) =>
+          ing.ingredient.id === ingredient.ingredient.id &&
+          ing.ingredient.nome === ingredient.ingredient.nome
+      );
 
       if (existing) {
         const existingRef = doc(db, this.getCollectedIngredientsPath(uid), existing.id);

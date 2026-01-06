@@ -10,8 +10,11 @@ interface PotionCardProps {
   onUse: (potionId: string) => void;
 }
 
+import { useEnglishPotionNames } from '@/hooks/useEnglishPotionNames';
+
 export function PotionCard({ potion, onClick, onUse }: PotionCardProps) {
   const { t } = useTranslation();
+  const { getEnglishName } = useEnglishPotionNames();
 
   return (
     <div
@@ -24,6 +27,9 @@ export function PotionCard({ potion, onClick, onUse }: PotionCardProps) {
           <h4 className="font-serif font-bold text-foreground text-lg leading-tight group-hover:text-totoro-blue transition-colors">
             {potion.potion.nome}
           </h4>
+          <span className="text-xs text-totoro-gray/50 italic font-medium block mt-1">
+            {getEnglishName(potion.recipe.winningAttribute, potion.potion.id)}
+          </span>
         </div>
 
         <div className="flex gap-2">
