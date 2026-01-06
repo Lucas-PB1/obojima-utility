@@ -4,7 +4,7 @@ import { useHome } from '@/hooks/useHome';
 import { SocialHub } from '@/components/Social';
 import { ActivityLog } from '@/components/System';
 import { useSettings } from '@/hooks/useSettings';
-import { ForageSystem } from '../Forage/ForageSystem';
+import { ForageSystem } from '@/components/Forage/ForageSystem';
 import { PageLayout, Button } from '@/components/ui';
 import { useTranslation } from '@/hooks/useTranslation';
 import { IngredientCollection } from '@/components/Ingredients';
