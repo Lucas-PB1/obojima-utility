@@ -1,3 +1,3 @@
-export { ForageForm } from '@/components/Forage/ForageForm';
-export { ForageResult } from '@/components/Forage/ForageResult';
-export { ForageSystem } from '@/components/Forage/ForageSystem';
+export { ForageForm } from './ForageForm';
+export { ForageResult } from './ForageResult';
+export { ForageSystem } from './ForageSystem';

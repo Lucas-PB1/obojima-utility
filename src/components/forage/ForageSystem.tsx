@@ -1,7 +1,8 @@
 'use client';
 import React from 'react';
 import { Button, PageHeader, ContentCard, IngredientCard } from '@/components/ui';
-import { ForageForm, ForageResult } from '@/components/Forage';
+import { ForageForm } from './ForageForm';
+import { ForageResult } from './ForageResult';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useForageSystem } from '@/hooks/useForageSystem';
 import { SettingsModal } from '@/components/System';
