@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
@@ -10,14 +10,19 @@ export function PresenceManager() {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (!isInitialized) return;
+
     socialService.updateHeartbeat();
 
-    const interval = setInterval(() => {
-      socialService.updateHeartbeat();
-    }, 2 * 60 * 1000);
+    const interval = setInterval(
+      () => {
+        socialService.updateHeartbeat();
+      },
+      2 * 60 * 1000
+    );
 
     return () => clearInterval(interval);
-  }, [pathname]);
+  }, [pathname, isInitialized]);
 
   return null;
 }

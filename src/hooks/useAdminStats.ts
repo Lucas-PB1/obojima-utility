@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { logger } from '@/utils/logger';
 import { UserProfile } from '@/types/auth';
 import { useState, useEffect } from 'react';

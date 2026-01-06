@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { User } from 'firebase/auth';
 import { db } from '@/config/firebase';
 import { logger } from '@/utils/logger';

@@ -1,6 +1,4 @@
-import {
-  Unsubscribe
-} from 'firebase/firestore';
+import { Unsubscribe } from 'firebase/firestore';
 import { Friend, FriendRequest, ChatMessage, TradeItem } from '@/types/social';
 import { UserProfile } from '@/types/auth';
 

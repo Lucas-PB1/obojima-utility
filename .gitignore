@@ -40,4 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 # firebase admin
-obojima-b50d8-firebase-adminsdk-fbsvc-5fce6d75a6.json
+firebase-admin.json

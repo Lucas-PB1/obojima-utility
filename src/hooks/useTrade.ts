@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useIngredients } from '@/hooks/useIngredients';
@@ -34,20 +34,24 @@ export function useTrade(friend: Friend, onClose: () => void) {
 
   const selectedItem = getSelectedItem();
 
-  const existingItemIndex = cart.findIndex((item) => item.id === selectedItemId && item.type === itemType);
+  const existingItemIndex = cart.findIndex(
+    (item) => item.id === selectedItemId && item.type === itemType
+  );
   const quantityInCart = existingItemIndex >= 0 ? cart[existingItemIndex].quantity : 0;
   const maxAddable = selectedItem ? Math.max(0, selectedItem.quantity - quantityInCart) : 0;
 
   const addToCart = () => {
     if (!selectedItem) return;
 
-    const existingItemIndex = cart.findIndex((item) => item.id === selectedItemId && item.type === itemType);
+    const existingItemIndex = cart.findIndex(
+      (item) => item.id === selectedItemId && item.type === itemType
+    );
     const quantityInCart = existingItemIndex >= 0 ? cart[existingItemIndex].quantity : 0;
 
     if (quantityInCart + quantity > selectedItem.quantity) {
-      setMessage({ 
-        type: 'error', 
-        text: t('social.trade.errorQuantityExceeds', selectedItem.quantity) 
+      setMessage({
+        type: 'error',
+        text: t('social.trade.errorQuantityExceeds', selectedItem.quantity)
       });
       setTimeout(() => setMessage(null), 3000);
       return;

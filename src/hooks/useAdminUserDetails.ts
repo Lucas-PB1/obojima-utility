@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { UserProfile } from '@/types/auth';
 import { useState, useEffect } from 'react';
 import { useUserPotions } from '@/hooks/useUserPotions';

@@ -157,7 +157,6 @@ class AuthService {
         email: user.email || '',
         photoURL: photoURL
       });
-      
     } catch (error) {
       logger.error('Erro ao atualizar perfil:', error);
       throw this.handleAuthError(error);

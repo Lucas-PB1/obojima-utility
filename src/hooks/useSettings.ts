@@ -1,4 +1,5 @@
-'use client';import { useSettingsContext } from '@/contexts/SettingsContext';
+'use client';
+import { useSettingsContext } from '@/contexts/SettingsContext';
 
 export function useSettings() {
   const { settings, isLoading, isInitialized, loadSettings, clearSettings, updateSetting } =

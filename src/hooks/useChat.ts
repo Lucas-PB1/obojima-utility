@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { ChatMessage } from '@/types/social';
 import { socialService } from '@/services/socialService';
 import { useState, useEffect, useCallback, useRef } from 'react';

@@ -47,7 +47,7 @@ export class ProfileService {
     try {
       const publicRef = doc(db, 'public_users', uid);
       const snapshot = await getDoc(publicRef);
-      
+
       if (snapshot.exists()) {
         return { uid: snapshot.id, ...snapshot.data() } as UserProfile;
       }
@@ -134,10 +134,10 @@ export class ProfileService {
       const user = authService.getCurrentUser();
       if (user) {
         await this.ensurePublicProfile({
-           uid: user.uid,
-           displayName: user.displayName || 'User',
-           email: user.email || '',
-           photoURL: user.photoURL
+          uid: user.uid,
+          displayName: user.displayName || 'User',
+          email: user.email || '',
+          photoURL: user.photoURL
         });
       }
     }

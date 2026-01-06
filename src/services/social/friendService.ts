@@ -161,10 +161,10 @@ export class FriendService {
           const friendId = data.participants.find((p: string) => p !== userId);
           const friendData = data.users[friendId];
           return {
-             friendshipId: doc.id,
-             friendId,
-             ...friendData,
-             addedAt: (data.createdAt as Timestamp).toDate()
+            friendshipId: doc.id,
+            friendId,
+            ...friendData,
+            addedAt: (data.createdAt as Timestamp).toDate()
           };
         });
 
@@ -174,61 +174,66 @@ export class FriendService {
         }
 
         // 2. Fetch latest status from public_users
-        const friendIds = friendsBasic.map(f => f.friendId);
+        const friendIds = friendsBasic.map((f) => f.friendId);
         const usersRef = collection(db, 'public_users');
-        
+
         try {
-            const chunks = [];
-            for (let i = 0; i < friendIds.length; i += 10) {
-                chunks.push(friendIds.slice(i, i + 10));
-            }
+          const chunks = [];
+          for (let i = 0; i < friendIds.length; i += 10) {
+            chunks.push(friendIds.slice(i, i + 10));
+          }
 
-            const publicProfilesMap = new Map();
-            
-            for (const chunk of chunks) {
-                const qStatus = query(usersRef, where('uid', 'in', chunk));
-                const snapStatus = await getDocs(qStatus);
-                snapStatus.forEach(doc => {
-                    publicProfilesMap.set(doc.id, doc.data());
-                });
-            }
+          const publicProfilesMap = new Map();
 
-            const now = new Date();
-            const fiveMinutes = 5 * 60 * 1000;
-
-            const friends: Friend[] = friendsBasic.map(f => {
-                const publicProfile = publicProfilesMap.get(f.friendId);
-                let status: 'online' | 'offline' = 'offline';
-                
-                if (publicProfile?.lastSeen) {
-                    const lastSeenDate = (publicProfile.lastSeen as Timestamp).toDate();
-                    const diff = now.getTime() - lastSeenDate.getTime();
-                    if (diff < fiveMinutes) {
-                        status = 'online';
-                    }
-                }
-
-                return {
-                    userId: f.friendId,
-                    displayName: publicProfile?.displayName || f.displayName,
-                    email: publicProfile?.email || f.email,
-                    photoURL: publicProfile?.photoURL || f.photoURL,
-                    addedAt: f.addedAt,
-                    status
-                } as Friend;
+          for (const chunk of chunks) {
+            const qStatus = query(usersRef, where('uid', 'in', chunk));
+            const snapStatus = await getDocs(qStatus);
+            snapStatus.forEach((doc) => {
+              publicProfilesMap.set(doc.id, doc.data());
             });
+          }
 
-            callback(friends);
+          const now = new Date();
+          const fiveMinutes = 5 * 60 * 1000;
+
+          const friends: Friend[] = friendsBasic.map((f) => {
+            const publicProfile = publicProfilesMap.get(f.friendId);
+            let status: 'online' | 'offline' = 'offline';
+
+            if (publicProfile?.lastSeen) {
+              const lastSeenDate = (publicProfile.lastSeen as Timestamp).toDate();
+              const diff = now.getTime() - lastSeenDate.getTime();
+              if (diff < fiveMinutes) {
+                status = 'online';
+              }
+            }
+
+            return {
+              userId: f.friendId,
+              displayName: publicProfile?.displayName || f.displayName,
+              email: publicProfile?.email || f.email,
+              photoURL: publicProfile?.photoURL || f.photoURL,
+              addedAt: f.addedAt,
+              status
+            } as Friend;
+          });
+
+          callback(friends);
         } catch (error) {
-            logger.error('Error fetching friend statuses:', error);
-            callback(friendsBasic.map(f => ({
-                userId: f.friendId,
-                displayName: f.displayName,
-                email: f.email,
-                photoURL: f.photoURL,
-                addedAt: f.addedAt,
-                status: 'offline'
-            } as Friend)));
+          logger.error('Error fetching friend statuses:', error);
+          callback(
+            friendsBasic.map(
+              (f) =>
+                ({
+                  userId: f.friendId,
+                  displayName: f.displayName,
+                  email: f.email,
+                  photoURL: f.photoURL,
+                  addedAt: f.addedAt,
+                  status: 'offline'
+                }) as Friend
+            )
+          );
         }
       },
       (error) => {
@@ -243,13 +248,10 @@ export class FriendService {
 
     try {
       const friendsRef = collection(db, 'friends');
-      const q = query(
-        friendsRef,
-        where('participants', 'array-contains', userId)
-      );
+      const q = query(friendsRef, where('participants', 'array-contains', userId));
       const snapshot = await getDocs(q);
-      
-      const friendshipDoc = snapshot.docs.find(doc => {
+
+      const friendshipDoc = snapshot.docs.find((doc) => {
         const data = doc.data();
         return data.participants.includes(friendId);
       });

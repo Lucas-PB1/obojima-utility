@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { MessageCircle, Gift, UserMinus } from 'lucide-react';
@@ -72,19 +72,15 @@ export function FriendList({ friends, onChat }: FriendListProps) {
           </div>
 
           <div className="flex gap-2">
-            <Button 
-              size="sm" 
-              variant="outline" 
+            <Button
+              size="sm"
+              variant="outline"
               onClick={() => onChat(friend)}
               title={t('social.chat.open')}
             >
               <MessageCircle className="w-5 h-5" />
             </Button>
-            <Button 
-              size="sm" 
-              variant="secondary"
-              onClick={() => setTradeFriend(friend)}
-            >
+            <Button size="sm" variant="secondary" onClick={() => setTradeFriend(friend)}>
               <Gift className="w-4 h-4 mr-2" />
               {t('social.trade.button')}
             </Button>

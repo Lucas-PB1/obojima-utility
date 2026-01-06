@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import serviceAccount from '../../obojima-b50d8-firebase-adminsdk-fbsvc-5fce6d75a6.json';
+import serviceAccount from '../../firebase-admin.json';
 import { logger } from '@/utils/logger';
 
 if (!admin.apps.length) {
@@ -7,7 +7,6 @@ if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount as admin.ServiceAccount)
     });
-
   } catch (error) {
     logger.error('[Firebase Admin]: Erro crítico na inicialização:', error);
     throw error;

@@ -4,6 +4,22 @@ import { authService } from '@/services/authService';
 import { CreatedPotion, PotionRecipe } from '@/types/ingredients';
 import { logger } from '@/utils/logger';
 
+interface PotionData {
+  potion?: {
+    nome?: string;
+    nome_portugues?: string;
+    nome_ingles?: string;
+    [key: string]: unknown;
+  };
+  createdAt?: Timestamp | Date | string;
+  usedAt?: Timestamp | Date | string;
+  recipe?: PotionRecipe & {
+    createdAt?: Timestamp | Date | string;
+    resultingPotion?: unknown;
+  };
+  [key: string]: unknown;
+}
+
 class FirebaseCreatedPotionService {
   private potionsUnsubscribe: Unsubscribe | null = null;
 
@@ -69,11 +85,12 @@ class FirebaseCreatedPotionService {
     }
   }
 
-  private normalizePotionData(data: any): CreatedPotion {
+  private normalizePotionData(data: PotionData): CreatedPotion {
     const potionData = data.potion || {};
     const normalizedPotion = {
       ...potionData,
-      nome: potionData.nome || potionData.nome_portugues || potionData.nome_ingles || 'Poção sem nome'
+      nome:
+        potionData.nome || potionData.nome_portugues || potionData.nome_ingles || 'Poção sem nome'
     };
 
     return {
@@ -83,7 +100,7 @@ class FirebaseCreatedPotionService {
       potion: normalizedPotion,
       recipe: {
         ...data.recipe,
-        createdAt: this.convertTimestampToDate(data.recipe.createdAt),
+        createdAt: this.convertTimestampToDate(data.recipe?.createdAt),
         resultingPotion: normalizedPotion
       }
     } as CreatedPotion;
@@ -98,7 +115,7 @@ class FirebaseCreatedPotionService {
       if (!response.ok) return [];
 
       const result = await response.json();
-      return result.data.map((data: any) => this.normalizePotionData(data));
+      return result.data.map((data: PotionData) => this.normalizePotionData(data));
     } catch (error) {
       logger.error('Erro ao carregar poções criadas:', error);
       return [];
