@@ -61,6 +61,7 @@ export const es = {
 
   // Shared UI Actions
   'ui.actions.save': '💾 Guardar',
+  'ui.states.loading': 'Cargando...',
   'ui.actions.saving': 'Guardando...',
   'ui.actions.cancel': 'Cancelar',
   'ui.actions.clear': 'Limpiar',
@@ -398,6 +399,10 @@ export const es = {
   'social.trade.type.potion': 'Pociones',
   'social.trade.type.ingredient': 'Ingredientes',
   'social.trade.noItems': 'No hay ítems disponibles',
+  'social.trade.errorQuantityExceeds': 'La cantidad excede el inventario disponible (Máx: {0})',
+  'social.friends.removeTitle': 'Eliminar Amigo',
+  'social.friends.removeConfirm': '¿Estás seguro de que deseas eliminar a {name} de tu lista de amigos?',
+  'social.requests.confirmReject': '¿Estás seguro?',
 
   // Migration
   'admin.migration.title': 'Sincronizar Perfiles Públicos',
