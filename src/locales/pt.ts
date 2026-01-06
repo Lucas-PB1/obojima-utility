@@ -61,6 +61,7 @@ export const pt = {
 
   // Shared UI Actions
   'ui.actions.save': '💾 Salvar',
+  'ui.states.loading': 'Carregando...',
   'ui.actions.saving': 'Salvando...',
   'ui.actions.cancel': 'Cancelar',
   'ui.actions.clear': 'Limpar',

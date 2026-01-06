@@ -102,6 +102,35 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       return NextResponse.json({ success: true, newQuantity });
     }
 
+    if (action === 'update_quantity') {
+      const { change } = body;
+      const docSnap = await potionRef.get();
+      if (!docSnap.exists) {
+        return NextResponse.json({ error: 'Potion not found' }, { status: 404 });
+      }
+
+      const potion = docSnap.data();
+      if (!potion) return NextResponse.json({ error: 'Potion data missing' }, { status: 500 });
+
+      const newQuantity = (potion.quantity || 0) + change;
+
+      if (newQuantity <= 0) {
+        await potionRef.update({
+          quantity: 0,
+          used: true,
+          usedAt: Timestamp.now()
+        });
+      } else {
+        await potionRef.update({
+          quantity: newQuantity,
+          used: false, // Ensure used is false if we are adding stock
+          usedAt: null // Reset usedAt
+        });
+      }
+
+      return NextResponse.json({ success: true, newQuantity });
+    }
+
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
   } catch (error) {
     logger.error('API Error updating potion:', error);

@@ -53,7 +53,7 @@ class FirebaseCreatedPotionService {
     return new Date();
   }
 
-  async addCreatedPotion(recipe: PotionRecipe, uid?: string): Promise<CreatedPotion> {
+  async addCreatedPotion(recipe: PotionRecipe, uid?: string, quantity: number = 1): Promise<CreatedPotion> {
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) {
       throw new Error('Usuário não autenticado');
@@ -63,7 +63,7 @@ class FirebaseCreatedPotionService {
       const response = await fetch('/api/potions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid: userId, recipe })
+        body: JSON.stringify({ uid: userId, recipe, quantity })
       });
 
       if (!response.ok) throw new Error('Failed to create potion');
@@ -184,6 +184,24 @@ class FirebaseCreatedPotionService {
     } catch (error) {
       logger.error('Erro ao usar poção:', error);
       return false;
+    }
+  }
+
+  async updatePotionQuantity(potionId: string, change: number, uid?: string): Promise<void> {
+    const userId = uid || this.getUserId();
+    if (!this.isClient() || !userId) return;
+
+    try {
+      const response = await fetch(`/api/potions/${potionId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid: userId, action: 'update_quantity', change })
+      });
+
+      if (!response.ok) throw new Error('Failed to update potion quantity');
+    } catch (error) {
+      logger.error('Erro ao atualizar quantidade da poção:', error);
+      throw error;
     }
   }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { CollectedIngredient, Ingredient } from '@/types/ingredients';
 import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
+import { Loader2 } from 'lucide-react';
 
 type AvailableIngredient = Ingredient & { uniqueKey: string };
 
@@ -19,6 +20,7 @@ interface AdminUserInventoryTabProps {
     handleUpdateQuantity: (id: string, current: number, change: number) => void;
     handleDeleteIngredient: (id: string, name: string) => void;
     submitting?: boolean;
+    loading?: boolean;
   };
 }
 
@@ -84,13 +86,20 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
         </div>
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-2 relative min-h-[100px]">
+        {data.loading && (
+          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
+            <Loader2 className="w-8 h-8 animate-spin text-totoro-green" />
+          </div>
+        )}
+
         <div className="grid grid-cols-12 gap-2 px-2 py-1 text-xs font-medium text-gray-500 uppercase">
           <div className="col-span-4">{t('admin.modal.inventory.table.item')}</div>
           <div className="col-span-3 text-center">{t('admin.modal.inventory.table.status')}</div>
           <div className="col-span-3">{t('admin.modal.inventory.table.acquired')}</div>
           <div className="col-span-2 text-right">{t('admin.modal.inventory.table.actions')}</div>
         </div>
+        
         {data.ingredients.length === 0 ? (
           <p className="text-center text-gray-500 py-8">{t('admin.modal.empty.ingredients')}</p>
         ) : (

@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { uid, recipe } = body;
+    const { uid, recipe, quantity } = body;
 
     if (!uid || !recipe) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         ...recipe,
         createdAt: new Date(recipe.createdAt)
       },
-      quantity: 1,
+      quantity: quantity || 1,
       createdAt: new Date(),
       used: false
     };

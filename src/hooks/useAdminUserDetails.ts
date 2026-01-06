@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { useUserPotions } from '@/hooks/useUserPotions';
 import { useUserHistory } from '@/hooks/useUserHistory';
 import { useUserIngredients } from '@/hooks/useUserIngredients';
-import { useIngredientsCatalog } from '@/hooks/useIngredientsCatalog';
+import { useIngredientsCatalog, AvailableIngredient } from '@/hooks/useIngredientsCatalog';
+import { usePotionsCatalog, AvailablePotion } from '@/hooks/usePotionsCatalog';
 import { useUserProfileManagement } from '@/hooks/useUserProfileManagement';
 
 interface UseAdminUserDetailsProps {
@@ -46,8 +47,19 @@ export function useAdminUserDetails({
     potions,
     loading: potionsLoading,
     fetchPotions,
-    handleDeletePotion
+    handleDeletePotion,
+    handleUpdateQuantity: handleUpdatePotionQuantity,
+    handleAddItem: handleAddPotion,
+    isAddingItem: isAddingPotion,
+    setIsAddingItem: setIsAddingPotion,
+    selectedUniqueKey: selectedPotionKey,
+    setSelectedUniqueKey: setSelectedPotionKey,
+    addQuantity: addPotionQuantity,
+    setAddQuantity: setAddPotionQuantity,
+    submitting: submittingPotion
   } = useUserPotions(user?.uid);
+  
+  const { availablePotions } = usePotionsCatalog();
 
   const { attempts, loading: historyLoading, fetchHistory } = useUserHistory(user?.uid);
 
@@ -88,12 +100,24 @@ export function useAdminUserDetails({
       handleDeleteIngredient,
       handleUpdateQuantity,
       handleAddItem: () => handleAddItem(availableIngredients),
-      submitting
+      submitting,
+      loading: ingredientsLoading
     },
 
     potionsData: {
       potions,
-      handleDeletePotion
+      availablePotions,
+      isAddingItem: isAddingPotion,
+      setIsAddingItem: setIsAddingPotion,
+      selectedUniqueKey: selectedPotionKey,
+      setSelectedUniqueKey: setSelectedPotionKey,
+      addQuantity: addPotionQuantity,
+      setAddQuantity: setAddPotionQuantity,
+      handleDeletePotion,
+      handleUpdateQuantity: handleUpdatePotionQuantity,
+      handleAddItem: () => handleAddPotion(availablePotions),
+      submitting: submittingPotion,
+      loading: potionsLoading
     },
 
     historyData: {

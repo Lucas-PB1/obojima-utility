@@ -35,7 +35,7 @@ export function useUserIngredients(userId: string | undefined) {
         await firebaseStorageService.removeCollectedIngredient(id, userId);
         setIngredients((prev) => prev.filter((i) => i.id !== id));
       } catch {
-        alert(t('admin.modal.actions.remove_ingredient_error'));
+        console.error(t('admin.modal.actions.remove_ingredient_error'));
       }
     }
   };
@@ -91,9 +91,8 @@ export function useUserIngredients(userId: string | undefined) {
       setIsAddingItem(false);
       setSelectedUniqueKey('');
       setAddQuantity(1);
-      alert(t('admin.modal.actions.add_success', ingredientToAdd.nome));
     } catch {
-      alert(t('admin.modal.actions.add_error'));
+      console.error(t('admin.modal.actions.add_error'));
     } finally {
       setSubmitting(false);
     }
