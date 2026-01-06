@@ -1,7 +1,9 @@
 'use client';
 import { StatsGrid, PageHeader } from '@/components/ui';
 import { useAdminStats } from '@/hooks/useAdminStats';
-import { UserList, AdminRoute, SystemMigration } from '@/components/Admin';
+import { UserList } from './UserList';
+import { AdminRoute } from './AdminRoute';
+import { SystemMigration } from './SystemMigration';
 import { useTranslation } from '@/hooks/useTranslation';
 
 export default function AdminContent() {

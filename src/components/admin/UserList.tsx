@@ -4,7 +4,7 @@ import { Button, DataTable } from '@/components/ui';
 import { useAdminUsers } from '@/hooks/useAdminUsers';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useUserTableColumns } from '@/hooks/useUserTableColumns';
-import { AdminUserDetailsModal } from '@/components/Admin';
+import { AdminUserDetailsModal } from './AdminUserDetailsModal';
 
 export function UserList() {
   const { t } = useTranslation();

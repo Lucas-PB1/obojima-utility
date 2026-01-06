@@ -1,4 +1,5 @@
-export { UserList } from '@/components/Admin/UserList';
-export { AdminRoute } from '@/components/Admin/AdminRoute';
-export { SystemMigration } from '@/components/Admin/SystemMigration';
-export { AdminUserDetailsModal } from '@/components/Admin/AdminUserDetailsModal';
+export { UserList } from './UserList';
+export { AdminRoute } from './AdminRoute';
+export { SystemMigration } from './SystemMigration';
+export { AdminUserDetailsModal } from './AdminUserDetailsModal';
+export { default as AdminContent } from './AdminContent';
