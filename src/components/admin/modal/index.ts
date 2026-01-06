@@ -1,4 +1,4 @@
-export { AdminUserHistoryTab } from '@/components/Admin/modal/AdminUserHistoryTab';
-export { AdminUserPotionsTab } from '@/components/Admin/modal/AdminUserPotionsTab';
-export { AdminUserOverviewTab } from '@/components/Admin/modal/AdminUserOverviewTab';
-export { AdminUserInventoryTab } from '@/components/Admin/modal/AdminUserInventoryTab';
+export { AdminUserHistoryTab } from '@/components/admin/modal/AdminUserHistoryTab';
+export { AdminUserPotionsTab } from '@/components/admin/modal/AdminUserPotionsTab';
+export { AdminUserOverviewTab } from '@/components/admin/modal/AdminUserOverviewTab';
+export { AdminUserInventoryTab } from '@/components/admin/modal/AdminUserInventoryTab';

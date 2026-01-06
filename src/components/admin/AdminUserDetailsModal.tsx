@@ -11,7 +11,7 @@ import {
   AdminUserHistoryTab,
   AdminUserOverviewTab,
   AdminUserInventoryTab
-} from '@/components/Admin/modal';
+} from '@/components/admin/modal';
 
 interface AdminUserDetailsModalProps {
   user: UserProfile | null;
