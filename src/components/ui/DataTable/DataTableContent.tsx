@@ -34,10 +34,10 @@ export function DataTableContent<T>({
             <div key={index}>{mobileRenderer(item)}</div>
           ))}
           {paginatedData.length === 0 && (
-             <div className="flex flex-col items-center justify-center py-12 text-foreground/60">
-                <span className="text-2xl mb-2">📦</span>
-                <span>{t('ui.datatable.noItems')}</span>
-             </div>
+            <div className="flex flex-col items-center justify-center py-12 text-foreground/60">
+              <span className="text-2xl mb-2">📦</span>
+              <span>{t('ui.datatable.noItems')}</span>
+            </div>
           )}
         </div>
       )}

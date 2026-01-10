@@ -59,7 +59,7 @@ export const pt = {
   'constants.ingredients.filters.placeholder.status': 'Todos',
   'constants.ingredients.filters.placeholder.values': '0',
 
-   // Rarity
+  // Rarity
   'constants.rarity.common': 'Comum',
   'constants.rarity.uncommon': 'Incomum',
   'constants.rarity.rare': 'Raro',

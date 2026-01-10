@@ -12,7 +12,11 @@ interface MobileNavProps<T extends string = string> {
   onTabChange: (id: T) => void;
 }
 
-export function MobileNav<T extends string = string>({ tabs, activeTab, onTabChange }: MobileNavProps<T>) {
+export function MobileNav<T extends string = string>({
+  tabs,
+  activeTab,
+  onTabChange
+}: MobileNavProps<T>) {
   return (
     <div className="md:hidden fixed bottom-6 left-6 right-6 z-50">
       <nav className="glass-panel border border-white/40 shadow-2xl rounded-3xl p-2 flex items-center justify-between overflow-x-auto no-scrollbar bg-white/80 backdrop-blur-xl">
@@ -28,7 +32,9 @@ export function MobileNav<T extends string = string>({ tabs, activeTab, onTabCha
             {activeTab === tab.id && (
               <div className="absolute inset-0 bg-totoro-blue rounded-2xl shadow-lg -z-10 animate-bounce-in"></div>
             )}
-            <span className={`text-xl transition-transform duration-300 ${activeTab === tab.id ? 'scale-110' : ''}`}>
+            <span
+              className={`text-xl transition-transform duration-300 ${activeTab === tab.id ? 'scale-110' : ''}`}
+            >
               {tab.icon}
             </span>
           </button>

@@ -9,7 +9,9 @@ interface PageLayoutProps {
 export function PageLayout({ children, className = '', variant = 'default' }: PageLayoutProps) {
   if (variant === 'simple') {
     return (
-      <div className={`max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 transition-all duration-300 ${className}`}>
+      <div
+        className={`max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8 transition-all duration-300 ${className}`}
+      >
         {children}
       </div>
     );

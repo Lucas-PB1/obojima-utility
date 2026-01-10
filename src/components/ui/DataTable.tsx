@@ -73,9 +73,7 @@ export function DataTable<T>({
             <div className="flex items-center gap-3">
               <div className="w-1.5 h-6 bg-totoro-blue rounded-full"></div>
               {icon && <span className="text-2xl">{icon}</span>}
-              <h2 className="text-xl font-black text-totoro-gray tracking-tight">
-                {title}
-              </h2>
+              <h2 className="text-xl font-black text-totoro-gray tracking-tight">{title}</h2>
             </div>
             {action && <div>{action}</div>}
           </div>

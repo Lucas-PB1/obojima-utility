@@ -25,7 +25,7 @@ export function ForageResult({ result }: ForageResultProps) {
     if (lower === 'rara') return 'rare';
     return lower;
   };
-  
+
   const rarityKey = normalizeRarityKey(result.rarity || 'common');
   const englishName = result.ingredient ? getEnglishName(result.ingredient.id, rarityKey) : '';
 
@@ -119,7 +119,7 @@ export function ForageResult({ result }: ForageResultProps) {
 
           <div className="bg-totoro-blue/5 rounded-2xl p-6 mb-6 border border-totoro-blue/10 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 text-4xl opacity-10 font-black italic">
-               {t(`constants.rarity.${rarityKey}`)}
+              {t(`constants.rarity.${rarityKey}`)}
             </div>
             <h5 className="font-black text-foreground text-2xl mb-1 relative z-10">
               {result.ingredient.nome}

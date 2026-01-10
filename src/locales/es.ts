@@ -412,7 +412,8 @@ export const es = {
   'social.trade.noItems': 'No hay ítems disponibles',
   'social.trade.errorQuantityExceeds': 'La cantidad excede el inventario disponible (Máx: {0})',
   'social.friends.removeTitle': 'Eliminar Amigo',
-  'social.friends.removeConfirm': '¿Estás seguro de que deseas eliminar a {name} de tu lista de amigos?',
+  'social.friends.removeConfirm':
+    '¿Estás seguro de que deseas eliminar a {name} de tu lista de amigos?',
   'social.requests.confirmReject': '¿Estás seguro?',
 
   // Migration

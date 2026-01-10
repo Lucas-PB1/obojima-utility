@@ -12,14 +12,6 @@ interface StatsGridProps {
   className?: string;
 }
 
-const colorClasses = {
-  'totoro-blue': 'bg-totoro-blue/20 text-totoro-blue',
-  'totoro-green': 'bg-totoro-green/20 text-totoro-green',
-  'totoro-yellow': 'bg-totoro-yellow/20 text-totoro-yellow',
-  'totoro-gray': 'bg-muted/50 text-foreground/70',
-  'totoro-orange': 'bg-totoro-orange/20 text-totoro-orange'
-};
-
 const textColorClasses = {
   'totoro-blue': 'text-totoro-blue',
   'totoro-green': 'text-totoro-green',
@@ -35,20 +27,18 @@ export function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
     >
       <div className="flex items-center gap-3 mb-6">
         <div className="w-1.5 h-6 bg-totoro-blue rounded-full"></div>
-        <h2 className="text-xl font-black text-totoro-gray tracking-tight">
-          {title}
-        </h2>
+        <h2 className="text-xl font-black text-totoro-gray tracking-tight">{title}</h2>
       </div>
 
-      <div
-        className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 relative z-10"
-      >
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 relative z-10">
         {stats.map((stat, index) => (
           <div key={index} className="flex flex-col items-center text-center">
             <div className={`text-2xl md:text-3xl font-black mb-1 ${textColorClasses[stat.color]}`}>
               {stat.value}
             </div>
-            <div className={`text-[10px] uppercase font-bold tracking-wider leading-tight max-w-[100px] ${textColorClasses[stat.color]}`}>
+            <div
+              className={`text-[10px] uppercase font-bold tracking-wider leading-tight max-w-[100px] ${textColorClasses[stat.color]}`}
+            >
               {stat.label}
             </div>
           </div>

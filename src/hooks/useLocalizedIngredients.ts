@@ -58,21 +58,19 @@ export function useLocalizedIngredients() {
               whimsy: i.whimsy
             })
         );
-        unique.ingredients.forEach(
-          (i) => {
-            const data = {
-              nome: i.nome,
-              descricao: `${i.circunstancia}. Localização: ${i.localizacao}`,
-              combat: 20,
-              utility: 20,
-              whimsy: 20
-            };
-            map[`unico-${i.id}`] = data;
-            if ([15, 16, 17, 18, 19, 21].includes(i.id)) {
-              map[`raro-${i.id}`] = data;
-            }
+        unique.ingredients.forEach((i) => {
+          const data = {
+            nome: i.nome,
+            descricao: `${i.circunstancia}. Localização: ${i.localizacao}`,
+            combat: 20,
+            utility: 20,
+            whimsy: 20
+          };
+          map[`unico-${i.id}`] = data;
+          if ([15, 16, 17, 18, 19, 21].includes(i.id)) {
+            map[`raro-${i.id}`] = data;
           }
-        );
+        });
 
         setIngredientsMap(map);
       } catch (error) {

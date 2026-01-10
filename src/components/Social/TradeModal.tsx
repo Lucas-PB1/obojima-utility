@@ -98,7 +98,9 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-[10px] text-totoro-gray/40 font-bold">
-                          {t(`constants.rarity.${(ing.ingredient.raridade || 'common').toLowerCase()}`)}
+                          {t(
+                            `constants.rarity.${(ing.ingredient.raridade || 'common').toLowerCase()}`
+                          )}
                         </span>
                         <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-mono">
                           {ing.quantity}x

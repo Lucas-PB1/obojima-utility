@@ -169,9 +169,7 @@ export function IngredientCollection() {
           </span>
           <span
             className={`text-[10px] font-black uppercase tracking-wider ${
-              item.used
-                ? 'text-totoro-gray/40'
-                : 'text-[#7ED321]'
+              item.used ? 'text-totoro-gray/40' : 'text-[#7ED321]'
             }`}
           >
             {item.used
