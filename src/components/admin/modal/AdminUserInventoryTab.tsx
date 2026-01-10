@@ -3,6 +3,8 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { CollectedIngredient, Ingredient } from '@/types/ingredients';
 import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 import { Loader2 } from 'lucide-react';
+import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
+import { DataTable, Column } from '@/components/ui';
 
 type AvailableIngredient = Ingredient & { uniqueKey: string };
 
@@ -24,35 +26,184 @@ interface AdminUserInventoryTabProps {
   };
 }
 
-import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
-
 export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
   const { t } = useTranslation();
   const { localizeIngredient } = useLocalizedIngredients();
   const { getEnglishName } = useEnglishIngredientNames();
 
-  return (
-    <div className="glass-panel p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="font-bold text-lg">{t('admin.modal.inventory.title')}</h3>
-        <button
-          onClick={() => data.setIsAddingItem(!data.isAddingItem)}
-          className="text-xs bg-totoro-green/10 text-totoro-green px-3 py-1 rounded hover:bg-totoro-green hover:text-white transition-colors"
+  const columns: Column<CollectedIngredient>[] = [
+    {
+      key: 'ingredient',
+      label: t('admin.modal.inventory.table.item'),
+      render: (_, item) => {
+        const localized = localizeIngredient(item.ingredient);
+        return (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-totoro-green/10 flex items-center justify-center text-lg">
+              🌿
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-totoro-gray text-sm">{localized.nome}</span>
+              <span className="text-[10px] text-totoro-gray/50 italic">
+                {getEnglishName(item.ingredient.id, item.ingredient.raridade)}
+              </span>
+            </div>
+          </div>
+        );
+      }
+    },
+    {
+      key: 'used',
+      label: t('admin.modal.inventory.table.status'),
+      render: (used) => (
+        <span
+          className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+            used ? 'bg-totoro-gray/10 text-totoro-gray/50' : 'bg-totoro-green/10 text-totoro-green'
+          }`}
         >
-          {data.isAddingItem
-            ? t('admin.modal.inventory.add.cancel')
-            : t('admin.modal.inventory.add.button')}
-        </button>
-      </div>
+          {used
+            ? t('admin.modal.inventory.status.used')
+            : t('admin.modal.inventory.status.available')}
+        </span>
+      )
+    },
+    {
+      key: 'collectedAt',
+      label: t('admin.modal.inventory.table.acquired'),
+      render: (_, item) => (
+        <span className="text-xs text-totoro-gray/70 font-medium">
+          {item.collectedAt ? new Date(item.collectedAt).toLocaleDateString() : '-'}
+        </span>
+      )
+    },
+    {
+      key: 'id', // Actions column
+      label: t('admin.modal.inventory.table.actions'),
+      render: (_, item) => {
+        const localized = localizeIngredient(item.ingredient);
+        return (
+          <div className="flex items-center justify-end gap-2">
+            <div className="flex items-center bg-white border border-totoro-gray/10 rounded-lg overflow-hidden shadow-sm">
+              <button
+                className="px-2 py-1 hover:bg-totoro-gray/5 text-xs font-bold text-totoro-gray border-r border-totoro-gray/10 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  data.handleUpdateQuantity(item.id, item.quantity, -1);
+                }}
+              >
+                -
+              </button>
+              <span className="px-2 text-xs font-black min-w-[24px] text-center">
+                {item.quantity}
+              </span>
+              <button
+                className="px-2 py-1 hover:bg-totoro-gray/5 text-xs font-bold text-totoro-gray border-l border-totoro-gray/10 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  data.handleUpdateQuantity(item.id, item.quantity, 1);
+                }}
+              >
+                +
+              </button>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                data.handleDeleteIngredient(
+                  item.id,
+                  `${localized.nome} (${getEnglishName(item.ingredient.id) || ''})`
+                );
+              }}
+              className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+              title={t('admin.modal.actions.remove')}
+            >
+              🗑️
+            </button>
+          </div>
+        );
+      }
+    }
+  ];
 
+  const mobileRenderer = (item: CollectedIngredient) => {
+    const localized = localizeIngredient(item.ingredient);
+    return (
+      <div className="flex items-center justify-between p-4 bg-white/50 rounded-2xl border border-white shadow-sm mb-3">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-[18px] bg-white flex items-center justify-center text-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-totoro-blue/5">
+            🌿
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-bold text-totoro-gray text-sm leading-tight">
+              {localized.nome}
+            </span>
+            <span className="text-[10px] text-totoro-gray/50 italic">
+              {getEnglishName(item.ingredient.id, item.ingredient.raridade)}
+            </span>
+            <span
+               className={`text-[9px] font-black uppercase tracking-wider w-fit ${
+                 item.used ? 'text-totoro-gray/40' : 'text-totoro-green'
+               }`}
+             >
+               {item.used
+                 ? t('admin.modal.inventory.status.used')
+                 : t('admin.modal.inventory.status.available')}
+             </span>
+          </div>
+        </div>
+        
+        <div className="flex flex-col items-end gap-3">
+            <div className="flex items-center bg-white border border-totoro-gray/10 rounded-lg overflow-hidden shadow-sm">
+              <button
+                className="w-8 h-8 flex items-center justify-center hover:bg-totoro-gray/5 text-sm font-bold text-totoro-gray border-r border-totoro-gray/10 active:bg-totoro-gray/10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  data.handleUpdateQuantity(item.id, item.quantity, -1);
+                }}
+              >
+                -
+              </button>
+              <span className="w-8 text-center text-sm font-black">
+                {item.quantity}
+              </span>
+              <button
+                className="w-8 h-8 flex items-center justify-center hover:bg-totoro-gray/5 text-sm font-bold text-totoro-gray border-l border-totoro-gray/10 active:bg-totoro-gray/10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  data.handleUpdateQuantity(item.id, item.quantity, 1);
+                }}
+              >
+                +
+              </button>
+            </div>
+            <button
+               onClick={(e) => {
+                  e.stopPropagation();
+                  data.handleDeleteIngredient(
+                    item.id,
+                    `${localized.nome} (${getEnglishName(item.ingredient.id) || ''})`
+                  );
+                }}
+                className="flex items-center gap-1 px-2 py-1 bg-red-50 text-red-500 rounded-lg text-[10px] font-bold uppercase tracking-wider hover:bg-red-100 transition-colors"
+             >
+               <span>🗑️</span> {t('admin.modal.actions.remove')}
+             </button>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="space-y-4">
       {data.isAddingItem && (
-        <div className="bg-white/50 p-4 rounded-lg mb-4 flex gap-2 items-end">
+        <div className="glass-panel p-4 animate-in fade-in slide-in-from-top-2 duration-300">
+           <div className="flex gap-2 items-end">
           <div className="flex-1">
-            <label className="text-xs font-medium block mb-1">
+            <label className="text-xs font-bold text-totoro-gray mb-1.5 block uppercase tracking-wider">
               {t('admin.modal.inventory.add.label')}
             </label>
             <select
-              className="w-full text-sm p-2 rounded border border-gray-200"
+              className="w-full text-sm p-2.5 rounded-xl border border-totoro-gray/20 bg-white/50 focus:ring-2 focus:ring-totoro-green/20 outline-none transition-all"
               value={data.selectedUniqueKey}
               onChange={(e) => data.setSelectedUniqueKey(e.target.value)}
             >
@@ -64,14 +215,14 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
               ))}
             </select>
           </div>
-          <div className="w-20">
-            <label className="text-xs font-medium block mb-1">
+          <div className="w-24">
+            <label className="text-xs font-bold text-totoro-gray mb-1.5 block uppercase tracking-wider">
               {t('admin.modal.inventory.add.qty')}
             </label>
             <input
               type="number"
               min="1"
-              className="w-full text-sm p-2 rounded border border-gray-200"
+              className="w-full text-sm p-2.5 rounded-xl border border-totoro-gray/20 bg-white/50 focus:ring-2 focus:ring-totoro-green/20 outline-none transition-all text-center font-bold"
               value={data.addQuantity}
               onChange={(e) => data.setAddQuantity(Number(e.target.value))}
             />
@@ -79,97 +230,45 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
           <button
             onClick={data.handleAddItem}
             disabled={!data.selectedUniqueKey || data.submitting}
-            className="bg-totoro-green text-white px-4 py-2 rounded text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-totoro-green text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-totoro-green/20 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 disabled:shadow-none transition-all"
           >
-            {data.submitting ? t('ui.states.loading') : t('admin.modal.inventory.add.confirm')}
+            {data.submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : t('admin.modal.inventory.add.confirm')}
           </button>
+          </div>
         </div>
       )}
 
-      <div className="space-y-2 relative min-h-[100px]">
-        {data.loading && (
-          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
-            <Loader2 className="w-8 h-8 animate-spin text-totoro-green" />
+      {data.loading && (
+          <div className="py-12 flex justify-center">
+             <Loader2 className="w-8 h-8 animate-spin text-totoro-green" />
           </div>
-        )}
+      )}
 
-        <div className="grid grid-cols-12 gap-2 px-2 py-1 text-xs font-medium text-gray-500 uppercase">
-          <div className="col-span-4">{t('admin.modal.inventory.table.item')}</div>
-          <div className="col-span-3 text-center">{t('admin.modal.inventory.table.status')}</div>
-          <div className="col-span-3">{t('admin.modal.inventory.table.acquired')}</div>
-          <div className="col-span-2 text-right">{t('admin.modal.inventory.table.actions')}</div>
-        </div>
-
-        {data.ingredients.length === 0 ? (
-          <p className="text-center text-gray-500 py-8">{t('admin.modal.empty.ingredients')}</p>
-        ) : (
-          data.ingredients.map((item) => {
-            const localized = localizeIngredient(item.ingredient);
-            return (
-              <div
-                key={item.id}
-                className="bg-white/40 p-1.5 rounded-lg grid grid-cols-12 gap-1 items-center hover:bg-white/60 transition-colors"
-              >
-                <div className="col-span-4 flex items-center gap-2 overflow-hidden">
-                  <span className="text-xl">🌿</span>
-                  <div className="flex flex-col overflow-hidden">
-                    <span className="font-medium truncate text-sm" title={localized.nome}>
-                      {localized.nome}
-                    </span>
-                    <span className="text-[10px] text-gray-400 italic truncate">
-                      {getEnglishName(item.ingredient.id, item.ingredient.raridade)}
-                    </span>
-                  </div>
-                </div>
-                <div className="col-span-3 flex justify-center">
-                  <span
-                    className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${item.used ? 'bg-gray-200 text-gray-500' : 'bg-green-100 text-green-700'}`}
-                  >
-                    {item.used
-                      ? t('admin.modal.inventory.status.used')
-                      : t('admin.modal.inventory.status.available')}
-                  </span>
-                </div>
-                <div className="col-span-3 text-xs text-gray-600 truncate">
-                  {item.collectedAt ? new Date(item.collectedAt).toLocaleDateString() : '-'}
-                </div>
-                <div className="col-span-2 flex items-center justify-end gap-1">
-                  <div className="flex items-center bg-white/50 rounded overflow-hidden">
-                    <button
-                      className="px-2 py-1 hover:bg-gray-200 text-xs"
-                      onClick={() => data.handleUpdateQuantity(item.id, item.quantity, -1)}
-                    >
-                      -
-                    </button>
-                    <span className="px-1 text-xs font-medium min-w-[20px] text-center">
-                      {item.quantity}
-                    </span>
-                    <button
-                      className="px-2 py-1 hover:bg-gray-200 text-xs"
-                      onClick={() => data.handleUpdateQuantity(item.id, item.quantity, 1)}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      data.handleDeleteIngredient(
-                        item.id,
-                        `${localized.nome} (${getEnglishName(item.ingredient.id) || ''})`
-                      );
-                    }}
-                    className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                    title={t('admin.modal.actions.remove')}
-                  >
-                    🗑️
-                  </button>
-                </div>
-              </div>
-            );
-          })
-        )}
-      </div>
+      {!data.loading && (
+         <DataTable
+           title={t('admin.modal.inventory.title')}
+           icon="🎒"
+           action={
+             <button
+               onClick={() => data.setIsAddingItem(!data.isAddingItem)}
+               className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                 data.isAddingItem
+                   ? 'bg-totoro-gray/10 text-totoro-gray hover:bg-totoro-gray/20'
+                   : 'bg-totoro-green/10 text-totoro-green hover:bg-totoro-green hover:text-white'
+               }`}
+             >
+               {data.isAddingItem
+                 ? t('admin.modal.inventory.add.cancel')
+                 : t('admin.modal.inventory.add.button')}
+             </button>
+           }
+           data={data.ingredients}
+           columns={columns}
+           mobileRenderer={mobileRenderer}
+           searchKeys={['ingredient.nome']}
+           searchPlaceholder={t('ingredients.search.placeholder')}
+         />
+      )}
     </div>
   );
 }

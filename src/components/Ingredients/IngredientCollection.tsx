@@ -143,6 +143,46 @@ export function IngredientCollection() {
     }
   ];
 
+  const mobileRenderer = (item: CollectedIngredient) => {
+    const localized = localizeIngredient(item.ingredient);
+    return (
+      <div
+        onClick={() => handleIngredientClick(localized)}
+        className="flex items-center justify-between p-5 hover:bg-totoro-blue/5 transition-colors active:bg-totoro-blue/10 cursor-pointer group"
+      >
+        <div className="flex items-center gap-5">
+          <div className="w-14 h-14 rounded-[18px] bg-white flex items-center justify-center text-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-totoro-blue/5 group-hover:scale-105 transition-transform duration-300">
+            🌿
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="font-bold text-totoro-gray text-[15px] leading-tight group-hover:text-totoro-blue transition-colors">
+              {localized.nome}
+            </span>
+            <span className="text-[11px] text-totoro-gray/50 font-black uppercase tracking-widest">
+              {localized.raridade}
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-0.5">
+          <span className="font-black text-2xl text-totoro-gray/90 tabular-nums">
+            {item.quantity}
+          </span>
+          <span
+            className={`text-[10px] font-black uppercase tracking-wider ${
+              item.used
+                ? 'text-totoro-gray/40'
+                : 'text-[#7ED321]'
+            }`}
+          >
+            {item.used
+              ? t('constants.ingredients.status.used')
+              : t('constants.ingredients.status.available')}
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -161,6 +201,9 @@ export function IngredientCollection() {
         searchPlaceholder={t('ingredients.search.placeholder')}
         itemsPerPage={15}
         className="mb-8"
+        title={t('ui.datatable.search')}
+        icon="🔍"
+        mobileRenderer={mobileRenderer}
       />
 
       <IngredientModal

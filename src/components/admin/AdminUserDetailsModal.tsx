@@ -62,13 +62,13 @@ export function AdminUserDetailsModal({
   const TabButton = ({ id, label, icon }: { id: string; label: string; icon: string }) => (
     <button
       onClick={() => setActiveTab(id)}
-      className={`px-4 py-3 font-medium text-sm transition-all duration-300 border-b-2 relative flex items-center justify-center gap-2 ${
+      className={`px-4 py-2 font-black text-xs uppercase tracking-wider transition-all duration-300 rounded-xl whitespace-nowrap flex items-center gap-2 ${
         activeTab === id
-          ? 'text-totoro-blue border-totoro-blue bg-totoro-blue/10'
-          : 'text-totoro-gray border-transparent hover:text-totoro-blue hover:border-totoro-blue/30 hover:bg-totoro-blue/5'
+          ? 'text-white bg-totoro-blue shadow-lg shadow-totoro-blue/20'
+          : 'text-totoro-gray/60 hover:text-totoro-blue hover:bg-totoro-blue/5'
       }`}
     >
-      <span>{icon}</span>
+      <span className="text-sm">{icon}</span>
       {label}
     </button>
   );
@@ -82,7 +82,7 @@ export function AdminUserDetailsModal({
     >
       <div className="w-full h-[85vh] flex flex-col">
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="grid w-full grid-cols-4 mb-4 border-b border-white/20 shrink-0">
+          <div className="flex w-full overflow-x-auto no-scrollbar md:grid md:grid-cols-4 mb-4 border-b border-white/20 shrink-0 gap-2 px-2 pb-1">
             <TabButton id="overview" label={t('admin.modal.tabs.overview')} icon="👤" />
             <TabButton id="inventory" label={t('admin.modal.tabs.inventory')} icon="🎒" />
             <TabButton id="potions" label={t('admin.modal.tabs.potions')} icon="🧪" />

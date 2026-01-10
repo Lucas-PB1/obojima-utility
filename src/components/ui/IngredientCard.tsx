@@ -35,13 +35,13 @@ export function IngredientCard({
 
   return (
     <div
-      className={`glass-panel p-6 rounded-3xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden group ${getBadgeClass()}`}
+      className={`glass-panel p-4 md:p-6 rounded-3xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden group ${getBadgeClass()}`}
     >
       <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
       <div className="relative z-10">
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex justify-between items-start mb-0 md:mb-2">
           <div>
-            <h3 className="font-serif font-bold text-foreground text-xl leading-tight group-hover:text-totoro-blue transition-colors">
+            <h3 className="font-serif font-bold text-foreground text-lg md:text-xl leading-tight group-hover:text-totoro-blue transition-colors">
               {ingredient.ingredient.nome}
             </h3>
             <span className="text-xs text-foreground/50 italic font-medium block mt-0.5">
@@ -59,11 +59,11 @@ export function IngredientCard({
           </span>
         </div>
 
-        <p className="text-sm text-foreground/60 mb-6 line-clamp-3 leading-relaxed italic">
+        <p className="text-sm text-foreground/60 mb-6 line-clamp-3 leading-relaxed italic hidden md:block">
           &quot;{ingredient.ingredient.descricao}&quot;
         </p>
 
-        <div className="grid grid-cols-3 gap-2 mb-6">
+        <div className="grid-cols-3 gap-2 mb-6 hidden md:grid">
           <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-orange/20 shadow-sm font-sans">
             <span className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</span>
             <span className="text-xl font-bold text-totoro-orange font-mono">
@@ -84,7 +84,7 @@ export function IngredientCard({
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/30">
+        <div className="flex items-center justify-between mt-auto pt-0 md:pt-4 md:border-t border-border/30">
           <p className="text-[10px] font-bold text-foreground/30 uppercase tracking-wider">
             {ingredient.collectedAt.toLocaleDateString('pt-BR')}
           </p>

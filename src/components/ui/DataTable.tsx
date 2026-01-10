@@ -18,6 +18,10 @@ interface DataTableProps<T> {
   itemsPerPage?: number;
   className?: string;
   onRowClick?: (item: T) => void;
+  title?: string;
+  icon?: string;
+  mobileRenderer?: (item: T) => React.ReactNode;
+  action?: React.ReactNode;
 }
 
 export function DataTable<T>({
@@ -28,7 +32,11 @@ export function DataTable<T>({
   searchPlaceholder,
   itemsPerPage = 10,
   className = '',
-  onRowClick
+  onRowClick,
+  title,
+  icon,
+  mobileRenderer,
+  action
 }: DataTableProps<T>) {
   const { t } = useTranslation();
   const {
@@ -57,9 +65,21 @@ export function DataTable<T>({
 
   return (
     <div
-      className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-border/40 overflow-hidden ${className}`}
+      className={`glass-panel rounded-3xl shadow-xl border border-white/60 overflow-hidden bg-white/80 backdrop-blur-xl ${className}`}
     >
-      <div className="p-6 border-b border-border/20">
+      <div className="p-6 border-b border-totoro-blue/5">
+        {title && (
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-6 bg-totoro-blue rounded-full"></div>
+              {icon && <span className="text-2xl">{icon}</span>}
+              <h2 className="text-xl font-black text-totoro-gray tracking-tight">
+                {title}
+              </h2>
+            </div>
+            {action && <div>{action}</div>}
+          </div>
+        )}
         <DataTableFilters
           searchKeys={searchKeys}
           searchTerm={searchTerm}
@@ -97,6 +117,7 @@ export function DataTable<T>({
         startIndex={startIndex}
         itemsPerPage={itemsPerPage}
         onRowClick={onRowClick}
+        mobileRenderer={mobileRenderer}
       />
 
       <DataTablePagination

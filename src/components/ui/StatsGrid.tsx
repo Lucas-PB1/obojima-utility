@@ -31,25 +31,26 @@ const textColorClasses = {
 export function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
   return (
     <div
-      className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-8 border border-border/40 relative overflow-hidden group ${className}`}
+      className={`glass-panel rounded-3xl shadow-xl p-6 bg-white/80 backdrop-blur-xl border border-white/60 relative overflow-hidden ${className}`}
     >
-      <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
-      <h2 className="text-xl font-black text-foreground mb-8 tracking-tight flex items-center gap-3 relative z-10">
-        <span className="w-1.5 h-6 bg-totoro-blue rounded-full"></span>
-        {title}
-      </h2>
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-1.5 h-6 bg-totoro-blue rounded-full"></div>
+        <h2 className="text-xl font-black text-totoro-gray tracking-tight">
+          {title}
+        </h2>
+      </div>
+
       <div
-        className="grid gap-4 relative z-10"
-        style={{
-          gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`
-        }}
+        className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 relative z-10"
       >
         {stats.map((stat, index) => (
-          <div key={index} className={`text-center p-4 ${colorClasses[stat.color]} rounded-lg`}>
-            <div className={`text-2xl font-bold ${colorClasses[stat.color].split(' ')[1]}`}>
+          <div key={index} className="flex flex-col items-center text-center">
+            <div className={`text-2xl md:text-3xl font-black mb-1 ${textColorClasses[stat.color]}`}>
               {stat.value}
             </div>
-            <div className={`text-sm ${textColorClasses[stat.color]}`}>{stat.label}</div>
+            <div className={`text-[10px] uppercase font-bold tracking-wider leading-tight max-w-[100px] ${textColorClasses[stat.color]}`}>
+              {stat.label}
+            </div>
           </div>
         ))}
       </div>

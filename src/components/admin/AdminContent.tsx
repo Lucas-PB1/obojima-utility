@@ -12,7 +12,7 @@ export function AdminContent() {
 
   return (
     <AdminRoute>
-      <div className="min-h-screen bg-mesh p-8 pt-24 font-sans text-foreground animate-in fade-in duration-500">
+      <div className="min-h-screen bg-mesh px-4 pt-24 pb-8 md:p-8 md:pt-24 font-sans text-foreground animate-in fade-in duration-500">
         <div className="max-w-7xl mx-auto space-y-6">
           <PageHeader title={t('admin.title')} subtitle={t('admin.subtitle')} icon="🛡️" />
 

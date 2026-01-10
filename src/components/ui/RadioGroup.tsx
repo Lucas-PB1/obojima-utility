@@ -18,9 +18,9 @@ export function RadioGroup({ value, onChange, options, label, className = '' }: 
   return (
     <div className={className}>
       {label && <label className="block text-sm font-medium text-totoro-gray mb-2">{label}</label>}
-      <div className="flex space-x-4">
+      <div className="flex flex-wrap gap-4">
         {options.map((option) => (
-          <label key={option.value} className="flex items-center">
+          <label key={option.value} className="flex items-center min-w-fit">
             <input
               type="radio"
               value={option.value}

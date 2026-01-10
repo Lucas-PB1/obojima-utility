@@ -16,3 +16,4 @@ export { StatsGrid } from './StatsGrid';
 export { TabNavigation } from './TabNavigation';
 export { ThemeSwitch } from './ThemeSwitch';
 export { ThemeToggle } from './ThemeToggle';
+export { MobileNav } from './MobileNav';

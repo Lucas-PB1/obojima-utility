@@ -4,8 +4,8 @@ import { useHome } from '@/hooks/useHome';
 import { SocialHub } from '@/components/Social';
 import { ActivityLog } from '@/components/System';
 import { useSettings } from '@/hooks/useSettings';
-import { ForageSystem } from '@/components/forage/ForageSystem';
-import { PageLayout, Button } from '@/components/ui';
+import { ForageSystem } from '@/components/Forage/ForageSystem';
+import { PageLayout, Button, MobileNav } from '@/components/ui';
 import { useTranslation } from '@/hooks/useTranslation';
 import { IngredientCollection } from '@/components/Ingredients';
 import { PotionBrewing, CreatedPotionCollection, RecipeCollection } from '@/components/Potions';
@@ -57,10 +57,10 @@ export default function HomeContent() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-serif font-bold text-totoro-gray tracking-tight transition-all duration-300">
+              <h1 className="text-xl md:text-3xl font-serif font-bold text-totoro-gray tracking-tight transition-all duration-300">
                 🌿 {t('app.header.title')}
               </h1>
-              <p className="text-[10px] font-semibold text-totoro-blue/70 uppercase tracking-[0.2em] font-sans -mt-1">
+              <p className="text-[8px] md:text-[10px] font-semibold text-totoro-blue/70 uppercase tracking-[0.2em] font-sans -mt-1">
                 {t('app.header.subtitle')}
               </p>
             </div>
@@ -95,7 +95,7 @@ export default function HomeContent() {
                       👤
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-semibold text-totoro-gray max-w-[120px] sm:max-w-[180px] truncate font-sans">
+                      <span className="text-xs font-semibold text-totoro-gray max-w-[80px] sm:max-w-[180px] truncate font-sans">
                         {user.email}
                       </span>
                     </div>
@@ -113,14 +113,14 @@ export default function HomeContent() {
             </div>
           </div>
 
-          <nav className="mt-6 flex items-center justify-center overflow-x-auto pb-1 no-scrollbar">
+          <nav className="mt-6 hidden md:flex items-center justify-center overflow-x-auto pb-1 no-scrollbar">
             <div className="flex p-1.5 bg-totoro-blue/10 rounded-2xl border border-totoro-blue/10 backdrop-blur-md">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => handleTabChange(tab.id)}
                   className={`
-                    relative px-6 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-500 select-none font-sans
+                    relative px-4 py-2 md:px-6 md:py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-500 select-none font-sans whitespace-nowrap
                     ${
                       activeTab === tab.id
                         ? 'text-white shadow-md'
@@ -142,7 +142,7 @@ export default function HomeContent() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 mb-8 md:mb-0">
         <PageLayout variant="simple" className="!py-4">
           {activeTab === 'forage' && (
             <ForageSystem onIngredientCollected={handleIngredientCollected} />
@@ -164,7 +164,9 @@ export default function HomeContent() {
         </PageLayout>
       </div>
 
-      <footer className="py-6 border-t border-totoro-blue/5">
+      <MobileNav tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
+
+      <footer className="pt-6 pb-32 md:py-6 border-t border-totoro-blue/5">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-[10px] font-black text-totoro-blue/20 uppercase tracking-[0.4em]">
             {t('app.footer.text')}

@@ -11,6 +11,7 @@ interface DataTableContentProps<T> {
   startIndex: number;
   itemsPerPage: number;
   onRowClick?: (item: T) => void;
+  mobileRenderer?: (item: T) => React.ReactNode;
 }
 
 export function DataTableContent<T>({
@@ -19,13 +20,30 @@ export function DataTableContent<T>({
   paginatedData,
   sortConfig,
   onSort,
-  onRowClick
+  onRowClick,
+  mobileRenderer
 }: DataTableContentProps<T>) {
   const { t } = useTranslation();
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full">
+      {/* Mobile View */}
+      {mobileRenderer && (
+        <div className="md:hidden flex flex-col divide-y divide-totoro-blue/5">
+          {paginatedData.map((item, index) => (
+            <div key={index}>{mobileRenderer(item)}</div>
+          ))}
+          {paginatedData.length === 0 && (
+             <div className="flex flex-col items-center justify-center py-12 text-foreground/60">
+                <span className="text-2xl mb-2">📦</span>
+                <span>{t('ui.datatable.noItems')}</span>
+             </div>
+          )}
+        </div>
+      )}
+
+      {/* Desktop View */}
+      <table className={`w-full ${mobileRenderer ? 'hidden md:table' : ''}`}>
         <thead className="bg-muted/20">
           <tr>
             {columns.map((column) => (
