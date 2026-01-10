@@ -25,7 +25,12 @@ export function useEnglishIngredientNames() {
         common.ingredients.forEach((i) => (names[`comum-${i.id}`] = i.nome));
         uncommon.ingredients.forEach((i) => (names[`incomum-${i.id}`] = i.nome));
         rare.ingredients.forEach((i) => (names[`raro-${i.id}`] = i.nome));
-        unique.ingredients.forEach((i) => (names[`unico-${i.id}`] = i.nome));
+        unique.ingredients.forEach((i) => {
+          names[`unico-${i.id}`] = i.nome;
+          if ([15, 16, 17, 18, 19, 21].includes(i.id)) {
+            names[`raro-${i.id}`] = i.nome;
+          }
+        });
 
         setEnglishNames(names);
       } catch (error) {
@@ -43,9 +48,11 @@ export function useEnglishIngredientNames() {
   }, []);
 
   const getEnglishName = (id: number, rarity?: string) => {
-    // If no rarity provided, try to find in common first (backwards compatibilityish, but risky)
-    // Better to require it, but for now defaults to 'comum' if undefined to match previous behavior logic which likely assumed common or just collided.
-    const key = `${rarity || 'comum'}-${id}`;
+    let r = (rarity || 'comum').toLowerCase();
+    if (r === 'unique') r = 'unico';
+    if (r === 'ú' || r === 'único') r = 'unico';
+
+    const key = `${r}-${id}`;
     return englishNames[key];
   };
 

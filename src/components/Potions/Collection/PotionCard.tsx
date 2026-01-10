@@ -39,7 +39,7 @@ export function PotionCard({ potion, onClick, onUse }: PotionCardProps) {
             #{potion.potion.id} - {t(POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].label)}
           </div>
           <div
-            className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20 ${
+            className={`inline-block px-2 py-1 rounded-lg text-xs font-bold tracking-wider backdrop-blur-md border border-white/20 ${
               potion.potion.raridade === 'Comum'
                 ? 'bg-totoro-green/20 text-totoro-green'
                 : potion.potion.raridade === 'Incomum'
@@ -47,7 +47,7 @@ export function PotionCard({ potion, onClick, onUse }: PotionCardProps) {
                   : 'bg-totoro-orange/20 text-totoro-orange'
             }`}
           >
-            {potion.potion.raridade}
+            {t(`constants.rarity.${potion.potion.raridade.toLowerCase()}`)}
           </div>
         </div>
 

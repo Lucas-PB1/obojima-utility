@@ -59,7 +59,7 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
               <option value="">{t('admin.modal.inventory.add.select_placeholder')}</option>
               {data.availableIngredients.map((ing) => (
                 <option key={ing.uniqueKey} value={ing.uniqueKey}>
-                  {ing.nome} ({ing.raridade})
+                  {ing.nome} ({t(`constants.rarity.${(ing.raridade || 'common').toLowerCase()}`)})
                 </option>
               ))}
             </select>
@@ -108,7 +108,7 @@ export function AdminUserInventoryTab({ data }: AdminUserInventoryTabProps) {
             return (
               <div
                 key={item.id}
-                className="bg-white/40 p-2 rounded-lg grid grid-cols-12 gap-2 items-center hover:bg-white/60 transition-colors"
+                className="bg-white/40 p-1.5 rounded-lg grid grid-cols-12 gap-1 items-center hover:bg-white/60 transition-colors"
               >
                 <div className="col-span-4 flex items-center gap-2 overflow-hidden">
                   <span className="text-xl">🌿</span>

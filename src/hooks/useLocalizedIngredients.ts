@@ -17,10 +17,11 @@ export function useLocalizedIngredients() {
   React.useEffect(() => {
     const loadIngredientsMap = async () => {
       try {
-        const [common, uncommon, rare] = await Promise.all([
+        const [common, uncommon, rare, unique] = await Promise.all([
           ingredientsService.loadCommonIngredients(language),
           ingredientsService.loadUncommonIngredients(language),
-          ingredientsService.loadRareIngredients(language)
+          ingredientsService.loadRareIngredients(language),
+          ingredientsService.loadUniqueIngredients(language)
         ]);
 
         const map: Record<
@@ -56,6 +57,21 @@ export function useLocalizedIngredients() {
               utility: i.utility,
               whimsy: i.whimsy
             })
+        );
+        unique.ingredients.forEach(
+          (i) => {
+            const data = {
+              nome: i.nome,
+              descricao: `${i.circunstancia}. Localização: ${i.localizacao}`,
+              combat: 20,
+              utility: 20,
+              whimsy: 20
+            };
+            map[`unico-${i.id}`] = data;
+            if ([15, 16, 17, 18, 19, 21].includes(i.id)) {
+              map[`raro-${i.id}`] = data;
+            }
+          }
         );
 
         setIngredientsMap(map);

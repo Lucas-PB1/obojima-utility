@@ -19,10 +19,25 @@ export class TradeService {
   async sendItems(toUserId: string, items: TradeItem[]): Promise<void> {
     const fromUserId = this.getUserId();
     if (!fromUserId) throw new Error('Not authenticated');
+    if (!toUserId) throw new Error('Invalid receiver ID');
+    if (!items || items.length === 0) throw new Error('No items to send');
+
+    const cleanItems = items.map((item) => {
+      if (!item.id || !item.name || !item.type || item.quantity === undefined) {
+        throw new Error(`Invalid item data: ${JSON.stringify(item)}`);
+      }
+      return {
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        quantity: item.quantity,
+        image: item.image || null,
+        rarity: item.rarity || null
+      };
+    });
 
     await runTransaction(db, async (transaction) => {
-      // 1. Prepare data and perform Sender Reads
-      const senderOps = items.map((item) => {
+      const senderOps = cleanItems.map((item) => {
         const senderCollectionPath =
           item.type === 'ingredient'
             ? `users/${fromUserId}/collectedIngredients`
@@ -123,7 +138,7 @@ export class TradeService {
       transaction.set(tradeRef, {
         fromUserId,
         toUserId,
-        items: items,
+        items: cleanItems,
         timestamp: Timestamp.now(),
         status: 'completed'
       });

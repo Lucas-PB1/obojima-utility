@@ -1281,7 +1281,7 @@
       }
     ]
   },
-  "unique_ingredients": {
+  "unique_rare_ingredients": {
     "descricao": "Ingredientes raros únicos que no encajan en regiones específicas",
     "categoria": "raro_unico",
     "dice": "d7",

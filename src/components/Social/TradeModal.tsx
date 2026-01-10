@@ -76,7 +76,7 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
             <label className="text-xs font-bold text-totoro-gray/60 uppercase tracking-wider mb-2 block">
               {t('social.trade.selectItem')}
             </label>
-            <div className="grid grid-cols-1 gap-2 max-h-[150px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20">
+            <div className="grid grid-cols-1 max-h-[150px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20">
               {itemType === 'ingredient' ? (
                 availableIngredients.length > 0 ? (
                   availableIngredients.map((ing) => (
@@ -97,8 +97,8 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-totoro-gray/40 uppercase font-bold">
-                          {ing.ingredient.raridade || 'comum'}
+                        <span className="text-[10px] text-totoro-gray/40 font-bold">
+                          {t(`constants.rarity.${(ing.ingredient.raridade || 'common').toLowerCase()}`)}
                         </span>
                         <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-mono">
                           {ing.quantity}x
@@ -128,8 +128,8 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] text-totoro-gray/40 uppercase font-bold">
-                        {pot.potion.raridade}
+                      <span className="text-[10px] text-totoro-gray/40 font-bold">
+                        {t(`constants.rarity.${(pot.potion.raridade || 'common').toLowerCase()}`)}
                       </span>
                       <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-mono">
                         {pot.quantity}x

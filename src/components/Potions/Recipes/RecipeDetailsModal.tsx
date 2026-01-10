@@ -25,7 +25,7 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
           </h1>
 
           <div
-            className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 shadow-sm ${
+            className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black tracking-widest border border-border/40 shadow-sm ${
               recipe.resultingPotion.raridade === 'Comum'
                 ? 'bg-totoro-green/20 text-totoro-green'
                 : recipe.resultingPotion.raridade === 'Incomum'
@@ -33,7 +33,7 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
                   : 'bg-totoro-orange/20 text-totoro-orange'
             }`}
           >
-            {recipe.resultingPotion.raridade}
+            {t(`constants.rarity.${recipe.resultingPotion.raridade.toLowerCase()}`)}
           </div>
         </div>
 

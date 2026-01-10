@@ -39,7 +39,7 @@ export function PotionDetailsModal({
 
           <div className="flex justify-center gap-3">
             <div
-              className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 shadow-sm ${
+              className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black tracking-widest border border-border/40 shadow-sm ${
                 potion.potion.raridade === 'Comum'
                   ? 'bg-totoro-green/20 text-totoro-green'
                   : potion.potion.raridade === 'Incomum'
@@ -47,7 +47,7 @@ export function PotionDetailsModal({
                     : 'bg-totoro-orange/20 text-totoro-orange'
               }`}
             >
-              {potion.potion.raridade}
+              {t(`constants.rarity.${potion.potion.raridade.toLowerCase()}`)}
             </div>
             <div
               className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 shadow-sm ${POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].classes}`}

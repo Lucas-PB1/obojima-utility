@@ -36,7 +36,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                       : 'bg-purple-100 text-purple-800'
                 }`}
               >
-                {result.recipe.resultingPotion.raridade}
+                {t(`constants.rarity.${result.recipe.resultingPotion.raridade.toLowerCase()}`)}
               </div>
             </div>
 
@@ -56,7 +56,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                       {result.remainsPotion.nome}
                     </div>
                     <div className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-3">
-                      {result.remainsPotion.raridade}
+                      {t(`constants.rarity.${result.remainsPotion.raridade.toLowerCase()}`)}
                     </div>
                     <p className="text-xs text-gray-700">{result.remainsPotion.descricao}</p>
                   </div>
@@ -90,7 +90,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                             : 'bg-purple-100 text-purple-800'
                       }`}
                     >
-                      {result.secondPotion.raridade}
+                      {t(`constants.rarity.${result.secondPotion.raridade.toLowerCase()}`)}
                     </div>
                     <p className="text-xs text-gray-700">{result.secondPotion.descricao}</p>
                   </div>
@@ -127,7 +127,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                     >
                       {t(POTION_CATEGORY_CONFIG[attr].label)}
                     </div>
-                    <div className="text-lg font-bold">
+                    <div className="text-lg font-bold text-gray-900">
                       {attr === 'combat'
                         ? result.recipe.combatScore
                         : attr === 'utility'

@@ -36,7 +36,7 @@ export function AdminUserPotionsTab({ data }: AdminUserPotionsTabProps) {
 
   const renderOption = (pot: AvailablePotion, index: number) => (
     <option key={pot.uniqueKey} value={pot.uniqueKey}>
-      {index + 1}. {pot.nome} ({pot.raridade})
+      {index + 1}. {pot.nome} ({t(`constants.rarity.${pot.raridade.toLowerCase()}`)})
     </option>
   );
 

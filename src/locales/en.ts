@@ -59,6 +59,17 @@ export const en = {
   'constants.ingredients.filters.placeholder.status': 'All',
   'constants.ingredients.filters.placeholder.values': '0',
 
+  // Rarity
+  'constants.rarity.common': 'Common',
+  'constants.rarity.uncommon': 'Uncommon',
+  'constants.rarity.rare': 'Rare',
+  'constants.rarity.unique': 'Unique',
+  'constants.rarity.comum': 'Common',
+  'constants.rarity.incomum': 'Uncommon',
+  'constants.rarity.raro': 'Rare',
+  'constants.rarity.rara': 'Rare',
+  'constants.rarity.unico': 'Unique',
+
   // Shared UI Actions
   'ui.actions.save': '💾 Save',
   'ui.states.loading': 'Loading...',

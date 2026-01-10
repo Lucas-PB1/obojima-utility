@@ -10,11 +10,24 @@ interface ForageResultProps {
 
 import { useTranslation } from '@/hooks/useTranslation';
 
+import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
+
 export function ForageResult({ result }: ForageResultProps) {
   const { regionDisplayName, particles, showDoubleForage } = useForageResult(result);
   const { t } = useTranslation();
+  const { getEnglishName } = useEnglishIngredientNames();
 
   if (!result) return null;
+
+  const normalizeRarityKey = (r: string) => {
+    const lower = r.toLowerCase();
+    if (lower === 'unique' || lower === 'único' || lower === 'ú') return 'unico';
+    if (lower === 'rara') return 'rare';
+    return lower;
+  };
+  
+  const rarityKey = normalizeRarityKey(result.rarity || 'common');
+  const englishName = result.ingredient ? getEnglishName(result.ingredient.id, rarityKey) : '';
 
   return (
     <ContentCard className="!p-0 border-none overflow-hidden shadow-2xl">
@@ -72,8 +85,8 @@ export function ForageResult({ result }: ForageResultProps) {
             </div>
 
             <div className="flex flex-wrap justify-center gap-3">
-              <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
-                DC {result.dcRange} • {result.rarity}
+              <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black border border-white/10 tracking-widest">
+                DC {result.dcRange} • {t(`constants.rarity.${rarityKey}`)}
               </span>
               <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
                 {t('forage.result.region', regionDisplayName)}
@@ -106,12 +119,17 @@ export function ForageResult({ result }: ForageResultProps) {
 
           <div className="bg-totoro-blue/5 rounded-2xl p-6 mb-6 border border-totoro-blue/10 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 text-4xl opacity-10 font-black italic">
-              {result.rarity}
+               {t(`constants.rarity.${rarityKey}`)}
             </div>
-            <h5 className="font-black text-foreground text-2xl mb-2 relative z-10">
+            <h5 className="font-black text-foreground text-2xl mb-1 relative z-10">
               {result.ingredient.nome}
             </h5>
-            <p className="text-foreground/60 leading-relaxed italic relative z-10">
+            {englishName && (
+              <p className="text-sm text-foreground/50 italic mb-2 relative z-10 font-medium">
+                {englishName}
+              </p>
+            )}
+            <p className="text-foreground/60 leading-relaxed italic relative z-10 mt-2">
               &quot;{result.ingredient.descricao}&quot;
             </p>
           </div>

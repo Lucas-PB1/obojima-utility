@@ -115,60 +115,12 @@
       "nome": "Ota Lantern Oil"
     },
     {
-      "id": 15,
-      "combat": 17,
-      "utility": 18,
-      "whimsy": 19,
-      "descricao": "Los kirios corredores son aves mágicas que viven en las llanuras de Obojima. Estas aves son conocidas por su velocidad increíble y por su capacidad de correr más rápido que el viento. Sus plumas tienen propiedades mágicas que pueden usarse para crear pociones de velocidad y agilidad. Las plumas se recolectan solo cuando las aves las pierden naturalmente durante la muda.",
-      "nome": "Plumage of a Running Kirio"
-    },
-    {
-      "id": 16,
-      "combat": 18,
-      "utility": 17,
-      "whimsy": 20,
-      "descricao": "Las estatuillas de neko ronin son hechas por artesanos especializados en Obojima. Estas estatuillas representan gatos samuráis y son conocidas por sus propiedades mágicas. Las estatuillas pueden usarse para crear pociones que conceden habilidades de combate y para invocar espíritos de gatos samuráis. Son hechas con materiales especiales y requieren años de entrenamiento para ser creadas correctamente.",
-      "nome": "Ronin Neko Figurine"
-    },
-    {
-      "id": 17,
-      "combat": 16,
-      "utility": 19,
-      "whimsy": 20,
-      "descricao": "Las piedras estrella son fragmentos de estrellas que cayeron en Obojima hace miles de años. Estas piedras contienen energía cósmica pura y pueden usarse para crear pociones que conectan al usuario con el cosmos. Las piedras estrella son extremadamente raras y son buscadas por astrólogos y magos que estudian las estrellas. Brillan con una luz suave incluso en la oscuridad total.",
-      "nome": "Starstone"
-    },
-    {
-      "id": 18,
-      "combat": 17,
-      "utility": 20,
-      "whimsy": 18,
-      "descricao": "Las lágrimas de la luna se forman cuando la luna llora sobre Obojima durante eclipses lunares. Estas lágrimas se recolectan en recipientes especiales y tienen propiedades mágicas únicas. Las lágrimas de la luna pueden usarse para crear pociones que conectan al usuario con la luna y para realizar rituales lunares poderosos. Se recolectan solo durante eclipses lunares, haciéndolas extremadamente raras.",
-      "nome": "Tears of the Moon"
-    },
-    {
-      "id": 19,
-      "combat": 0,
-      "utility": 0,
-      "whimsy": 20,
-      "descricao": "En las alturas más allá de la línea de nieve existe un reino árido donde muchos seres mágicos residen. Uno de ellos es el legendario dragón de nieve, Nokumai, cuyo aliento helado es deseado por todos los que tratan con cosas de naturaleza arcana. Se dice que el Aliento Congelado de Nokumai nunca se derrite, y el gran dragón solo respira una vez cada mil años, aunque nadie vivo ha visto realmente a Nokumai y el dragón puede haber desaparecido hace mucho tiempo.",
-      "nome": "Nokumai's Frozen Breath"
-    },
-    {
       "id": 20,
       "combat": 18,
       "utility": 20,
       "whimsy": 0,
       "descricao": "Estos escarabajos fueron hechos famosos por el legendario sabio, Arol, por su uso de sus mandíbulas como plumas para su pluma. Pero los fabricantes de pociones comenzaron a usar los escarabajos para la creación de pociones cuando una bruja del Aquelarre Cabeza de Pez comenzó a ver el raro insecto en sus sueños. Los Escarabajos del Sabio Arol viven profundamente en el subsuelo, huyendo incluso de la luz más tenue. En raras ocasiones, vienen a la superficie, aunque la razón permanece un misterio.",
       "nome": "Sage Arol's Beetle"
-    },
-    {
-      "id": 21,
-      "combat": 18,
-      "utility": 17,
-      "whimsy": 19,
-      "descricao": "El whisky Wufu es destilado por los monjes de la montaña Wufu usando una receta secreta que incluye hierbas mágicas y agua de manantial sagrado. Este whisky es conocido por sus propiedades mágicas y por su capacidad de abrir la mente a visiones místicas. El whisky Wufu puede usarse para crear pociones que mejoran habilidades psíquicas y para realizar rituales de adivinación. Se produce solo una vez al año durante el festival de la montaña.",
-      "nome": "Wufu Whisky"
     }
   ]
 }

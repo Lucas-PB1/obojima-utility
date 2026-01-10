@@ -115,60 +115,12 @@
       "nome": "Ota Lantern Oil"
     },
     {
-      "id": 15,
-      "combat": 17,
-      "utility": 18,
-      "whimsy": 19,
-      "descricao": "Running kirios are magical birds that live on the plains of Obojima. These birds are known for their incredible speed and their ability to run faster than the wind. Their feathers have magical properties that can be used to create speed and agility potions. The feathers are collected only when the birds shed them naturally during molting.",
-      "nome": "Plumage of a Running Kirio"
-    },
-    {
-      "id": 16,
-      "combat": 18,
-      "utility": 17,
-      "whimsy": 20,
-      "descricao": "Ronin neko figurines are made by specialized artisans on Obojima. These figurines represent samurai cats and are known for their magical properties. The figurines can be used to create potions that grant combat abilities and to summon samurai cat spirits. They are made with special materials and require years of training to be created correctly.",
-      "nome": "Ronin Neko Figurine"
-    },
-    {
-      "id": 17,
-      "combat": 16,
-      "utility": 19,
-      "whimsy": 20,
-      "descricao": "Starstones are fragments of stars that fell on Obojima thousands of years ago. These stones contain pure cosmic energy and can be used to create potions that connect the user with the cosmos. Starstones are extremely rare and are sought after by astrologers and wizards who study the stars. They glow with a soft light even in total darkness.",
-      "nome": "Starstone"
-    },
-    {
-      "id": 18,
-      "combat": 17,
-      "utility": 20,
-      "whimsy": 18,
-      "descricao": "Tears of the moon are formed when the moon cries over Obojima during lunar eclipses. These tears are collected in special containers and have unique magical properties. Tears of the moon can be used to create potions that connect the user with the moon and to perform powerful lunar rituals. They are collected only during lunar eclipses, making them extremely rare.",
-      "nome": "Tears of the Moon"
-    },
-    {
-      "id": 19,
-      "combat": 0,
-      "utility": 0,
-      "whimsy": 20,
-      "descricao": "In the heights beyond the snowline exists a barren realm where many magical beings reside. One of them is the legendary snow dragon, Nokumai, whose frozen breath is desired by all who deal in things of an arcane nature. It is said that Nokumai’s Frozen Breath never melts, and the great dragon only breathes it once every thousand years, though no one alive has actually seen Nokumai and the dragon may be long gone.",
-      "nome": "Nokumai's Frozen Breath"
-    },
-    {
       "id": 20,
       "combat": 18,
       "utility": 20,
       "whimsy": 0,
       "descricao": "These beetles were made famous by the legendary sage, Arol, for his use of their mandibles as nibs for his quill. But potion makers began using the beetles for potion crafting when a witch of the Fish Head Coven started seeing the rare insect in her dreams. Sage Arol beetles live deep underground, fleeing from even the faintest light. On rare occasions, they come to the surface, though the reason remains a mystery.",
       "nome": "Sage Arol's Beetle"
-    },
-    {
-      "id": 21,
-      "combat": 18,
-      "utility": 17,
-      "whimsy": 19,
-      "descricao": "Wufu whisky is distilled by the monks of Wufu Mountain using a secret recipe that includes magical herbs and sacred spring water. This whisky is known for its magical properties and its ability to open the mind to mystical visions. Wufu whisky can be used to create potions that enhance psychic abilities and to perform divination rituals. It is produced only once a year during the mountain festival.",
-      "nome": "Wufu Whisky"
     }
   ]
 }

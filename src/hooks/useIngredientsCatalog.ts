@@ -11,10 +11,11 @@ export function useIngredientsCatalog() {
   useEffect(() => {
     const loadIngredients = async () => {
       try {
-        const [common, uncommon, rare] = await Promise.all([
+        const [common, uncommon, rare, unique] = await Promise.all([
           ingredientsService.loadCommonIngredients(),
           ingredientsService.loadUncommonIngredients(),
-          ingredientsService.loadRareIngredients()
+          ingredientsService.loadRareIngredients(),
+          ingredientsService.loadUniqueIngredients()
         ]);
 
         const commonWithKey = common.ingredients.map((i) => ({
@@ -35,8 +36,18 @@ export function useIngredientsCatalog() {
           uniqueKey: `raro-${i.id}`
         }));
 
+        const uniqueWithKey = unique.ingredients.map((i) => ({
+          ...i,
+          combat: 20,
+          utility: 20,
+          whimsy: 20,
+          descricao: `${i.circunstancia}. Localização: ${i.localizacao}`,
+          raridade: 'unico' as const,
+          uniqueKey: `unico-${i.id}`
+        }));
+
         setAvailableIngredients(
-          [...commonWithKey, ...uncommonWithKey, ...rareWithKey].sort((a, b) =>
+          [...commonWithKey, ...uncommonWithKey, ...rareWithKey, ...uniqueWithKey].sort((a, b) =>
             a.nome.localeCompare(b.nome)
           )
         );

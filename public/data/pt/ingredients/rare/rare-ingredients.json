@@ -115,60 +115,12 @@
       "nome": "Óleo da Lanterna de Ota"
     },
     {
-      "id": 15,
-      "combat": 17,
-      "utility": 18,
-      "whimsy": 19,
-      "descricao": "Os kirios corredores são aves mágicas que vivem nas planícies de Obojima. Estas aves são conhecidas por sua velocidade incrível e por sua capacidade de correr mais rápido que o vento. Suas penas têm propriedades mágicas que podem ser usadas para criar poções de velocidade e agilidade. As penas são coletadas apenas quando as aves as perdem naturalmente durante a muda.",
-      "nome": "Plumagem de um Kirio Corredor"
-    },
-    {
-      "id": 16,
-      "combat": 18,
-      "utility": 17,
-      "whimsy": 20,
-      "descricao": "As estatuetas de neko ronin são feitas por artesãos especializados em Obojima. Estas estatuetas representam gatos samurais e são conhecidas por suas propriedades mágicas. As estatuetas podem ser usadas para criar poções que concedem habilidades de combate e para invocar espíritos de gatos samurais. São feitas com materiais especiais e requerem anos de treinamento para serem criadas corretamente.",
-      "nome": "Estatueta de Neko Ronin"
-    },
-    {
-      "id": 17,
-      "combat": 16,
-      "utility": 19,
-      "whimsy": 20,
-      "descricao": "As pedras estrela são fragmentos de estrelas que caíram em Obojima há milhares de anos. Estas pedras contêm energia cósmica pura e podem ser usadas para criar poções que conectam o usuário com o cosmos. As pedras estrela são extremamente raras e são procuradas por astrólogos e magos que estudam as estrelas. Elas brilham com uma luz suave mesmo na escuridão total.",
-      "nome": "Pedra Estrela"
-    },
-    {
-      "id": 18,
-      "combat": 17,
-      "utility": 20,
-      "whimsy": 18,
-      "descricao": "As lágrimas da lua são formadas quando a lua chora sobre Obojima durante eclipses lunares. Estas lágrimas são coletadas em recipientes especiais e têm propriedades mágicas únicas. As lágrimas da lua podem ser usadas para criar poções que conectam o usuário com a lua e para realizar rituais lunares poderosos. São coletadas apenas durante eclipses lunares, tornando-as extremamente raras.",
-      "nome": "Lágrimas da Lua"
-    },
-    {
-      "id": 19,
-      "combat": 0,
-      "utility": 0,
-      "whimsy": 20,
-      "descricao": "Nas alturas além da linha de neve existe um reino árido onde muitos seres mágicos residem. Um deles é o lendário dragão de neve, Nokumai, cujo sopro gelado é desejado por todos que lidam com coisas de natureza arcana. Diz-se que o Sopro Congelado de Nokumai nunca derrete, e o grande dragão só respira uma vez a cada mil anos, embora ninguém vivo tenha realmente visto Nokumai e o dragão pode ter desaparecido há muito tempo.",
-      "nome": "Sopro Congelado de Nokumai"
-    },
-    {
       "id": 20,
       "combat": 18,
       "utility": 20,
       "whimsy": 0,
       "descricao": "Estes besouros foram tornados famosos pelo lendário sábio, Arol, por seu uso de suas mandíbulas como penas para sua caneta. Mas os fabricantes de poções começaram a usar os besouros para criação de poções quando uma bruxa do Coven Cabeça de Peixe começou a ver o raro inseto em seus sonhos. Os Besouros do Sábio Arol vivem profundamente no subsolo, fugindo até da luz mais fraca. Em raras ocasiões, eles vêm à superfície, embora a razão permaneça um mistério.",
       "nome": "Besouro do Sábio Arol"
-    },
-    {
-      "id": 21,
-      "combat": 18,
-      "utility": 17,
-      "whimsy": 19,
-      "descricao": "O uísque Wufu é destilado pelos monges da montanha Wufu usando uma receita secreta que inclui ervas mágicas e água de nascente sagrada. Este uísque é conhecido por suas propriedades mágicas e por sua capacidade de abrir a mente para visões místicas. O uísque Wufu pode ser usado para criar poções que melhoram habilidades psíquicas e para realizar rituais de adivinhação. É produzido apenas uma vez por ano durante o festival da montanha.",
-      "nome": "Uísque Wufu"
     }
   ]
 }

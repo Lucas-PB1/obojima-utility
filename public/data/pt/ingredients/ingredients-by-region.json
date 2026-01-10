@@ -1281,7 +1281,7 @@
       }
     ]
   },
-  "unique_ingredients": {
+  "unique_rare_ingredients": {
     "descricao": "Ingredientes raros únicos que não se encaixam em regiões específicas",
     "categoria": "raro_unico",
     "dice": "d7",
@@ -1424,6 +1424,7 @@
       "Vinyl Record",
       "Wolfenite",
       "Wulfenite",
+      "Wychwood",
       "Wychwood",
       "Yellow Slime"
     ]
