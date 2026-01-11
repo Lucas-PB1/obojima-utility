@@ -5,7 +5,7 @@ import { translations } from '@/constants/translations';
 
 export function useTranslation() {
   const { settings } = useSettings();
-  const language = settings.language || 'pt';
+  const language = settings.language || 'en';
 
   const t = useCallback(
     (key: string, ...args: (string | number)[]) => {

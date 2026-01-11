@@ -17,8 +17,6 @@ export function ProfileTab({ onClose }: ProfileTabProps) {
 
   const [displayName, setDisplayName] = useState(user?.displayName || '');
   const [photoURL, setPhotoURL] = useState(user?.photoURL || '');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [saving, setSaving] = useState(false);
 
   // Fetch true public data on mount
@@ -41,9 +39,6 @@ export function ProfileTab({ onClose }: ProfileTabProps) {
     try {
       if (displayName !== user.displayName || photoURL !== user.photoURL) {
         await authService.updateProfile(displayName, photoURL);
-      }
-      if (newPassword && newPassword === confirmPassword) {
-        await authService.updatePassword(newPassword);
       }
       onClose();
     } catch (error) {
@@ -96,30 +91,6 @@ export function ProfileTab({ onClose }: ProfileTabProps) {
             label={t('settings.profile.displayName')}
             value={displayName}
             onChange={(val) => setDisplayName(String(val))}
-          />
-          <Input
-            label={t('settings.profile.photoURL')}
-            value={photoURL}
-            onChange={(val) => setPhotoURL(String(val))}
-            placeholder="https://..."
-          />
-        </div>
-
-        <div className="bg-white/5 p-4 rounded-xl border border-white/10 space-y-4">
-          <h4 className="text-sm font-bold text-totoro-gray uppercase tracking-wider">
-            {t('settings.profile.security')}
-          </h4>
-          <Input
-            type="password"
-            label={t('settings.profile.newPassword')}
-            value={newPassword}
-            onChange={(val) => setNewPassword(String(val))}
-          />
-          <Input
-            type="password"
-            label={t('settings.profile.confirmPassword')}
-            value={confirmPassword}
-            onChange={(val) => setConfirmPassword(String(val))}
           />
         </div>
       </div>

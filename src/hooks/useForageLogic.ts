@@ -16,10 +16,14 @@ import {
   ForageAttempt,
   CollectedIngredient
 } from '@/types/ingredients';
+import Swal from 'sweetalert2';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function useForageLogic() {
-  const [region, setRegion] = useState<RegionKey>('Gale Fields');
-  const [testType, setTestType] = useState<TestType>('natureza');
+  const { settings } = useSettings();
+  const { t } = useTranslation();
+  const [region, setRegion] = useState<RegionKey | ''>((settings.defaultRegion as RegionKey) || '');
+  const [testType, setTestType] = useState<TestType | ''>(settings.defaultTestType || '');
   const [modifier, setModifier] = useState<number | ''>('');
   const [bonusDice, setBonusDice] = useState<{ type: DiceType; value: number } | null>(null);
   const [advantage, setAdvantage] = useState<AdvantageType>('normal');
@@ -29,9 +33,14 @@ export function useForageLogic() {
     GAME_CONFIG.DAILY_FORAGE_LIMIT
   );
 
-  const { settings } = useSettings();
-
   useEffect(() => {
+    if (settings.defaultRegion) {
+      setRegion(settings.defaultRegion as RegionKey);
+    }
+    if (settings.defaultTestType) {
+      setTestType(settings.defaultTestType);
+    }
+
     if (settings.defaultModifier !== '') {
       setModifier(settings.defaultModifier);
     }
@@ -42,7 +51,13 @@ export function useForageLogic() {
         value: settings.defaultBonusValue
       });
     }
-  }, [settings.defaultModifier, settings.defaultBonusType, settings.defaultBonusValue]);
+  }, [
+    settings.defaultRegion,
+    settings.defaultTestType,
+    settings.defaultModifier,
+    settings.defaultBonusType,
+    settings.defaultBonusValue
+  ]);
 
   useEffect(() => {
     const loadRemainingAttempts = async () => {
@@ -111,8 +126,14 @@ export function useForageLogic() {
         incomum:
           totalRoll >= 21
             ? () => ingredientsService.getRandomUncommonIngredientFromAnyRegion(language)
-            : () => ingredientsService.getRandomIngredientFromRegion(region, rarity, language),
-        comum: () => ingredientsService.getRandomIngredientFromRegion(region, rarity, language)
+            : () =>
+                ingredientsService.getRandomIngredientFromRegion(
+                  region as RegionKey,
+                  rarity,
+                  language
+                ),
+        comum: () =>
+          ingredientsService.getRandomIngredientFromRegion(region as RegionKey, rarity, language)
       };
 
       return (await ingredientGetters[rarity]?.()) || null;
@@ -128,10 +149,23 @@ export function useForageLogic() {
     ) => {
       const currentRemaining = await firebaseStorageService.getRemainingAttemptsToday();
       if (currentRemaining <= 0) {
-        alert(
-          `Você já atingiu o limite de ${GAME_CONFIG.DAILY_FORAGE_LIMIT} tentativas hoje! Volte amanhã para continuar forrageando.`
-        );
+        Swal.fire({
+          title: t('alerts.forage.limit.title'),
+          text: t('alerts.forage.limit.text', GAME_CONFIG.DAILY_FORAGE_LIMIT),
+          icon: 'warning',
+          confirmButtonText: t('common.confirm')
+        });
         setRemainingAttempts(0);
+        return;
+      }
+
+      if (!region || !testType) {
+        Swal.fire({
+          title: t('alerts.forage.validation.title'),
+          text: t('alerts.forage.validation.text'),
+          icon: 'warning',
+          confirmButtonText: t('common.confirm')
+        });
         return;
       }
 
@@ -153,8 +187,8 @@ export function useForageLogic() {
         const attempt: ForageAttempt = {
           id: Date.now().toString(),
           timestamp: new Date(),
-          region,
-          testType,
+          region: region as RegionKey,
+          testType: testType as TestType,
           modifier: modifierValue,
           bonusDice: bonusDice || undefined,
           advantage,
@@ -195,7 +229,7 @@ export function useForageLogic() {
         setIsLoading(false);
       }
     },
-    [region, testType, modifier, bonusDice, advantage, getIngredientByRarity]
+    [region, testType, modifier, bonusDice, advantage, getIngredientByRarity, t]
   );
 
   return {

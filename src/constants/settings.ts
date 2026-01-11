@@ -23,6 +23,8 @@ export interface SettingsState {
   potionBrewerTalent: boolean;
   potionBrewerLevel: number;
   language: Language;
+  defaultRegion?: string;
+  defaultTestType?: 'natureza' | 'sobrevivencia';
 }
 
 export const DEFAULT_SETTINGS: SettingsState = {
@@ -33,5 +35,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   cauldronBonus: false,
   potionBrewerTalent: false,
   potionBrewerLevel: 1,
-  language: 'pt'
+  language: 'en',
+  defaultRegion: '',
+  defaultTestType: undefined
 };

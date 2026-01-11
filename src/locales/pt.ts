@@ -85,6 +85,8 @@ export const pt = {
   'ui.actions.update': 'Atualizar',
   'common.cancel': 'Cancelar',
   'common.confirm': 'Confirmar',
+  'common.none': 'Nenhum',
+  'common.none_female': 'Nenhuma',
 
   // Shared UI Labels
   'ui.theme.light': 'Claro',
@@ -423,5 +425,17 @@ export const pt = {
   'admin.migration.status.starting': 'Iniciando migração via servidor...',
   'admin.migration.status.success': 'Sucesso: {0}',
   'admin.migration.status.error': 'Erro: {0}',
-  'admin.tools.title': 'Ferramentas de Sistema'
+  'admin.tools.title': 'Ferramentas de Sistema',
+
+  // Alerts
+  'alerts.forage.limit.title': 'Limite Diário',
+  'alerts.forage.limit.text': 'Você atingiu o limite de {0} tentativas hoje! Volte amanhã.',
+  'alerts.forage.validation.title': 'Atenção',
+  'alerts.forage.validation.text': 'Por favor, selecione uma região e um tipo de teste.',
+  'alerts.admin.delete.title': 'Tem certeza?',
+  'alerts.admin.delete.text': 'Esta ação não poderá ser desfeita!',
+  'alerts.admin.delete.confirm': 'Sim, excluir!',
+  'alerts.admin.delete.cancel': 'Cancelar',
+  'alerts.success.title': 'Sucesso!',
+  'alerts.error.title': 'Erro!'
 };

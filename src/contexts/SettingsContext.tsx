@@ -73,7 +73,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           cauldronBonus: firestoreSettings.cauldronBonus,
           potionBrewerTalent: firestoreSettings.potionBrewerTalent,
           potionBrewerLevel: firestoreSettings.potionBrewerLevel,
-          language: firestoreSettings.language || current.language || 'pt'
+          language: firestoreSettings.language || current.language || 'en',
+          defaultRegion: firestoreSettings.defaultRegion || '',
+          defaultTestType: firestoreSettings.defaultTestType
         };
       });
       setIsLoading(false);
@@ -120,6 +122,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
               await firebaseSettingsService.setPotionBrewerTalent(value as boolean);
             else if (key === 'defaultModifier')
               await firebaseSettingsService.setDefaultModifier(value as number | '');
+            else if (key === 'defaultRegion')
+              await firebaseSettingsService.setDefaultRegion(value as string);
+            else if (key === 'defaultTestType')
+              await firebaseSettingsService.setDefaultTestType(
+                value as 'natureza' | 'sobrevivencia'
+              );
             else if (key === 'potionBrewerLevel')
               await firebaseSettingsService.setPotionBrewerLevel(value as number);
             else {

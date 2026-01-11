@@ -8,6 +8,8 @@ interface MigrationResponse {
   error?: string;
 }
 
+import Swal from 'sweetalert2';
+
 export function useSystemMigration() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,18 @@ export function useSystemMigration() {
   const [error, setError] = useState<boolean>(false);
 
   const migratePublicProfiles = async () => {
-    if (!confirm(t('admin.migration.confirm'))) return;
+    const result = await Swal.fire({
+      title: t('admin.migration.title'),
+      text: t('admin.migration.confirm'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: t('common.confirm'),
+      cancelButtonText: t('common.cancel')
+    });
+
+    if (!result.isConfirmed) return;
 
     setLoading(true);
     setStatus(t('admin.migration.status.starting'));

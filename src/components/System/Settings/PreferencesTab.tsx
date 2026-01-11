@@ -3,6 +3,9 @@ import { useSettings } from '@/hooks/useSettings';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Input, Button, Select, ThemeSwitch } from '@/components/ui';
 import { DICE_OPTIONS, LANGUAGE_OPTIONS, Language } from '@/constants/settings';
+import { TEST_TYPE_OPTIONS } from '@/constants/forage';
+import { ingredientsService } from '@/services/ingredientsService';
+import { Globe, Dices, Sparkles } from 'lucide-react';
 
 interface PreferencesTabProps {
   onClose: () => void;
@@ -25,8 +28,8 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
       </div>
 
       <div>
-        <h4 className="font-semibold text-foreground mb-3 flex items-center">
-          <span className="mr-2">🌍</span>
+        <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+          <Globe className="w-4 h-4" />
           {t('settings.language.title')}
         </h4>
         <Select
@@ -40,7 +43,41 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
 
       <div>
         <h4 className="font-semibold text-foreground mb-3 flex items-center">
-          <span className="mr-2">🎯</span>
+          <span className="mr-2">�</span>
+          {t('forage.title')}
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Select
+            value={settings.defaultRegion || ''}
+            onChange={(value) => updateSetting('defaultRegion', value)}
+            options={[
+              { value: '', label: t('common.none_female') },
+              ...ingredientsService.getRegionKeys().map((key) => ({
+                value: key,
+                label: ingredientsService.getRegionDisplayName(key, settings.language)
+              }))
+            ]}
+            placeholder={t('forage.form.region')}
+            label={t('forage.form.region')}
+          />
+          <Select
+            value={settings.defaultTestType || ''}
+            onChange={(value) =>
+              updateSetting('defaultTestType', value as 'natureza' | 'sobrevivencia')
+            }
+            options={[
+              { value: '', label: t('common.none') },
+              ...TEST_TYPE_OPTIONS.map((opt) => ({ ...opt, label: t(opt.label) }))
+            ]}
+            placeholder={t('forage.form.testType')}
+            label={t('forage.form.testType')}
+          />
+        </div>
+      </div>
+
+      <div>
+        <h4 className="font-semibold text-foreground mb-3 flex items-center">
+          <span className="mr-2">�🎯</span>
           {t('settings.modifier.title')}
         </h4>
         <Input
@@ -54,8 +91,8 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
       </div>
 
       <div>
-        <h4 className="font-semibold text-foreground mb-3 flex items-center">
-          <span className="mr-2">🎲</span>
+        <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+          <Dices className="w-4 h-4" />
           {t('settings.bonus.title')}
         </h4>
 
@@ -83,8 +120,8 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
       </div>
 
       <div>
-        <h4 className="font-semibold text-foreground mb-3 flex items-center">
-          <span className="mr-2">✨</span>
+        <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+          <Sparkles className="w-4 h-4" />
           {t('settings.talents.title')}
         </h4>
 

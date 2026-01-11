@@ -11,6 +11,8 @@ interface Settings {
   potionBrewerTalent: boolean;
   potionBrewerLevel: number;
   language?: 'pt' | 'en' | 'es';
+  defaultRegion?: string;
+  defaultTestType?: 'natureza' | 'sobrevivencia';
 }
 
 const defaultSettings: Settings = {
@@ -20,7 +22,9 @@ const defaultSettings: Settings = {
   cauldronBonus: false,
   potionBrewerTalent: false,
   potionBrewerLevel: 1,
-  language: 'pt'
+  language: 'en',
+  defaultRegion: '',
+  defaultTestType: undefined
 };
 
 class FirebaseSettingsService {
@@ -196,6 +200,28 @@ class FirebaseSettingsService {
   async setLanguage(language: 'pt' | 'en' | 'es'): Promise<void> {
     const settings = await this.getSettings();
     settings.language = language;
+    await this.saveSettings(settings);
+  }
+
+  async getDefaultRegion(): Promise<string> {
+    const settings = await this.getSettings();
+    return settings.defaultRegion || '';
+  }
+
+  async setDefaultRegion(region: string): Promise<void> {
+    const settings = await this.getSettings();
+    settings.defaultRegion = region;
+    await this.saveSettings(settings);
+  }
+
+  async getDefaultTestType(): Promise<'natureza' | 'sobrevivencia' | undefined> {
+    const settings = await this.getSettings();
+    return settings.defaultTestType;
+  }
+
+  async setDefaultTestType(testType: 'natureza' | 'sobrevivencia' | undefined): Promise<void> {
+    const settings = await this.getSettings();
+    settings.defaultTestType = testType;
     await this.saveSettings(settings);
   }
 

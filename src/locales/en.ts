@@ -85,6 +85,8 @@ export const en = {
   'ui.actions.update': 'Update',
   'common.cancel': 'Cancel',
   'common.confirm': 'Confirm',
+  'common.none': 'None',
+  'common.none_female': 'None',
 
   // Shared UI Labels
   'ui.theme.light': 'Light',
@@ -421,5 +423,18 @@ export const en = {
   'admin.migration.status.starting': 'Starting migration via server...',
   'admin.migration.status.success': 'Success: {0}',
   'admin.migration.status.error': 'Error: {0}',
-  'admin.tools.title': 'System Tools'
+  'admin.tools.title': 'System Tools',
+
+  // Alerts
+  'alerts.forage.limit.title': 'Daily Limit',
+  'alerts.forage.limit.text':
+    'You have reached the limit of {0} attempts today! Come back tomorrow.',
+  'alerts.forage.validation.title': 'Attention',
+  'alerts.forage.validation.text': 'Please select a region and a test type.',
+  'alerts.admin.delete.title': 'Are you sure?',
+  'alerts.admin.delete.text': 'This action cannot be undone!',
+  'alerts.admin.delete.confirm': 'Yes, delete it!',
+  'alerts.admin.delete.cancel': 'Cancel',
+  'alerts.success.title': 'Success!',
+  'alerts.error.title': 'Error!'
 };

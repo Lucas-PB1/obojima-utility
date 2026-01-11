@@ -10,6 +10,8 @@ interface IngredientCardProps {
 }
 
 import { useEnglishIngredientNames } from '@/hooks/useEnglishIngredientNames';
+import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function IngredientCard({
   ingredient,
@@ -17,18 +19,23 @@ export function IngredientCard({
   onRemove,
   showActions = true
 }: IngredientCardProps) {
+  const { t } = useTranslation();
   const { getEnglishName } = useEnglishIngredientNames();
+  const { localizeIngredient } = useLocalizedIngredients();
+
+  const localizedIngredient = localizeIngredient(ingredient.ingredient); // Localize the inner ingredient data
+
   const maxAttr = Math.max(
-    ingredient.ingredient.combat,
-    ingredient.ingredient.utility,
-    ingredient.ingredient.whimsy
+    localizedIngredient.combat,
+    localizedIngredient.utility,
+    localizedIngredient.whimsy
   );
 
   const getBadgeClass = () => {
     if (ingredient.used) return 'bg-muted/10 border-border/20';
-    if (ingredient.ingredient.combat === maxAttr)
+    if (localizedIngredient.combat === maxAttr)
       return 'bg-totoro-orange/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
-    if (ingredient.ingredient.utility === maxAttr)
+    if (localizedIngredient.utility === maxAttr)
       return 'bg-totoro-blue/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
     return 'bg-totoro-yellow/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
   };
@@ -42,10 +49,10 @@ export function IngredientCard({
         <div className="flex justify-between items-start mb-0 md:mb-2">
           <div>
             <h3 className="font-serif font-bold text-foreground text-lg md:text-xl leading-tight group-hover:text-totoro-blue transition-colors">
-              {ingredient.ingredient.nome}
+              {localizedIngredient.nome}
             </h3>
             <span className="text-xs text-foreground/50 italic font-medium block mt-0.5">
-              {getEnglishName(ingredient.ingredient.id, ingredient.ingredient.raridade)}
+              {getEnglishName(localizedIngredient.id, localizedIngredient.raridade)}
             </span>
           </div>
           <span
@@ -55,31 +62,41 @@ export function IngredientCard({
                 : 'bg-totoro-green/10 text-totoro-green border-totoro-green/20 animate-pulse'
             }`}
           >
-            {ingredient.used ? 'Consumido' : 'Disponível'}
+            {ingredient.used
+              ? t('constants.ingredients.status.used')
+              : t('constants.ingredients.status.available')}
           </span>
         </div>
 
-        <p className="text-sm text-foreground/60 mb-6 line-clamp-3 leading-relaxed italic hidden md:block">
-          &quot;{ingredient.ingredient.descricao}&quot;
+        <p
+          className="text-sm text-foreground/60 mb-6 leading-relaxed italic hidden md:block"
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden'
+          }}
+        >
+          &quot;{localizedIngredient.descricao}&quot;
         </p>
 
         <div className="grid-cols-3 gap-2 mb-6 hidden md:grid">
           <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-orange/20 shadow-sm font-sans">
             <span className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</span>
             <span className="text-xl font-bold text-totoro-orange font-mono">
-              {ingredient.ingredient.combat}
+              {localizedIngredient.combat}
             </span>
           </div>
           <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-blue/20 shadow-sm font-sans">
             <span className="text-[9px] font-bold text-totoro-blue/60 uppercase">Utl</span>
             <span className="text-xl font-bold text-totoro-blue font-mono">
-              {ingredient.ingredient.utility}
+              {localizedIngredient.utility}
             </span>
           </div>
           <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-yellow/20 shadow-sm font-sans">
             <span className="text-[9px] font-bold text-totoro-yellow/60 uppercase">Why</span>
             <span className="text-xl font-bold text-totoro-yellow font-mono">
-              {ingredient.ingredient.whimsy}
+              {localizedIngredient.whimsy}
             </span>
           </div>
         </div>
@@ -118,9 +135,9 @@ export function IngredientCard({
         className={`absolute -bottom-10 -left-10 w-40 h-40 opacity-5 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150 ${
           ingredient.used
             ? 'bg-totoro-gray'
-            : ingredient.ingredient.combat === maxAttr
+            : localizedIngredient.combat === maxAttr
               ? 'bg-totoro-orange'
-              : ingredient.ingredient.utility === maxAttr
+              : localizedIngredient.utility === maxAttr
                 ? 'bg-totoro-blue'
                 : 'bg-totoro-yellow'
         }`}
