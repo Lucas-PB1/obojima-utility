@@ -5,10 +5,10 @@ import { RegionKey, TestType, DiceType, AdvantageType } from '@/types/ingredient
 import { DICE_OPTIONS, TEST_TYPE_OPTIONS, ADVANTAGE_OPTIONS } from '@/constants/forage';
 
 interface ForageFormProps {
-  region: RegionKey;
-  setRegion: (region: RegionKey) => void;
-  testType: TestType;
-  setTestType: (type: TestType) => void;
+  region: RegionKey | '';
+  setRegion: (region: RegionKey | '') => void;
+  testType: TestType | '';
+  setTestType: (type: TestType | '') => void;
   modifier: number | '';
   setModifier: (modifier: number | '') => void;
   bonusDice: { type: DiceType; value: number } | null;
@@ -65,14 +65,14 @@ export function ForageForm({
       <div className="space-y-6">
         <Select
           value={region}
-          onChange={(value) => setRegion(value as RegionKey)}
+          onChange={(value) => setRegion(value as RegionKey | '')}
           options={regionOptions}
           label={t('forage.form.region')}
         />
 
         <RadioGroup
           value={testType}
-          onChange={(value) => setTestType(value as TestType)}
+          onChange={(value) => setTestType(value as TestType | '')}
           options={translatedTestTypeOptions}
           label={t('forage.form.testType')}
         />
