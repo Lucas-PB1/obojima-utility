@@ -3,6 +3,7 @@ import { logger } from '@/utils/logger';
 import { useSettings } from '@/hooks/useSettings';
 import { GAME_CONFIG } from '@/config/gameConfig';
 import { diceService } from '@/services/diceService';
+import { TEST_TYPE_OPTIONS } from '@/constants/forage';
 import { useState, useEffect, useCallback } from 'react';
 import { ingredientsService } from '@/services/ingredientsService';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
@@ -22,8 +23,15 @@ import { useTranslation } from '@/hooks/useTranslation';
 export function useForageLogic() {
   const { settings } = useSettings();
   const { t } = useTranslation();
-  const [region, setRegion] = useState<RegionKey | ''>((settings.defaultRegion as RegionKey) || '');
-  const [testType, setTestType] = useState<TestType | ''>(settings.defaultTestType || '');
+  const [region, setRegion] = useState<RegionKey | ''>(() => {
+    if (settings.defaultRegion) return settings.defaultRegion as RegionKey;
+    const keys = ingredientsService.getRegionKeys();
+    return keys.length > 0 ? (keys[0] as RegionKey) : '';
+  });
+  const [testType, setTestType] = useState<TestType | ''>(() => {
+    if (settings.defaultTestType) return settings.defaultTestType;
+    return TEST_TYPE_OPTIONS.length > 0 ? (TEST_TYPE_OPTIONS[0].value as TestType) : '';
+  });
   const [modifier, setModifier] = useState<number | ''>('');
   const [bonusDice, setBonusDice] = useState<{ type: DiceType; value: number } | null>(null);
   const [advantage, setAdvantage] = useState<AdvantageType>('normal');
