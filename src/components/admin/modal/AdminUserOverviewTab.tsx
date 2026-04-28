@@ -1,7 +1,7 @@
 import React from 'react';
-import Image from 'next/image';
 import { UserProfile } from '@/types/auth';
 import { useTranslation } from '@/hooks/useTranslation';
+import { UserAvatar } from '@/components/ui';
 
 interface AdminUserOverviewTabProps {
   user: UserProfile;
@@ -26,18 +26,12 @@ export function AdminUserOverviewTab({ user, stats, actions }: AdminUserOverview
       <div className="glass-panel p-6">
         {/* Header Profile */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
-          <div className="w-24 h-24 rounded-full bg-totoro-blue/10 flex items-center justify-center text-4xl border-4 border-white shadow-lg shrink-0 relative overflow-hidden">
-            {user.photoURL ? (
-              <Image
-                src={user.photoURL}
-                alt={user.displayName || ''}
-                fill
-                className="object-cover"
-              />
-            ) : (
-              (user.displayName?.[0] || user.email?.[0] || '?').toUpperCase()
-            )}
-          </div>
+          <UserAvatar
+            src={user.photoURL}
+            name={user.displayName}
+            email={user.email}
+            className="w-24 h-24 text-4xl border-4 border-white shadow-lg shrink-0"
+          />
           <div className="flex-1 text-center md:text-left space-y-2 w-full">
             <div>
               <h3 className="text-2xl font-black text-totoro-gray tracking-tight">

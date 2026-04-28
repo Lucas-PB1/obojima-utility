@@ -43,6 +43,71 @@ export const en = {
   'settings.profile.newPassword': 'New Password',
   'settings.profile.confirmPassword': 'Confirm Password',
   'settings.profile.save': 'Save Changes',
+  'settings.navigation.back': 'Back to app',
+  'settings.navigation.account': 'Account',
+  'settings.navigation.player': 'Player',
+  'settings.account.title': 'User Account',
+  'settings.account.subtitle':
+    'Manage your profile, language, and security in a cleaner dedicated space.',
+  'settings.account.profile.title': 'Profile',
+  'settings.account.profile.preview': 'Public preview',
+  'settings.account.profile.displayNamePlaceholder': 'How you want to appear in the app',
+  'settings.account.profile.email': 'Account Email',
+  'settings.account.profile.photoPlaceholder': 'https://example.com/avatar.png',
+  'settings.account.profile.photoHint':
+    'Use a public avatar URL. It will be reflected in the header, social, and admin areas.',
+  'settings.account.profile.validation.displayNameRequired':
+    'Enter a display name before saving your profile.',
+  'settings.account.profile.validation.photoUrl': 'Enter a valid photo URL.',
+  'settings.account.profile.feedback.noChanges': 'There are no changes to save yet.',
+  'settings.account.profile.feedback.saved': 'Profile updated successfully.',
+  'settings.account.profile.feedback.error': 'Could not save your profile right now.',
+  'settings.account.appearance.title': 'Appearance and language',
+  'settings.account.security.title': 'Security',
+  'settings.account.security.heading': 'Change password',
+  'settings.account.security.description':
+    'Confirm your current password to complete the change safely.',
+  'settings.account.security.currentPassword': 'Current Password',
+  'settings.account.security.validation.currentRequired': 'Enter your current password.',
+  'settings.account.security.validation.newRequired': 'Enter a new password.',
+  'settings.account.security.validation.minLength':
+    'The new password must be at least 6 characters long.',
+  'settings.account.security.validation.mismatch': 'The new passwords do not match.',
+  'settings.account.security.feedback.saved': 'Password updated successfully.',
+  'settings.account.security.feedback.error': 'Could not update the password right now.',
+  'settings.account.security.tip': 'Protect your account before heading back into the adventure.',
+  'settings.account.security.save': 'Update password',
+  'settings.player.title': 'Player Settings',
+  'settings.player.subtitle':
+    'Adjust default tests, bonuses, and talents without mixing them with your account preferences.',
+  'settings.player.defaults.title': 'Table defaults',
+  'settings.player.talents.section': 'Talents and perks',
+  'settings.player.autosave.idle': 'Autosave ready',
+  'settings.player.autosave.saving': 'Saving changes',
+  'settings.player.autosave.saved': 'Changes saved',
+  'settings.player.autosave.error': 'Save failed',
+  'settings.player.summary.title': 'Gameplay impact',
+  'settings.player.summary.defaults': 'Defaults apply automatically',
+  'settings.player.summary.defaultsDesc':
+    'Values from this screen become the starting point when you open gameplay systems.',
+  'settings.player.summary.forage': 'Faster foraging flow',
+  'settings.player.summary.forageDesc':
+    'Region, test type, modifier, and bonus leave the routine ready to play.',
+  'settings.player.summary.potions': 'Talents affect crafting',
+  'settings.player.summary.potionsDesc':
+    'Special Cauldron and Potion Brewer keep influencing potion crafting.',
+  'settings.player.system.title': 'Organization',
+  'settings.player.system.accountPrefsTitle': 'Language and theme live in Account',
+  'settings.player.system.accountPrefsDesc':
+    'Personal preferences now live in the Account screen so this area can stay focused on gameplay.',
+  'settings.player.reset.title': 'Reset player settings?',
+  'settings.player.reset.description':
+    'This clears only gameplay adjustments and keeps language and theme as they are.',
+  'settings.player.reset.confirm': 'Reset player',
+  'settings.player.reset.cardTitle': 'Clear player settings',
+  'settings.player.reset.cardDescription':
+    'Use this when you want to return to base table defaults without touching your account.',
+  'settings.player.reset.button': 'Clear player adjustments',
 
   // Constants
   'constants.forage.testType.nature': 'Nature',

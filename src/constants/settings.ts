@@ -27,7 +27,9 @@ export interface SettingsState {
   defaultTestType?: 'natureza' | 'sobrevivencia';
 }
 
-export const DEFAULT_SETTINGS: SettingsState = {
+export type SettingsSaveStatus = 'idle' | 'saving' | 'saved' | 'error';
+
+export const PLAYER_SETTINGS_DEFAULTS: Omit<SettingsState, 'language'> = {
   defaultModifier: '',
   defaultBonusType: '',
   defaultBonusValue: 0,
@@ -35,7 +37,11 @@ export const DEFAULT_SETTINGS: SettingsState = {
   cauldronBonus: false,
   potionBrewerTalent: false,
   potionBrewerLevel: 1,
-  language: 'en',
   defaultRegion: '',
   defaultTestType: undefined
+};
+
+export const DEFAULT_SETTINGS: SettingsState = {
+  ...PLAYER_SETTINGS_DEFAULTS,
+  language: 'en',
 };

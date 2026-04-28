@@ -1,0 +1,277 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid));
+    }
+
+    function isAdmin() {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        userDoc(request.auth.uid).data.role == 'admin';
+    }
+
+    function isSelf(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function canAccessUser(userId) {
+      return isSelf(userId) || isAdmin();
+    }
+
+    function isParticipant(participants) {
+      return signedIn() && request.auth.uid in participants;
+    }
+
+    function isTwoParty(participants) {
+      return participants is list &&
+        participants.size() == 2 &&
+        participants[0] is string &&
+        participants[1] is string &&
+        participants[0] != participants[1];
+    }
+
+    function participantDocId(documentId, participants) {
+      return isTwoParty(participants) &&
+        isParticipant(participants) &&
+        (
+          documentId == participants[0] + '_' + participants[1] ||
+          documentId == participants[1] + '_' + participants[0]
+        );
+    }
+
+    function selfUserCreateFields() {
+      return [
+        'uid',
+        'email',
+        'displayName',
+        'photoURL',
+        'role',
+        'createdAt',
+        'lastLogin',
+        'updatedAt',
+        'settings'
+      ];
+    }
+
+    function selfUserUpdateFields() {
+      return [
+        'email',
+        'displayName',
+        'photoURL',
+        'lastLogin',
+        'updatedAt',
+        'settings'
+      ];
+    }
+
+    function validSelfUserCreate(userId) {
+      return isSelf(userId) &&
+        request.resource.data.keys().hasOnly(selfUserCreateFields()) &&
+        request.resource.data.uid == userId &&
+        request.resource.data.role == 'user';
+    }
+
+    function validSelfUserUpdate() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(selfUserUpdateFields()) &&
+        request.resource.data.uid == resource.data.uid &&
+        request.resource.data.role == resource.data.role;
+    }
+
+    function publicProfileFields() {
+      return [
+        'uid',
+        'displayName',
+        'searchName',
+        'email',
+        'photoURL',
+        'lastSeen'
+      ];
+    }
+
+    function validPublicProfile(userId) {
+      return isSelf(userId) &&
+        request.resource.data.keys().hasOnly(publicProfileFields()) &&
+        request.resource.data.uid == userId;
+    }
+
+    function friendRequestFields() {
+      return [
+        'fromUserId',
+        'fromUserName',
+        'toUserId',
+        'status',
+        'createdAt'
+      ];
+    }
+
+    function validFriendRequestCreate() {
+      return signedIn() &&
+        request.resource.data.keys().hasAll(friendRequestFields()) &&
+        request.resource.data.keys().hasOnly(friendRequestFields()) &&
+        request.resource.data.fromUserId == request.auth.uid &&
+        request.resource.data.toUserId is string &&
+        request.resource.data.toUserId != request.auth.uid &&
+        request.resource.data.status == 'pending';
+    }
+
+    function canReadFriendRequest() {
+      return signedIn() && (
+        request.auth.uid == resource.data.fromUserId ||
+        request.auth.uid == resource.data.toUserId
+      );
+    }
+
+    function validFriendRequestStatusUpdate() {
+      return signedIn() &&
+        request.auth.uid == resource.data.toUserId &&
+        resource.data.status == 'pending' &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']) &&
+        request.resource.data.status in ['accepted', 'rejected'];
+    }
+
+    function chatFields() {
+      return ['participants', 'updatedAt'];
+    }
+
+    function validChatCreate(chatId) {
+      return participantDocId(chatId, request.resource.data.participants) &&
+        request.resource.data.keys().hasOnly(chatFields());
+    }
+
+    function validChatUpdate(chatId) {
+      return isParticipant(resource.data.participants) &&
+        request.resource.data.participants == resource.data.participants &&
+        participantDocId(chatId, request.resource.data.participants) &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(chatFields());
+    }
+
+    function chatDoc(chatId) {
+      return get(/databases/$(database)/documents/chats/$(chatId));
+    }
+
+    function isChatParticipant(chatId) {
+      return isParticipant(chatDoc(chatId).data.participants);
+    }
+
+    function messageFields() {
+      return [
+        'senderId',
+        'receiverId',
+        'content',
+        'timestamp',
+        'read'
+      ];
+    }
+
+    function validMessageCreate(chatId) {
+      return isChatParticipant(chatId) &&
+        request.resource.data.keys().hasOnly(messageFields()) &&
+        request.resource.data.senderId == request.auth.uid &&
+        request.resource.data.receiverId in chatDoc(chatId).data.participants &&
+        request.resource.data.receiverId != request.auth.uid &&
+        request.resource.data.content is string &&
+        request.resource.data.content.size() > 0 &&
+        request.resource.data.content.size() <= 2000 &&
+        request.resource.data.timestamp is timestamp &&
+        request.resource.data.read == false;
+    }
+
+    function validMessageReadUpdate(chatId) {
+      return isChatParticipant(chatId) &&
+        request.auth.uid == resource.data.receiverId &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']) &&
+        request.resource.data.senderId == resource.data.senderId &&
+        request.resource.data.receiverId == resource.data.receiverId &&
+        request.resource.data.content == resource.data.content &&
+        request.resource.data.timestamp == resource.data.timestamp;
+    }
+
+    match /users/{userId} {
+      allow read: if canAccessUser(userId);
+      allow create: if validSelfUserCreate(userId) || isAdmin();
+      allow update: if (isSelf(userId) && validSelfUserUpdate()) || isAdmin();
+      allow delete: if isAdmin();
+
+      match /collectedIngredients/{ingredientId} {
+        allow read, write: if canAccessUser(userId);
+      }
+
+      match /forageAttempts/{attemptId} {
+        allow read, write: if canAccessUser(userId);
+      }
+
+      match /recipes/{recipeId} {
+        allow read, write: if canAccessUser(userId);
+      }
+
+      match /createdPotions/{potionId} {
+        allow read, write: if canAccessUser(userId);
+      }
+
+      match /{document=**} {
+        allow read, write: if false;
+      }
+    }
+
+    match /public_users/{userId} {
+      allow read: if signedIn();
+      allow create: if validPublicProfile(userId) || isAdmin();
+      allow update: if (
+        validPublicProfile(userId) &&
+        request.resource.data.uid == resource.data.uid
+      ) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /friends/{friendshipId} {
+      allow read: if isParticipant(resource.data.participants);
+      allow create: if participantDocId(friendshipId, request.resource.data.participants) &&
+        request.resource.data.keys().hasOnly(['participants', 'createdAt', 'users']);
+      allow update: if isParticipant(resource.data.participants) &&
+        request.resource.data.participants == resource.data.participants &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['participants', 'createdAt', 'users']);
+      allow delete: if isParticipant(resource.data.participants) || isAdmin();
+    }
+
+    match /friendRequests/{requestId} {
+      allow read: if canReadFriendRequest();
+      allow create: if validFriendRequestCreate();
+      allow update: if isAdmin() || validFriendRequestStatusUpdate();
+      allow delete: if isAdmin() || (
+        signedIn() &&
+        request.auth.uid == resource.data.fromUserId &&
+        resource.data.status == 'pending'
+      );
+    }
+
+    match /chats/{chatId} {
+      allow read: if isParticipant(resource.data.participants);
+      allow create: if validChatCreate(chatId);
+      allow update: if validChatUpdate(chatId);
+      allow delete: if isAdmin();
+
+      match /messages/{messageId} {
+        allow read: if isChatParticipant(chatId);
+        allow create: if validMessageCreate(chatId);
+        allow update: if validMessageReadUpdate(chatId);
+        allow delete: if isAdmin() ||
+          (isChatParticipant(chatId) && resource.data.senderId == request.auth.uid);
+      }
+    }
+
+    match /trades/{tradeId} {
+      allow read: if isParticipant(resource.data.participants) || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

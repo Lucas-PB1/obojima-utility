@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserUtils } from '@/lib/userUtils';
 import { authService } from '@/services/authService';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { e2eUser, isE2EMode } from '@/lib/e2e/mockData';
 
 export function useAuth() {
@@ -17,6 +17,8 @@ export function useAuth() {
   const router = useRouter();
 
   useEffect(() => {
+    let profileUnsubscribe: (() => void) | null = null;
+
     if (isE2EMode()) {
       setUser(e2eUser as User);
       setUserProfile({
@@ -33,6 +35,11 @@ export function useAuth() {
     }
 
     const unsubscribe = authService.onAuthStateChange(async (currentUser) => {
+      if (profileUnsubscribe) {
+        profileUnsubscribe();
+        profileUnsubscribe = null;
+      }
+
       setUser(currentUser);
 
       if (currentUser) {
@@ -71,8 +78,19 @@ export function useAuth() {
               lastLogin: new Date().toISOString()
             };
             await setDoc(userDocRef, newProfile);
-            setUserProfile(newProfile);
           }
+
+          profileUnsubscribe = onSnapshot(
+            userDocRef,
+            (snapshot) => {
+              if (snapshot.exists()) {
+                setUserProfile(snapshot.data() as UserProfile);
+              }
+            },
+            (error) => {
+              logger.error('Error subscribing to user profile:', error);
+            }
+          );
         } catch (error) {
           logger.error('Error fetching/creating user profile:', error);
         }
@@ -83,7 +101,12 @@ export function useAuth() {
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      if (profileUnsubscribe) {
+        profileUnsubscribe();
+      }
+    };
   }, []);
 
   const logout = async () => {

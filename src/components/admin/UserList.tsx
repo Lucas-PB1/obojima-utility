@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { UserProfile } from '@/types/auth';
-import { Button, DataTable } from '@/components/ui';
+import { Button, DataTable, UserAvatar } from '@/components/ui';
 import { useAdminUsers } from '@/hooks/useAdminUsers';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useUserTableColumns } from '@/hooks/useUserTableColumns';
@@ -36,18 +35,12 @@ export function UserList() {
         className="flex items-center justify-between p-5 hover:bg-totoro-blue/5 transition-colors active:bg-totoro-blue/10 cursor-pointer group"
       >
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-totoro-blue/10 flex items-center justify-center text-lg text-totoro-blue font-bold border-2 border-white shadow-sm relative overflow-hidden">
-            {user.photoURL ? (
-              <Image
-                src={user.photoURL}
-                alt={user.displayName || ''}
-                fill
-                className="object-cover"
-              />
-            ) : (
-              (user.displayName?.[0] || user.email?.[0] || '?').toUpperCase()
-            )}
-          </div>
+          <UserAvatar
+            src={user.photoURL}
+            name={user.displayName}
+            email={user.email}
+            className="w-12 h-12 text-lg font-bold border-2 border-white shadow-sm"
+          />
           <div className="flex flex-col gap-0.5">
             <span className="font-bold text-totoro-gray text-sm group-hover:text-totoro-blue transition-colors">
               {user.displayName || t('admin.users.noName')}

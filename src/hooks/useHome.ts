@@ -1,17 +1,14 @@
 'use client';
-import { useEffect } from 'react';
 import { useApp } from '@/hooks/useApp';
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
 import { useIngredients } from '@/hooks/useIngredients';
+import { useProtectedApp } from '@/hooks/useProtectedApp';
 
 export function useHome() {
-  const router = useRouter();
-  const { user, loading: authLoading, isAuthenticated, logout } = useAuth();
+  const { user, userProfile, authLoading, isAuthenticated, logout, isClient, isInitialized } =
+    useProtectedApp();
   const {
     activeTab,
     recentlyCollected,
-    isClient,
     tabs,
     handleIngredientCollected,
     handleTabChange,
@@ -19,12 +16,6 @@ export function useHome() {
   } = useApp();
 
   const { ingredients, markAsUsed } = useIngredients();
-
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [authLoading, isAuthenticated, router]);
 
   const availableIngredients = ingredients
     .filter((ing) => !ing.used && ing.quantity > 0)
@@ -38,9 +29,11 @@ export function useHome() {
 
   return {
     user,
+    userProfile,
     authLoading,
     isAuthenticated,
     logout,
+    isInitialized,
     activeTab,
     recentlyCollected,
     isClient,

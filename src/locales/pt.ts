@@ -43,6 +43,71 @@ export const pt = {
   'settings.profile.newPassword': 'Nova Senha',
   'settings.profile.confirmPassword': 'Confirmar Senha',
   'settings.profile.save': 'Salvar Alterações',
+  'settings.navigation.back': 'Voltar ao app',
+  'settings.navigation.account': 'Usuário',
+  'settings.navigation.player': 'Jogador',
+  'settings.account.title': 'Conta do Usuário',
+  'settings.account.subtitle':
+    'Gerencie seu perfil, idioma e segurança em um espaço próprio e mais limpo.',
+  'settings.account.profile.title': 'Perfil',
+  'settings.account.profile.preview': 'Preview público',
+  'settings.account.profile.displayNamePlaceholder': 'Como você quer aparecer no app',
+  'settings.account.profile.email': 'Email da Conta',
+  'settings.account.profile.photoPlaceholder': 'https://exemplo.com/avatar.png',
+  'settings.account.profile.photoHint':
+    'Use uma URL pública para o avatar. Ela será refletida no header, social e admin.',
+  'settings.account.profile.validation.displayNameRequired':
+    'Informe um nome de exibição para salvar seu perfil.',
+  'settings.account.profile.validation.photoUrl': 'Informe uma URL válida para a foto.',
+  'settings.account.profile.feedback.noChanges': 'Nada mudou por aqui ainda.',
+  'settings.account.profile.feedback.saved': 'Perfil atualizado com sucesso.',
+  'settings.account.profile.feedback.error': 'Não foi possível salvar o perfil agora.',
+  'settings.account.appearance.title': 'Aparência e idioma',
+  'settings.account.security.title': 'Segurança',
+  'settings.account.security.heading': 'Alterar senha',
+  'settings.account.security.description':
+    'Confirme sua senha atual para concluir a troca com segurança.',
+  'settings.account.security.currentPassword': 'Senha Atual',
+  'settings.account.security.validation.currentRequired': 'Digite sua senha atual.',
+  'settings.account.security.validation.newRequired': 'Digite uma nova senha.',
+  'settings.account.security.validation.minLength':
+    'A nova senha precisa ter pelo menos 6 caracteres.',
+  'settings.account.security.validation.mismatch': 'As senhas novas não coincidem.',
+  'settings.account.security.feedback.saved': 'Senha atualizada com sucesso.',
+  'settings.account.security.feedback.error': 'Não foi possível atualizar a senha agora.',
+  'settings.account.security.tip': 'Proteja sua conta antes de sair para aventurar.',
+  'settings.account.security.save': 'Atualizar senha',
+  'settings.player.title': 'Configurações de Jogador',
+  'settings.player.subtitle':
+    'Ajuste padrões de testes, bônus e talentos sem misturar isso com sua conta.',
+  'settings.player.defaults.title': 'Padrões de mesa',
+  'settings.player.talents.section': 'Talentos e vantagens',
+  'settings.player.autosave.idle': 'Autosave pronto',
+  'settings.player.autosave.saving': 'Salvando ajustes',
+  'settings.player.autosave.saved': 'Ajustes salvos',
+  'settings.player.autosave.error': 'Falha ao salvar',
+  'settings.player.summary.title': 'Impacto no jogo',
+  'settings.player.summary.defaults': 'Padrões aplicados automaticamente',
+  'settings.player.summary.defaultsDesc':
+    'Os valores desta tela entram como ponto de partida quando voce abre os sistemas.',
+  'settings.player.summary.forage': 'Forrageio mais rapido',
+  'settings.player.summary.forageDesc':
+    'Regiao, tipo de teste, modificador e bonus deixam a rotina pronta para jogar.',
+  'settings.player.summary.potions': 'Talentos afetam criacao',
+  'settings.player.summary.potionsDesc':
+    'Caldeirao Especial e Potion Brewer continuam influenciando a fabricacao de pocoes.',
+  'settings.player.system.title': 'Organizacao',
+  'settings.player.system.accountPrefsTitle': 'Idioma e tema ficam na conta',
+  'settings.player.system.accountPrefsDesc':
+    'Preferencias pessoais agora ficam separadas na tela Usuario para manter esta area focada no jogo.',
+  'settings.player.reset.title': 'Resetar configuracoes de jogador?',
+  'settings.player.reset.description':
+    'Isso vai limpar apenas os ajustes de jogo e manter idioma e tema como estao.',
+  'settings.player.reset.confirm': 'Resetar jogador',
+  'settings.player.reset.cardTitle': 'Limpar configuracoes de jogador',
+  'settings.player.reset.cardDescription':
+    'Use este reset quando quiser voltar aos valores base da mesa sem mexer na sua conta.',
+  'settings.player.reset.button': 'Limpar ajustes do jogador',
 
   // Constants
   'constants.forage.testType.nature': 'Natureza',

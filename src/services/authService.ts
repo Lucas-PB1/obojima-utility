@@ -1,16 +1,20 @@
 import { auth } from '@/config/firebase';
+import { db } from '@/config/firebase';
 import { logger } from '@/utils/logger';
 
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
   updateProfile,
   updatePassword,
+  reauthenticateWithCredential,
   User,
   UserCredential
 } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { socialService } from '@/services/socialService';
 
@@ -117,6 +121,9 @@ class AuthService {
       const firebaseError = error as { code: string; message?: string };
 
       switch (firebaseError.code) {
+        case 'auth/invalid-credential':
+          message = 'Senha atual incorreta';
+          break;
         case 'auth/email-already-in-use':
           message = 'Este email já está em uso';
           break;
@@ -144,6 +151,9 @@ class AuthService {
         case 'auth/network-request-failed':
           message = 'Erro de conexão. Verifique sua internet';
           break;
+        case 'auth/requires-recent-login':
+          message = 'Confirme sua senha atual para continuar';
+          break;
         default:
           message = firebaseError.message || message;
       }
@@ -170,17 +180,31 @@ class AuthService {
         email: user.email || '',
         photoURL: photoURL
       });
+
+      await setDoc(
+        doc(db, 'users', user.uid),
+        {
+          displayName: displayName || 'User',
+          email: user.email || '',
+          photoURL: photoURL,
+          updatedAt: new Date().toISOString()
+        },
+        { merge: true }
+      );
     } catch (error) {
       logger.error('Erro ao atualizar perfil:', error);
       throw this.handleAuthError(error);
     }
   }
 
-  async updatePassword(newPassword: string): Promise<void> {
+  async updatePasswordWithReauth(currentPassword: string, newPassword: string): Promise<void> {
     const user = this.getCurrentUser();
     if (!user) throw new Error('Usuário não autenticado');
+    if (!user.email) throw new Error('Usuário sem email associado');
 
     try {
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
     } catch (error) {
       logger.error('Erro ao atualizar senha:', error);

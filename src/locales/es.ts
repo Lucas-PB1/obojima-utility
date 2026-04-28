@@ -43,6 +43,72 @@ export const es = {
   'settings.profile.newPassword': 'Nueva Contraseña',
   'settings.profile.confirmPassword': 'Confirmar Contraseña',
   'settings.profile.save': 'Guardar Cambios',
+  'settings.navigation.back': 'Volver a la app',
+  'settings.navigation.account': 'Usuario',
+  'settings.navigation.player': 'Jugador',
+  'settings.account.title': 'Cuenta de Usuario',
+  'settings.account.subtitle':
+    'Gestiona tu perfil, idioma y seguridad en un espacio dedicado y mas limpio.',
+  'settings.account.profile.title': 'Perfil',
+  'settings.account.profile.preview': 'Vista publica',
+  'settings.account.profile.displayNamePlaceholder': 'Como quieres aparecer en la app',
+  'settings.account.profile.email': 'Email de la Cuenta',
+  'settings.account.profile.photoPlaceholder': 'https://ejemplo.com/avatar.png',
+  'settings.account.profile.photoHint':
+    'Usa una URL publica para el avatar. Se reflejara en el header, social y admin.',
+  'settings.account.profile.validation.displayNameRequired':
+    'Ingresa un nombre visible antes de guardar tu perfil.',
+  'settings.account.profile.validation.photoUrl': 'Ingresa una URL valida para la foto.',
+  'settings.account.profile.feedback.noChanges': 'Todavia no hay cambios para guardar.',
+  'settings.account.profile.feedback.saved': 'Perfil actualizado con exito.',
+  'settings.account.profile.feedback.error': 'No se pudo guardar el perfil en este momento.',
+  'settings.account.appearance.title': 'Apariencia e idioma',
+  'settings.account.security.title': 'Seguridad',
+  'settings.account.security.heading': 'Cambiar contrasena',
+  'settings.account.security.description':
+    'Confirma tu contrasena actual para completar el cambio de forma segura.',
+  'settings.account.security.currentPassword': 'Contrasena Actual',
+  'settings.account.security.validation.currentRequired': 'Ingresa tu contrasena actual.',
+  'settings.account.security.validation.newRequired': 'Ingresa una nueva contrasena.',
+  'settings.account.security.validation.minLength':
+    'La nueva contrasena debe tener al menos 6 caracteres.',
+  'settings.account.security.validation.mismatch': 'Las nuevas contrasenas no coinciden.',
+  'settings.account.security.feedback.saved': 'Contrasena actualizada con exito.',
+  'settings.account.security.feedback.error':
+    'No se pudo actualizar la contrasena en este momento.',
+  'settings.account.security.tip': 'Protege tu cuenta antes de volver a la aventura.',
+  'settings.account.security.save': 'Actualizar contrasena',
+  'settings.player.title': 'Configuracion de Jugador',
+  'settings.player.subtitle':
+    'Ajusta pruebas, bonos y talentos sin mezclarlos con las preferencias de tu cuenta.',
+  'settings.player.defaults.title': 'Valores por defecto',
+  'settings.player.talents.section': 'Talentos y ventajas',
+  'settings.player.autosave.idle': 'Autosave listo',
+  'settings.player.autosave.saving': 'Guardando ajustes',
+  'settings.player.autosave.saved': 'Ajustes guardados',
+  'settings.player.autosave.error': 'Error al guardar',
+  'settings.player.summary.title': 'Impacto en el juego',
+  'settings.player.summary.defaults': 'Los valores se aplican automaticamente',
+  'settings.player.summary.defaultsDesc':
+    'Los valores de esta pantalla se usan como punto de partida al abrir los sistemas de juego.',
+  'settings.player.summary.forage': 'Forrajeo mas rapido',
+  'settings.player.summary.forageDesc':
+    'Region, tipo de prueba, modificador y bono dejan la rutina lista para jugar.',
+  'settings.player.summary.potions': 'Los talentos afectan la creacion',
+  'settings.player.summary.potionsDesc':
+    'Caldero Especial y Elaborador siguen influyendo en la creacion de pociones.',
+  'settings.player.system.title': 'Organizacion',
+  'settings.player.system.accountPrefsTitle': 'Idioma y tema viven en Usuario',
+  'settings.player.system.accountPrefsDesc':
+    'Las preferencias personales ahora viven en la pantalla Usuario para mantener esta area enfocada en el juego.',
+  'settings.player.reset.title': '¿Restablecer configuracion del jugador?',
+  'settings.player.reset.description':
+    'Esto limpiara solo los ajustes de juego y mantendra idioma y tema como estan.',
+  'settings.player.reset.confirm': 'Restablecer jugador',
+  'settings.player.reset.cardTitle': 'Limpiar configuracion del jugador',
+  'settings.player.reset.cardDescription':
+    'Usa esto cuando quieras volver a los valores base de la mesa sin tocar tu cuenta.',
+  'settings.player.reset.button': 'Limpiar ajustes del jugador',
 
   // Constants
   'constants.forage.testType.nature': 'Naturaleza',

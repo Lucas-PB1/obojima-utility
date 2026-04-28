@@ -2,9 +2,8 @@ import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Friend } from '@/types/social';
 import { authService } from '@/services/authService';
-import { Button, Input } from '@/components/ui';
+import { Button, Input, UserAvatar } from '@/components/ui';
 import { useChat } from '@/hooks/useChat';
-import Image from 'next/image';
 import { MessageBubble } from '@/components/Social';
 
 interface ChatWindowProps {
@@ -24,18 +23,13 @@ export function ChatWindow({ friend, onClose }: ChatWindowProps) {
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-20 pointer-events-none">
         <div className="flex items-center gap-3 pointer-events-auto duration-300">
-          <div className="relative w-10 h-10 rounded-full bg-totoro-blue/20 flex items-center justify-center text-sm shadow-inner ring-2 ring-white/20 backdrop-blur-sm">
-            {friend.photoURL ? (
-              <Image
-                src={friend.photoURL}
-                alt={friend.displayName}
-                width={40}
-                height={40}
-                className="rounded-full object-cover w-full h-full"
-              />
-            ) : (
-              <span className="text-lg">👤</span>
-            )}
+          <div className="relative">
+            <UserAvatar
+              src={friend.photoURL}
+              name={friend.displayName}
+              className="w-10 h-10 bg-totoro-blue/20 text-sm shadow-inner ring-2 ring-white/20 backdrop-blur-sm"
+              fallbackClassName="text-lg"
+            />
             <div
               className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ring-2 ring-[color:var(--surface-raised)] ${
                 friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'

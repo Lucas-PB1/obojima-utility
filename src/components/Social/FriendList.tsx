@@ -1,9 +1,8 @@
 'use client';
-import Image from 'next/image';
 import React, { useState } from 'react';
 import { MessageCircle, Gift, UserMinus } from 'lucide-react';
 import { Friend } from '@/types/social';
-import { Button } from '@/components/ui';
+import { Button, UserAvatar } from '@/components/ui';
 import { TradeModal } from '@/components/Social';
 import { useTranslation } from '@/hooks/useTranslation';
 import { socialService } from '@/services/socialService';
@@ -47,19 +46,12 @@ export function FriendList({ friends, onChat }: FriendListProps) {
           className="glass-panel p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-totoro-blue/20 to-totoro-green/20 flex items-center justify-center text-xl shadow-inner">
-              {friend.photoURL ? (
-                <Image
-                  src={friend.photoURL}
-                  alt={friend.displayName}
-                  width={48}
-                  height={48}
-                  className="rounded-full w-full h-full object-cover"
-                />
-              ) : (
-                '👤'
-              )}
-            </div>
+            <UserAvatar
+              src={friend.photoURL}
+              name={friend.displayName}
+              className="w-12 h-12 bg-gradient-to-br from-totoro-blue/20 to-totoro-green/20 shadow-inner"
+              fallbackClassName="text-xl"
+            />
             <div>
               <h3 className="font-bold text-totoro-gray">{friend.displayName}</h3>
               <p className="text-xs text-totoro-blue/60 flex items-center gap-1">

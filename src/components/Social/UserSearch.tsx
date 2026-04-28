@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Button, Input } from '@/components/ui';
+import { Button, Input, UserAvatar } from '@/components/ui';
 import { useUserSearch } from '@/hooks/useUserSearch';
-import Image from 'next/image';
 
 export function UserSearch() {
   const { t } = useTranslation();
@@ -31,19 +30,13 @@ export function UserSearch() {
             className="glass-panel p-5 flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 hover:shadow-[var(--shadow-raised)]"
           >
             <div className="flex items-center gap-4">
-              <div className="relative w-14 h-14 rounded-full bg-totoro-blue/10 flex items-center justify-center text-2xl shadow-sm ring-2 ring-white/40 group-hover:ring-totoro-blue/30 transition-all duration-300">
-                {user.photoURL ? (
-                  <Image
-                    src={user.photoURL}
-                    alt={user.displayName || 'User'}
-                    width={56}
-                    height={56}
-                    className="rounded-full object-cover w-full h-full"
-                  />
-                ) : (
-                  <span className="opacity-70">👤</span>
-                )}
-              </div>
+              <UserAvatar
+                src={user.photoURL}
+                name={user.displayName}
+                email={user.email}
+                className="relative w-14 h-14 text-2xl shadow-sm ring-2 ring-white/40 group-hover:ring-totoro-blue/30 transition-all duration-300"
+                fallbackClassName="opacity-70 text-xl"
+              />
               <div className="flex flex-col">
                 <span className="font-bold text-lg text-totoro-gray group-hover:text-totoro-blue transition-colors duration-300">
                   {user.displayName || t('admin.users.noName')}

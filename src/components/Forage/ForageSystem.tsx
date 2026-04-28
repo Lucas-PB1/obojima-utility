@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Button, PageHeader, ContentCard, IngredientCard } from '@/components/ui';
 import { ForageForm } from './ForageForm';
 import { ForageResult } from './ForageResult';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useForageSystem } from '@/hooks/useForageSystem';
-import { SettingsModal } from '@/components/System';
 import { Leaf, SlidersHorizontal, Target } from 'lucide-react';
 
 interface ForageSystemProps {
@@ -15,6 +15,7 @@ interface ForageSystemProps {
 import { useTranslation } from '@/hooks/useTranslation';
 
 export function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
+  const router = useRouter();
   const { t } = useTranslation();
   const {
     region,
@@ -31,9 +32,6 @@ export function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
     lastResult,
     remainingAttempts,
     ingredients,
-    isSettingsOpen,
-    openSettings,
-    closeSettings,
     handleForage
   } = useForageSystem(onIngredientCollected);
 
@@ -72,7 +70,7 @@ export function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
             </div>
 
             <Button
-              onClick={openSettings}
+              onClick={() => router.push('/settings/player')}
               variant="secondary"
               size="md"
               className="!rounded-lg !px-3 md:!px-5 w-full sm:w-auto h-full min-h-[50px] sm:min-h-0"
@@ -119,8 +117,6 @@ export function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
           </div>
         </ContentCard>
       )}
-
-      <SettingsModal isOpen={isSettingsOpen} onClose={closeSettings} />
     </div>
   );
 }

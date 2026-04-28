@@ -27,6 +27,17 @@ const defaultSettings: Settings = {
   defaultTestType: undefined
 };
 
+const defaultPlayerSettings: Omit<Settings, 'language'> = {
+  defaultModifier: '',
+  defaultBonusDice: null,
+  doubleForageTalent: false,
+  cauldronBonus: false,
+  potionBrewerTalent: false,
+  potionBrewerLevel: 1,
+  defaultRegion: '',
+  defaultTestType: undefined
+};
+
 class FirebaseSettingsService {
   private settingsUnsubscribe: Unsubscribe | null = null;
 
@@ -233,6 +244,21 @@ class FirebaseSettingsService {
       await setDoc(userRef, { [this.getSettingsFieldPath()]: defaultSettings }, { merge: true });
     } catch (error) {
       logger.error('Erro ao limpar configurações:', error);
+      throw error;
+    }
+  }
+
+  async clearPlayerSettings(): Promise<void> {
+    if (!this.isClient() || !this.getUserId()) return;
+
+    try {
+      const settings = await this.getSettings();
+      await this.saveSettings({
+        ...settings,
+        ...defaultPlayerSettings
+      });
+    } catch (error) {
+      logger.error('Erro ao limpar configurações do jogador:', error);
       throw error;
     }
   }
