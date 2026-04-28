@@ -27,8 +27,10 @@ Este documento descreve como configurar o Firebase para o projeto Obojima Utilit
 ## 4. Configurar Regras de Segurança
 
 1. No console do Firestore, vá na aba "Regras"
-2. Cole o conteúdo do arquivo `firestore.rules` neste repositório
+2. Cole o conteúdo do arquivo `doc/firestore.rules` neste repositório
 3. Clique em "Publicar"
+
+Para o Firebase Storage, use o conteúdo de `doc/storage.rules`.
 
 As regras garantem que cada usuário só possa acessar seus próprios dados.
 
