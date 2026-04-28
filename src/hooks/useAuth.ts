@@ -7,8 +7,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserUtils } from '@/lib/userUtils';
 import { authService } from '@/services/authService';
+import { firebaseRecipeService } from '@/services/firebaseRecipeService';
+import { firebaseSettingsService } from '@/services/firebaseSettingsService';
+import { firebaseStorageService } from '@/services/firebaseStorageService';
 import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { e2eUser, isE2EMode } from '@/lib/e2e/mockData';
+import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -113,6 +117,10 @@ export function useAuth() {
     if (isE2EMode()) return;
 
     try {
+      firebaseStorageService.cleanup();
+      firebaseRecipeService.cleanup();
+      firebaseCreatedPotionService.cleanup();
+      firebaseSettingsService.cleanup();
       await authService.logout();
       router.push('/login');
     } catch (error) {

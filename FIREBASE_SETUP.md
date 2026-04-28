@@ -14,7 +14,8 @@ Este documento descreve como configurar o Firebase para o projeto Obojima Utilit
 1. No console do Firebase, vá em "Authentication"
 2. Clique em "Começar"
 3. Habilite o método "Email/Password"
-4. Salve as configurações
+4. Habilite o método "Google"
+5. Salve as configurações
 
 ## 3. Configurar Firestore
 
@@ -30,7 +31,8 @@ Este documento descreve como configurar o Firebase para o projeto Obojima Utilit
 2. Cole o conteúdo do arquivo `doc/firestore.rules` neste repositório
 3. Clique em "Publicar"
 
-Para o Firebase Storage, use o conteúdo de `doc/storage.rules`.
+Para o Firebase Storage, vá em "Storage" > "Rules" e publique o conteúdo de `doc/storage.rules`.
+O upload de avatar usa o caminho `users/{uid}/avatars/profile.*`.
 
 As regras garantem que cada usuário só possa acessar seus próprios dados.
 

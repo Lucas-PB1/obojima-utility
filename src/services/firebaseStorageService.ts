@@ -30,6 +30,16 @@ class FirebaseStorageService {
     return authService.getUserId();
   }
 
+  private isLogoutPermissionError(error: unknown): boolean {
+    return (
+      !this.getUserId() &&
+      !!error &&
+      typeof error === 'object' &&
+      'code' in error &&
+      error.code === 'permission-denied'
+    );
+  }
+
   private getCollectedIngredientsPath(uid?: string): string {
     const userId = uid || this.getUserId();
     if (!userId) throw new Error('Usuário não autenticado');
@@ -111,6 +121,12 @@ class FirebaseStorageService {
           callback(ingredients);
         },
         (error) => {
+          if (this.isLogoutPermissionError(error)) {
+            this.collectedIngredientsUnsubscribe = null;
+            callback([]);
+            return;
+          }
+
           logger.error('Erro ao observar ingredientes:', error);
           callback([]);
         }
@@ -275,6 +291,12 @@ class FirebaseStorageService {
           callback(attempts);
         },
         (error) => {
+          if (this.isLogoutPermissionError(error)) {
+            this.forageAttemptsUnsubscribe = null;
+            callback([]);
+            return;
+          }
+
           logger.error('Erro ao observar tentativas:', error);
           callback([]);
         }

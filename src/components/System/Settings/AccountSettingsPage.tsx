@@ -1,14 +1,33 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
-import { Globe, Palette, Shield, Sparkles, UserRound } from 'lucide-react';
+import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  CheckCircle2,
+  Chrome,
+  Globe,
+  Link2,
+  Palette,
+  Shield,
+  Sparkles,
+  Upload,
+  UserRound
+} from 'lucide-react';
 import { authService } from '@/services/authService';
+import { firebaseFileStorageService } from '@/services/firebaseFileStorageService';
 import { useProtectedApp } from '@/hooks/useProtectedApp';
 import { useSettings } from '@/hooks/useSettings';
 import { useTranslation } from '@/hooks/useTranslation';
 import { LANGUAGE_OPTIONS } from '@/constants/settings';
 import { AppLoadingScreen } from '@/components/AppShell/AppLoadingScreen';
 import { SettingsHubLayout } from './SettingsHubLayout';
-import { Button, ContentCard, Input, PageHeader, Select, ThemeSwitch, UserAvatar } from '@/components/ui';
+import {
+  Button,
+  ContentCard,
+  Input,
+  PageHeader,
+  Select,
+  ThemeSwitch,
+  UserAvatar
+} from '@/components/ui';
 
 type FeedbackState = {
   status: 'idle' | 'saving' | 'saved' | 'error';
@@ -33,6 +52,7 @@ export function AccountSettingsPage() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [selectedAvatarFile, setSelectedAvatarFile] = useState<File | null>(null);
   const [profileFeedback, setProfileFeedback] = useState<FeedbackState>({
     status: 'idle',
     message: null
@@ -41,11 +61,21 @@ export function AccountSettingsPage() {
     status: 'idle',
     message: null
   });
+  const [providerFeedback, setProviderFeedback] = useState<FeedbackState>({
+    status: 'idle',
+    message: null
+  });
+  const [linkedProviderIds, setLinkedProviderIds] = useState<string[]>([]);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setDisplayName(userProfile?.displayName || user?.displayName || '');
     setPhotoURL(userProfile?.photoURL || user?.photoURL || '');
   }, [user?.displayName, user?.photoURL, userProfile?.displayName, userProfile?.photoURL]);
+
+  useEffect(() => {
+    setLinkedProviderIds(authService.getLinkedProviderIds(user));
+  }, [user]);
 
   const currentDisplayName = userProfile?.displayName || user?.displayName || '';
   const currentEmail = userProfile?.email || user?.email || '';
@@ -56,6 +86,7 @@ export function AccountSettingsPage() {
   const hasProfileChanges =
     trimmedDisplayName !== (currentDisplayName || '').trim() ||
     trimmedPhotoURL !== (currentPhotoURL || '').trim();
+  const googleLinked = linkedProviderIds.includes('google.com');
 
   const passwordValidationError = useMemo(() => {
     const hasAnyPasswordInput = currentPassword || newPassword || confirmPassword;
@@ -82,6 +113,12 @@ export function AccountSettingsPage() {
   const resetSecurityFeedback = () => {
     if (securityFeedback.status !== 'idle') {
       setSecurityFeedback({ status: 'idle', message: null });
+    }
+  };
+
+  const resetProviderFeedback = () => {
+    if (providerFeedback.status !== 'idle') {
+      setProviderFeedback({ status: 'idle', message: null });
     }
   };
 
@@ -127,6 +164,63 @@ export function AccountSettingsPage() {
     }
   };
 
+  const getErrorMessage = (error: unknown, fallbackKey: string) => {
+    if (!(error instanceof Error)) return t(fallbackKey);
+    return error.message.startsWith('settings.') ? t(error.message) : error.message;
+  };
+
+  const handleAvatarFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    resetProfileFeedback();
+
+    if (!file) {
+      setSelectedAvatarFile(null);
+      return;
+    }
+
+    const validationKey = firebaseFileStorageService.validateAvatarFile(file);
+    if (validationKey) {
+      setSelectedAvatarFile(null);
+      setProfileFeedback({
+        status: 'error',
+        message: t(validationKey)
+      });
+      event.target.value = '';
+      return;
+    }
+
+    setSelectedAvatarFile(file);
+  };
+
+  const handleAvatarUpload = async () => {
+    if (!user || !selectedAvatarFile) return;
+
+    const nextDisplayName =
+      trimmedDisplayName || currentDisplayName || currentEmail || t('admin.users.noName');
+
+    setProfileFeedback({ status: 'saving', message: null });
+
+    try {
+      const uploadedPhotoURL = await firebaseFileStorageService.uploadUserAvatar(
+        user.uid,
+        selectedAvatarFile
+      );
+      await authService.updateProfile(nextDisplayName, uploadedPhotoURL);
+      setPhotoURL(uploadedPhotoURL);
+      setSelectedAvatarFile(null);
+      if (avatarInputRef.current) avatarInputRef.current.value = '';
+      setProfileFeedback({
+        status: 'saved',
+        message: t('settings.account.profile.upload.feedback.saved')
+      });
+    } catch (error) {
+      setProfileFeedback({
+        status: 'error',
+        message: getErrorMessage(error, 'settings.account.profile.upload.feedback.error')
+      });
+    }
+  };
+
   const handlePasswordSave = async () => {
     if (passwordValidationError) {
       setSecurityFeedback({
@@ -151,6 +245,34 @@ export function AccountSettingsPage() {
       const message =
         error instanceof Error ? error.message : t('settings.account.security.feedback.error');
       setSecurityFeedback({ status: 'error', message });
+    }
+  };
+
+  const handleGoogleLink = async () => {
+    if (googleLinked) {
+      setProviderFeedback({
+        status: 'saved',
+        message: t('settings.account.providers.google.feedback.alreadyLinked')
+      });
+      return;
+    }
+
+    resetProviderFeedback();
+    setProviderFeedback({ status: 'saving', message: null });
+
+    try {
+      const linkedUser = await authService.linkGoogleAccount();
+      setLinkedProviderIds(authService.getLinkedProviderIds(linkedUser));
+      setProviderFeedback({
+        status: 'saved',
+        message: t('settings.account.providers.google.feedback.linked')
+      });
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : t('settings.account.providers.google.feedback.error');
+      setProviderFeedback({ status: 'error', message });
     }
   };
 
@@ -227,6 +349,51 @@ export function AccountSettingsPage() {
                     {t('settings.account.profile.validation.photoUrl')}
                   </p>
                 )}
+
+                <div className="rounded-lg bg-muted/30 p-4 shadow-[inset_0_0_0_1px_var(--hairline)]">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <h3 className="text-sm font-semibold text-foreground">
+                        {t('settings.account.profile.upload.title')}
+                      </h3>
+                      <p className="mt-1 text-xs text-foreground/50">
+                        {selectedAvatarFile
+                          ? selectedAvatarFile.name
+                          : t('settings.account.profile.upload.description')}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                      <input
+                        ref={avatarInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarFileChange}
+                        className="sr-only"
+                      />
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => avatarInputRef.current?.click()}
+                        disabled={profileFeedback.status === 'saving'}
+                        className="w-full sm:w-auto"
+                      >
+                        <Upload className="h-4 w-4" />
+                        {t('settings.account.profile.upload.choose')}
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={handleAvatarUpload}
+                        disabled={!selectedAvatarFile || profileFeedback.status === 'saving'}
+                        className="w-full sm:w-auto"
+                      >
+                        {profileFeedback.status === 'saving'
+                          ? t('ui.actions.saving')
+                          : t('settings.account.profile.upload.save')}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -269,9 +436,7 @@ export function AccountSettingsPage() {
                       {t('settings.appearance.title')}
                     </h3>
                   </div>
-                  <p className="mt-1 text-xs text-foreground/50">
-                    {t('settings.appearance.desc')}
-                  </p>
+                  <p className="mt-1 text-xs text-foreground/50">{t('settings.appearance.desc')}</p>
                 </div>
                 <ThemeSwitch />
               </div>
@@ -291,6 +456,70 @@ export function AccountSettingsPage() {
                   label={t('settings.language.label')}
                 />
               </div>
+            </div>
+          </ContentCard>
+
+          <ContentCard title={t('settings.account.providers.title')}>
+            <div className="space-y-4">
+              <div className="rounded-lg bg-muted/30 p-4 shadow-[inset_0_0_0_1px_var(--hairline)]">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Chrome className="h-4 w-4 text-totoro-blue" />
+                      <h3 className="text-sm font-semibold text-foreground">
+                        {t('settings.account.providers.google.heading')}
+                      </h3>
+                    </div>
+                    <p className="text-xs text-foreground/50">
+                      {t('settings.account.providers.google.description')}
+                    </p>
+                  </div>
+                  <div
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold ${
+                      googleLinked
+                        ? 'bg-totoro-green/10 text-totoro-green'
+                        : 'bg-foreground/5 text-foreground/50'
+                    }`}
+                  >
+                    {googleLinked && <CheckCircle2 className="h-3.5 w-3.5" />}
+                    {googleLinked
+                      ? t('settings.account.providers.google.status.linked')
+                      : t('settings.account.providers.google.status.notLinked')}
+                  </div>
+                </div>
+              </div>
+
+              {providerFeedback.message && (
+                <div
+                  className={`rounded-lg px-4 py-3 text-sm font-semibold ${
+                    providerFeedback.status === 'saved'
+                      ? 'bg-totoro-green/10 text-totoro-green shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.18)]'
+                      : providerFeedback.status === 'error'
+                        ? 'bg-totoro-orange/10 text-totoro-orange shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.18)]'
+                        : 'bg-totoro-blue/10 text-totoro-blue shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.18)]'
+                  }`}
+                >
+                  {providerFeedback.message}
+                </div>
+              )}
+
+              <Button
+                variant={googleLinked ? 'secondary' : 'outline'}
+                onClick={handleGoogleLink}
+                disabled={googleLinked || providerFeedback.status === 'saving'}
+                fullWidth
+              >
+                {googleLinked ? (
+                  <CheckCircle2 className="h-4 w-4" />
+                ) : (
+                  <Link2 className="h-4 w-4" />
+                )}
+                {providerFeedback.status === 'saving'
+                  ? t('ui.actions.saving')
+                  : googleLinked
+                    ? t('settings.account.providers.google.action.linked')
+                    : t('settings.account.providers.google.action.link')}
+              </Button>
             </div>
           </ContentCard>
 

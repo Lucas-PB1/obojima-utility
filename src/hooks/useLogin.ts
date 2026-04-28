@@ -5,15 +5,18 @@ import { useRouter } from 'next/navigation';
 import { doc, setDoc } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { authService } from '@/services/authService';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function useLogin() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = authService.onAuthStateChange((user) => {
@@ -28,6 +31,7 @@ export function useLogin() {
   const toggleMode = () => {
     setIsLogin(!isLogin);
     setError(null);
+    setSuccessMessage(null);
     setPassword('');
     setConfirmPassword('');
   };
@@ -35,6 +39,7 @@ export function useLogin() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccessMessage(null);
     setLoading(true);
 
     try {
@@ -43,13 +48,13 @@ export function useLogin() {
         router.push('/');
       } else {
         if (password !== confirmPassword) {
-          setError('As senhas não coincidem');
+          setError(t('auth.validation.passwordMismatch'));
           setLoading(false);
           return;
         }
 
         if (password.length < 6) {
-          setError('A senha deve ter pelo menos 6 caracteres');
+          setError(t('auth.validation.passwordMinLength'));
           setLoading(false);
           return;
         }
@@ -73,6 +78,44 @@ export function useLogin() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setError(null);
+    setSuccessMessage(null);
+    setLoading(true);
+
+    try {
+      await authService.loginWithGoogle();
+      router.push('/');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : t('auth.google.error');
+      setError(errorMessage);
+      setLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    setError(null);
+    setSuccessMessage(null);
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setError(t('auth.reset.emailRequired'));
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await authService.sendPasswordReset(trimmedEmail);
+      setSuccessMessage(t('auth.reset.sent'));
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : t('auth.reset.error');
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     isLogin,
     email,
@@ -83,7 +126,10 @@ export function useLogin() {
     setConfirmPassword,
     loading,
     error,
+    successMessage,
     handleSubmit,
+    handleGoogleLogin,
+    handlePasswordReset,
     toggleMode
   };
 }

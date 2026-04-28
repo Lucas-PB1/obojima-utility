@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { Chrome } from 'lucide-react';
 import { Input, Button } from '@/components/ui';
 import { useLogin } from '@/hooks/useLogin';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -18,7 +19,10 @@ export default function LoginContent() {
     setConfirmPassword,
     loading,
     error,
+    successMessage,
     handleSubmit,
+    handleGoogleLogin,
+    handlePasswordReset,
     toggleMode
   } = useLogin();
 
@@ -47,6 +51,12 @@ export default function LoginContent() {
             </div>
           )}
 
+          {successMessage && (
+            <div className="mb-4 p-3 bg-totoro-green/10 rounded-lg text-totoro-green text-sm shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.18)]">
+              {successMessage}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               type="email"
@@ -57,14 +67,29 @@ export default function LoginContent() {
               className="w-full"
             />
 
-            <Input
-              type="password"
-              value={password}
-              onChange={(val) => setPassword(String(val))}
-              placeholder="••••••••"
-              label={t('auth.password')}
-              className="w-full"
-            />
+            <div className="space-y-2">
+              <Input
+                type="password"
+                value={password}
+                onChange={(val) => setPassword(String(val))}
+                placeholder="••••••••"
+                label={t('auth.password')}
+                className="w-full"
+              />
+
+              {isLogin && (
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handlePasswordReset}
+                    disabled={loading}
+                    className="text-xs font-semibold text-totoro-blue hover:text-totoro-blue/80 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {t('auth.reset.forgot')}
+                  </button>
+                </div>
+              )}
+            </div>
 
             {!isLogin && (
               <Input
@@ -93,6 +118,25 @@ export default function LoginContent() {
                   : t('auth.submit.register')}
             </Button>
           </form>
+
+          <div className="my-5 flex items-center gap-3">
+            <div className="h-px flex-1 bg-[color:var(--hairline)]" />
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-foreground/40">
+              {t('auth.divider.or')}
+            </span>
+            <div className="h-px flex-1 bg-[color:var(--hairline)]" />
+          </div>
+
+          <Button
+            type="button"
+            variant="secondary"
+            fullWidth
+            onClick={handleGoogleLogin}
+            disabled={loading}
+          >
+            <Chrome className="h-4 w-4" />
+            {loading ? t('auth.submit.loading') : t('auth.google.continue')}
+          </Button>
 
           <div className="mt-6 text-center">
             <button

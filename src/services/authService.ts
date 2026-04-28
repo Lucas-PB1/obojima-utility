@@ -5,7 +5,11 @@ import { logger } from '@/utils/logger';
 import {
   createUserWithEmailAndPassword,
   EmailAuthProvider,
+  GoogleAuthProvider,
+  linkWithPopup,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
   updateProfile,
@@ -19,6 +23,23 @@ import { doc, setDoc } from 'firebase/firestore';
 import { socialService } from '@/services/socialService';
 
 class AuthService {
+  private createGoogleProvider(): GoogleAuthProvider {
+    const provider = new GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    provider.setCustomParameters({ prompt: 'select_account' });
+    return provider;
+  }
+
+  private async ensurePublicProfile(user: User): Promise<void> {
+    await socialService.ensurePublicProfile({
+      uid: user.uid,
+      email: user.email || '',
+      displayName: user.displayName || 'User',
+      photoURL: user.photoURL || null
+    });
+  }
+
   async register(email: string, password: string): Promise<UserCredential> {
     if (typeof window === 'undefined') {
       throw new Error('Autenticação só pode ser feita no cliente');
@@ -28,12 +49,7 @@ class AuthService {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
       if (userCredential.user) {
-        await socialService.ensurePublicProfile({
-          uid: userCredential.user.uid,
-          email: userCredential.user.email || '',
-          displayName: userCredential.user.displayName || 'User',
-          photoURL: userCredential.user.photoURL || null
-        });
+        await this.ensurePublicProfile(userCredential.user);
       }
 
       return userCredential;
@@ -52,12 +68,7 @@ class AuthService {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       if (userCredential.user) {
-        await socialService.ensurePublicProfile({
-          uid: userCredential.user.uid,
-          email: userCredential.user.email || '',
-          displayName: userCredential.user.displayName || 'User',
-          photoURL: userCredential.user.photoURL || null
-        });
+        await this.ensurePublicProfile(userCredential.user);
       }
 
       return userCredential;
@@ -65,6 +76,65 @@ class AuthService {
       logger.error('Erro ao fazer login:', error);
       throw this.handleAuthError(error);
     }
+  }
+
+  async loginWithGoogle(): Promise<UserCredential> {
+    if (typeof window === 'undefined') {
+      throw new Error('Autenticação só pode ser feita no cliente');
+    }
+
+    try {
+      const userCredential = await signInWithPopup(auth, this.createGoogleProvider());
+
+      if (userCredential.user) {
+        await this.ensurePublicProfile(userCredential.user);
+      }
+
+      return userCredential;
+    } catch (error) {
+      logger.error('Erro ao fazer login com Google:', error);
+      throw this.handleAuthError(error);
+    }
+  }
+
+  async sendPasswordReset(email: string): Promise<void> {
+    if (typeof window === 'undefined') {
+      throw new Error('Autenticação só pode ser feita no cliente');
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+      logger.error('Erro ao enviar reset de senha:', error);
+      throw this.handleAuthError(error);
+    }
+  }
+
+  async linkGoogleAccount(): Promise<User> {
+    const user = this.getCurrentUser();
+    if (!user) throw new Error('Usuário não autenticado');
+
+    try {
+      const userCredential = await linkWithPopup(user, this.createGoogleProvider());
+      await userCredential.user.reload();
+
+      await setDoc(
+        doc(db, 'users', userCredential.user.uid),
+        {
+          updatedAt: new Date().toISOString()
+        },
+        { merge: true }
+      );
+
+      return userCredential.user;
+    } catch (error) {
+      logger.error('Erro ao vincular conta Google:', error);
+      throw this.handleAuthError(error);
+    }
+  }
+
+  getLinkedProviderIds(user: User | null = this.getCurrentUser()): string[] {
+    return user?.providerData.map((provider) => provider.providerId) || [];
   }
 
   async logout(): Promise<void> {
@@ -126,6 +196,22 @@ class AuthService {
           break;
         case 'auth/email-already-in-use':
           message = 'Este email já está em uso';
+          break;
+        case 'auth/account-exists-with-different-credential':
+          message =
+            'Já existe uma conta com este email. Entre com email e senha e vincule o Google nas configurações da conta.';
+          break;
+        case 'auth/credential-already-in-use':
+          message = 'Esta conta Google já está vinculada a outro usuário.';
+          break;
+        case 'auth/provider-already-linked':
+          message = 'Sua conta Google já está vinculada.';
+          break;
+        case 'auth/popup-closed-by-user':
+          message = 'Login com Google cancelado.';
+          break;
+        case 'auth/popup-blocked':
+          message = 'O navegador bloqueou a janela do Google. Libere pop-ups e tente novamente.';
           break;
         case 'auth/invalid-email':
           message = 'Email inválido';

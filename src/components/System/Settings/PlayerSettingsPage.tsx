@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { Dices, Globe, Leaf, SlidersHorizontal, Sparkles, Target } from 'lucide-react';
+import { Dices, Globe, Leaf, MapPinned, SlidersHorizontal, Sparkles, Target } from 'lucide-react';
 import { ingredientsService } from '@/services/ingredientsService';
 import { useProtectedApp } from '@/hooks/useProtectedApp';
 import { useSettings } from '@/hooks/useSettings';
@@ -12,7 +12,13 @@ import { AppLoadingScreen } from '@/components/AppShell/AppLoadingScreen';
 import { SettingsHubLayout } from './SettingsHubLayout';
 import { Button, ContentCard, Input, PageHeader, Select } from '@/components/ui';
 
-function SaveStatusBadge({ status, label }: { status: 'idle' | 'saving' | 'saved' | 'error'; label: string }) {
+function SaveStatusBadge({
+  status,
+  label
+}: {
+  status: 'idle' | 'saving' | 'saved' | 'error';
+  label: string;
+}) {
   return (
     <div
       className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] shadow-[inset_0_0_0_1px_var(--hairline)] ${
@@ -37,6 +43,30 @@ function SaveStatusBadge({ status, label }: { status: 'idle' | 'saving' | 'saved
         }`}
       />
       {label}
+    </div>
+  );
+}
+
+function SettingsSectionHeader({
+  icon,
+  title,
+  description
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="mt-0.5 rounded-lg bg-totoro-blue/10 p-2 text-totoro-blue shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.14)]">
+        {icon}
+      </div>
+      <div>
+        <h3 className="text-sm font-black uppercase tracking-[0.16em] text-foreground/80">
+          {title}
+        </h3>
+        <p className="mt-1 text-sm text-foreground/55">{description}</p>
+      </div>
     </div>
   );
 }
@@ -148,86 +178,89 @@ export function PlayerSettingsPage() {
       <div className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
         <div className="space-y-6">
           <ContentCard title={t('settings.player.defaults.title')}>
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Select
-                  value={settings.defaultRegion || ''}
-                  onChange={(value) => updateSetting('defaultRegion', value)}
-                  options={[
-                    { value: '', label: t('common.none_female') },
-                    ...ingredientsService.getRegionKeys().map((key) => ({
-                      value: key,
-                      label: ingredientsService.getRegionDisplayName(key, settings.language)
-                    }))
-                  ]}
-                  placeholder={t('forage.form.region')}
-                  label={t('forage.form.region')}
+            <div className="space-y-8">
+              <section className="space-y-4">
+                <SettingsSectionHeader
+                  icon={<MapPinned className="h-4 w-4" />}
+                  title={t('settings.player.defaults.forage.title')}
+                  description={t('settings.player.defaults.forage.description')}
                 />
 
-                <Select
-                  value={settings.defaultTestType || ''}
-                  onChange={(value) =>
-                    updateSetting(
-                      'defaultTestType',
-                      value ? (value as 'natureza' | 'sobrevivencia') : undefined
-                    )
-                  }
-                  options={[
-                    { value: '', label: t('common.none') },
-                    ...TEST_TYPE_OPTIONS.map((option) => ({
-                      ...option,
-                      label: t(option.label)
-                    }))
-                  ]}
-                  placeholder={t('forage.form.testType')}
-                  label={t('forage.form.testType')}
-                />
-              </div>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)_140px]">
+                  <Select
+                    value={settings.defaultRegion || ''}
+                    onChange={(value) => updateSetting('defaultRegion', value)}
+                    options={[
+                      { value: '', label: t('common.none_female') },
+                      ...ingredientsService.getRegionKeys().map((key) => ({
+                        value: key,
+                        label: ingredientsService.getRegionDisplayName(key, settings.language)
+                      }))
+                    ]}
+                    placeholder={t('forage.form.region')}
+                    label={t('forage.form.region')}
+                  />
 
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_1.1fr] gap-4">
-                <Input
-                  type="number"
-                  value={settings.defaultModifier}
-                  onChange={(value) => updateSetting('defaultModifier', value as number | '')}
-                  onBlur={() => void flushPendingSave()}
-                  placeholder={t('settings.modifier.placeholder')}
-                  label={t('settings.modifier.label')}
-                />
+                  <Select
+                    value={settings.defaultTestType || ''}
+                    onChange={(value) =>
+                      updateSetting(
+                        'defaultTestType',
+                        value ? (value as 'natureza' | 'sobrevivencia') : undefined
+                      )
+                    }
+                    options={[
+                      { value: '', label: t('common.none') },
+                      ...TEST_TYPE_OPTIONS.map((option) => ({
+                        ...option,
+                        label: t(option.label)
+                      }))
+                    ]}
+                    placeholder={t('forage.form.testType')}
+                    label={t('forage.form.testType')}
+                  />
 
-                <div className="space-y-4 rounded-lg bg-muted/30 p-4 shadow-[inset_0_0_0_1px_var(--hairline)]">
-                  <div className="flex items-center gap-2">
-                    <Dices className="h-4 w-4 text-totoro-blue" />
-                    <h3 className="text-sm font-semibold text-foreground">
-                      {t('settings.bonus.title')}
-                    </h3>
-                  </div>
-
-                  <div className="grid grid-cols-[minmax(0,1fr)_88px] gap-3">
-                    <Select
-                      value={settings.defaultBonusType}
-                      onChange={(value) => updateSetting('defaultBonusType', value)}
-                      options={[
-                        { value: '', label: t('forage.form.bonusDice.none') },
-                        ...translatedDiceOptions
-                      ]}
-                      placeholder={t('settings.bonus.select.placeholder')}
-                      label={t('settings.bonus.select.label')}
-                    />
-
-                    <Input
-                      type="number"
-                      value={settings.defaultBonusValue}
-                      onChange={(value) => updateSetting('defaultBonusValue', value as number)}
-                      onBlur={() => void flushPendingSave()}
-                      min={1}
-                      max={10}
-                      label={t('settings.bonus.amount.label')}
-                    />
-                  </div>
-
-                  <p className="text-xs text-foreground/60">{t('settings.bonus.desc')}</p>
+                  <Input
+                    type="number"
+                    value={settings.defaultModifier}
+                    onChange={(value) => updateSetting('defaultModifier', value as number | '')}
+                    onBlur={() => void flushPendingSave()}
+                    placeholder={t('settings.modifier.placeholder')}
+                    label={t('settings.player.defaults.modifier.label')}
+                  />
                 </div>
-              </div>
+              </section>
+
+              <section className="space-y-4 border-t border-[color:var(--hairline)] pt-6">
+                <SettingsSectionHeader
+                  icon={<Dices className="h-4 w-4" />}
+                  title={t('settings.player.defaults.bonus.title')}
+                  description={t('settings.player.defaults.bonus.description')}
+                />
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_140px]">
+                  <Select
+                    value={settings.defaultBonusType}
+                    onChange={(value) => updateSetting('defaultBonusType', value)}
+                    options={[
+                      { value: '', label: t('forage.form.bonusDice.none') },
+                      ...translatedDiceOptions
+                    ]}
+                    placeholder={t('settings.bonus.select.placeholder')}
+                    label={t('settings.bonus.select.label')}
+                  />
+
+                  <Input
+                    type="number"
+                    value={settings.defaultBonusValue}
+                    onChange={(value) => updateSetting('defaultBonusValue', value as number)}
+                    onBlur={() => void flushPendingSave()}
+                    min={1}
+                    max={10}
+                    label={t('settings.bonus.amount.label')}
+                  />
+                </div>
+              </section>
             </div>
           </ContentCard>
 
