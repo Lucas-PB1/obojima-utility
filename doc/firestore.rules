@@ -45,6 +45,10 @@ service cloud.firestore {
         );
     }
 
+    function activeFriendship(documentId) {
+      return exists(/databases/$(database)/documents/friends/$(documentId));
+    }
+
     function selfUserCreateFields() {
       return [
         'uid',
@@ -88,36 +92,21 @@ service cloud.firestore {
         'uid',
         'displayName',
         'searchName',
-        'email',
         'photoURL',
-        'lastSeen'
+        'lastSeen',
+        'createdAt',
+        'updatedAt'
       ];
     }
 
     function validPublicProfile(userId) {
       return isSelf(userId) &&
         request.resource.data.keys().hasOnly(publicProfileFields()) &&
-        request.resource.data.uid == userId;
-    }
-
-    function friendRequestFields() {
-      return [
-        'fromUserId',
-        'fromUserName',
-        'toUserId',
-        'status',
-        'createdAt'
-      ];
-    }
-
-    function validFriendRequestCreate() {
-      return signedIn() &&
-        request.resource.data.keys().hasAll(friendRequestFields()) &&
-        request.resource.data.keys().hasOnly(friendRequestFields()) &&
-        request.resource.data.fromUserId == request.auth.uid &&
-        request.resource.data.toUserId is string &&
-        request.resource.data.toUserId != request.auth.uid &&
-        request.resource.data.status == 'pending';
+        request.resource.data.uid == userId &&
+        request.resource.data.displayName is string &&
+        request.resource.data.searchName is string &&
+        request.resource.data.lastSeen is timestamp &&
+        request.resource.data.updatedAt is timestamp;
     }
 
     function canReadFriendRequest() {
@@ -127,69 +116,25 @@ service cloud.firestore {
       );
     }
 
-    function validFriendRequestStatusUpdate() {
+    function canReadBlock() {
+      return signedIn() && (
+        request.auth.uid == resource.data.blockerId ||
+        request.auth.uid == resource.data.blockedUserId ||
+        isAdmin()
+      );
+    }
+
+    function canReadReport() {
+      return signedIn() && (
+        request.auth.uid == resource.data.reporterId ||
+        isAdmin()
+      );
+    }
+
+    function canUpdateNotification() {
       return signedIn() &&
-        request.auth.uid == resource.data.toUserId &&
-        resource.data.status == 'pending' &&
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']) &&
-        request.resource.data.status in ['accepted', 'rejected'];
-    }
-
-    function chatFields() {
-      return ['participants', 'updatedAt'];
-    }
-
-    function validChatCreate(chatId) {
-      return participantDocId(chatId, request.resource.data.participants) &&
-        request.resource.data.keys().hasOnly(chatFields());
-    }
-
-    function validChatUpdate(chatId) {
-      return isParticipant(resource.data.participants) &&
-        request.resource.data.participants == resource.data.participants &&
-        participantDocId(chatId, request.resource.data.participants) &&
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(chatFields());
-    }
-
-    function chatDoc(chatId) {
-      return get(/databases/$(database)/documents/chats/$(chatId));
-    }
-
-    function isChatParticipant(chatId) {
-      return isParticipant(chatDoc(chatId).data.participants);
-    }
-
-    function messageFields() {
-      return [
-        'senderId',
-        'receiverId',
-        'content',
-        'timestamp',
-        'read'
-      ];
-    }
-
-    function validMessageCreate(chatId) {
-      return isChatParticipant(chatId) &&
-        request.resource.data.keys().hasOnly(messageFields()) &&
-        request.resource.data.senderId == request.auth.uid &&
-        request.resource.data.receiverId in chatDoc(chatId).data.participants &&
-        request.resource.data.receiverId != request.auth.uid &&
-        request.resource.data.content is string &&
-        request.resource.data.content.size() > 0 &&
-        request.resource.data.content.size() <= 2000 &&
-        request.resource.data.timestamp is timestamp &&
-        request.resource.data.read == false;
-    }
-
-    function validMessageReadUpdate(chatId) {
-      return isChatParticipant(chatId) &&
-        request.auth.uid == resource.data.receiverId &&
         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']) &&
-        request.resource.data.senderId == resource.data.senderId &&
-        request.resource.data.receiverId == resource.data.receiverId &&
-        request.resource.data.content == resource.data.content &&
-        request.resource.data.timestamp == resource.data.timestamp;
+        request.resource.data.read == true;
     }
 
     match /users/{userId} {
@@ -214,6 +159,17 @@ service cloud.firestore {
         allow read, write: if canAccessUser(userId);
       }
 
+      match /notifications/{notificationId} {
+        allow read: if canAccessUser(userId);
+        allow create, delete: if isAdmin();
+        allow update: if (isSelf(userId) && canUpdateNotification()) || isAdmin();
+      }
+
+      match /fcmTokens/{tokenId} {
+        allow read: if canAccessUser(userId);
+        allow create, update, delete: if isAdmin();
+      }
+
       match /{document=**} {
         allow read, write: if false;
       }
@@ -231,42 +187,41 @@ service cloud.firestore {
 
     match /friends/{friendshipId} {
       allow read: if isParticipant(resource.data.participants);
-      allow create: if participantDocId(friendshipId, request.resource.data.participants) &&
-        request.resource.data.keys().hasOnly(['participants', 'createdAt', 'users']);
-      allow update: if isParticipant(resource.data.participants) &&
-        request.resource.data.participants == resource.data.participants &&
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['participants', 'createdAt', 'users']);
-      allow delete: if isParticipant(resource.data.participants) || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
     match /friendRequests/{requestId} {
       allow read: if canReadFriendRequest();
-      allow create: if validFriendRequestCreate();
-      allow update: if isAdmin() || validFriendRequestStatusUpdate();
-      allow delete: if isAdmin() || (
-        signedIn() &&
-        request.auth.uid == resource.data.fromUserId &&
-        resource.data.status == 'pending'
-      );
+      allow create, update, delete: if isAdmin();
     }
 
     match /chats/{chatId} {
       allow read: if isParticipant(resource.data.participants);
-      allow create: if validChatCreate(chatId);
-      allow update: if validChatUpdate(chatId);
+      allow create, update: if isAdmin();
       allow delete: if isAdmin();
 
       match /messages/{messageId} {
-        allow read: if isChatParticipant(chatId);
-        allow create: if validMessageCreate(chatId);
-        allow update: if validMessageReadUpdate(chatId);
-        allow delete: if isAdmin() ||
-          (isChatParticipant(chatId) && resource.data.senderId == request.auth.uid);
+        // Usa senderId/receiverId no documento (evita get() no chat e falhas em queries).
+        allow read: if signedIn() && (
+          request.auth.uid == resource.data.senderId ||
+          request.auth.uid == resource.data.receiverId
+        );
+        allow create, update, delete: if isAdmin();
       }
     }
 
     match /trades/{tradeId} {
       allow read: if isParticipant(resource.data.participants) || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /blocks/{blockId} {
+      allow read: if canReadBlock();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /reports/{reportId} {
+      allow read: if canReadReport();
       allow create, update, delete: if isAdmin();
     }
 

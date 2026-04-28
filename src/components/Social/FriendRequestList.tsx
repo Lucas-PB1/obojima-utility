@@ -6,9 +6,10 @@ import { Button } from '@/components/ui';
 
 interface FriendRequestListProps {
   requests: FriendRequest[];
+  sentRequests: FriendRequest[];
 }
 
-export function FriendRequestList({ requests }: FriendRequestListProps) {
+export function FriendRequestList({ requests, sentRequests }: FriendRequestListProps) {
   const { t } = useTranslation();
   const [loadingMap, setLoadingMap] = React.useState<Record<string, boolean>>({});
   const [rejectId, setRejectId] = React.useState<string | null>(null);
@@ -28,8 +29,17 @@ export function FriendRequestList({ requests }: FriendRequestListProps) {
     }
   };
 
+  const handleCancel = async (requestId: string) => {
+    setLoadingMap((prev) => ({ ...prev, [requestId]: true }));
+    try {
+      await socialService.cancelFriendRequest(requestId);
+    } finally {
+      setLoadingMap((prev) => ({ ...prev, [requestId]: false }));
+    }
+  };
+
   return (
-    <div className="max-w-2xl mx-auto space-y-4">
+    <div className="max-w-3xl mx-auto space-y-6">
       {requests.length === 0 && (
         <div className="text-center py-10 opacity-50">
           <p>{t('social.requests.empty')}</p>
@@ -82,6 +92,34 @@ export function FriendRequestList({ requests }: FriendRequestListProps) {
           </div>
         </div>
       ))}
+
+      <div className="space-y-3">
+        <h3 className="text-sm font-black uppercase tracking-[0.18em] text-totoro-blue/60">
+          {t('social.requests.sent')}
+        </h3>
+        {sentRequests.length === 0 ? (
+          <p className="rounded-lg bg-white/5 p-4 text-sm text-totoro-gray/50">
+            {t('social.requests.sentEmpty')}
+          </p>
+        ) : (
+          sentRequests.map((req) => (
+            <div key={req.id} className="glass-panel p-4 flex items-center justify-between">
+              <div>
+                <p className="font-bold text-totoro-gray">{req.toUserName || req.toUserId}</p>
+                <p className="text-xs text-totoro-blue/50">{req.createdAt.toLocaleDateString()}</p>
+              </div>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => handleCancel(req.id)}
+                disabled={loadingMap[req.id]}
+              >
+                {loadingMap[req.id] ? '...' : t('social.requests.cancel')}
+              </Button>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

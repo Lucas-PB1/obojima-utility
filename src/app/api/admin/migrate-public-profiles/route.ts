@@ -16,17 +16,19 @@ export async function POST(req: NextRequest) {
 
     for (const authUser of authUsers) {
       const userRef = adminDb.collection('public_users').doc(authUser.uid);
+      const displayName = authUser.displayName || 'Bardo Viajante';
 
       const publicProfile = {
         uid: authUser.uid,
-        displayName: authUser.displayName || 'Bardo Viajante',
-        searchName: (authUser.displayName || 'Bardo Viajante').toLowerCase(),
-        email: authUser.email || '',
+        displayName,
+        searchName: displayName.toLowerCase(),
         photoURL: authUser.photoURL || null,
-        lastSeen: Timestamp.now()
+        createdAt: Timestamp.now(),
+        lastSeen: Timestamp.now(),
+        updatedAt: Timestamp.now()
       };
 
-      batch.set(userRef, publicProfile, { merge: true });
+      batch.set(userRef, publicProfile);
       updatedCount++;
     }
 

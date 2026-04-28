@@ -7,6 +7,8 @@ export function useChat(friendId: string) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState('');
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,6 +17,7 @@ export function useChat(friendId: string) {
       setMessages(msgs);
       setLoading(false);
     });
+    socialService.markChatRead(friendId).catch(() => {});
 
     return () => unsubscribe();
   }, [friendId]);
@@ -35,13 +38,23 @@ export function useChat(friendId: string) {
     e.preventDefault();
     if (!newMessage.trim()) return;
 
-    await sendMessage(newMessage);
-    setNewMessage('');
+    setSending(true);
+    setError(null);
+    try {
+      await sendMessage(newMessage);
+      setNewMessage('');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Erro ao enviar mensagem');
+    } finally {
+      setSending(false);
+    }
   };
 
   return {
     messages,
     loading,
+    sending,
+    error,
     newMessage,
     setNewMessage,
     messagesEndRef,

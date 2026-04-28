@@ -15,6 +15,7 @@ import { db } from '@/config/firebase';
 import { logger } from '@/utils/logger';
 import { UserProfile } from '@/types/auth';
 import { authService } from '@/services/authService';
+import { PublicUserProfile } from '@/types/social';
 
 export class ProfileService {
   private isClient(): boolean {
@@ -27,21 +28,23 @@ export class ProfileService {
     if (!this.isClient() || !user.uid) return;
 
     const publicRef = doc(db, 'public_users', user.uid);
-    await setDoc(
-      publicRef,
-      {
-        uid: user.uid,
-        displayName: user.displayName,
-        searchName: (user.displayName || '').toLowerCase(),
-        email: user.email,
-        photoURL: user.photoURL,
-        lastSeen: Timestamp.now()
-      },
-      { merge: true }
-    );
+    const snapshot = await getDoc(publicRef);
+    const now = Timestamp.now();
+    const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+    const createdAt = snapshot.exists() ? snapshot.data().createdAt || now : now;
+
+    await setDoc(publicRef, {
+      uid: user.uid,
+      displayName,
+      searchName: displayName.toLowerCase(),
+      photoURL: user.photoURL,
+      lastSeen: now,
+      createdAt,
+      updatedAt: now
+    });
   }
 
-  async getPublicProfile(uid: string): Promise<UserProfile | null> {
+  async getPublicProfile(uid: string): Promise<PublicUserProfile | null> {
     if (!this.isClient() || !uid) return null;
 
     try {
@@ -49,7 +52,7 @@ export class ProfileService {
       const snapshot = await getDoc(publicRef);
 
       if (snapshot.exists()) {
-        return { uid: snapshot.id, ...snapshot.data() } as UserProfile;
+        return { uid: snapshot.id, ...snapshot.data() } as PublicUserProfile;
       }
       return null;
     } catch (error) {
@@ -58,15 +61,14 @@ export class ProfileService {
     }
   }
 
-  async searchUsers(searchTerm: string): Promise<UserProfile[]> {
-    console.log(`[ProfileService] searchUsers triggered with: ${searchTerm}`);
+  async searchUsers(searchTerm: string): Promise<PublicUserProfile[]> {
     if (!this.isClient() || !searchTerm || searchTerm.length < 3) return [];
 
     try {
       const usersRef = collection(db, 'public_users');
       const termLowerCase = searchTerm.toLowerCase();
+      const currentUserId = authService.getUserId();
 
-      // Busca por nome (prefixo)
       const nameQuery = query(
         usersRef,
         where('searchName', '>=', termLowerCase),
@@ -75,16 +77,6 @@ export class ProfileService {
         limit(10)
       );
 
-      // Busca por email (prefixo)
-      const emailQuery = query(
-        usersRef,
-        where('email', '>=', termLowerCase),
-        where('email', '<=', termLowerCase + '\uf8ff'),
-        orderBy('email'),
-        limit(10)
-      );
-
-      // Fallback: Busca por displayName (case-sensitive)
       const displayQuery = query(
         usersRef,
         where('displayName', '>=', searchTerm),
@@ -93,24 +85,23 @@ export class ProfileService {
         limit(10)
       );
 
-      const [nameSnapshot, emailSnapshot, displaySnapshot] = await Promise.all([
+      const [nameSnapshot, displaySnapshot] = await Promise.all([
         getDocs(nameQuery),
-        getDocs(emailQuery),
         getDocs(displayQuery)
       ]);
 
-      const usersMap = new Map<string, UserProfile>();
+      const usersMap = new Map<string, PublicUserProfile>();
 
       nameSnapshot.docs.forEach((doc) => {
-        usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as UserProfile);
-      });
-
-      emailSnapshot.docs.forEach((doc) => {
-        usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as UserProfile);
+        if (doc.id !== currentUserId) {
+          usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as PublicUserProfile);
+        }
       });
 
       displaySnapshot.docs.forEach((doc) => {
-        usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as UserProfile);
+        if (doc.id !== currentUserId) {
+          usersMap.set(doc.id, { uid: doc.id, ...doc.data() } as PublicUserProfile);
+        }
       });
 
       return Array.from(usersMap.values()).slice(0, 10);

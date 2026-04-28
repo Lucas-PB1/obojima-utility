@@ -5,3 +5,7 @@ export { TradeModal } from '@/components/Social/TradeModal';
 export { UserSearch } from '@/components/Social/UserSearch';
 export { MessageBubble } from '@/components/Social/MessageBubble';
 export { FriendRequestList } from '@/components/Social/FriendRequestList';
+export { ConversationList } from '@/components/Social/ConversationList';
+export { NotificationList } from '@/components/Social/NotificationList';
+export { BlockedUsersList } from '@/components/Social/BlockedUsersList';
+export { PushNotificationGate } from '@/components/Social/PushNotificationGate';

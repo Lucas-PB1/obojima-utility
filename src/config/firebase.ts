@@ -2,8 +2,9 @@ import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import { getStorage, FirebaseStorage } from 'firebase/storage';
+import { getMessaging, isSupported, Messaging } from 'firebase/messaging';
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -16,6 +17,7 @@ let app: FirebaseApp | null = null;
 let auth: Auth;
 let db: Firestore;
 let storage: FirebaseStorage;
+let messagingPromise: Promise<Messaging | null> | null = null;
 
 if (typeof window !== 'undefined') {
   if (getApps().length === 0) {
@@ -31,6 +33,18 @@ if (typeof window !== 'undefined') {
   auth = {} as Auth;
   db = {} as Firestore;
   storage = {} as FirebaseStorage;
+}
+
+export async function getClientMessaging(): Promise<Messaging | null> {
+  if (typeof window === 'undefined' || !app) return null;
+
+  if (!messagingPromise) {
+    messagingPromise = isSupported()
+      .then((supported) => (supported ? getMessaging(app as FirebaseApp) : null))
+      .catch(() => null);
+  }
+
+  return messagingPromise;
 }
 
 export { app, auth, db, storage };

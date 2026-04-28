@@ -13,9 +13,8 @@ interface ChatWindowProps {
 
 export function ChatWindow({ friend, onClose }: ChatWindowProps) {
   const { t } = useTranslation();
-  const { messages, newMessage, setNewMessage, messagesEndRef, handleSend } = useChat(
-    friend.userId
-  );
+  const { messages, sending, error, newMessage, setNewMessage, messagesEndRef, handleSend } =
+    useChat(friend.userId);
   const myId = authService.getUserId();
 
   return (
@@ -63,6 +62,7 @@ export function ChatWindow({ friend, onClose }: ChatWindowProps) {
 
       {/* Input Area */}
       <div className="p-4 bg-gradient-to-b from-transparent to-white/10 backdrop-blur-[2px]">
+        {error && <p className="mb-2 text-sm font-bold text-red-600">{error}</p>}
         <form
           onSubmit={handleSend}
           className="glass-card p-2 rounded-lg flex gap-2 items-center shadow-[var(--shadow-soft)] bg-white/40"
@@ -76,17 +76,17 @@ export function ChatWindow({ friend, onClose }: ChatWindowProps) {
           />
           <Button
             type="submit"
-            disabled={!newMessage.trim()}
+            disabled={!newMessage.trim() || sending}
             className={`
               rounded-lg h-10 px-6 font-bold shadow-[var(--shadow-soft)] transition-all duration-300
               ${
-                !newMessage.trim()
+                !newMessage.trim() || sending
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
                   : 'bg-gradient-to-r from-totoro-blue to-blue-400 text-white hover:scale-105 btn-shimmer'
               }
             `}
           >
-            {t('social.chat.send')}
+            {sending ? '...' : t('social.chat.send')}
           </Button>
         </form>
       </div>

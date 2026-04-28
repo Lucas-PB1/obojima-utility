@@ -1,21 +1,40 @@
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
-  addDoc,
-  updateDoc,
-  query,
-  where,
   onSnapshot,
+  query,
   Timestamp,
   Unsubscribe,
-  runTransaction
+  where
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { logger } from '@/utils/logger';
-import { Friend, FriendRequest } from '@/types/social';
+import { BlockedUser, Friend, FriendRequest, ReportReason } from '@/types/social';
+
+function toDate(value: unknown): Date {
+  if (value instanceof Timestamp) return value.toDate();
+  if (value instanceof Date) return value;
+  return new Date();
+}
+
+async function requestJson(path: string, init: RequestInit = {}) {
+  const response = await fetch(path, {
+    ...init,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(await authService.getAuthorizationHeaders()),
+      ...(init.headers || {})
+    }
+  });
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || data.success === false) {
+    throw new Error(data.error || 'Falha na ação social');
+  }
+
+  return data;
+}
 
 export class FriendService {
   private getUserId(): string | null {
@@ -23,36 +42,17 @@ export class FriendService {
   }
 
   async sendFriendRequest(toUserId: string): Promise<void> {
-    const fromUserId = this.getUserId();
-    if (!fromUserId) throw new Error('Not authenticated');
-    if (fromUserId === toUserId) throw new Error('Você não pode adicionar a si mesmo.');
+    if (!this.getUserId()) throw new Error('Not authenticated');
+    await requestJson('/api/social/friend-requests', {
+      method: 'POST',
+      body: JSON.stringify({ toUserId })
+    });
+  }
 
-    try {
-      const requestsRef = collection(db, 'friendRequests');
-
-      const q = query(
-        requestsRef,
-        where('fromUserId', '==', fromUserId),
-        where('toUserId', '==', toUserId),
-        where('status', '==', 'pending')
-      );
-      const snapshot = await getDocs(q);
-      if (!snapshot.empty) throw new Error('Request already pending');
-
-      const currentUser = authService.getCurrentUser();
-      const fromUserName = currentUser?.displayName || currentUser?.email || 'Unknown';
-
-      await addDoc(requestsRef, {
-        fromUserId,
-        fromUserName,
-        toUserId,
-        status: 'pending',
-        createdAt: Timestamp.now()
-      });
-    } catch (error) {
-      logger.error('Error sending friend request:', error);
-      throw error;
-    }
+  async cancelFriendRequest(requestId: string): Promise<void> {
+    await requestJson(`/api/social/friend-requests/${requestId}`, {
+      method: 'DELETE'
+    });
   }
 
   subscribeToFriendRequests(callback: (requests: FriendRequest[]) => void): Unsubscribe {
@@ -68,14 +68,16 @@ export class FriendService {
     return onSnapshot(
       q,
       (snapshot) => {
-        const requests = snapshot.docs.map(
-          (doc) =>
-            ({
-              id: doc.id,
-              ...doc.data(),
-              createdAt: (doc.data().createdAt as Timestamp).toDate()
-            }) as FriendRequest
-        );
+        const requests = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            createdAt: toDate(data.createdAt),
+            updatedAt: data.updatedAt ? toDate(data.updatedAt) : undefined,
+            respondedAt: data.respondedAt ? toDate(data.respondedAt) : null
+          } as FriendRequest;
+        });
         callback(requests);
       },
       (error) => {
@@ -84,65 +86,42 @@ export class FriendService {
     );
   }
 
-  async respondToFriendRequest(requestId: string, accept: boolean): Promise<void> {
-    try {
-      const requestRef = doc(db, 'friendRequests', requestId);
-      const docSnap = await getDoc(requestRef);
-      if (!docSnap.exists()) throw new Error('Request not found');
+  subscribeToSentFriendRequests(callback: (requests: FriendRequest[]) => void): Unsubscribe {
+    const userId = this.getUserId();
+    if (!userId) return () => {};
 
-      const requestData = docSnap.data() as FriendRequest;
+    const q = query(
+      collection(db, 'friendRequests'),
+      where('fromUserId', '==', userId),
+      where('status', '==', 'pending')
+    );
 
-      if (accept) {
-        await runTransaction(db, async (transaction) => {
-          const uid1 =
-            requestData.fromUserId < requestData.toUserId
-              ? requestData.fromUserId
-              : requestData.toUserId;
-          const uid2 =
-            requestData.fromUserId < requestData.toUserId
-              ? requestData.toUserId
-              : requestData.fromUserId;
-          const friendshipId = `${uid1}_${uid2}`;
-          const friendRef = doc(db, 'friends', friendshipId);
-
-          const senderPublicRef = doc(db, 'public_users', requestData.fromUserId);
-          const receiverPublicRef = doc(db, 'public_users', requestData.toUserId);
-
-          const [senderSnap, receiverSnap] = await Promise.all([
-            transaction.get(senderPublicRef),
-            transaction.get(receiverPublicRef)
-          ]);
-
-          const senderData = senderSnap.exists()
-            ? senderSnap.data()
-            : {
-                uid: requestData.fromUserId,
-                displayName: requestData.fromUserName || 'Unknown',
-                email: 'hidden',
-                photoURL: null
-              };
-
-          const friendshipData = {
-            participants: [requestData.fromUserId, requestData.toUserId],
-            createdAt: Timestamp.now(),
-            users: {
-              [requestData.fromUserId]: senderData,
-              [requestData.toUserId]: receiverSnap.exists()
-                ? receiverSnap.data()
-                : { uid: requestData.toUserId, displayName: 'User' }
-            }
-          };
-
-          transaction.set(friendRef, friendshipData, { merge: true });
-          transaction.update(requestRef, { status: 'accepted' });
+    return onSnapshot(
+      q,
+      (snapshot) => {
+        const requests = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            createdAt: toDate(data.createdAt),
+            updatedAt: data.updatedAt ? toDate(data.updatedAt) : undefined,
+            respondedAt: data.respondedAt ? toDate(data.respondedAt) : null
+          } as FriendRequest;
         });
-      } else {
-        await updateDoc(requestRef, { status: 'rejected' });
+        callback(requests);
+      },
+      (error) => {
+        logger.error('Error subscribing to sent friend requests:', error);
       }
-    } catch (error) {
-      logger.error('Error responding to request:', error);
-      throw error;
-    }
+    );
+  }
+
+  async respondToFriendRequest(requestId: string, accept: boolean): Promise<void> {
+    await requestJson(`/api/social/friend-requests/${requestId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ action: accept ? 'accept' : 'reject' })
+    });
   }
 
   subscribeToFriends(callback: (friends: Friend[]) => void): Unsubscribe {
@@ -155,16 +134,15 @@ export class FriendService {
     return onSnapshot(
       q,
       async (snapshot) => {
-        // 1. Basic list from the friendship documents
         const friendsBasic = snapshot.docs.map((doc) => {
           const data = doc.data();
           const friendId = data.participants.find((p: string) => p !== userId);
-          const friendData = data.users[friendId];
+          const friendData = data.users?.[friendId] || {};
           return {
             friendshipId: doc.id,
             friendId,
             ...friendData,
-            addedAt: (data.createdAt as Timestamp).toDate()
+            addedAt: toDate(data.createdAt)
           };
         });
 
@@ -173,7 +151,6 @@ export class FriendService {
           return;
         }
 
-        // 2. Fetch latest status from public_users
         const friendIds = friendsBasic.map((f) => f.friendId);
         const usersRef = collection(db, 'public_users');
 
@@ -183,7 +160,7 @@ export class FriendService {
             chunks.push(friendIds.slice(i, i + 10));
           }
 
-          const publicProfilesMap = new Map();
+          const publicProfilesMap = new Map<string, Record<string, unknown>>();
 
           for (const chunk of chunks) {
             const qStatus = query(usersRef, where('uid', 'in', chunk));
@@ -199,40 +176,36 @@ export class FriendService {
           const friends: Friend[] = friendsBasic.map((f) => {
             const publicProfile = publicProfilesMap.get(f.friendId);
             let status: 'online' | 'offline' = 'offline';
+            const lastSeen = publicProfile?.lastSeen;
 
-            if (publicProfile?.lastSeen) {
-              const lastSeenDate = (publicProfile.lastSeen as Timestamp).toDate();
-              const diff = now.getTime() - lastSeenDate.getTime();
-              if (diff < fiveMinutes) {
-                status = 'online';
-              }
+            if (lastSeen instanceof Timestamp) {
+              const diff = now.getTime() - lastSeen.toDate().getTime();
+              if (diff < fiveMinutes) status = 'online';
             }
 
             return {
+              friendshipId: f.friendshipId,
               userId: f.friendId,
-              displayName: publicProfile?.displayName || f.displayName,
-              email: publicProfile?.email || f.email,
-              photoURL: publicProfile?.photoURL || f.photoURL,
+              displayName: String(publicProfile?.displayName || f.displayName || 'User'),
+              photoURL:
+                (publicProfile?.photoURL as string | null | undefined) || f.photoURL || null,
               addedAt: f.addedAt,
               status
-            } as Friend;
+            };
           });
 
           callback(friends);
         } catch (error) {
           logger.error('Error fetching friend statuses:', error);
           callback(
-            friendsBasic.map(
-              (f) =>
-                ({
-                  userId: f.friendId,
-                  displayName: f.displayName,
-                  email: f.email,
-                  photoURL: f.photoURL,
-                  addedAt: f.addedAt,
-                  status: 'offline'
-                }) as Friend
-            )
+            friendsBasic.map((f) => ({
+              friendshipId: f.friendshipId,
+              userId: f.friendId,
+              displayName: f.displayName || 'User',
+              photoURL: f.photoURL || null,
+              addedAt: f.addedAt,
+              status: 'offline'
+            }))
           );
         }
       },
@@ -243,27 +216,57 @@ export class FriendService {
   }
 
   async removeFriend(friendId: string): Promise<void> {
+    await requestJson(`/api/social/friends/${friendId}`, {
+      method: 'DELETE'
+    });
+  }
+
+  subscribeToBlockedUsers(callback: (blockedUsers: BlockedUser[]) => void): Unsubscribe {
     const userId = this.getUserId();
-    if (!userId) return;
+    if (!userId) return () => {};
 
-    try {
-      const friendsRef = collection(db, 'friends');
-      const q = query(friendsRef, where('participants', 'array-contains', userId));
-      const snapshot = await getDocs(q);
+    const q = query(collection(db, 'blocks'), where('blockerId', '==', userId));
 
-      const friendshipDoc = snapshot.docs.find((doc) => {
-        const data = doc.data();
-        return data.participants.includes(friendId);
-      });
-
-      if (friendshipDoc) {
-        await runTransaction(db, async (transaction) => {
-          transaction.delete(friendshipDoc.ref);
+    return onSnapshot(
+      q,
+      (snapshot) => {
+        const blockedUsers = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          const blockedUser = data.blockedUser || {};
+          return {
+            id: doc.id,
+            blockerId: data.blockerId,
+            blockedUserId: data.blockedUserId,
+            displayName: blockedUser.displayName || 'User',
+            photoURL: blockedUser.photoURL || null,
+            createdAt: toDate(data.createdAt)
+          } as BlockedUser;
         });
+        callback(blockedUsers);
+      },
+      (error) => {
+        logger.error('Error subscribing to blocked users:', error);
       }
-    } catch (error) {
-      logger.error('Error removing friend:', error);
-      throw error;
-    }
+    );
+  }
+
+  async blockUser(blockedUserId: string): Promise<void> {
+    await requestJson('/api/social/blocks', {
+      method: 'POST',
+      body: JSON.stringify({ blockedUserId })
+    });
+  }
+
+  async unblockUser(blockedUserId: string): Promise<void> {
+    await requestJson(`/api/social/blocks/${blockedUserId}`, {
+      method: 'DELETE'
+    });
+  }
+
+  async reportUser(reportedUserId: string, reason: ReportReason, details = ''): Promise<void> {
+    await requestJson('/api/social/reports', {
+      method: 'POST',
+      body: JSON.stringify({ reportedUserId, reason, details })
+    });
   }
 }

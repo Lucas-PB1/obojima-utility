@@ -5,8 +5,16 @@ import { useUserSearch } from '@/hooks/useUserSearch';
 
 export function UserSearch() {
   const { t } = useTranslation();
-  const { searchTerm, setSearchTerm, results, loading, loadingMap, sentRequests, handleAddFriend } =
-    useUserSearch();
+  const {
+    searchTerm,
+    setSearchTerm,
+    results,
+    loading,
+    loadingMap,
+    sentRequests,
+    error,
+    handleAddFriend
+  } = useUserSearch();
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -20,6 +28,12 @@ export function UserSearch() {
       </div>
 
       <div className="space-y-4">
+        {error && (
+          <div className="rounded-lg bg-red-100/80 px-4 py-3 text-sm font-bold text-red-700">
+            {error}
+          </div>
+        )}
+
         {results.length === 0 && !loading && searchTerm.length >= 3 && (
           <p className="text-center text-totoro-gray/50 italic">{t('social.search.noResults')}</p>
         )}
@@ -33,7 +47,6 @@ export function UserSearch() {
               <UserAvatar
                 src={user.photoURL}
                 name={user.displayName}
-                email={user.email}
                 className="relative w-14 h-14 text-2xl shadow-sm ring-2 ring-white/40 group-hover:ring-totoro-blue/30 transition-all duration-300"
                 fallbackClassName="opacity-70 text-xl"
               />
@@ -41,7 +54,9 @@ export function UserSearch() {
                 <span className="font-bold text-lg text-totoro-gray group-hover:text-totoro-blue transition-colors duration-300">
                   {user.displayName || t('admin.users.noName')}
                 </span>
-                <span className="text-sm text-totoro-gray/60">{user.email}</span>
+                <span className="text-sm text-totoro-gray/60">
+                  {t('social.search.privateProfile')}
+                </span>
               </div>
             </div>
             {sentRequests.has(user.uid) ? (

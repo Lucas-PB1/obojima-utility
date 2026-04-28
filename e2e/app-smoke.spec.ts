@@ -14,4 +14,12 @@ test('player shell supports core mobile workflows in E2E mode', async ({ page })
 
   await page.getByRole('button', { name: /Social/i }).click();
   await expect(page.getByText(/Mesa Teste|Friends|Amigos/i).first()).toBeVisible();
+  await expect(page.getByText('friend@example.com')).toHaveCount(0);
+
+  await page.getByRole('button', { name: /Conversas|Chats/i }).click();
+  await expect(page.getByText(/Nenhuma conversa|No conversations/i)).toBeVisible();
+
+  await page.getByRole('button', { name: /Amigos|Friends/i }).click();
+  await page.getByRole('button', { name: /Abrir chat|Open chat/i }).click();
+  await expect(page.getByPlaceholder(/Digite uma mensagem|Type a message/i)).toBeVisible();
 });

@@ -34,16 +34,28 @@ Este documento descreve como configurar o Firebase para o projeto Obojima Utilit
 Para o Firebase Storage, vá em "Storage" > "Rules" e publique o conteúdo de `doc/storage.rules`.
 O upload de avatar usa o caminho `users/{uid}/avatars/profile.*`.
 
-As regras garantem que cada usuário só possa acessar seus próprios dados.
+As regras garantem que cada usuário só possa acessar seus próprios dados. No Social, escritas
+sensíveis de amizade, chat, trocas, bloqueios, denúncias, notificações e tokens FCM passam pelas
+rotas `/api/social/*` com Admin SDK.
 
-## 5. Obter Credenciais
+## 5. Configurar Cloud Messaging
+
+1. No console do Firebase, vá em "Configurações do projeto" > "Cloud Messaging"
+2. Gere uma Web Push certificate/key pair
+3. Copie a chave pública VAPID para `NEXT_PUBLIC_FIREBASE_VAPID_KEY`
+4. Mantenha `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` preenchido nas credenciais web
+
+O Social exige push configurado; sem VAPID key ou permissão do navegador, a tela social mostra o
+estado de bloqueio até a configuração ficar pronta.
+
+## 6. Obter Credenciais
 
 1. No console do Firebase, vá em "Configurações do projeto" (ícone de engrenagem)
 2. Role até "Seus aplicativos" e clique em "Web" (ícone `</>`)
 3. Registre o app com um nome (ex: "Obojima Utilities Web")
 4. Copie as credenciais fornecidas
 
-## 6. Configurar Variáveis de Ambiente
+## 7. Configurar Variáveis de Ambiente
 
 Crie um arquivo `.env.local` na raiz do projeto com as seguintes variáveis:
 
@@ -54,6 +66,7 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=seu_projeto_id
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=seu_projeto_id.appspot.com
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=seu_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=seu_app_id
+NEXT_PUBLIC_FIREBASE_VAPID_KEY=sua_web_push_vapid_key
 FIREBASE_PROJECT_ID=seu_projeto_id
 FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@seu_projeto_id.iam.gserviceaccount.com
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nSUA_CHAVE_AQUI\n-----END PRIVATE KEY-----\n"
@@ -64,7 +77,7 @@ Para a chave privada, use uma destas formas: PEM com `\n`, PEM com quebras reais
 
 **IMPORTANTE:** Não commite o arquivo `.env.local` no repositório. Ele já está no `.gitignore`.
 
-## 7. Estrutura de Dados no Firestore
+## 8. Estrutura de Dados no Firestore
 
 O Firestore será organizado da seguinte forma:
 
@@ -80,13 +93,40 @@ users/
       {recipeId}/
     createdPotions/ (subcollection)
       {potionId}/
+    notifications/ (subcollection)
+      {notificationId}/
+    fcmTokens/ (subcollection)
+      {tokenId}/
+
+public_users/
+  {userId}/ (sem email público)
+
+friends/
+  {uid1_uid2}/
+
+friendRequests/
+  {fromUid_toUid}/
+
+chats/
+  {uid1_uid2}/
+    messages/
+      {messageId}/
+
+blocks/
+  {blockerUid_blockedUid}/
+
+reports/
+  {reportId}/
 ```
 
-## 8. Migração de Dados
+## 9. Migração de Dados
 
 Quando um usuário faz login pela primeira vez após a atualização, os dados do localStorage serão automaticamente migrados para o Firestore. O processo é transparente e não requer ação do usuário.
 
-## 9. Testar a Configuração
+Para remover emails antigos de `public_users`, execute a migração "Sincronizar Perfis Públicos" na
+tela de ferramentas admin depois de publicar as rules novas.
+
+## 10. Testar a Configuração
 
 1. Execute `npm run dev`
 2. Acesse `http://localhost:3000`

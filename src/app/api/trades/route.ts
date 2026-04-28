@@ -5,6 +5,7 @@ import { apiAuthErrorResponse, requireUser } from '@/lib/server/apiAuth';
 import { validateTradeItems } from '@/features/inventory/domain/tradeRules';
 import { TradeItem } from '@/types/social';
 import { logger } from '@/utils/logger';
+import { assertCanInteract, createSocialNotification, getPublicProfile } from '@/lib/server/social';
 
 interface TradeRequestBody {
   toUserId?: string;
@@ -40,7 +41,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: validationError }, { status: 400 });
     }
 
+    await assertCanInteract(user.uid, toUserId);
+
     const cleanItems = cleanTradeItems(items);
+    const senderProfile = await getPublicProfile(user.uid);
 
     await adminDb.runTransaction(async (transaction) => {
       const senderOps = cleanItems.map((item) => {
@@ -152,6 +156,17 @@ export async function POST(req: NextRequest) {
         timestamp: Timestamp.now(),
         status: 'completed'
       });
+    });
+
+    await createSocialNotification({
+      recipientId: toUserId,
+      actorId: user.uid,
+      actorName: senderProfile.displayName,
+      type: 'trade',
+      link: '/?tab=social',
+      data: {
+        itemCount: String(cleanItems.reduce((total, item) => total + item.quantity, 0))
+      }
     });
 
     return NextResponse.json({ success: true });

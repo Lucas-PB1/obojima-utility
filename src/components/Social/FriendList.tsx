@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { MessageCircle, Gift, UserMinus } from 'lucide-react';
-import { Friend } from '@/types/social';
+import { Flag, MessageCircle, Gift, ShieldBan, UserMinus } from 'lucide-react';
+import { Friend, ReportReason } from '@/types/social';
 import { Button, UserAvatar } from '@/components/ui';
 import { TradeModal } from '@/components/Social';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -16,6 +16,10 @@ export function FriendList({ friends, onChat }: FriendListProps) {
   const { t } = useTranslation();
   const [tradeFriend, setTradeFriend] = useState<Friend | null>(null);
   const [friendToRemove, setFriendToRemove] = useState<Friend | null>(null);
+  const [friendToBlock, setFriendToBlock] = useState<Friend | null>(null);
+  const [friendToReport, setFriendToReport] = useState<Friend | null>(null);
+  const [reportReason, setReportReason] = useState<ReportReason>('other');
+  const [reportDetails, setReportDetails] = useState('');
   const [removing, setRemoving] = useState(false);
 
   const handleRemoveFriend = async () => {
@@ -28,6 +32,30 @@ export function FriendList({ friends, onChat }: FriendListProps) {
     } finally {
       setRemoving(false);
       setFriendToRemove(null);
+    }
+  };
+
+  const handleBlockFriend = async () => {
+    if (!friendToBlock) return;
+    setRemoving(true);
+    try {
+      await socialService.blockUser(friendToBlock.userId);
+    } finally {
+      setRemoving(false);
+      setFriendToBlock(null);
+    }
+  };
+
+  const handleReportFriend = async () => {
+    if (!friendToReport) return;
+    setRemoving(true);
+    try {
+      await socialService.reportUser(friendToReport.userId, reportReason, reportDetails);
+      setFriendToReport(null);
+      setReportReason('other');
+      setReportDetails('');
+    } finally {
+      setRemoving(false);
     }
   };
 
@@ -85,6 +113,24 @@ export function FriendList({ friends, onChat }: FriendListProps) {
             >
               <UserMinus className="w-5 h-5" />
             </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="px-2"
+              onClick={() => setFriendToBlock(friend)}
+              title={t('social.friends.block')}
+            >
+              <ShieldBan className="w-5 h-5" />
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="px-2"
+              onClick={() => setFriendToReport(friend)}
+              title={t('social.friends.report')}
+            >
+              <Flag className="w-5 h-5" />
+            </Button>
           </div>
         </div>
       ))}
@@ -106,6 +152,66 @@ export function FriendList({ friends, onChat }: FriendListProps) {
               </Button>
               <Button variant="danger" onClick={handleRemoveFriend} disabled={removing}>
                 {removing ? '...' : t('common.confirm')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {friendToBlock && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="glass-panel p-6 max-w-sm w-full space-y-4">
+            <h3 className="text-xl font-bold text-totoro-gray">{t('social.friends.blockTitle')}</h3>
+            <p className="text-totoro-gray/80">
+              {t('social.friends.blockConfirm').replace('{name}', friendToBlock.displayName)}
+            </p>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="ghost" onClick={() => setFriendToBlock(null)}>
+                {t('common.cancel')}
+              </Button>
+              <Button variant="danger" onClick={handleBlockFriend} disabled={removing}>
+                {removing ? '...' : t('common.confirm')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {friendToReport && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="glass-panel p-6 max-w-md w-full space-y-4">
+            <h3 className="text-xl font-bold text-totoro-gray">
+              {t('social.friends.reportTitle')}
+            </h3>
+            <p className="text-sm text-totoro-gray/70">
+              {t('social.friends.reportDescription').replace('{name}', friendToReport.displayName)}
+            </p>
+            <select
+              value={reportReason}
+              onChange={(event) => setReportReason(event.target.value as ReportReason)}
+              className="w-full rounded-lg bg-[--input-bg] p-3 text-sm shadow-[inset_0_0_0_1px_var(--hairline)]"
+            >
+              {(['spam', 'abuse', 'harassment', 'trade', 'other'] as ReportReason[]).map(
+                (reason) => (
+                  <option key={reason} value={reason}>
+                    {t(`social.report.reason.${reason}`)}
+                  </option>
+                )
+              )}
+            </select>
+            <textarea
+              value={reportDetails}
+              onChange={(event) => setReportDetails(event.target.value)}
+              className="min-h-24 w-full rounded-lg bg-[--input-bg] p-3 text-sm shadow-[inset_0_0_0_1px_var(--hairline)]"
+              placeholder={t('social.friends.reportDetails')}
+              maxLength={1000}
+            />
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="ghost" onClick={() => setFriendToReport(null)}>
+                {t('common.cancel')}
+              </Button>
+              <Button variant="danger" onClick={handleReportFriend} disabled={removing}>
+                {removing ? '...' : t('social.friends.report')}
               </Button>
             </div>
           </div>
