@@ -97,6 +97,19 @@ class AuthService {
     return user?.uid || null;
   }
 
+  async getIdToken(): Promise<string> {
+    const user = this.getCurrentUser();
+    if (!user) throw new Error('Usuário não autenticado');
+    return user.getIdToken();
+  }
+
+  async getAuthorizationHeaders(): Promise<HeadersInit> {
+    const token = await this.getIdToken();
+    return {
+      Authorization: `Bearer ${token}`
+    };
+  }
+
   private handleAuthError(error: unknown): Error {
     let message = 'Erro desconhecido ao autenticar';
 

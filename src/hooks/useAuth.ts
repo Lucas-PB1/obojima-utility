@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { UserUtils } from '@/lib/userUtils';
 import { authService } from '@/services/authService';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { e2eUser, isE2EMode } from '@/lib/e2e/mockData';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -16,6 +17,21 @@ export function useAuth() {
   const router = useRouter();
 
   useEffect(() => {
+    if (isE2EMode()) {
+      setUser(e2eUser as User);
+      setUserProfile({
+        uid: e2eUser.uid,
+        email: e2eUser.email,
+        displayName: e2eUser.displayName,
+        photoURL: e2eUser.photoURL,
+        role: 'admin',
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString()
+      });
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = authService.onAuthStateChange(async (currentUser) => {
       setUser(currentUser);
 
@@ -71,6 +87,8 @@ export function useAuth() {
   }, []);
 
   const logout = async () => {
+    if (isE2EMode()) return;
+
     try {
       await authService.logout();
       router.push('/login');

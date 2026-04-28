@@ -32,19 +32,19 @@ export function IngredientCard({
   );
 
   const getBadgeClass = () => {
-    if (ingredient.used) return 'bg-muted/10 border-border/20';
+    if (ingredient.used) return 'bg-muted/10 shadow-[inset_0_0_0_1px_var(--hairline)]';
     if (localizedIngredient.combat === maxAttr)
-      return 'bg-totoro-orange/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
+      return 'bg-totoro-orange/5 shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.13),var(--shadow-soft)]';
     if (localizedIngredient.utility === maxAttr)
-      return 'bg-totoro-blue/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
-    return 'bg-totoro-yellow/5 border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)]';
+      return 'bg-totoro-blue/5 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.13),var(--shadow-soft)]';
+    return 'bg-totoro-yellow/5 shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.13),var(--shadow-soft)]';
   };
 
   return (
     <div
-      className={`glass-panel p-4 md:p-6 rounded-3xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden group ${getBadgeClass()}`}
+      className={`glass-panel p-4 md:p-6 rounded-lg border border-transparent transition-all duration-500 hover:shadow-[var(--shadow-raised)] hover:-translate-y-1 relative overflow-hidden group ${getBadgeClass()}`}
     >
-      <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+      <div className="absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent pointer-events-none"></div>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-0 md:mb-2">
           <div>
@@ -56,10 +56,10 @@ export function IngredientCard({
             </span>
           </div>
           <span
-            className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border font-sans ${
+            className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest font-sans ${
               ingredient.used
-                ? 'bg-totoro-gray/10 text-totoro-gray border-totoro-gray/20'
-                : 'bg-totoro-green/10 text-totoro-green border-totoro-green/20 animate-pulse'
+                ? 'bg-totoro-gray/10 text-totoro-gray shadow-[inset_0_0_0_1px_rgba(127,140,141,0.16)]'
+                : 'bg-totoro-green/10 text-totoro-green shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.18)] animate-pulse'
             }`}
           >
             {ingredient.used
@@ -81,19 +81,19 @@ export function IngredientCard({
         </p>
 
         <div className="grid-cols-3 gap-2 mb-6 hidden md:grid">
-          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-orange/20 shadow-sm font-sans">
+          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.15)] font-sans">
             <span className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</span>
             <span className="text-xl font-bold text-totoro-orange font-mono">
               {localizedIngredient.combat}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-blue/20 shadow-sm font-sans">
+          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.15)] font-sans">
             <span className="text-[9px] font-bold text-totoro-blue/60 uppercase">Utl</span>
             <span className="text-xl font-bold text-totoro-blue font-mono">
               {localizedIngredient.utility}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-xl border border-totoro-yellow/20 shadow-sm font-sans">
+          <div className="flex flex-col items-center bg-muted/30 p-2 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.15)] font-sans">
             <span className="text-[9px] font-bold text-totoro-yellow/60 uppercase">Why</span>
             <span className="text-xl font-bold text-totoro-yellow font-mono">
               {localizedIngredient.whimsy}
@@ -101,7 +101,7 @@ export function IngredientCard({
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-auto pt-0 md:pt-4 md:border-t border-border/30">
+        <div className="flex items-center justify-between mt-auto pt-0 md:pt-4 md:shadow-[inset_0_1px_0_var(--hairline)]">
           <p className="text-[10px] font-bold text-foreground/30 uppercase tracking-wider">
             {ingredient.collectedAt.toLocaleDateString('pt-BR')}
           </p>
@@ -111,7 +111,7 @@ export function IngredientCard({
               {!ingredient.used && onMarkAsUsed && (
                 <button
                   onClick={() => onMarkAsUsed(ingredient.id)}
-                  className="bg-totoro-blue/10 hover:bg-totoro-blue text-totoro-blue hover:text-white px-4 py-1.5 text-[10px] font-bold rounded-xl transition-all duration-300 font-sans border border-totoro-blue/20"
+                  className="bg-totoro-blue/10 hover:bg-totoro-blue text-totoro-blue hover:text-white px-4 py-1.5 text-[10px] font-bold rounded-lg transition-all duration-300 font-sans shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.18)]"
                 >
                   USAR
                 </button>

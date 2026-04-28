@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { useSettings } from '@/hooks/useSettings';
 import { ForageAttempt } from '@/types/ingredients';
 import { ingredientsService } from '@/services/ingredientsService';
+import { shouldShowDoubleForage } from '@/features/forage/domain/forageRules';
 
 export function useForageResult(result: ForageAttempt | null) {
   const { settings } = useSettings();
@@ -31,9 +32,10 @@ export function useForageResult(result: ForageAttempt | null) {
     settings,
     regionDisplayName,
     particles,
-    showDoubleForage:
-      settings.doubleForageTalent &&
-      result?.success &&
-      (result.rarity === 'comum' || result.rarity === 'incomum')
+    showDoubleForage: shouldShowDoubleForage(
+      settings.doubleForageTalent,
+      result?.success,
+      result?.rarity
+    )
   };
 }

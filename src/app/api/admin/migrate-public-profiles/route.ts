@@ -1,10 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth, adminDb } from '@/config/firebase-admin';
 import { logger } from '@/utils/logger';
 import { Timestamp } from 'firebase-admin/firestore';
+import { apiAuthErrorResponse, requireAdmin } from '@/lib/server/apiAuth';
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   try {
+    await requireAdmin(req);
+
     const listUsersResult = await adminAuth.listUsers();
     const authUsers = listUsersResult.users;
 
@@ -34,6 +37,9 @@ export async function POST() {
       message: `Migração completa: ${updatedCount} perfis públicos sincronizados.`
     });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('Error migrating public profiles:', error);
 
     let errorMessage = error instanceof Error ? error.message : 'Unknown error';

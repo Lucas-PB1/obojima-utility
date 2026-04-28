@@ -19,17 +19,17 @@ export function SimpleIngredientCard({ ingredient, className = '' }: SimpleIngre
 
   const getBadgeClass = () => {
     if (localizedIngredient.combat === maxAttr)
-      return 'bg-gradient-to-br from-totoro-orange/10 to-totoro-orange/20 border-totoro-orange/20';
+      return 'bg-gradient-to-br from-totoro-orange/10 to-totoro-orange/20 shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.14)]';
     if (localizedIngredient.utility === maxAttr)
-      return 'bg-gradient-to-br from-totoro-blue/10 to-totoro-blue/20 border-totoro-blue/20';
-    return 'bg-gradient-to-br from-totoro-yellow/10 to-totoro-yellow/20 border-totoro-yellow/20';
+      return 'bg-gradient-to-br from-totoro-blue/10 to-totoro-blue/20 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.14)]';
+    return 'bg-gradient-to-br from-totoro-yellow/10 to-totoro-yellow/20 shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.14)]';
   };
 
   return (
     <div
-      className={`group glass-panel p-5 rounded-3xl border border-border/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-xl hover:-translate-y-2 relative overflow-hidden ${className} ${getBadgeClass()}`}
+      className={`group glass-panel p-5 rounded-lg border border-transparent transition-all duration-500 hover:shadow-[var(--shadow-raised)] hover:-translate-y-2 relative overflow-hidden ${className} ${getBadgeClass()}`}
     >
-      <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+      <div className="absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent pointer-events-none"></div>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-1">
           <h3 className="font-serif font-bold text-foreground text-base leading-tight group-hover:text-totoro-blue transition-colors">
@@ -41,20 +41,20 @@ export function SimpleIngredientCard({ ingredient, className = '' }: SimpleIngre
           &quot;{localizedIngredient.descricao}&quot;
         </p>
 
-        <div className="flex justify-center items-center gap-1.5 pt-2 border-t border-border/30">
-          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg border border-totoro-orange/20 min-w-[32px] font-sans">
+        <div className="flex justify-center items-center gap-1.5 pt-2 shadow-[inset_0_1px_0_var(--hairline)]">
+          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.15)] min-w-[32px] font-sans">
             <span className="text-[9px] font-bold text-totoro-orange/60 uppercase">Cbt</span>
             <span className="text-xs font-bold text-totoro-orange font-mono">
               {localizedIngredient.combat}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg border border-totoro-blue/20 min-w-[32px] font-sans">
+          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.15)] min-w-[32px] font-sans">
             <span className="text-[9px] font-bold text-totoro-blue/60 uppercase">Utl</span>
             <span className="text-xs font-bold text-totoro-blue font-mono">
               {localizedIngredient.utility}
             </span>
           </div>
-          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg border border-totoro-yellow/20 min-w-[32px] font-sans">
+          <div className="flex flex-col items-center bg-muted/30 px-2 py-1 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.15)] min-w-[32px] font-sans">
             <span className="text-[9px] font-bold text-totoro-yellow/60 uppercase">Why</span>
             <span className="text-xs font-bold text-totoro-yellow font-mono">
               {localizedIngredient.whimsy}

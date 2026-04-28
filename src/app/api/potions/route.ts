@@ -2,13 +2,15 @@ import { logger } from '@/utils/logger';
 import { adminDb } from '@/config/firebase-admin';
 import { Timestamp } from 'firebase-admin/firestore';
 import { NextRequest, NextResponse } from 'next/server';
+import { apiAuthErrorResponse, assertCanAccessUser, requireUser } from '@/lib/server/apiAuth';
 
 export async function POST(req: NextRequest) {
   try {
+    const user = await requireUser(req);
     const body = await req.json();
-    const { uid, recipe, quantity } = body;
+    const { recipe, quantity } = body;
 
-    if (!uid || !recipe) {
+    if (!recipe) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -25,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     const docRef = await adminDb
       .collection('users')
-      .doc(uid)
+      .doc(user.uid)
       .collection('createdPotions')
       .add({
         ...createdPotion,
@@ -44,6 +46,9 @@ export async function POST(req: NextRequest) {
       }
     });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('API Error adding created potion:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
@@ -51,12 +56,11 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
+    const user = await requireUser(req);
     const { searchParams } = new URL(req.url);
-    const uid = searchParams.get('uid');
+    const uid = searchParams.get('uid') || user.uid;
 
-    if (!uid) {
-      return NextResponse.json({ error: 'Missing uid' }, { status: 400 });
-    }
+    await assertCanAccessUser(user, uid);
 
     const snapshot = await adminDb.collection('users').doc(uid).collection('createdPotions').get();
 
@@ -77,6 +81,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ success: true, data: potions });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('API Error fetching created potions:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }

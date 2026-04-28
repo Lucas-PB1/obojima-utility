@@ -8,9 +8,9 @@ interface FilterSectionProps {
 export function FilterSection({ children, className = '' }: FilterSectionProps) {
   return (
     <div
-      className={`glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-8 border border-white/40 relative overflow-hidden ${className}`}
+      className={`glass-panel rounded-lg shadow-[var(--shadow-raised)] p-6 border-transparent relative overflow-hidden ${className}`}
     >
-      <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+      <div className="absolute inset-x-3 top-0 h-px bg-linear-to-r from-transparent via-white/45 to-transparent pointer-events-none"></div>
       <div className="relative z-10">{children}</div>
     </div>
   );

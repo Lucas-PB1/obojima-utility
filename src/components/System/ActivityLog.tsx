@@ -32,10 +32,10 @@ export function ActivityLog() {
             {filteredAttempts.map((attempt) => (
               <div
                 key={attempt.id}
-                className={`p-6 rounded-xl border-2 transition-all duration-300 ${
+                className={`p-6 rounded-lg border border-transparent transition-all duration-300 ${
                   attempt.success
-                    ? 'bg-totoro-green/10 border-totoro-green/20 hover:border-totoro-green/30'
-                    : 'bg-totoro-orange/10 border-totoro-orange/20 hover:border-totoro-orange/30'
+                    ? 'bg-totoro-green/10 shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.16),var(--shadow-soft)] hover:shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.24),var(--shadow-soft)]'
+                    : 'bg-totoro-orange/10 shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.16),var(--shadow-soft)] hover:shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.24),var(--shadow-soft)]'
                 }`}
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -109,7 +109,7 @@ export function ActivityLog() {
                     </div>
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs">
+                      <span className="bg-totoro-blue/20 text-totoro-blue px-2 py-1 rounded text-xs shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.12)]">
                         {t(
                           'activity.card.bonus',
                           attempt.modifier > 0 ? '+' : '',
@@ -117,12 +117,12 @@ export function ActivityLog() {
                         )}
                       </span>
                       {attempt.bonusDice && (
-                        <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs">
+                        <span className="bg-totoro-yellow/20 text-totoro-yellow px-2 py-1 rounded text-xs shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.12)]">
                           {attempt.bonusDice.value}d{attempt.bonusDice.type.substring(1)}
                         </span>
                       )}
                       {attempt.advantage !== 'normal' && (
-                        <span className="bg-totoro-gray/20 text-totoro-gray px-2 py-1 rounded text-xs">
+                        <span className="bg-totoro-gray/20 text-totoro-gray px-2 py-1 rounded text-xs shadow-[inset_0_0_0_1px_var(--hairline)]">
                           {attempt.advantage === 'vantagem'
                             ? t('activity.card.advantage')
                             : t('activity.card.disadvantage')}
@@ -133,7 +133,7 @@ export function ActivityLog() {
 
                   {attempt.success && attempt.ingredient && (
                     <div className="md:w-80">
-                      <div className="bg-muted/50 p-4 rounded-lg border border-totoro-green/20">
+                      <div className="bg-muted/50 p-4 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.14)]">
                         <h4 className="font-bold text-totoro-green mb-2">
                           {t('activity.card.ingredient.title')}
                         </h4>

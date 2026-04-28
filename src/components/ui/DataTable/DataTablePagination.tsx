@@ -18,7 +18,7 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="px-6 py-4 border-t border-border/20">
+    <div className="px-6 py-4 subtle-divider-top">
       <div className="flex items-center justify-between">
         <div className="text-sm text-foreground/60">
           {t('ui.datatable.page', currentPage, totalPages)}

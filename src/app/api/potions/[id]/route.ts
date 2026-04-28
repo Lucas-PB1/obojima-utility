@@ -2,16 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { adminDb } from '@/config/firebase-admin';
 import { logger } from '@/utils/logger';
 import { Timestamp } from 'firebase-admin/firestore';
+import { apiAuthErrorResponse, assertCanAccessUser, requireUser } from '@/lib/server/apiAuth';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const user = await requireUser(req);
     const { id } = await params;
     const { searchParams } = new URL(req.url);
-    const uid = searchParams.get('uid');
+    const uid = searchParams.get('uid') || user.uid;
 
-    if (!uid) {
-      return NextResponse.json({ error: 'Missing uid' }, { status: 400 });
-    }
+    await assertCanAccessUser(user, uid);
 
     const docSnap = await adminDb
       .collection('users')
@@ -38,6 +38,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
     return NextResponse.json({ success: true, data: potion });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('API Error fetching potion:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
@@ -45,18 +48,20 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const user = await requireUser(req);
     const { id } = await params;
     const { searchParams } = new URL(req.url);
-    const uid = searchParams.get('uid');
+    const uid = searchParams.get('uid') || user.uid;
 
-    if (!uid) {
-      return NextResponse.json({ error: 'Missing uid' }, { status: 400 });
-    }
+    await assertCanAccessUser(user, uid);
 
     await adminDb.collection('users').doc(uid).collection('createdPotions').doc(id).delete();
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('API Error deleting potion:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
@@ -64,13 +69,12 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const user = await requireUser(req);
     const { id } = await params;
     const body = await req.json();
-    const { uid, action } = body;
+    const { uid = user.uid, action } = body;
 
-    if (!uid) {
-      return NextResponse.json({ error: 'Missing uid' }, { status: 400 });
-    }
+    await assertCanAccessUser(user, uid);
 
     const potionRef = adminDb.collection('users').doc(uid).collection('createdPotions').doc(id);
 
@@ -133,6 +137,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('API Error updating potion:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }

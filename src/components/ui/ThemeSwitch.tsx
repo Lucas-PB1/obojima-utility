@@ -29,7 +29,7 @@ export function ThemeSwitch() {
         onClick={() => setTheme(isDark ? 'light' : 'dark')}
         className={`
           relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-totoro-blue focus-visible:ring-offset-2
-          ${isDark ? 'bg-totoro-blue/20 border border-totoro-blue/30' : 'bg-slate-200 border border-slate-300'}
+          ${isDark ? 'bg-totoro-blue/20 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.24)]' : 'bg-slate-200 shadow-[inset_0_0_0_1px_rgba(44,62,80,0.13)]'}
         `}
       >
         <span className="sr-only">{t('ui.theme.toggle')}</span>

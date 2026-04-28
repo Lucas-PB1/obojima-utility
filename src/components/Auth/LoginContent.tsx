@@ -31,9 +31,9 @@ export default function LoginContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-totoro-blue/10 to-totoro-green/10 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-mesh flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-totoro-blue/20">
+        <div className="glass-panel rounded-lg shadow-[var(--shadow-raised)] p-8 border-transparent bg-[var(--surface-raised)]">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-totoro-gray mb-2">🌿 Obojima Utilities</h1>
             <p className="text-totoro-blue">
@@ -42,7 +42,7 @@ export default function LoginContent() {
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-totoro-orange/10 border border-totoro-orange/30 rounded-lg text-totoro-orange text-sm">
+            <div className="mb-4 p-3 bg-totoro-orange/10 rounded-lg text-totoro-orange text-sm shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.18)]">
               {error}
             </div>
           )}

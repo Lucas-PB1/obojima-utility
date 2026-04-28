@@ -44,7 +44,7 @@ export function IngredientModal({ ingredient, isOpen, onClose }: IngredientModal
         </div>
 
         <div className="grid grid-cols-3 gap-4">
-          <div className="bg-totoro-orange/20 border border-totoro-orange/30 rounded-lg p-4 text-center">
+          <div className="bg-totoro-orange/20 rounded-lg p-4 text-center shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.2)]">
             <div className="text-totoro-orange text-sm font-medium mb-1">
               ⚔️ {t('forage.result.stats.combat')}
             </div>
@@ -52,13 +52,13 @@ export function IngredientModal({ ingredient, isOpen, onClose }: IngredientModal
               {localizedIngredient.combat}
             </div>
           </div>
-          <div className="bg-totoro-blue/20 border border-totoro-blue/30 rounded-lg p-4 text-center">
+          <div className="bg-totoro-blue/20 rounded-lg p-4 text-center shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.2)]">
             <div className="text-totoro-blue text-sm font-medium mb-1">
               🛠️ {t('forage.result.stats.utility')}
             </div>
             <div className="text-2xl font-bold text-totoro-blue">{localizedIngredient.utility}</div>
           </div>
-          <div className="bg-totoro-yellow/20 border border-totoro-yellow/30 rounded-lg p-4 text-center">
+          <div className="bg-totoro-yellow/20 rounded-lg p-4 text-center shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.2)]">
             <div className="text-totoro-yellow text-sm font-medium mb-1">
               ✨ {t('forage.result.stats.whimsy')}
             </div>
@@ -68,7 +68,7 @@ export function IngredientModal({ ingredient, isOpen, onClose }: IngredientModal
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-totoro-green/10 to-totoro-blue/10 rounded-lg p-6 border border-totoro-green/20">
+        <div className="bg-gradient-to-r from-totoro-green/10 to-totoro-blue/10 rounded-lg p-6 shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.15)]">
           <h5 className="font-semibold text-totoro-gray mb-3 flex items-center">
             <span className="mr-2">📖</span>
             {t('ui.labels.description')}
@@ -95,7 +95,7 @@ export function IngredientModal({ ingredient, isOpen, onClose }: IngredientModal
           </div>
         </div>
 
-        <div className="flex justify-end pt-4 border-t border-totoro-gray/20">
+        <div className="flex justify-end pt-4 subtle-divider-top">
           <button
             onClick={onClose}
             className="px-6 py-2 bg-totoro-green text-white rounded-lg hover:bg-totoro-green/90 transition-colors font-medium"

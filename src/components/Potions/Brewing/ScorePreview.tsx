@@ -17,13 +17,13 @@ export function ScorePreview({
   const { t } = useTranslation();
 
   return (
-    <div className="bg-muted/30 p-4 rounded-lg border border-border/20">
+    <div className="bg-muted/30 p-4 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)]">
       <h4 className="text-sm font-medium text-foreground mb-3">{t('potions.create.preview')}</h4>
       <div className="grid grid-cols-3 gap-4">
         {(['combat', 'utility', 'whimsy'] as const).map((attr) => (
           <div
             key={attr}
-            className={`p-3 rounded-lg border ${POTION_CATEGORY_CONFIG[attr].classes} ${previewScores.winningAttribute === attr ? 'ring-2 ring-opacity-50 ring-current' : ''}`}
+            className={`p-3 rounded-lg shadow-[inset_0_0_0_1px_rgba(255,255,255,0.14)] ${POTION_CATEGORY_CONFIG[attr].classes} ${previewScores.winningAttribute === attr ? 'ring-2 ring-opacity-50 ring-current' : ''}`}
           >
             <div className="text-xs font-medium">{t(POTION_CATEGORY_CONFIG[attr].label)}</div>
             <div className="text-lg font-bold">
@@ -44,7 +44,7 @@ export function ScorePreview({
       </div>
 
       {availableScores?.canChoose && (
-        <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+        <div className="mt-3 p-3 bg-purple-50 rounded-lg shadow-[inset_0_0_0_1px_rgba(168,85,247,0.18)]">
           <div className="flex items-center text-purple-700 text-sm">
             <span className="mr-2">🧪</span>
             <span className="font-medium">{t('potions.create.brewerActive')}</span>

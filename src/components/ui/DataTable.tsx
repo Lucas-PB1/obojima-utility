@@ -41,6 +41,7 @@ export function DataTable<T>({
   const { t } = useTranslation();
   const {
     paginatedData,
+    filteredData,
     totalPages,
     currentPage,
     startIndex,
@@ -65,13 +66,13 @@ export function DataTable<T>({
 
   return (
     <div
-      className={`glass-panel rounded-3xl shadow-xl border border-white/60 overflow-hidden bg-white/80 backdrop-blur-xl ${className}`}
+      className={`glass-panel rounded-lg shadow-[var(--shadow-raised)] border-transparent overflow-hidden bg-[var(--surface-raised)] backdrop-blur-xl ${className}`}
     >
-      <div className="p-6 border-b border-totoro-blue/5">
+      <div className="p-6 subtle-divider-bottom">
         {title && (
           <div className="flex items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-1.5 h-6 bg-totoro-blue rounded-full"></div>
+              <div className="w-1 h-6 bg-totoro-blue rounded-full"></div>
               {icon && <span className="text-2xl">{icon}</span>}
               <h2 className="text-xl font-black text-totoro-gray tracking-tight">{title}</h2>
             </div>
@@ -99,9 +100,9 @@ export function DataTable<T>({
         <div className="mt-4 text-sm text-foreground/60">
           {t(
             'ui.datatable.showing',
-            startIndex + 1,
-            Math.min(startIndex + itemsPerPage, paginatedData.length),
-            paginatedData.length
+            filteredData.length === 0 ? 0 : startIndex + 1,
+            Math.min(startIndex + itemsPerPage, filteredData.length),
+            filteredData.length
           )}
         </div>
       </div>

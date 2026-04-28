@@ -23,10 +23,10 @@ const textColorClasses = {
 export function StatsGrid({ title, stats, className = '' }: StatsGridProps) {
   return (
     <div
-      className={`glass-panel rounded-3xl shadow-xl p-6 bg-white/80 backdrop-blur-xl border border-white/60 relative overflow-hidden ${className}`}
+      className={`glass-panel rounded-lg shadow-[var(--shadow-raised)] p-6 bg-[var(--surface-raised)] backdrop-blur-xl border-transparent relative overflow-hidden ${className}`}
     >
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-1.5 h-6 bg-totoro-blue rounded-full"></div>
+        <div className="w-1 h-6 bg-totoro-blue rounded-full"></div>
         <h2 className="text-xl font-black text-totoro-gray tracking-tight">{title}</h2>
       </div>
 

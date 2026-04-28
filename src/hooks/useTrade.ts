@@ -7,6 +7,8 @@ import { Friend, TradeItem, TradeItemType } from '@/types/social';
 import { CollectedIngredient, CreatedPotion } from '@/types/ingredients';
 import { useLocalizedIngredients } from '@/hooks/useLocalizedIngredients';
 import { useCreatedPotionCollection } from '@/hooks/useCreatedPotionCollection';
+import { canAddTradeQuantity, getMaxAddableQuantity } from '@/features/inventory/domain/tradeRules';
+import { logger } from '@/utils/logger';
 
 export function useTrade(friend: Friend, onClose: () => void) {
   const { t } = useTranslation();
@@ -38,7 +40,9 @@ export function useTrade(friend: Friend, onClose: () => void) {
     (item) => item.id === selectedItemId && item.type === itemType
   );
   const quantityInCart = existingItemIndex >= 0 ? cart[existingItemIndex].quantity : 0;
-  const maxAddable = selectedItem ? Math.max(0, selectedItem.quantity - quantityInCart) : 0;
+  const maxAddable = selectedItem
+    ? getMaxAddableQuantity(selectedItem.quantity, quantityInCart)
+    : 0;
 
   const addToCart = () => {
     if (!selectedItem) return;
@@ -48,7 +52,7 @@ export function useTrade(friend: Friend, onClose: () => void) {
     );
     const quantityInCart = existingItemIndex >= 0 ? cart[existingItemIndex].quantity : 0;
 
-    if (quantityInCart + quantity > selectedItem.quantity) {
+    if (!canAddTradeQuantity(selectedItem.quantity, quantityInCart, quantity)) {
       setMessage({
         type: 'error',
         text: t('social.trade.errorQuantityExceeds', selectedItem.quantity)
@@ -102,7 +106,7 @@ export function useTrade(friend: Friend, onClose: () => void) {
       setMessage({ type: 'success', text: t('social.trade.success') });
       setTimeout(() => onClose(), 2000);
     } catch (error) {
-      console.error('Trade error:', error);
+      logger.error('Trade error:', error);
       setMessage({
         type: 'error',
         text: error instanceof Error ? error.message : t('social.trade.error')

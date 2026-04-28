@@ -25,7 +25,7 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
           </h1>
 
           <div
-            className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black tracking-widest border border-border/40 shadow-sm ${
+            className={`inline-block px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest shadow-[inset_0_0_0_1px_var(--hairline)] ${
               recipe.resultingPotion.raridade === 'Comum'
                 ? 'bg-totoro-green/20 text-totoro-green'
                 : recipe.resultingPotion.raridade === 'Incomum'
@@ -37,8 +37,8 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-border/40 relative overflow-hidden">
-          <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+        <div className="glass-panel p-6 rounded-lg border-transparent relative overflow-hidden">
+          <div className="absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent pointer-events-none"></div>
           <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-3 relative z-10">
             {t('recipes.details.effect')}
           </h4>
@@ -58,8 +58,8 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-border/40 shadow-sm relative overflow-hidden">
-          <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+        <div className="glass-panel p-6 rounded-lg border-transparent shadow-[var(--shadow-soft)] relative overflow-hidden">
+          <div className="absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent pointer-events-none"></div>
           <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-4 relative z-10 text-center">
             {t('recipes.details.potential')}
           </h4>
@@ -164,7 +164,7 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
               )}
             </div>
           </div>
-          <div className="mt-4 pt-4 border-t border-totoro-blue/5 text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">
+          <div className="mt-4 pt-4 subtle-divider-top text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">
             {t('recipes.details.predictedDomain')}{' '}
             <span className="text-totoro-blue">
               {t(POTION_CATEGORY_CONFIG[recipe.winningAttribute].label)}
@@ -176,11 +176,11 @@ export function RecipeDetailsModal({ isOpen, onClose, recipe, onDelete }: Recipe
           <Button
             onClick={() => onDelete(recipe.id)}
             variant="ghost"
-            className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-2xl !font-bold"
+            className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-lg !font-bold"
           >
             {t('recipes.details.delete')}
           </Button>
-          <Button onClick={onClose} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
+          <Button onClick={onClose} variant="secondary" className="flex-1 !rounded-lg !font-bold">
             {t('ui.actions.close')}
           </Button>
         </div>

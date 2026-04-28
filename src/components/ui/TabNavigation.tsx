@@ -21,7 +21,7 @@ export function TabNavigation<T = string>({
 }: TabNavigationProps<T>) {
   return (
     <div
-      className={`glass-panel border-b border-white/20 sticky top-16 z-40 shadow-sm transition-all duration-300 ${className}`}
+      className={`glass-panel subtle-divider-bottom sticky top-16 z-40 shadow-(--shadow-soft)] transition-all duration-300 ${className}`}
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex">
@@ -29,10 +29,10 @@ export function TabNavigation<T = string>({
             <button
               key={index}
               onClick={() => onTabChange(tab.id)}
-              className={`px-6 py-4 font-medium text-sm transition-all duration-300 border-b-2 relative ${
+              className={`px-6 py-4 font-medium text-sm transition-all duration-300 relative ${
                 activeTab === tab.id
-                  ? 'text-totoro-blue border-totoro-blue bg-totoro-blue/10'
-                  : 'text-totoro-gray border-transparent hover:text-totoro-blue hover:border-totoro-blue/30 hover:bg-totoro-blue/5'
+                  ? 'text-totoro-blue bg-totoro-blue/10 shadow-[inset_0_-2px_0_var(--totoro-blue)]'
+                  : 'text-totoro-gray hover:text-totoro-blue hover:bg-totoro-blue/5'
               }`}
             >
               <span className="flex items-center">

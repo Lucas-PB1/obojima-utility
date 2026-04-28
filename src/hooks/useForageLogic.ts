@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { ingredientsService } from '@/services/ingredientsService';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
+import { determineForageRarity, normalizeModifier } from '@/features/forage/domain/forageRules';
 
 import {
   RegionKey,
@@ -76,55 +77,6 @@ export function useForageLogic() {
     loadRemainingAttempts();
   }, []);
 
-  const determineRarityAndSuccess = (totalRoll: number) => {
-    const rollRanges = [
-      { min: 10, max: 15, rarity: 'comum' as const, isNative: true, dc: 10 },
-      { min: 16, max: 20, rarity: 'incomum' as const, isNative: true, dc: 16 },
-      { min: 21, max: 25, rarity: 'incomum' as const, isNative: false, dc: 21 },
-      { min: 26, max: 30, rarity: 'raro' as const, isNative: false, dc: 26, rareChance: 0.3 },
-      {
-        min: 31,
-        max: Infinity,
-        rarity: 'unico' as const,
-        isNative: false,
-        dc: 31,
-        uniqueChance: 0.1
-      }
-    ];
-
-    for (const range of rollRanges) {
-      if (totalRoll >= range.min && totalRoll <= range.max) {
-        const isSuccess = totalRoll >= range.min;
-
-        if (!isSuccess) {
-          return { rarity: 'comum' as const, success: false, dcResult: { dc: 10, range: '10-15' } };
-        }
-
-        let finalRarity = range.rarity;
-
-        if (range.rareChance && Math.random() > range.rareChance) {
-          finalRarity = 'incomum';
-        }
-
-        if (range.uniqueChance && Math.random() > range.uniqueChance) {
-          finalRarity = Math.random() <= 0.3 ? 'raro' : 'incomum';
-        }
-
-        return {
-          rarity: finalRarity,
-          success: true,
-          dcResult: {
-            dc: range.dc,
-            range: `${range.min}-${range.max === Infinity ? '+' : range.max}`
-          },
-          isNative: range.isNative
-        };
-      }
-    }
-
-    return { rarity: 'comum' as const, success: false, dcResult: { dc: 10, range: '10-15' } };
-  };
-
   const getIngredientByRarity = useCallback(
     async (rarity: 'comum' | 'incomum' | 'raro' | 'unico', totalRoll: number) => {
       const language = settings.language || 'pt';
@@ -180,7 +132,7 @@ export function useForageLogic() {
       setIsLoading(true);
 
       try {
-        const modifierValue = modifier === '' ? 0 : modifier;
+        const modifierValue = normalizeModifier(modifier);
         const { roll } = diceService.rollWithAdvantage(advantage);
         const totalRoll = diceService.calculateTotalRoll(
           roll,
@@ -188,7 +140,7 @@ export function useForageLogic() {
           bonusDice || undefined
         );
 
-        const { rarity, success, dcResult } = determineRarityAndSuccess(totalRoll);
+        const { rarity, success, dcResult } = determineForageRarity(totalRoll);
 
         const ingredient = success ? await getIngredientByRarity(rarity, totalRoll) : null;
 

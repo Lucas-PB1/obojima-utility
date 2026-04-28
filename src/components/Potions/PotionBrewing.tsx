@@ -90,9 +90,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
                 <button
                   key={score.attribute}
                   onClick={() => handleScoreChoice(score.attribute)}
-                  className={`w-full p-4 rounded-lg border-2 transition-all ${
+                  className={`w-full p-4 rounded-lg border border-transparent shadow-[inset_0_0_0_1px_var(--hairline),var(--shadow-soft)] transition-all ${
                     POTION_CATEGORY_CONFIG[score.attribute].classes
-                  } hover:shadow-md hover:scale-105`}
+                  } hover:shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.22),var(--shadow-soft)] hover:scale-105`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="text-left">
@@ -119,7 +119,7 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
               ))}
             </div>
 
-            <div className="flex justify-end pt-4 border-t border-gray-200">
+            <div className="flex justify-end pt-4 subtle-divider-top">
               <Button onClick={closeScoreChoiceModal} variant="secondary">
                 {t('ui.actions.cancel')}
               </Button>

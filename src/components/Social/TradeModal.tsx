@@ -50,14 +50,14 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
       }
     >
       <div className="space-y-6">
-        <div className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
-          <div className="flex gap-2 bg-black/20 p-1 rounded-xl">
+        <div className="space-y-4 p-4 rounded-lg bg-white/5 shadow-[inset_0_0_0_1px_var(--hairline)]">
+          <div className="flex gap-2 bg-black/20 p-1 rounded-lg shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
             <button
               onClick={() => {
                 setItemType('ingredient');
                 setSelectedItemId('');
               }}
-              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${itemType === 'ingredient' ? 'bg-totoro-blue text-white shadow-md' : 'text-totoro-gray/50 hover:bg-white/5'}`}
+              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${itemType === 'ingredient' ? 'bg-totoro-blue text-white shadow-[0_12px_24px_-18px_rgba(var(--primary-rgb),0.8)]' : 'text-totoro-gray/50 hover:bg-white/5'}`}
             >
               {t('social.trade.type.ingredient')}
             </button>
@@ -66,7 +66,7 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                 setItemType('potion');
                 setSelectedItemId('');
               }}
-              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${itemType === 'potion' ? 'bg-totoro-blue text-white shadow-md' : 'text-totoro-gray/50 hover:bg-white/5'}`}
+              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${itemType === 'potion' ? 'bg-totoro-blue text-white shadow-[0_12px_24px_-18px_rgba(var(--primary-rgb),0.8)]' : 'text-totoro-gray/50 hover:bg-white/5'}`}
             >
               {t('social.trade.type.potion')}
             </button>
@@ -84,8 +84,8 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                       key={ing.id}
                       onClick={() => setSelectedItemId(ing.id)}
                       className={`
-                        cursor-pointer p-3 rounded-xl border transition-all flex items-center justify-between
-                        ${selectedItemId === ing.id ? 'bg-totoro-blue/10 border-totoro-blue/50 shadow-sm' : 'bg-white/5 border-transparent hover:bg-white/10'}
+                        cursor-pointer p-3 rounded-lg border border-transparent transition-all flex items-center justify-between
+                        ${selectedItemId === ing.id ? 'bg-totoro-blue/10 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.28),var(--shadow-soft)]' : 'bg-white/5 hover:bg-white/10 shadow-[inset_0_0_0_1px_transparent]'}
                       `}
                     >
                       <div className="flex flex-col">
@@ -102,14 +102,14 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                             `constants.rarity.${(ing.ingredient.raridade || 'common').toLowerCase()}`
                           )}
                         </span>
-                        <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-mono">
+                        <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-mono shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]">
                           {ing.quantity}x
                         </span>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <p className="text-sm text-totoro-gray/50 p-4 text-center italic bg-white/5 rounded-xl">
+                  <p className="text-sm text-totoro-gray/50 p-4 text-center italic bg-white/5 rounded-lg">
                     {t('social.trade.noItems')}
                   </p>
                 )
@@ -119,8 +119,8 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                     key={pot.id}
                     onClick={() => setSelectedItemId(pot.id)}
                     className={`
-                      cursor-pointer p-3 rounded-xl border transition-all flex items-center justify-between
-                      ${selectedItemId === pot.id ? 'bg-totoro-blue/10 border-totoro-blue/50 shadow-sm' : 'bg-white/5 border-transparent hover:bg-white/10'}
+                      cursor-pointer p-3 rounded-lg border border-transparent transition-all flex items-center justify-between
+                      ${selectedItemId === pot.id ? 'bg-totoro-blue/10 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.28),var(--shadow-soft)]' : 'bg-white/5 hover:bg-white/10 shadow-[inset_0_0_0_1px_transparent]'}
                     `}
                   >
                     <div className="flex flex-col">
@@ -133,14 +133,14 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                       <span className="text-[10px] text-totoro-gray/40 font-bold">
                         {t(`constants.rarity.${(pot.potion.raridade || 'common').toLowerCase()}`)}
                       </span>
-                      <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-mono">
+                      <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-mono shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]">
                         {pot.quantity}x
                       </span>
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-totoro-gray/50 p-4 text-center italic bg-white/5 rounded-xl">
+                <p className="text-sm text-totoro-gray/50 p-4 text-center italic bg-white/5 rounded-lg">
                   {t('social.trade.noItems')}
                 </p>
               )}
@@ -159,7 +159,7 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                   </span>
                 </label>
                 <div
-                  className={`flex items-center gap-3 bg-white/5 p-2 rounded-xl border border-white/10 ${maxAddable === 0 ? 'opacity-50 pointer-events-none' : ''}`}
+                  className={`flex items-center gap-3 bg-white/5 p-2 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)] ${maxAddable === 0 ? 'opacity-50 pointer-events-none' : ''}`}
                 >
                   <input
                     type="range"
@@ -208,7 +208,7 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
             </span>
           </div>
 
-          <div className="min-h-[100px] max-h-[150px] overflow-y-auto bg-white/5 rounded-xl border border-white/10 p-2 space-y-2 relative">
+          <div className="min-h-[100px] max-h-[150px] overflow-y-auto bg-white/5 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)] p-2 space-y-2 relative">
             {cart.length === 0 ? (
               <div className="absolute inset-0 flex items-center justify-center text-totoro-gray/30 font-medium italic">
                 {t('social.trade.noItemsSelected')}
@@ -217,7 +217,7 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
               cart.map((item, index) => (
                 <div
                   key={`${item.id}-${index}`}
-                  className="flex items-center justify-between p-3 bg-white/40 rounded-lg shadow-sm animate-in fade-in slide-in-from-left-2"
+                  className="flex items-center justify-between p-3 bg-white/40 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline),var(--shadow-soft)] animate-in fade-in slide-in-from-left-2"
                 >
                   <div className="flex items-center gap-3">
                     <div

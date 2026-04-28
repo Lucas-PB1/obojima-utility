@@ -19,11 +19,11 @@ export function MessageBubble({ message, isMe }: MessageBubbleProps) {
       <div className="flex flex-col gap-1 max-w-[70%]">
         <div
           className={`
-            px-5 py-3 rounded-2xl text-sm shadow-sm backdrop-blur-sm
+            px-5 py-3 rounded-lg text-sm shadow-[var(--shadow-soft)] backdrop-blur-sm
             ${
               isMe
-                ? 'bg-gradient-to-br from-totoro-blue to-blue-500 text-white rounded-br-none border border-blue-400/30'
-                : 'bg-white/80 text-totoro-gray rounded-bl-none border border-white/50 glass-card'
+                ? 'bg-gradient-to-br from-totoro-blue to-blue-500 text-white rounded-br-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.16),var(--shadow-soft)]'
+                : 'bg-white/80 text-totoro-gray rounded-bl-none glass-card'
             }
           `}
         >

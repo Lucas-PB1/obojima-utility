@@ -40,7 +40,6 @@ export function useAdminUsers() {
     try {
       setLoading(true);
       await adminService.syncUsers();
-      await adminService.syncUsers();
       Swal.fire({
         title: t('alerts.success.title'),
         text: t('admin.users.sync.success'),

@@ -3,6 +3,7 @@ import { Input, Button, Select, RadioGroup, ContentCard } from '@/components/ui'
 import { ingredientsService } from '@/services/ingredientsService';
 import { RegionKey, TestType, DiceType, AdvantageType } from '@/types/ingredients';
 import { DICE_OPTIONS, TEST_TYPE_OPTIONS, ADVANTAGE_OPTIONS } from '@/constants/forage';
+import { Loader2 } from 'lucide-react';
 
 interface ForageFormProps {
   region: RegionKey | '';
@@ -130,12 +131,11 @@ export function ForageForm({
           disabled={isLoading || remainingAttempts <= 0}
           fullWidth
           size="lg"
-          effect="pulse-glow"
           variant="danger"
         >
           {isLoading ? (
             <span className="flex items-center justify-center">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-2"></div>
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               {t('forage.form.button.loading')}
             </span>
           ) : remainingAttempts <= 0 ? (

@@ -47,7 +47,7 @@ export function Input({
         placeholder={placeholder}
         min={min}
         max={max}
-        className={`w-full p-3 border border-border/50 rounded-lg focus:ring-2 focus:ring-totoro-blue focus:border-totoro-blue bg-[var(--input-bg)] text-foreground placeholder-foreground/30 shadow-sm transition-all duration-200 hover:border-totoro-blue/40 ${inputClassName}`}
+        className={`w-full p-3 border border-transparent rounded-lg bg-[var(--input-bg)] text-foreground placeholder-foreground/30 shadow-[inset_0_0_0_1px_var(--hairline),var(--shadow-soft)] transition-all duration-200 hover:bg-[var(--surface-hover)] hover:shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.28),var(--shadow-soft)] focus:outline-none focus:ring-4 focus:ring-totoro-blue/15 focus:shadow-[inset_0_0_0_1px_var(--totoro-blue),var(--shadow-soft)] ${inputClassName}`}
         style={{
           WebkitAppearance: 'none',
           MozAppearance: 'none',

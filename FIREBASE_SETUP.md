@@ -50,7 +50,13 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=seu_projeto_id
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=seu_projeto_id.appspot.com
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=seu_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=seu_app_id
+FIREBASE_PROJECT_ID=seu_projeto_id
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@seu_projeto_id.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nSUA_CHAVE_AQUI\n-----END PRIVATE KEY-----\n"
 ```
+
+O servidor também aceita `FIREBASE_ADMIN_CLIENT_EMAIL` e `FIREBASE_ADMIN_PRIVATE_KEY`.
+Para a chave privada, use uma destas formas: PEM com `\n`, PEM com quebras reais de linha, PEM em uma linha só, ou base64 do PEM completo.
 
 **IMPORTANTE:** Não commite o arquivo `.env.local` no repositório. Ele já está no `.gitignore`.
 
@@ -98,4 +104,3 @@ Quando um usuário faz login pela primeira vez após a atualização, os dados d
 - Verifique o console do navegador para erros
 - Verifique se a migração foi executada (verifique o console)
 - Verifique se os dados existem no Firestore através do console do Firebase
-

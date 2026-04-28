@@ -20,7 +20,7 @@ export function ChatWindow({ friend, onClose }: ChatWindowProps) {
   const myId = authService.getUserId();
 
   return (
-    <div className="flex flex-col h-[600px] glass-panel p-0 overflow-hidden relative shadow-2xl border-white/20">
+    <div className="flex flex-col h-[600px] glass-panel p-0 overflow-hidden relative shadow-[var(--shadow-raised)] border-transparent">
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-20 pointer-events-none">
         <div className="flex items-center gap-3 pointer-events-auto duration-300">
@@ -37,7 +37,7 @@ export function ChatWindow({ friend, onClose }: ChatWindowProps) {
               <span className="text-lg">👤</span>
             )}
             <div
-              className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
+              className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ring-2 ring-[color:var(--surface-raised)] ${
                 friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'
               }`}
             />
@@ -71,7 +71,7 @@ export function ChatWindow({ friend, onClose }: ChatWindowProps) {
       <div className="p-4 bg-gradient-to-b from-transparent to-white/10 backdrop-blur-[2px]">
         <form
           onSubmit={handleSend}
-          className="glass-card p-2 rounded-2xl flex gap-2 items-center shadow-lg border-white/30 bg-white/40"
+          className="glass-card p-2 rounded-lg flex gap-2 items-center shadow-[var(--shadow-soft)] bg-white/40"
         >
           <Input
             value={newMessage}
@@ -84,7 +84,7 @@ export function ChatWindow({ friend, onClose }: ChatWindowProps) {
             type="submit"
             disabled={!newMessage.trim()}
             className={`
-              rounded-xl h-10 px-6 font-bold shadow-md transition-all duration-300
+              rounded-lg h-10 px-6 font-bold shadow-[var(--shadow-soft)] transition-all duration-300
               ${
                 !newMessage.trim()
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'

@@ -39,7 +39,7 @@ export function PotionDetailsModal({
 
           <div className="flex justify-center gap-3">
             <div
-              className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black tracking-widest border border-border/40 shadow-sm ${
+              className={`inline-block px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest shadow-[inset_0_0_0_1px_var(--hairline)] ${
                 potion.potion.raridade === 'Comum'
                   ? 'bg-totoro-green/20 text-totoro-green'
                   : potion.potion.raridade === 'Incomum'
@@ -50,15 +50,15 @@ export function PotionDetailsModal({
               {t(`constants.rarity.${potion.potion.raridade.toLowerCase()}`)}
             </div>
             <div
-              className={`inline-block px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 shadow-sm ${POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].classes}`}
+              className={`inline-block px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-[inset_0_0_0_1px_var(--hairline)] ${POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].classes}`}
             >
               {t(POTION_CATEGORY_CONFIG[potion.recipe.winningAttribute].label)}
             </div>
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-border/40 relative overflow-hidden">
-          <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+        <div className="glass-panel p-6 rounded-lg border-transparent relative overflow-hidden">
+          <div className="absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent pointer-events-none"></div>
           <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-3 relative z-10">
             {t('potions.details.desc.arcane')}
           </h4>
@@ -67,8 +67,8 @@ export function PotionDetailsModal({
           </p>
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-border/40 shadow-sm relative overflow-hidden">
-          <div className="absolute inset-0 border-t border-l border-border/20 pointer-events-none rounded-3xl"></div>
+        <div className="glass-panel p-6 rounded-lg border-transparent shadow-[var(--shadow-soft)] relative overflow-hidden">
+          <div className="absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent pointer-events-none"></div>
           <div className="flex items-center justify-between relative z-10">
             <div>
               <h4 className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-1">
@@ -95,7 +95,7 @@ export function PotionDetailsModal({
                 }}
                 variant="primary"
                 size="md"
-                className="!rounded-2xl !font-bold"
+                className="!rounded-lg !font-bold"
               >
                 {t('potions.card.useNow')}
               </Button>
@@ -103,14 +103,14 @@ export function PotionDetailsModal({
           </div>
 
           {potion.used && potion.usedAt && (
-            <div className="mt-4 pt-4 border-t border-totoro-blue/5 text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">
+            <div className="mt-4 pt-4 subtle-divider-top text-[10px] text-totoro-gray/50 font-bold uppercase tracking-widest relative z-10 text-center">
               {t('potions.details.lastUse', potion.usedAt.toLocaleDateString('pt-BR'))}
             </div>
           )}
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-white/40 shadow-sm relative overflow-hidden">
-          <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-3xl"></div>
+        <div className="glass-panel p-6 rounded-lg border-transparent shadow-[var(--shadow-soft)] relative overflow-hidden">
+          <div className="absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-white/35 to-transparent pointer-events-none"></div>
           <h4 className="text-[10px] font-black text-totoro-blue/60 uppercase tracking-[0.2em] mb-4 relative z-10 text-center">
             {t('potions.result.scores')}
           </h4>
@@ -223,11 +223,11 @@ export function PotionDetailsModal({
           <Button
             onClick={() => onDelete(potion.id)}
             variant="ghost"
-            className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-2xl !font-bold"
+            className="flex-1 !text-totoro-orange hover:!bg-totoro-orange/10 !rounded-lg !font-bold"
           >
             {t('ui.actions.delete')}
           </Button>
-          <Button onClick={onClose} variant="secondary" className="flex-1 !rounded-2xl !font-bold">
+          <Button onClick={onClose} variant="secondary" className="flex-1 !rounded-lg !font-bold">
             {t('ui.actions.close')}
           </Button>
         </div>

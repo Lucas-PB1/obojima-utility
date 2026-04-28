@@ -41,7 +41,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
             </div>
 
             {result.cauldronBonus && result.remainsPotion && (
-              <div className="mt-6 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
+              <div className="mt-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.16)]">
                 <div className="text-center mb-3">
                   <div className="text-lg mb-2">✨</div>
                   <h4 className="font-bold text-green-800 text-lg mb-2">
@@ -50,7 +50,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                   <p className="text-green-700 text-sm mb-3">{t('potions.result.remains.desc')}</p>
                 </div>
 
-                <div className="bg-muted/30 rounded-lg p-4 border border-green-200/20">
+                <div className="bg-muted/30 rounded-lg p-4 shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.12)]">
                   <div className="text-center">
                     <div className="text-xl font-bold text-green-700 dark:text-green-400 mb-1">
                       {result.remainsPotion.nome}
@@ -65,7 +65,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
             )}
 
             {result.potionBrewerSuccess && result.secondPotion && (
-              <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
+              <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-4 shadow-[inset_0_0_0_1px_rgba(168,85,247,0.16)]">
                 <div className="text-center mb-3">
                   <div className="text-lg mb-2">🧪</div>
                   <h4 className="font-bold text-purple-800 text-lg mb-2">
@@ -76,7 +76,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
                   </p>
                 </div>
 
-                <div className="bg-muted/30 rounded-lg p-4 border border-purple-200/20">
+                <div className="bg-muted/30 rounded-lg p-4 shadow-[inset_0_0_0_1px_rgba(168,85,247,0.12)]">
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-700 dark:text-purple-400 mb-1">
                       {result.secondPotion.nome}
@@ -99,7 +99,7 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
             )}
 
             {result.potionBrewerSuccess === false && (
-              <div className="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-4">
+              <div className="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 shadow-[inset_0_0_0_1px_var(--hairline)]">
                 <div className="text-center">
                   <div className="text-lg mb-2">🧪</div>
                   <h4 className="font-bold text-gray-700 text-lg mb-2">

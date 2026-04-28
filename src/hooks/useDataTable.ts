@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { DataTableService, SortConfig } from '@/services/dataTableService';
 
@@ -35,8 +35,15 @@ export function useDataTable<T>({
   const processedData = useMemo(() => {
     const filtered = DataTableService.filterData(data, searchTerm, searchKeys, activeFilters);
     const sorted = DataTableService.sortData(filtered, sortConfig);
-    return DataTableService.paginateData(sorted, currentPage, itemsPerPage);
+    const paginated = DataTableService.paginateData(sorted, currentPage, itemsPerPage);
+    return { filtered, sorted, ...paginated };
   }, [data, searchTerm, searchKeys, activeFilters, sortConfig, currentPage, itemsPerPage]);
+
+  useEffect(() => {
+    if (currentPage > processedData.totalPages) {
+      setCurrentPage(processedData.totalPages);
+    }
+  }, [currentPage, processedData.totalPages]);
 
   const handleSort = useCallback(
     (key: keyof T) => {
@@ -95,8 +102,8 @@ export function useDataTable<T>({
 
   return {
     paginatedData: processedData.paginatedData,
-    filteredData: data,
-    sortedData: data,
+    filteredData: processedData.filtered,
+    sortedData: processedData.sorted,
     totalPages: processedData.totalPages,
     currentPage,
     startIndex: processedData.startIndex,

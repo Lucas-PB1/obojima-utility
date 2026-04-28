@@ -28,7 +28,7 @@ export function UserSearch() {
         {results.map((user) => (
           <div
             key={user.uid}
-            className="glass-panel p-5 flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 hover:shadow-lg hover:border-totoro-blue/30"
+            className="glass-panel p-5 flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 hover:shadow-[var(--shadow-raised)]"
           >
             <div className="flex items-center gap-4">
               <div className="relative w-14 h-14 rounded-full bg-totoro-blue/10 flex items-center justify-center text-2xl shadow-sm ring-2 ring-white/40 group-hover:ring-totoro-blue/30 transition-all duration-300">
@@ -52,7 +52,7 @@ export function UserSearch() {
               </div>
             </div>
             {sentRequests.has(user.uid) ? (
-              <span className="text-xs font-bold text-green-600 bg-green-100/80 px-4 py-1.5 rounded-full border border-green-200 backdrop-blur-sm">
+              <span className="text-xs font-bold text-green-600 bg-green-100/80 px-4 py-1.5 rounded-full shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.18)] backdrop-blur-sm">
                 {t('social.search.requestSent')}
               </span>
             ) : (

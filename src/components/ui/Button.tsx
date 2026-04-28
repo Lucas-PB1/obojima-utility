@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -15,17 +16,17 @@ interface ButtonProps {
 
 const variantClasses = {
   primary:
-    'bg-gradient-to-br from-totoro-blue via-totoro-blue to-[#357ABD] text-white border-[#5DA9FF] shadow-[0_4px_15px_rgba(74,144,226,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(74,144,226,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
+    'bg-totoro-blue text-white border-transparent shadow-[var(--shadow-soft)] hover:shadow-[0_18px_36px_-24px_rgba(var(--primary-rgb),0.62)]',
   secondary:
-    'bg-[var(--input-bg)] text-foreground border-border/50 hover:border-totoro-blue/40 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 active:translate-y-0',
+    'bg-[var(--surface-raised)] text-foreground border-transparent ring-1 ring-inset ring-[color:var(--hairline)] hover:bg-[var(--surface-hover)] hover:ring-totoro-blue/30 shadow-[var(--shadow-soft)]',
   success:
-    'bg-gradient-to-br from-totoro-green via-totoro-green to-[#6AB31D] text-white border-[#9FE842] shadow-[0_4px_15px_rgba(126,211,33,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(126,211,33,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
+    'bg-totoro-green text-white border-transparent shadow-[var(--shadow-soft)] hover:shadow-[0_18px_36px_-24px_rgba(var(--success-rgb),0.62)]',
   danger:
-    'bg-gradient-to-br from-totoro-orange via-totoro-orange to-[#C0661A] text-white border-[#FF9F4D] shadow-[0_4px_15px_rgba(230,126,34,0.3),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_8px_25px_rgba(230,126,34,0.4),inset_0_1px_1px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 active:translate-y-0',
+    'bg-totoro-orange text-white border-transparent shadow-[var(--shadow-soft)] hover:shadow-[0_18px_36px_-24px_rgba(var(--danger-rgb),0.62)]',
   ghost:
-    'bg-transparent hover:bg-totoro-blue/10 text-foreground border-transparent hover:text-totoro-blue shadow-none transform hover:scale-105 active:scale-95',
+    'bg-transparent hover:bg-totoro-blue/10 text-foreground border-transparent hover:text-totoro-blue shadow-none',
   outline:
-    'bg-transparent border-2 border-totoro-blue text-totoro-blue hover:bg-totoro-blue hover:text-white shadow-none transform hover:-translate-y-0.5'
+    'bg-transparent border-transparent ring-1 ring-inset ring-totoro-blue/35 text-totoro-blue hover:bg-totoro-blue hover:text-white hover:ring-totoro-blue shadow-none'
 };
 
 const sizeClasses = {
@@ -44,7 +45,7 @@ export function Button({
   disabled = false,
   className = '',
   fullWidth = false,
-  effect = 'shimmer',
+  effect = 'none',
   title
 }: ButtonProps) {
   const getEffectClasses = () => {
@@ -64,14 +65,18 @@ export function Button({
   };
 
   const baseClasses =
-    'relative inline-flex items-center justify-center font-bold tracking-tight rounded-2xl border transition-all duration-300 ease-out focus:outline-none focus:ring-4 focus:ring-totoro-blue/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none select-none';
+    'group relative inline-flex items-center justify-center font-bold tracking-tight rounded-lg border transition-all duration-200 ease-out focus:outline-none focus:ring-4 focus:ring-totoro-blue/20 disabled:opacity-50 disabled:cursor-not-allowed select-none';
 
   return (
-    <button
+    <motion.button
       type={type}
       onClick={onClick}
       disabled={disabled}
       title={title}
+      aria-label={title}
+      whileHover={disabled ? undefined : { y: -1 }}
+      whileTap={disabled ? undefined : { scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 420, damping: 28 }}
       className={`
         ${baseClasses}
         ${variantClasses[variant]}
@@ -83,19 +88,19 @@ export function Button({
     >
       {!disabled && (variant === 'primary' || variant === 'success' || variant === 'danger') && (
         <>
-          <div className="absolute inset-0 rounded-2xl opacity-40 group-hover:opacity-60 transition-opacity bg-[radial-gradient(circle_at_50%_-20%,rgba(255,255,255,0.5),transparent_70%)]"></div>
-          <div className="absolute inset-[1px] rounded-[15px] border-t border-white/20 pointer-events-none"></div>
+          <div className="absolute inset-0 rounded-lg opacity-30 group-hover:opacity-50 transition-opacity bg-[radial-gradient(circle_at_50%_-20%,rgba(255,255,255,0.5),transparent_70%)]"></div>
+          <div className="absolute inset-[1px] rounded-[7px] pointer-events-none shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]"></div>
         </>
       )}
 
       {!disabled && variant === 'primary' && (
-        <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
           <div className="absolute top-1 left-4 w-1 h-1 bg-white/40 rounded-full animate-ping"></div>
           <div className="absolute bottom-2 right-6 w-0.5 h-0.5 bg-white/20 rounded-full animate-pulse delay-75"></div>
         </div>
       )}
 
       <span className="relative z-10 flex items-center gap-2">{children}</span>
-    </button>
+    </motion.button>
   );
 }

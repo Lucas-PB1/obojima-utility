@@ -25,12 +25,12 @@ function SettingsContent({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="w-full">
-      <div className="flex p-1 bg-muted/30 rounded-lg mb-6 border border-border/50">
+      <div className="flex p-1 bg-muted/30 rounded-lg mb-6 shadow-[inset_0_0_0_1px_var(--hairline)]">
         <button
           onClick={() => setActiveTab('profile')}
           className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
             activeTab === 'profile'
-              ? 'bg-white shadow-sm text-totoro-blue'
+              ? 'bg-[var(--surface-raised)] shadow-[var(--shadow-soft)] text-totoro-blue'
               : 'text-totoro-gray/60 hover:text-totoro-gray'
           }`}
         >
@@ -40,7 +40,7 @@ function SettingsContent({ onClose }: { onClose: () => void }) {
           onClick={() => setActiveTab('preferences')}
           className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
             activeTab === 'preferences'
-              ? 'bg-white shadow-sm text-totoro-blue'
+              ? 'bg-[var(--surface-raised)] shadow-[var(--shadow-soft)] text-totoro-blue'
               : 'text-totoro-gray/60 hover:text-totoro-gray'
           }`}
         >

@@ -1,10 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth, adminDb } from '@/config/firebase-admin';
 import { AdminLogic } from '@/lib/admin/adminLogic';
 import { logger } from '@/utils/logger';
+import { apiAuthErrorResponse, requireAdmin } from '@/lib/server/apiAuth';
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   try {
+    await requireAdmin(req);
+
     const listUsersResult = await adminAuth.listUsers();
     const authUsers = listUsersResult.users;
 
@@ -45,6 +48,9 @@ export async function POST() {
       message: `Sync completo: ${createdCount} novos, ${updatedCount} atualizados, ${orphanedCount} órfãos. Total Auth: ${authUsers.length}.`
     });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('Error syncing users:', error);
 
     let errorMessage = error instanceof Error ? error.message : 'Unknown error';

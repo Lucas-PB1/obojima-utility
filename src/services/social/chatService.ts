@@ -1,11 +1,13 @@
 import {
   collection,
+  doc,
   addDoc,
   query,
   orderBy,
   onSnapshot,
   Timestamp,
-  Unsubscribe
+  Unsubscribe,
+  setDoc
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
@@ -53,6 +55,15 @@ export class ChatService {
     if (!userId) return;
 
     const chatId = this.getChatId(userId, friendId);
+    await setDoc(
+      doc(db, 'chats', chatId),
+      {
+        participants: [userId, friendId],
+        updatedAt: Timestamp.now()
+      },
+      { merge: true }
+    );
+
     const messagesRef = collection(db, `chats/${chatId}/messages`);
 
     await addDoc(messagesRef, {

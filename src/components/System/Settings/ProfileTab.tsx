@@ -51,8 +51,8 @@ export function ProfileTab({ onClose }: ProfileTabProps) {
   return (
     <div className="space-y-6">
       {/* Profile Header */}
-      <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-totoro-blue/10 to-transparent rounded-2xl border border-totoro-blue/20">
-        <div className="w-20 h-20 rounded-full bg-white shadow-lg overflow-hidden mb-3 border-4 border-white/50">
+      <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-totoro-blue/10 to-transparent rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.14),var(--shadow-soft)]">
+        <div className="w-20 h-20 rounded-full bg-white shadow-[0_18px_34px_-24px_rgba(var(--primary-rgb),0.75),inset_0_0_0_3px_rgba(255,255,255,0.56)] overflow-hidden mb-3">
           {(() => {
             const currentSrc = photoURL || user?.photoURL;
             let isValid = false;
@@ -83,7 +83,7 @@ export function ProfileTab({ onClose }: ProfileTabProps) {
       </div>
 
       <div className="space-y-4">
-        <div className="bg-white/5 p-4 rounded-xl border border-white/10 space-y-4">
+        <div className="bg-white/5 p-4 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)] space-y-4">
           <h4 className="text-sm font-bold text-totoro-gray uppercase tracking-wider">
             {t('settings.profile.info')}
           </h4>

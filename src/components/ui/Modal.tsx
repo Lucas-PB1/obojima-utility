@@ -1,5 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { X } from 'lucide-react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,21 +12,6 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      setIsVisible(true);
-      setTimeout(() => setIsAnimating(true), 10);
-    } else {
-      setIsAnimating(false);
-      setTimeout(() => setIsVisible(false), 300);
-    }
-  }, [isOpen]);
-
-  if (!isVisible) return null;
-
   const sizeClasses = {
     sm: 'max-w-md',
     md: 'max-w-lg',
@@ -36,44 +23,46 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div
-        className={`fixed inset-0 bg-background/60 backdrop-blur-md transition-all duration-300 ${
-          isAnimating ? 'opacity-100' : 'opacity-0'
-        }`}
-        onClick={onClose}
-      />
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <motion.div
+            className="fixed inset-0 bg-background/60 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={onClose}
+          />
 
-      <div className="flex min-h-full items-center justify-center p-4">
-        <div
-          className={`relative w-full ${sizeClasses[size]} transform transition-all duration-300 ${
-            isAnimating ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'
-          }`}
-        >
-          <div className="relative overflow-hidden rounded-2xl bg-modal-bg shadow-2xl border border-border">
-            <div className="bg-primary/10 px-6 py-4 border-b border-border/40">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-                <button
-                  onClick={onClose}
-                  className="text-totoro-blue hover:text-totoro-blue/80 transition-colors p-1 rounded-full hover:bg-totoro-blue/10"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+          <div className="flex min-h-full items-center justify-center p-4">
+            <motion.div
+              className={`relative w-full ${sizeClasses[size]}`}
+              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 360, damping: 32 }}
+            >
+              <div className="relative overflow-hidden rounded-lg bg-modal-bg shadow-[var(--shadow-raised)] border border-transparent ring-1 ring-inset ring-[color:var(--hairline-strong)]">
+                <div className="bg-primary/10 px-5 py-4 subtle-divider-bottom">
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+                    <button
+                      onClick={onClose}
+                      className="text-totoro-blue hover:text-totoro-blue/80 transition-colors p-2 rounded-lg hover:bg-totoro-blue/10 focus:outline-none focus:ring-4 focus:ring-totoro-blue/15"
+                      aria-label="Close modal"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-5 bg-modal-bg">{children}</div>
               </div>
-            </div>
-
-            <div className="p-6 bg-modal-bg">{children}</div>
+            </motion.div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 }

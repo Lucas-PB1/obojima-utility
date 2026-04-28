@@ -6,6 +6,12 @@ import {
   PotionBrewingResult
 } from '@/types/ingredients';
 import { firebaseSettingsService } from '@/services/firebaseSettingsService';
+import {
+  assertValidPotionIngredients,
+  calculatePotionScores,
+  getAvailablePotionScores,
+  resolveWinningPotionAttribute
+} from '@/features/potions/domain/potionRules';
 
 import { BaseDataService } from './baseDataService';
 import { logger } from '@/utils/logger';
@@ -58,26 +64,7 @@ class PotionService extends BaseDataService {
     scores: Array<{ attribute: 'combat' | 'utility' | 'whimsy'; value: number; label: string }>;
     canChoose: boolean;
   } {
-    if (ingredients.length !== 3) {
-      return { scores: [], canChoose: false };
-    }
-
-    const combatScore = ingredients.reduce((sum, ing) => sum + ing.combat, 0);
-    const utilityScore = ingredients.reduce((sum, ing) => sum + ing.utility, 0);
-    const whimsyScore = ingredients.reduce((sum, ing) => sum + ing.whimsy, 0);
-
-    const scores = [
-      { attribute: 'combat' as const, value: combatScore, label: 'Combate' },
-      { attribute: 'utility' as const, value: utilityScore, label: 'Utilidade' },
-      { attribute: 'whimsy' as const, value: whimsyScore, label: 'Caprichoso' }
-    ];
-
-    scores.sort((a, b) => b.value - a.value);
-
-    const canChoose = potionBrewerTalent && scores.length >= 2;
-    const topTwoScores = scores.slice(0, 2);
-
-    return { scores: topTwoScores, canChoose };
+    return getAvailablePotionScores(ingredients, potionBrewerTalent);
   }
 
   public async brewPotion(
@@ -85,52 +72,21 @@ class PotionService extends BaseDataService {
     chosenAttribute?: 'combat' | 'utility' | 'whimsy',
     language: string = 'pt'
   ): Promise<PotionBrewingResult> {
-    if (ingredients.length !== 3) {
+    const validationError = assertValidPotionIngredients(ingredients);
+    if (validationError) {
       return {
         recipe: this.createEmptyRecipe(),
         success: false,
-        message: 'Uma receita deve conter exatamente 3 ingredientes.'
+        message: validationError
       };
     }
 
-    const ingredientIds = ingredients.map((ing) => ing.id);
-    const uniqueIds = new Set(ingredientIds);
-    if (uniqueIds.size !== 3) {
-      return {
-        recipe: this.createEmptyRecipe(),
-        success: false,
-        message: 'Todos os ingredientes em uma receita devem ser únicos.'
-      };
-    }
-
-    const combatScore = ingredients.reduce((sum, ing) => sum + ing.combat, 0);
-    const utilityScore = ingredients.reduce((sum, ing) => sum + ing.utility, 0);
-    const whimsyScore = ingredients.reduce((sum, ing) => sum + ing.whimsy, 0);
-    const scores = [
-      { attribute: 'combat' as const, value: combatScore },
-      { attribute: 'utility' as const, value: utilityScore },
-      { attribute: 'whimsy' as const, value: whimsyScore }
-    ];
-
-    scores.sort((a, b) => b.value - a.value);
+    const { combatScore, utilityScore, whimsyScore } = calculatePotionScores(ingredients);
+    const winner = resolveWinningPotionAttribute(ingredients, chosenAttribute);
 
     const potionBrewerTalent = await firebaseSettingsService.getPotionBrewerTalent();
-    let winningAttribute: 'combat' | 'utility' | 'whimsy';
-    let winningScore: number;
-
-    if (chosenAttribute) {
-      const chosenScore = scores.find((s) => s.attribute === chosenAttribute);
-      if (chosenScore) {
-        winningAttribute = chosenAttribute;
-        winningScore = chosenScore.value;
-      } else {
-        winningAttribute = scores[0].attribute;
-        winningScore = scores[0].value;
-      }
-    } else {
-      winningAttribute = scores[0].attribute;
-      winningScore = scores[0].value;
-    }
+    const winningAttribute = winner.attribute;
+    const winningScore = winner.score;
 
     await this.loadPotionData(language);
 
@@ -191,7 +147,12 @@ class PotionService extends BaseDataService {
       const percentageRoll = Math.floor(Math.random() * 100) + 1;
 
       if (percentageRoll <= potionBrewerLevel) {
-        const secondPotion = this.selectPotion(scores[0].attribute, scores[0].value, language);
+        const defaultWinner = resolveWinningPotionAttribute(ingredients);
+        const secondPotion = this.selectPotion(
+          defaultWinner.attribute,
+          defaultWinner.score,
+          language
+        );
         if (secondPotion) {
           result.secondPotion = secondPotion;
           result.potionBrewerSuccess = true;
@@ -310,28 +271,7 @@ class PotionService extends BaseDataService {
     whimsyScore: number;
     winningAttribute: 'combat' | 'utility' | 'whimsy';
   } {
-    if (ingredients.length !== 3) {
-      throw new Error('Deve fornecer exatamente 3 ingredientes');
-    }
-
-    const combatScore = ingredients.reduce((sum, ing) => sum + ing.combat, 0);
-    const utilityScore = ingredients.reduce((sum, ing) => sum + ing.utility, 0);
-    const whimsyScore = ingredients.reduce((sum, ing) => sum + ing.whimsy, 0);
-
-    const scores = [
-      { attribute: 'combat' as const, value: combatScore },
-      { attribute: 'utility' as const, value: utilityScore },
-      { attribute: 'whimsy' as const, value: whimsyScore }
-    ];
-
-    scores.sort((a, b) => b.value - a.value);
-
-    return {
-      combatScore,
-      utilityScore,
-      whimsyScore,
-      winningAttribute: scores[0].attribute
-    };
+    return calculatePotionScores(ingredients);
   }
 
   public async generateCommonPotionFromRemains(

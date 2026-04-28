@@ -18,14 +18,14 @@ export function PotionFilter({ filter, setFilter, filteredCount }: PotionFilterP
         {t('potions.collection.myPotions', filteredCount)}
       </h3>
 
-      <div className="flex flex-wrap gap-2 p-1 bg-primary/5 rounded-2xl border border-border/40 backdrop-blur-sm">
+      <div className="flex flex-wrap gap-2 p-1 bg-primary/5 rounded-lg backdrop-blur-sm shadow-[inset_0_0_0_1px_var(--hairline)]">
         {POTION_FILTER_OPTIONS.map((option) => (
           <button
             key={option.value}
             onClick={() => setFilter(option.value)}
-            className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
+            className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
               filter === option.value
-                ? 'bg-totoro-blue text-white shadow-lg shadow-totoro-blue/20'
+                ? 'bg-totoro-blue text-white shadow-[0_12px_24px_-18px_rgba(var(--primary-rgb),0.8)]'
                 : 'text-foreground/50 hover:text-totoro-blue hover:bg-muted'
             }`}
           >

@@ -29,6 +29,13 @@ export class DataTableService {
     return val.includes(term);
   }
 
+  private static matchesFilter(
+    value: string | number | boolean | object | null | undefined,
+    filterValue: string
+  ): boolean {
+    return String(value ?? '').toLowerCase() === filterValue.toLowerCase();
+  }
+
   static filterData<T>(
     data: T[],
     searchTerm: string,
@@ -50,7 +57,7 @@ export class DataTableService {
       if (value) {
         filtered = filtered.filter((item) => {
           const itemValue = this.getNestedValue(item, key);
-          return this.matchesSearch(itemValue, value);
+          return this.matchesFilter(itemValue, value);
         });
       }
     });
@@ -76,8 +83,9 @@ export class DataTableService {
     currentPage: number,
     itemsPerPage: number
   ): { paginatedData: T[]; totalPages: number; startIndex: number } {
-    const totalPages = Math.ceil(data.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
+    const totalPages = Math.max(1, Math.ceil(data.length / itemsPerPage));
+    const safePage = Math.min(Math.max(currentPage, 1), totalPages);
+    const startIndex = (safePage - 1) * itemsPerPage;
     const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
 
     return { paginatedData, totalPages, startIndex };

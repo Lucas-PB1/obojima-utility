@@ -6,6 +6,7 @@ import { ForageResult } from './ForageResult';
 import { CollectedIngredient } from '@/types/ingredients';
 import { useForageSystem } from '@/hooks/useForageSystem';
 import { SettingsModal } from '@/components/System';
+import { Leaf, SlidersHorizontal, Target } from 'lucide-react';
 
 interface ForageSystemProps {
   onIngredientCollected?: (ingredient: CollectedIngredient) => void;
@@ -41,23 +42,23 @@ export function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
       <PageHeader
         title={t('forage.title')}
         subtitle={t('forage.subtitle')}
-        icon="🌿"
+        icon={<Leaf className="h-7 w-7" />}
         action={
           <div className="grid grid-cols-2 sm:flex sm:flex-row items-stretch sm:items-center gap-2 md:gap-3 w-full sm:w-auto">
             <div
-              className={`px-3 py-2 md:px-6 md:py-3 rounded-2xl flex items-center justify-center sm:justify-start gap-2 md:gap-4 transition-all duration-500 border ${
+              className={`px-3 py-2 md:px-6 md:py-3 rounded-lg flex items-center justify-center sm:justify-start gap-2 md:gap-4 transition-all duration-500 border border-transparent ${
                 remainingAttempts > 0
-                  ? 'bg-totoro-green/5 text-totoro-green border-totoro-green/20'
-                  : 'bg-totoro-orange/5 text-totoro-orange border-totoro-orange/20 animate-pulse'
+                  ? 'bg-totoro-green/5 text-totoro-green shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.16),var(--shadow-soft)]'
+                  : 'bg-totoro-orange/5 text-totoro-orange shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.18),var(--shadow-soft)] animate-pulse'
               }`}
             >
               <div className="flex items-center gap-2 md:gap-4">
                 <div
-                  className={`w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center shadow-inner shrink-0 ${
+                  className={`w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center shadow-inner shrink-0 ${
                     remainingAttempts > 0 ? 'bg-totoro-green/10' : 'bg-totoro-orange/10'
                   }`}
                 >
-                  <span className="text-lg md:text-xl">🎯</span>
+                  <Target className="h-5 w-5" />
                 </div>
                 <div className="flex flex-col items-start">
                   <div className="text-xl md:text-2xl font-black leading-none mb-0.5">
@@ -74,12 +75,10 @@ export function ForageSystem({ onIngredientCollected }: ForageSystemProps) {
               onClick={openSettings}
               variant="secondary"
               size="md"
-              className="!rounded-2xl !px-3 md:!px-5 w-full sm:w-auto hover:bg-white/50 h-full min-h-[50px] sm:min-h-0"
+              className="!rounded-lg !px-3 md:!px-5 w-full sm:w-auto h-full min-h-[50px] sm:min-h-0"
             >
               <div className="flex items-center justify-center gap-1.5">
-                <span className="text-lg group-hover:rotate-90 transition-transform duration-500 shrink-0">
-                  ⚙️
-                </span>
+                <SlidersHorizontal className="h-4 w-4 shrink-0" />
                 <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest leading-none">
                   {t('forage.settings.button')}
                 </span>

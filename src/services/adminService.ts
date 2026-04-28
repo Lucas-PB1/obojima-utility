@@ -1,8 +1,16 @@
 import { collection, getCountFromServer, getDocs } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { UserProfile } from '@/types/auth';
+import { authService } from '@/services/authService';
 
 class AdminService {
+  private async getJsonHeaders(): Promise<HeadersInit> {
+    return {
+      'Content-Type': 'application/json',
+      ...(await authService.getAuthorizationHeaders())
+    };
+  }
+
   async getUserCount(): Promise<number> {
     const coll = collection(db, 'users');
     const snapshot = await getCountFromServer(coll);
@@ -16,7 +24,10 @@ class AdminService {
   }
 
   async syncUsers() {
-    const res = await fetch('/api/admin/sync-users', { method: 'POST' });
+    const res = await fetch('/api/admin/sync-users', {
+      method: 'POST',
+      headers: await authService.getAuthorizationHeaders()
+    });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'Erro ao sincronizar');
     return data;
@@ -25,6 +36,7 @@ class AdminService {
   async updateUser(uid: string, updates: Partial<UserProfile>) {
     const res = await fetch(`/api/admin/users/${uid}`, {
       method: 'PATCH',
+      headers: await this.getJsonHeaders(),
       body: JSON.stringify(updates)
     });
     const data = await res.json();
@@ -33,9 +45,22 @@ class AdminService {
   }
 
   async deleteUser(uid: string) {
-    const res = await fetch(`/api/admin/users/${uid}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/users/${uid}`, {
+      method: 'DELETE',
+      headers: await authService.getAuthorizationHeaders()
+    });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'Erro ao excluir usuário');
+    return data;
+  }
+
+  async backfillChatParticipants() {
+    const res = await fetch('/api/admin/backfill-chat-participants', {
+      method: 'POST',
+      headers: await authService.getAuthorizationHeaders()
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Erro ao atualizar chats');
     return data;
   }
 }

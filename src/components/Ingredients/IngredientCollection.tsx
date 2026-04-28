@@ -151,7 +151,7 @@ export function IngredientCollection() {
         className="flex items-center justify-between p-5 hover:bg-totoro-blue/5 transition-colors active:bg-totoro-blue/10 cursor-pointer group"
       >
         <div className="flex items-center gap-5">
-          <div className="w-14 h-14 rounded-[18px] bg-white flex items-center justify-center text-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-totoro-blue/5 group-hover:scale-105 transition-transform duration-300">
+          <div className="w-14 h-14 rounded-lg bg-[var(--surface-raised)] flex items-center justify-center text-2xl shadow-[inset_0_0_0_1px_var(--hairline),var(--shadow-soft)] group-hover:scale-105 transition-transform duration-300">
             🌿
           </div>
           <div className="flex flex-col gap-1">

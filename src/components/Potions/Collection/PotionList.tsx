@@ -17,7 +17,7 @@ export function PotionList({ potions, filter, onPotionClick, onUsePotion }: Poti
 
   if (potions.length === 0) {
     return (
-      <div className="glass-panel text-foreground/50 text-center py-12 rounded-3xl border border-dashed border-border/40">
+      <div className="glass-panel text-foreground/50 text-center py-12 rounded-lg border-transparent shadow-[inset_0_0_0_1px_var(--hairline),var(--shadow-soft)]">
         <div className="text-4xl mb-3">🧪</div>
         <p className="text-sm font-medium">
           {filter === 'all'

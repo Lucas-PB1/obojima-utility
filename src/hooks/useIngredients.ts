@@ -4,17 +4,25 @@ import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect, useCallback } from 'react';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
 import { firebaseStorageService } from '@/services/firebaseStorageService';
+import { e2eAttempts, e2eIngredients, isE2EMode } from '@/lib/e2e/mockData';
 
 export function useIngredients() {
   const { isAuthenticated, loading: authLoading } = useAuth();
-  const [ingredients, setIngredients] = useState<CollectedIngredient[]>([]);
-  const [attempts, setAttempts] = useState<ForageAttempt[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [ingredients, setIngredients] = useState<CollectedIngredient[]>(
+    isE2EMode() ? e2eIngredients : []
+  );
+  const [attempts, setAttempts] = useState<ForageAttempt[]>(isE2EMode() ? e2eAttempts : []);
+  const [loading, setLoading] = useState(!isE2EMode());
 
   const refreshData = useCallback(async () => {
     if (!isAuthenticated) {
       setIngredients([]);
       setAttempts([]);
+      setLoading(false);
+      return;
+    }
+
+    if (isE2EMode()) {
       setLoading(false);
       return;
     }
@@ -34,6 +42,11 @@ export function useIngredients() {
 
   useEffect(() => {
     if (authLoading) return;
+
+    if (isE2EMode()) {
+      setLoading(false);
+      return;
+    }
 
     if (!isAuthenticated) {
       setIngredients([]);
@@ -62,6 +75,21 @@ export function useIngredients() {
   const markAsUsed = useCallback(
     async (id: string) => {
       if (!isAuthenticated) return;
+      if (isE2EMode()) {
+        setIngredients((prev) =>
+          prev.map((ingredient) =>
+            ingredient.id === id
+              ? {
+                  ...ingredient,
+                  quantity: Math.max(0, ingredient.quantity - 1),
+                  used: ingredient.quantity <= 1,
+                  usedAt: ingredient.quantity <= 1 ? new Date() : ingredient.usedAt
+                }
+              : ingredient
+          )
+        );
+        return;
+      }
       try {
         await firebaseStorageService.markIngredientAsUsed(id);
       } catch (error) {
@@ -74,6 +102,10 @@ export function useIngredients() {
   const removeIngredient = useCallback(
     async (id: string) => {
       if (!isAuthenticated) return;
+      if (isE2EMode()) {
+        setIngredients((prev) => prev.filter((ingredient) => ingredient.id !== id));
+        return;
+      }
       try {
         await firebaseStorageService.removeCollectedIngredient(id);
       } catch (error) {
@@ -86,6 +118,10 @@ export function useIngredients() {
   const addIngredient = useCallback(
     async (ingredient: CollectedIngredient) => {
       if (!isAuthenticated) return;
+      if (isE2EMode()) {
+        setIngredients((prev) => [ingredient, ...prev]);
+        return;
+      }
       try {
         await firebaseStorageService.addCollectedIngredient(ingredient);
       } catch (error) {
@@ -98,6 +134,10 @@ export function useIngredients() {
   const addAttempt = useCallback(
     async (attempt: ForageAttempt) => {
       if (!isAuthenticated) return;
+      if (isE2EMode()) {
+        setAttempts((prev) => [attempt, ...prev]);
+        return;
+      }
       try {
         await firebaseStorageService.addForageAttempt(attempt);
       } catch (error) {

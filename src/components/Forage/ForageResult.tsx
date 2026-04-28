@@ -3,6 +3,8 @@ import React from 'react';
 import { ForageAttempt } from '@/types/ingredients';
 import { ContentCard } from '@/components/ui';
 import { useForageResult } from '@/hooks/useForageResult';
+import { Gift, Moon, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface ForageResultProps {
   result: ForageAttempt | null;
@@ -30,8 +32,11 @@ export function ForageResult({ result }: ForageResultProps) {
   const englishName = result.ingredient ? getEnglishName(result.ingredient.id, rarityKey) : '';
 
   return (
-    <ContentCard className="!p-0 border-none overflow-hidden shadow-2xl">
-      <div
+    <ContentCard className="!p-0 !border-transparent overflow-hidden shadow-[var(--shadow-raised)]">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 28 }}
         className={`relative min-h-[400px] flex flex-col justify-center transition-all duration-700 ${
           result.success
             ? 'bg-gradient-to-br from-[#10B981] via-[#3B82F6] to-[#F59E0B]'
@@ -41,20 +46,28 @@ export function ForageResult({ result }: ForageResultProps) {
         <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]"></div>
 
         {particles.map((particle) => (
-          <div key={particle.id} className="magic-particle bg-white" style={particle.style} />
+          <motion.div
+            key={particle.id}
+            className="absolute rounded-full bg-white blur-[1px]"
+            style={particle.style}
+            animate={{ y: [0, -18, 0], x: [0, 8, 0], opacity: [0.2, 0.8, 0.2] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          />
         ))}
 
         <div className="relative z-10 p-8 text-white">
           <div className="text-center mb-10">
-            <div
-              className={`text-7xl mb-4 animate-bounce ${
+            <motion.div
+              className={`mb-4 flex justify-center ${
                 result.success
                   ? 'drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]'
                   : 'grayscale opacity-50'
               }`}
+              animate={{ scale: result.success ? [1, 1.05, 1] : 1 }}
+              transition={{ duration: 1.8, repeat: result.success ? Infinity : 0 }}
             >
-              {result.success ? '✨' : '🌙'}
-            </div>
+              {result.success ? <Sparkles size={64} /> : <Moon size={64} />}
+            </motion.div>
             <h3 className="text-4xl font-black uppercase tracking-tighter mb-2 italic">
               {result.success ? t('forage.result.success.title') : t('forage.result.failure.title')}
             </h3>
@@ -64,7 +77,7 @@ export function ForageResult({ result }: ForageResultProps) {
           </div>
 
           <div className="flex flex-col items-center gap-6">
-            <div className="flex items-center justify-center gap-8 bg-black/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 w-full max-w-sm shadow-2xl">
+            <div className="flex items-center justify-center gap-8 bg-black/20 backdrop-blur-md rounded-lg p-6 w-full max-w-sm shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12),0_22px_44px_-28px_rgba(0,0,0,0.75)]">
               <div className="text-center">
                 <p className="text-[10px] font-black uppercase opacity-60 mb-1">
                   {t('forage.result.roll')}
@@ -85,26 +98,26 @@ export function ForageResult({ result }: ForageResultProps) {
             </div>
 
             <div className="flex flex-wrap justify-center gap-3">
-              <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black border border-white/10 tracking-widest">
+              <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] tracking-widest">
                 DC {result.dcRange} • {t(`constants.rarity.${rarityKey}`)}
               </span>
-              <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
+              <span className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] tracking-widest">
                 {t('forage.result.region', regionDisplayName)}
               </span>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {result.success && result.ingredient && (
         <div className="p-8 bg-background">
           <div className="text-center mb-6">
-            <div className="text-3xl mb-2">🎁</div>
+            <Gift className="mx-auto mb-2 h-8 w-8 text-totoro-orange" />
             <h4 className="font-black text-foreground text-xl uppercase tracking-tight">
               {t('forage.result.ingredient.title')}
             </h4>
             {showDoubleForage && (
-              <div className="mt-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl px-4 py-3">
+              <div className="mt-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg px-4 py-3 shadow-[inset_0_0_0_1px_rgba(168,85,247,0.16)]">
                 <div className="text-purple-500 text-sm font-black flex items-center justify-center gap-2">
                   <span>✨</span>
                   {t('forage.result.double.title')}
@@ -117,7 +130,7 @@ export function ForageResult({ result }: ForageResultProps) {
             )}
           </div>
 
-          <div className="bg-totoro-blue/5 rounded-2xl p-6 mb-6 border border-totoro-blue/10 relative overflow-hidden">
+          <div className="bg-totoro-blue/5 rounded-lg p-6 mb-6 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.12),var(--shadow-soft)] relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 text-4xl opacity-10 font-black italic">
               {t(`constants.rarity.${rarityKey}`)}
             </div>
@@ -135,7 +148,7 @@ export function ForageResult({ result }: ForageResultProps) {
           </div>
 
           <div className="grid grid-cols-3 gap-4">
-            <div className="bg-totoro-orange/10 border border-totoro-orange/20 rounded-2xl p-4 text-center">
+            <div className="bg-totoro-orange/10 rounded-lg p-4 text-center shadow-[inset_0_0_0_1px_rgba(var(--danger-rgb),0.16)]">
               <div className="text-totoro-orange text-[10px] font-black uppercase mb-1 tracking-widest">
                 {t('forage.result.stats.combat')}
               </div>
@@ -143,7 +156,7 @@ export function ForageResult({ result }: ForageResultProps) {
                 {result.ingredient.combat}
               </div>
             </div>
-            <div className="bg-totoro-blue/10 border border-totoro-blue/20 rounded-2xl p-4 text-center">
+            <div className="bg-totoro-blue/10 rounded-lg p-4 text-center shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.16)]">
               <div className="text-totoro-blue text-[10px] font-black uppercase mb-1 tracking-widest">
                 {t('forage.result.stats.utility')}
               </div>
@@ -151,7 +164,7 @@ export function ForageResult({ result }: ForageResultProps) {
                 {result.ingredient.utility}
               </div>
             </div>
-            <div className="bg-totoro-yellow/10 border border-totoro-yellow/20 rounded-2xl p-4 text-center">
+            <div className="bg-totoro-yellow/10 rounded-lg p-4 text-center shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.16)]">
               <div className="text-totoro-yellow text-[10px] font-black uppercase mb-1 tracking-widest">
                 {t('forage.result.stats.whimsy')}
               </div>

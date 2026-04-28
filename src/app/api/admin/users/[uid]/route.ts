@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth, adminDb } from '@/config/firebase-admin';
 import { logger } from '@/utils/logger';
 import { UserProfile } from '@/types/auth';
+import { apiAuthErrorResponse, requireAdmin } from '@/lib/server/apiAuth';
 
 interface UserUpdateBody {
   displayName?: string;
@@ -11,6 +12,8 @@ interface UserUpdateBody {
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
   try {
+    await requireAdmin(req);
+
     const { uid } = await params;
     const body = await req.json();
     const { displayName, disabled, role } = body as UserUpdateBody;
@@ -35,12 +38,20 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
       ...updates,
       updatedAt: new Date().toISOString()
     };
-    if (role !== undefined) firestoreUpdates.role = role as 'admin' | 'user';
+    if (role !== undefined) {
+      if (role !== 'admin' && role !== 'user') {
+        return NextResponse.json({ success: false, error: 'Invalid role' }, { status: 400 });
+      }
+      firestoreUpdates.role = role;
+    }
 
     await adminDb.collection('users').doc(uid).update(firestoreUpdates);
 
     return NextResponse.json({ success: true, message: 'Usuário atualizado com sucesso' });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('Error updating user:', error);
     const errorMessage = error instanceof Error ? error.message : 'Falha ao atualizar usuário';
     return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
@@ -49,6 +60,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
   try {
+    await requireAdmin(req);
+
     const { uid } = await params;
 
     try {
@@ -61,6 +74,9 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ u
 
     return NextResponse.json({ success: true, message: 'Usuário excluído com sucesso' });
   } catch (error) {
+    const authResponse = apiAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+
     logger.error('Error deleting user:', error);
     const errorMessage = error instanceof Error ? error.message : 'Falha ao excluir usuário';
     return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });

@@ -1,6 +1,7 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { createElement, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { CollectedIngredient } from '@/types/ingredients';
+import { APP_SHELL_TAB_ICONS } from '@/features/app-shell/types';
 
 export type TabType =
   | 'forage'
@@ -14,17 +15,17 @@ export type TabType =
 export interface Tab {
   id: TabType;
   label: string;
-  icon: string;
+  icon: ReactNode;
 }
 
-const TABS_CONFIG: Omit<Tab, 'label'>[] = [
-  { id: 'forage', icon: '🌿' },
-  { id: 'collection', icon: '🎒' },
-  { id: 'potions', icon: '🧪' },
-  { id: 'created-potions', icon: '⚗️' },
-  { id: 'recipes', icon: '📜' },
-  { id: 'social', icon: '👥' },
-  { id: 'log', icon: '📋' }
+const TABS_CONFIG: Pick<Tab, 'id'>[] = [
+  { id: 'forage' },
+  { id: 'collection' },
+  { id: 'potions' },
+  { id: 'created-potions' },
+  { id: 'recipes' },
+  { id: 'social' },
+  { id: 'log' }
 ];
 
 const MAX_RECENT_ITEMS = 5;
@@ -78,7 +79,8 @@ export function useApp() {
         label = t('menu.social');
         break;
     }
-    return { ...tab, label };
+    const Icon = APP_SHELL_TAB_ICONS[tab.id];
+    return { ...tab, label, icon: createElement(Icon, { size: 18, strokeWidth: 2.4 }) };
   });
 
   return {

@@ -5,7 +5,7 @@ import { Input, Button, Select, ThemeSwitch } from '@/components/ui';
 import { DICE_OPTIONS, LANGUAGE_OPTIONS, Language } from '@/constants/settings';
 import { TEST_TYPE_OPTIONS } from '@/constants/forage';
 import { ingredientsService } from '@/services/ingredientsService';
-import { Globe, Dices, Sparkles } from 'lucide-react';
+import { Dices, Globe, Leaf, Sparkles, Target } from 'lucide-react';
 
 interface PreferencesTabProps {
   onClose: () => void;
@@ -17,7 +17,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+      <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)]">
         <div>
           <h3 className="text-sm font-semibold text-foreground">
             {t('settings.appearance.title')}
@@ -43,7 +43,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
 
       <div>
         <h4 className="font-semibold text-foreground mb-3 flex items-center">
-          <span className="mr-2">�</span>
+          <Leaf className="mr-2 h-4 w-4" />
           {t('forage.title')}
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -77,7 +77,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
 
       <div>
         <h4 className="font-semibold text-foreground mb-3 flex items-center">
-          <span className="mr-2">�🎯</span>
+          <Target className="mr-2 h-4 w-4" />
           {t('settings.modifier.title')}
         </h4>
         <Input
@@ -126,7 +126,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
         </h4>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-muted/30 border border-border rounded-lg">
+          <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)]">
             <div className="flex-1">
               <h5 className="font-medium text-foreground mb-1">
                 {t('settings.talents.doubleForage.title')}
@@ -146,7 +146,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
             </label>
           </div>
 
-          <div className="flex items-center justify-between p-4 bg-muted/30 border border-border rounded-lg">
+          <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)]">
             <div className="flex-1">
               <h5 className="font-medium text-foreground mb-1">
                 {t('settings.talents.cauldron.title')}
@@ -164,7 +164,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
             </label>
           </div>
 
-          <div className="p-4 bg-muted/30 border border-border rounded-lg">
+          <div className="p-4 bg-muted/30 rounded-lg shadow-[inset_0_0_0_1px_var(--hairline)]">
             <div className="flex items-center justify-between mb-3">
               <div className="flex-1">
                 <h5 className="font-medium text-foreground mb-1">
@@ -205,7 +205,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
         </div>
       </div>
 
-      <div className="bg-totoro-blue/10 border border-totoro-blue/20 rounded-lg p-4">
+      <div className="bg-totoro-blue/10 rounded-lg p-4 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.16)]">
         <h5 className="font-medium text-totoro-blue mb-2">{t('settings.howItWorks.title')}</h5>
         <ul className="text-sm text-totoro-blue space-y-1">
           <li>{t('settings.howItWorks.item1')}</li>
@@ -214,7 +214,7 @@ export function PreferencesTab({ onClose }: PreferencesTabProps) {
         </ul>
       </div>
 
-      <div className="flex justify-between pt-4 border-t border-border">
+      <div className="flex justify-between pt-4 subtle-divider-top">
         <button
           onClick={clearSettings}
           className="flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"

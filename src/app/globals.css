@@ -13,11 +13,21 @@
 
   --background: #b8d6d6;
   --foreground: #2c3e50;
+  --surface: #f8fbfa;
+  --surface-raised: rgba(255, 255, 255, 0.86);
+  --surface-muted: rgba(255, 255, 255, 0.48);
+  --surface-hover: rgba(255, 255, 255, 0.72);
+  --text-muted: rgba(44, 62, 80, 0.62);
   --primary: #4a90e2;
   --secondary: #7ed321;
   --accent: #f5a623;
   --muted: #e2e8f0;
   --border: #cbd5e1;
+  --hairline: rgba(44, 62, 80, 0.11);
+  --hairline-strong: rgba(44, 62, 80, 0.17);
+  --inner-highlight: rgba(255, 255, 255, 0.58);
+  --shadow-soft: 0 14px 34px -24px rgba(44, 62, 80, 0.35);
+  --shadow-raised: 0 22px 48px -32px rgba(44, 62, 80, 0.42), inset 0 1px 0 var(--inner-highlight);
 
   --success: #7ed321;
   --warning: #f5a623;
@@ -25,10 +35,10 @@
   --info: #4a90e2;
 
   --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: rgba(74, 144, 226, 0.1);
+  --glass-border: rgba(44, 62, 80, 0.1);
+  --glass-shadow: rgba(44, 62, 80, 0.14);
   --glass-card-bg: rgba(255, 255, 255, 0.1);
-  --glass-card-border: rgba(255, 255, 255, 0.2);
+  --glass-card-border: rgba(44, 62, 80, 0.09);
 
   --input-bg: #ffffff;
   --input-border: #cbd5e1;
@@ -37,25 +47,46 @@
 }
 
 .dark {
-  --background: #0f1115;
-  --foreground: #f8fafc;
-  --primary: #60a5fa;
-  --secondary: #a3e635;
-  --accent: #fbbf24;
-  --muted: #1e293b;
-  --border: #334155;
-  --totoro-gray: #94a3b8; /* Light gray for dark mode */
+  color-scheme: dark;
 
-  --glass-bg: rgba(15, 17, 21, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: rgba(0, 0, 0, 0.6);
-  --glass-card-bg: rgba(255, 255, 255, 0.03);
-  --glass-card-border: rgba(255, 255, 255, 0.08);
+  --background: #0b1513;
+  --foreground: #eef7f2;
+  --surface: #101d1a;
+  --surface-raised: rgba(18, 32, 29, 0.88);
+  --surface-muted: rgba(29, 48, 43, 0.62);
+  --surface-hover: rgba(38, 63, 57, 0.72);
+  --text-muted: rgba(210, 229, 221, 0.62);
+  --primary: #83c5ff;
+  --secondary: #a8e86f;
+  --accent: #ffd166;
+  --muted: #172622;
+  --border: #2e4740;
+  --hairline: rgba(183, 228, 215, 0.1);
+  --hairline-strong: rgba(183, 228, 215, 0.17);
+  --inner-highlight: rgba(255, 255, 255, 0.055);
+  --shadow-soft: 0 18px 42px -28px rgba(0, 0, 0, 0.74);
+  --shadow-raised: 0 24px 58px -34px rgba(0, 0, 0, 0.82), inset 0 1px 0 var(--inner-highlight);
+  --totoro-blue: #83c5ff;
+  --totoro-green: #a8e86f;
+  --totoro-yellow: #ffd166;
+  --totoro-gray: #d8e8e2;
+  --totoro-orange: #ff9c66;
 
-  --input-bg: #1e293b;
-  --input-border: #334155;
+  --glass-bg: rgba(16, 29, 26, 0.82);
+  --glass-border: rgba(183, 228, 215, 0.14);
+  --glass-shadow: rgba(0, 0, 0, 0.55);
+  --glass-card-bg: rgba(22, 38, 34, 0.7);
+  --glass-card-border: rgba(183, 228, 215, 0.12);
 
-  --modal-bg: #000000;
+  --input-bg: #12201d;
+  --input-border: #345249;
+
+  --modal-bg: #0f1a17;
+  --primary-rgb: 131, 197, 255;
+  --secondary-rgb: 168, 232, 111;
+  --success-rgb: 168, 232, 111;
+  --danger-rgb: 255, 156, 102;
+  --whimsy-rgb: 255, 209, 102;
 }
 
 :root {
@@ -189,17 +220,99 @@ body {
 
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 10px 40px -10px var(--glass-shadow);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid transparent;
+  box-shadow:
+    inset 0 0 0 1px var(--glass-border),
+    var(--shadow-raised);
 }
 
 .glass-card {
   background: var(--glass-card-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-card-border);
+  border: 1px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--glass-card-border);
+}
+
+.dark .glass-panel {
+  box-shadow:
+    inset 0 0 0 1px var(--glass-border),
+    var(--shadow-raised);
+}
+
+.dark .glass-card {
+  box-shadow: inset 0 0 0 1px var(--glass-card-border);
+}
+
+.surface-hairline {
+  border: 1px solid transparent;
+  box-shadow:
+    inset 0 0 0 1px var(--hairline),
+    var(--shadow-soft);
+}
+
+.surface-raised {
+  background: var(--surface-raised);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-raised);
+}
+
+.subtle-divider-bottom {
+  box-shadow: inset 0 -1px 0 var(--hairline);
+}
+
+.subtle-divider-top {
+  box-shadow: inset 0 1px 0 var(--hairline);
+}
+
+.dark .bg-white,
+.dark .bg-white\/90,
+.dark .bg-white\/80,
+.dark .bg-white\/50,
+.dark .bg-white\/40,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark .bg-gray-300 {
+  background-color: var(--surface-raised) !important;
+}
+
+.dark .bg-white\/20,
+.dark .bg-white\/10,
+.dark .bg-white\/5 {
+  background-color: rgba(183, 228, 215, 0.08) !important;
+}
+
+.dark .hover\:bg-white:hover,
+.dark .hover\:bg-white\/50:hover,
+.dark .hover\:bg-white\/40:hover,
+.dark .hover\:bg-white\/20:hover,
+.dark .hover\:bg-white\/10:hover,
+.dark .hover\:bg-white\/5:hover {
+  background-color: var(--surface-hover) !important;
+}
+
+.dark .border-white,
+.dark .border-white\/60,
+.dark .border-white\/50,
+.dark .border-white\/40,
+.dark .border-white\/30,
+.dark .border-white\/20,
+.dark .border-white\/10,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: var(--glass-border) !important;
+}
+
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-gray-400 {
+  color: var(--text-muted) !important;
 }
 
 .btn-shimmer {
@@ -286,4 +399,17 @@ body {
     radial-gradient(at 100% 0%, rgba(126, 211, 33, 0.02) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(245, 166, 35, 0.02) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(230, 126, 34, 0.02) 0px, transparent 50%);
+}
+
+.dark .bg-topo {
+  background-image: radial-gradient(rgba(183, 228, 215, 0.12) 0.6px, transparent 0.6px);
+}
+
+.dark .bg-mesh {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(at 8% 0%, rgba(131, 197, 255, 0.14) 0px, transparent 42%),
+    radial-gradient(at 100% 12%, rgba(168, 232, 111, 0.1) 0px, transparent 36%),
+    radial-gradient(at 92% 92%, rgba(255, 209, 102, 0.08) 0px, transparent 38%),
+    radial-gradient(at 0% 100%, rgba(255, 156, 102, 0.08) 0px, transparent 34%);
 }

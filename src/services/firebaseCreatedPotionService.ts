@@ -53,6 +53,13 @@ class FirebaseCreatedPotionService {
     return new Date();
   }
 
+  private async getJsonHeaders(): Promise<HeadersInit> {
+    return {
+      'Content-Type': 'application/json',
+      ...(await authService.getAuthorizationHeaders())
+    };
+  }
+
   async addCreatedPotion(
     recipe: PotionRecipe,
     uid?: string,
@@ -66,7 +73,7 @@ class FirebaseCreatedPotionService {
     try {
       const response = await fetch('/api/potions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await this.getJsonHeaders(),
         body: JSON.stringify({ uid: userId, recipe, quantity })
       });
 
@@ -115,7 +122,9 @@ class FirebaseCreatedPotionService {
     if (!this.isClient() || !userId) return [];
 
     try {
-      const response = await fetch(`/api/potions?uid=${userId}`);
+      const response = await fetch(`/api/potions?uid=${userId}`, {
+        headers: await authService.getAuthorizationHeaders()
+      });
       if (!response.ok) return [];
 
       const result = await response.json();
@@ -179,7 +188,7 @@ class FirebaseCreatedPotionService {
     try {
       const response = await fetch(`/api/potions/${potionId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await this.getJsonHeaders(),
         body: JSON.stringify({ uid: userId, action: 'use' })
       });
 
@@ -198,7 +207,7 @@ class FirebaseCreatedPotionService {
     try {
       const response = await fetch(`/api/potions/${potionId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await this.getJsonHeaders(),
         body: JSON.stringify({ uid: userId, action: 'update_quantity', change })
       });
 
@@ -215,7 +224,8 @@ class FirebaseCreatedPotionService {
 
     try {
       const response = await fetch(`/api/potions/${potionId}?uid=${userId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: await authService.getAuthorizationHeaders()
       });
 
       if (!response.ok) throw new Error('Failed to delete potion');
@@ -230,7 +240,9 @@ class FirebaseCreatedPotionService {
     if (!this.isClient() || !userId) return null;
 
     try {
-      const response = await fetch(`/api/potions/${potionId}?uid=${userId}`);
+      const response = await fetch(`/api/potions/${potionId}?uid=${userId}`, {
+        headers: await authService.getAuthorizationHeaders()
+      });
       if (!response.ok) return null;
 
       const result = await response.json();
