@@ -4,7 +4,7 @@ export interface SortConfig<T> {
 }
 
 export class DataTableService {
-  private static getNestedValue<T>(
+  static getNestedValue<T>(
     item: T,
     key: string
   ): string | number | boolean | object | null | undefined {
@@ -65,12 +65,25 @@ export class DataTableService {
     return filtered;
   }
 
+  private static normalizeSortableValue(value: unknown): string | number {
+    if (value instanceof Date) return value.getTime();
+    if (typeof value === 'string') {
+      const timestamp = Date.parse(value);
+      return Number.isNaN(timestamp) ? value.toLowerCase() : timestamp;
+    }
+    if (typeof value === 'number') return value;
+    if (typeof value === 'boolean') return value ? 1 : 0;
+    if (value == null) return '';
+    return String(value).toLowerCase();
+  }
+
   static sortData<T>(data: T[], sortConfig: SortConfig<T> | null): T[] {
     if (!sortConfig) return data;
 
     return [...data].sort((a, b) => {
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
+      const key = String(sortConfig.key);
+      const aValue = this.normalizeSortableValue(this.getNestedValue(a, key));
+      const bValue = this.normalizeSortableValue(this.getNestedValue(b, key));
 
       if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
       if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;

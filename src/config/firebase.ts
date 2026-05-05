@@ -13,13 +13,22 @@ export const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
+export const isFirebaseConfigured = Boolean(
+  firebaseConfig.apiKey &&
+  firebaseConfig.authDomain &&
+  firebaseConfig.projectId &&
+  firebaseConfig.storageBucket &&
+  firebaseConfig.messagingSenderId &&
+  firebaseConfig.appId
+);
+
 let app: FirebaseApp | null = null;
 let auth: Auth;
 let db: Firestore;
 let storage: FirebaseStorage;
 let messagingPromise: Promise<Messaging | null> | null = null;
 
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && isFirebaseConfigured) {
   if (getApps().length === 0) {
     app = initializeApp(firebaseConfig);
   } else {

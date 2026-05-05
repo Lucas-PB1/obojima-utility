@@ -25,4 +25,19 @@ describe('DataTableService', () => {
     });
     expect(DataTableService.paginateData([], 1, 10).totalPages).toBe(1);
   });
+
+  it('sorts nested values and date strings', () => {
+    const datedRows = [
+      { profile: { name: 'Beta' }, createdAt: '2024-01-01T00:00:00.000Z' },
+      { profile: { name: 'Alpha' }, createdAt: '2025-01-01T00:00:00.000Z' }
+    ];
+
+    expect(
+      DataTableService.sortData(datedRows, { key: 'profile.name' as never, direction: 'asc' })[0]
+        .profile.name
+    ).toBe('Alpha');
+    expect(
+      DataTableService.sortData(datedRows, { key: 'createdAt', direction: 'desc' })[0].createdAt
+    ).toBe('2025-01-01T00:00:00.000Z');
+  });
 });

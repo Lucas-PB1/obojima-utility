@@ -195,6 +195,9 @@ export interface PotionBrewingResult {
   recipe: PotionRecipe;
   success: boolean;
   message: string;
+  goldSpent?: number;
+  goldBalanceAfter?: number;
+  goldWarnings?: string[];
   cauldronBonus?: boolean;
   remainsPotion?: Potion;
   potionBrewerSuccess?: boolean;

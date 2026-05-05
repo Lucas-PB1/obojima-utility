@@ -1,7 +1,16 @@
 'use client';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { Dices, Globe, Leaf, MapPinned, SlidersHorizontal, Sparkles, Target } from 'lucide-react';
+import {
+  Coins,
+  Dices,
+  Globe,
+  Leaf,
+  MapPinned,
+  SlidersHorizontal,
+  Sparkles,
+  Target
+} from 'lucide-react';
 import { ingredientsService } from '@/services/ingredientsService';
 import { useProtectedApp } from '@/hooks/useProtectedApp';
 import { useSettings } from '@/hooks/useSettings';
@@ -179,6 +188,23 @@ export function PlayerSettingsPage() {
         <div className="space-y-6">
           <ContentCard title={t('settings.player.defaults.title')}>
             <div className="space-y-8">
+              <section className="space-y-4">
+                <SettingsSectionHeader
+                  icon={<Coins className="h-4 w-4" />}
+                  title="Bolsa de gold"
+                  description="Cadastre o gold disponível para pagar a criação de poções."
+                />
+
+                <Input
+                  type="number"
+                  value={settings.gold}
+                  onChange={(value) => updateSetting('gold', Math.max(0, Number(value) || 0))}
+                  onBlur={() => void flushPendingSave()}
+                  min={0}
+                  label="Gold atual"
+                />
+              </section>
+
               <section className="space-y-4">
                 <SettingsSectionHeader
                   icon={<MapPinned className="h-4 w-4" />}

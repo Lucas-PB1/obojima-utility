@@ -30,6 +30,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
     showResultModal,
     previewScores,
     availableScores,
+    currentGold,
+    estimatedGoldCost,
+    hasEnoughGold,
     chosenAttribute,
     showScoreChoice,
     handleIngredientSelect,
@@ -56,6 +59,9 @@ export const PotionBrewing: React.FC<PotionBrewingProps> = ({
           isBrewing={isBrewing}
           previewScores={previewScores}
           availableScores={availableScores}
+          currentGold={currentGold}
+          estimatedGoldCost={estimatedGoldCost}
+          hasEnoughGold={hasEnoughGold}
           chosenAttribute={chosenAttribute}
         />
       </ContentCard>

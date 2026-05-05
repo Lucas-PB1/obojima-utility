@@ -29,7 +29,6 @@ export function useSocialHub() {
 
   useEffect(() => {
     if (!user) return;
-    if (isE2EMode()) return;
 
     let disposed = false;
     socialService.getPushStatus().then((status) => {

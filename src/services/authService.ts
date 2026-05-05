@@ -1,4 +1,4 @@
-import { auth } from '@/config/firebase';
+import { auth, isFirebaseConfigured } from '@/config/firebase';
 import { db } from '@/config/firebase';
 import { logger } from '@/utils/logger';
 
@@ -21,6 +21,7 @@ import {
 import { doc, setDoc } from 'firebase/firestore';
 
 import { socialService } from '@/services/socialService';
+import { getDevState, isDevMode } from '@/features/dev-mode';
 
 class AuthService {
   private createGoogleProvider(): GoogleAuthProvider {
@@ -149,12 +150,30 @@ class AuthService {
   }
 
   getCurrentUser(): User | null {
+    if (isDevMode()) {
+      const state = getDevState();
+      const user = state.users.find((item) => item.uid === state.activeUserId) || state.users[0];
+      return {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        providerData: [],
+        getIdToken: async () => 'dev-token'
+      } as unknown as User;
+    }
+    if (!isFirebaseConfigured) return null;
     if (typeof window === 'undefined') return null;
     return auth.currentUser;
   }
 
   onAuthStateChange(callback: (user: User | null) => void): () => void {
-    if (typeof window === 'undefined') {
+    if (isDevMode()) {
+      callback(this.getCurrentUser());
+      return () => {};
+    }
+
+    if (typeof window === 'undefined' || !isFirebaseConfigured) {
       callback(null);
       return () => {};
     }
@@ -172,6 +191,8 @@ class AuthService {
   }
 
   async getIdToken(): Promise<string> {
+    if (isDevMode()) return 'dev-token';
+    if (!isFirebaseConfigured) throw new Error('Firebase não configurado');
     const user = this.getCurrentUser();
     if (!user) throw new Error('Usuário não autenticado');
     return user.getIdToken();

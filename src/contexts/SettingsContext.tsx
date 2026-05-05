@@ -109,6 +109,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         cauldronBonus: firestoreSettings.cauldronBonus,
         potionBrewerTalent: firestoreSettings.potionBrewerTalent,
         potionBrewerLevel: firestoreSettings.potionBrewerLevel,
+        gold: Math.max(0, Math.floor(Number(firestoreSettings.gold || 0))),
         language: firestoreSettings.language || settingsRef.current.language || 'en',
         defaultRegion: firestoreSettings.defaultRegion || '',
         defaultTestType: firestoreSettings.defaultTestType
@@ -157,6 +158,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         );
       } else if (key === 'potionBrewerLevel') {
         await firebaseSettingsService.setPotionBrewerLevel(value as number);
+      } else if (key === 'gold') {
+        await firebaseSettingsService.setGold(value as number);
       } else if (key === 'defaultBonusType' || key === 'defaultBonusValue') {
         const bonusDice =
           snapshot.defaultBonusType && snapshot.defaultBonusValue > 0
@@ -271,7 +274,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         syncSettingsRef(nextSettings);
 
         const isDebouncedField =
-          key === 'defaultModifier' || key === 'potionBrewerLevel' || key === 'defaultBonusValue';
+          key === 'defaultModifier' ||
+          key === 'potionBrewerLevel' ||
+          key === 'defaultBonusValue' ||
+          key === 'gold';
 
         if (isDebouncedField) {
           if (timeoutRef.current) clearTimeout(timeoutRef.current);

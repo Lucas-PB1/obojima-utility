@@ -2,11 +2,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import type { User } from 'firebase/auth';
-import { Gift, Leaf, LogOut } from 'lucide-react';
+import { Coins, Gift, Leaf, LogOut } from 'lucide-react';
 import { motion } from 'motion/react';
 import { UserProfile } from '@/types/auth';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Button, UserAvatar } from '@/components/ui';
+import { useSettings } from '@/hooks/useSettings';
 
 interface AppShellFrameProps {
   user: User | null;
@@ -29,6 +30,7 @@ export function AppShellFrame({
 }: AppShellFrameProps) {
   const router = useRouter();
   const { t } = useTranslation();
+  const { settings, updateSetting, flushPendingSave } = useSettings();
 
   const displayName = useMemo(() => {
     const rawName =
@@ -60,42 +62,75 @@ export function AppShellFrame({
               {headerAside}
 
               {user && (
-                <div className="flex items-center bg-totoro-blue/5 rounded-lg border border-transparent pl-2 pr-2 py-1.5 gap-2 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.12),var(--shadow-soft)] transition-all hover:bg-[var(--surface-hover)] hover:shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.22),var(--shadow-soft)]">
-                  <button
-                    type="button"
-                    onClick={() => router.push('/settings/account')}
-                    className="flex min-w-0 items-center gap-3 rounded-lg px-2 py-1 text-left transition-colors hover:bg-white/40"
-                  >
-                    <UserAvatar
-                      src={photoURL}
-                      name={displayName}
-                      email={displayEmail}
-                      shape="rounded"
-                      className="h-10 w-10 shrink-0"
-                      iconClassName="h-5 w-5"
-                      fallbackClassName="text-sm"
-                    />
-                    <div className="min-w-0 flex flex-col">
-                      <span className="text-xs font-black text-totoro-gray truncate font-sans uppercase tracking-[0.14em]">
-                        {displayName}
+                <>
+                  <div className="flex items-center rounded-lg bg-totoro-yellow/10 px-2 py-1.5 shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.18),var(--shadow-soft)]">
+                    <button
+                      type="button"
+                      onClick={() => updateSetting('gold', Math.max(0, (settings.gold || 0) - 25))}
+                      onBlur={() => void flushPendingSave()}
+                      className="h-8 w-8 rounded-lg text-sm font-black text-totoro-orange transition hover:bg-totoro-yellow/20"
+                      aria-label="Remover 25 gold"
+                    >
+                      -
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => router.push('/settings/player')}
+                      className="flex min-w-[92px] items-center justify-center gap-2 rounded-lg px-2 py-1 text-totoro-orange transition hover:bg-totoro-yellow/20"
+                    >
+                      <Coins className="h-4 w-4" />
+                      <span className="text-xs font-black uppercase tracking-[0.12em]">
+                        {settings.gold || 0} gold
                       </span>
-                      <span className="text-[11px] text-totoro-gray/60 truncate font-medium">
-                        {displayEmail}
-                      </span>
-                    </div>
-                  </button>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateSetting('gold', (settings.gold || 0) + 25)}
+                      onBlur={() => void flushPendingSave()}
+                      className="h-8 w-8 rounded-lg text-sm font-black text-totoro-orange transition hover:bg-totoro-yellow/20"
+                      aria-label="Adicionar 25 gold"
+                    >
+                      +
+                    </button>
+                  </div>
 
-                  <Button
-                    onClick={onLogout}
-                    variant="ghost"
-                    size="sm"
-                    className="px-3! py-2! rounded-lg! text-[10px]! font-black hover:bg-totoro-orange/10 hover:text-totoro-orange transition-all"
-                    title={t('app.user.logout')}
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    <span className="hidden sm:inline">{t('app.user.logout')}</span>
-                  </Button>
-                </div>
+                  <div className="flex items-center bg-totoro-blue/5 rounded-lg border border-transparent pl-2 pr-2 py-1.5 gap-2 shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.12),var(--shadow-soft)] transition-all hover:bg-[var(--surface-hover)] hover:shadow-[inset_0_0_0_1px_rgba(var(--primary-rgb),0.22),var(--shadow-soft)]">
+                    <button
+                      type="button"
+                      onClick={() => router.push('/settings/account')}
+                      className="flex min-w-0 items-center gap-3 rounded-lg px-2 py-1 text-left transition-colors hover:bg-white/40"
+                    >
+                      <UserAvatar
+                        src={photoURL}
+                        name={displayName}
+                        email={displayEmail}
+                        shape="rounded"
+                        className="h-10 w-10 shrink-0"
+                        iconClassName="h-5 w-5"
+                        fallbackClassName="text-sm"
+                      />
+                      <div className="min-w-0 flex flex-col">
+                        <span className="text-xs font-black text-totoro-gray truncate font-sans uppercase tracking-[0.14em]">
+                          {displayName}
+                        </span>
+                        <span className="text-[11px] text-totoro-gray/60 truncate font-medium">
+                          {displayEmail}
+                        </span>
+                      </div>
+                    </button>
+
+                    <Button
+                      onClick={onLogout}
+                      variant="ghost"
+                      size="sm"
+                      className="px-3! py-2! rounded-lg! text-[10px]! font-black hover:bg-totoro-orange/10 hover:text-totoro-orange transition-all"
+                      title={t('app.user.logout')}
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      <span className="hidden sm:inline">{t('app.user.logout')}</span>
+                    </Button>
+                  </div>
+                </>
               )}
             </div>
           </div>
@@ -108,9 +143,7 @@ export function AppShellFrame({
 
       {mobileNavigation}
 
-      <footer
-        className={`${mobileNavigation ? 'pt-6 pb-32 md:py-6' : 'py-6'} subtle-divider-top`}
-      >
+      <footer className={`${mobileNavigation ? 'pt-6 pb-32 md:py-6' : 'py-6'} subtle-divider-top`}>
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-[10px] font-black text-totoro-blue/20 uppercase tracking-[0.4em]">
             {t('app.footer.text')}

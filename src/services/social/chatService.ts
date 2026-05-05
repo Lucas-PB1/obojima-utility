@@ -14,6 +14,14 @@ import { getChatId } from '@/features/social/domain/socialRules';
 import { authService } from '@/services/authService';
 import { logger } from '@/utils/logger';
 import { ChatConversation, ChatMessage, Friend } from '@/types/social';
+import {
+  createDevId,
+  getDevState,
+  getDevUserId,
+  isDevMode,
+  setDevState,
+  subscribeDevState
+} from '@/features/dev-mode';
 
 function toDate(value: unknown): Date {
   if (value instanceof Timestamp) return value.toDate();
@@ -45,6 +53,11 @@ export class ChatService {
   }
 
   subscribeToConversations(callback: (conversations: ChatConversation[]) => void): Unsubscribe {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.conversationsByUser[userId] || []));
+    }
+
     const userId = this.getUserId();
     if (!userId) return () => {};
 
@@ -130,6 +143,17 @@ export class ChatService {
   }
 
   subscribeToMessages(friendId: string, callback: (messages: ChatMessage[]) => void): Unsubscribe {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      const conversation = (getDevState().conversationsByUser[userId] || []).find((item) =>
+        item.participants.includes(friendId)
+      );
+      const conversationId = conversation?.id || getChatId(userId, friendId);
+      return subscribeDevState((state) =>
+        callback(state.messagesByConversation[conversationId] || [])
+      );
+    }
+
     const userId = this.getUserId();
     if (!userId) return () => {};
 
@@ -160,6 +184,57 @@ export class ChatService {
   }
 
   async sendMessage(friendId: string, content: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      const state = getDevState();
+      const friendUser = state.users.find((user) => user.uid === friendId);
+      const existing = (state.conversationsByUser[userId] || []).find((item) =>
+        item.participants.includes(friendId)
+      );
+      const conversationId = existing?.id || getChatId(userId, friendId);
+      const message: ChatMessage = {
+        id: createDevId('message'),
+        senderId: userId,
+        receiverId: friendId,
+        content,
+        timestamp: new Date(),
+        read: false
+      };
+      const conversation: ChatConversation = {
+        id: conversationId,
+        friend: existing?.friend || {
+          userId: friendId,
+          displayName: friendUser?.displayName || 'User',
+          email: friendUser?.email || undefined,
+          photoURL: friendUser?.photoURL,
+          addedAt: new Date(),
+          status: 'online'
+        },
+        participants: [userId, friendId],
+        updatedAt: new Date(),
+        unreadCount: 0,
+        lastMessage: { content, senderId: userId, timestamp: new Date() }
+      };
+
+      setDevState((current) => ({
+        ...current,
+        conversationsByUser: {
+          ...current.conversationsByUser,
+          [userId]: [
+            conversation,
+            ...(current.conversationsByUser[userId] || []).filter(
+              (item) => item.id !== conversationId
+            )
+          ]
+        },
+        messagesByConversation: {
+          ...current.messagesByConversation,
+          [conversationId]: [...(current.messagesByConversation[conversationId] || []), message]
+        }
+      }));
+      return;
+    }
+
     const userId = this.getUserId();
     if (!userId) throw new Error('Not authenticated');
 
@@ -170,6 +245,22 @@ export class ChatService {
   }
 
   async markChatRead(friendId: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        conversationsByUser: {
+          ...state.conversationsByUser,
+          [userId]: (state.conversationsByUser[userId] || []).map((conversation) =>
+            conversation.participants.includes(friendId)
+              ? { ...conversation, unreadCount: 0 }
+              : conversation
+          )
+        }
+      }));
+      return;
+    }
+
     await requestJson(`/api/social/chats/${friendId}/read`, {
       method: 'PATCH'
     });

@@ -17,6 +17,14 @@ import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { logger } from '@/utils/logger';
 import { CollectedIngredient, ForageAttempt } from '@/types/ingredients';
+import {
+  createDevId,
+  getDevState,
+  getDevUserId,
+  isDevMode,
+  setDevState,
+  subscribeDevState
+} from '@/features/dev-mode';
 
 class FirebaseStorageService {
   private collectedIngredientsUnsubscribe: Unsubscribe | null = null;
@@ -73,6 +81,11 @@ class FirebaseStorageService {
   }
 
   async getCollectedIngredients(uid?: string): Promise<CollectedIngredient[]> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      return getDevState().ingredientsByUser[userId] || [];
+    }
+
     if (!this.isClient() || (!this.getUserId() && !uid)) return [];
 
     try {
@@ -97,6 +110,11 @@ class FirebaseStorageService {
   subscribeToCollectedIngredients(
     callback: (ingredients: CollectedIngredient[]) => void
   ): () => void {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.ingredientsByUser[userId] || []));
+    }
+
     if (!this.isClient() || !this.getUserId()) {
       callback([]);
       return () => {};
@@ -146,6 +164,36 @@ class FirebaseStorageService {
   }
 
   async addCollectedIngredient(ingredient: CollectedIngredient, uid?: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      setDevState((state) => {
+        const current = state.ingredientsByUser[userId] || [];
+        const existing = current.find(
+          (item) =>
+            item.ingredient.id === ingredient.ingredient.id &&
+            item.ingredient.nome === ingredient.ingredient.nome
+        );
+        const next = existing
+          ? current.map((item) =>
+              item.id === existing.id
+                ? {
+                    ...item,
+                    quantity: item.quantity + ingredient.quantity,
+                    collectedAt: new Date(),
+                    used: false
+                  }
+                : item
+            )
+          : [{ ...ingredient, id: ingredient.id || createDevId('ingredient') }, ...current];
+
+        return {
+          ...state,
+          ingredientsByUser: { ...state.ingredientsByUser, [userId]: next }
+        };
+      });
+      return;
+    }
+
     if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
@@ -185,6 +233,20 @@ class FirebaseStorageService {
     updates: Partial<CollectedIngredient>,
     uid?: string
   ): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      setDevState((state) => ({
+        ...state,
+        ingredientsByUser: {
+          ...state.ingredientsByUser,
+          [userId]: (state.ingredientsByUser[userId] || []).map((item) =>
+            item.id === id ? { ...item, ...updates } : item
+          )
+        }
+      }));
+      return;
+    }
+
     if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
@@ -206,6 +268,27 @@ class FirebaseStorageService {
   }
 
   async markIngredientAsUsed(id: string, uid?: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      setDevState((state) => ({
+        ...state,
+        ingredientsByUser: {
+          ...state.ingredientsByUser,
+          [userId]: (state.ingredientsByUser[userId] || []).map((item) => {
+            if (item.id !== id) return item;
+            const quantity = Math.max(0, item.quantity - 1);
+            return {
+              ...item,
+              quantity,
+              used: quantity === 0,
+              usedAt: quantity === 0 ? new Date() : item.usedAt
+            };
+          })
+        }
+      }));
+      return;
+    }
+
     if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
@@ -235,6 +318,18 @@ class FirebaseStorageService {
   }
 
   async removeCollectedIngredient(id: string, uid?: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      setDevState((state) => ({
+        ...state,
+        ingredientsByUser: {
+          ...state.ingredientsByUser,
+          [userId]: (state.ingredientsByUser[userId] || []).filter((item) => item.id !== id)
+        }
+      }));
+      return;
+    }
+
     if (!this.isClient() || (!this.getUserId() && !uid)) return;
 
     try {
@@ -247,6 +342,11 @@ class FirebaseStorageService {
   }
 
   async getForageAttempts(uid?: string): Promise<ForageAttempt[]> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      return getDevState().attemptsByUser[userId] || [];
+    }
+
     if (!this.isClient() || (!this.getUserId() && !uid)) return [];
 
     try {
@@ -268,6 +368,11 @@ class FirebaseStorageService {
   }
 
   subscribeToForageAttempts(callback: (attempts: ForageAttempt[]) => void): () => void {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.attemptsByUser[userId] || []));
+    }
+
     if (!this.isClient() || !this.getUserId()) {
       callback([]);
       return () => {};
@@ -316,6 +421,21 @@ class FirebaseStorageService {
   }
 
   async addForageAttempt(attempt: ForageAttempt): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        attemptsByUser: {
+          ...state.attemptsByUser,
+          [userId]: [
+            { ...attempt, id: attempt.id || createDevId('attempt') },
+            ...(state.attemptsByUser[userId] || [])
+          ]
+        }
+      }));
+      return;
+    }
+
     if (!this.isClient() || !this.getUserId()) return;
 
     try {
@@ -335,6 +455,15 @@ class FirebaseStorageService {
   }
 
   async getRemainingAttemptsToday(): Promise<number> {
+    if (isDevMode()) {
+      const attempts = await this.getForageAttempts();
+      const today = new Date().toDateString();
+      const usedToday = attempts.filter(
+        (attempt) => attempt.timestamp.toDateString() === today
+      ).length;
+      return Math.max(0, GAME_CONFIG.DAILY_FORAGE_LIMIT - usedToday);
+    }
+
     if (!this.isClient() || !this.getUserId()) return GAME_CONFIG.DAILY_FORAGE_LIMIT;
 
     try {

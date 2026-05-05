@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth, adminDb } from '@/config/firebase-admin';
+import { isFirebaseAdminConfigured } from '@/config/firebase-admin';
 
 export interface ApiUser {
   uid: string;
@@ -28,6 +29,10 @@ function getBearerToken(req: NextRequest): string {
 }
 
 export async function requireUser(req: NextRequest): Promise<ApiUser> {
+  if (!isFirebaseAdminConfigured) {
+    throw new ApiAuthError(503, 'Firebase Admin is not configured');
+  }
+
   try {
     const decodedToken = await adminAuth.verifyIdToken(getBearerToken(req));
     return {

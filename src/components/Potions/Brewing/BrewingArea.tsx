@@ -12,6 +12,9 @@ interface BrewingAreaProps {
   isBrewing: boolean;
   previewScores: PotionScores | null;
   availableScores: { canChoose: boolean } | null;
+  currentGold: number;
+  estimatedGoldCost: number;
+  hasEnoughGold: boolean;
   chosenAttribute: 'combat' | 'utility' | 'whimsy' | null;
 }
 
@@ -23,6 +26,9 @@ export function BrewingArea({
   isBrewing,
   previewScores,
   availableScores,
+  currentGold,
+  estimatedGoldCost,
+  hasEnoughGold,
   chosenAttribute
 }: BrewingAreaProps) {
   const { t } = useTranslation();
@@ -66,10 +72,30 @@ export function BrewingArea({
         />
       )}
 
+      {selectedIngredients.length === 3 && estimatedGoldCost > 0 && (
+        <div
+          className={`rounded-lg p-3 text-sm shadow-[inset_0_0_0_1px_var(--hairline)] ${
+            hasEnoughGold
+              ? 'bg-totoro-yellow/10 text-foreground'
+              : 'bg-totoro-orange/10 text-totoro-orange'
+          }`}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="font-black uppercase tracking-wide">Bolsa de gold</span>
+            <span className="font-bold">
+              {currentGold} gold · custo {estimatedGoldCost}
+            </span>
+          </div>
+          {!hasEnoughGold && (
+            <p className="mt-1 text-xs font-medium">Gold insuficiente para criar esta poção.</p>
+          )}
+        </div>
+      )}
+
       <div className="flex gap-3">
         <Button
           onClick={onBrew}
-          disabled={selectedIngredients.length !== 3 || isBrewing}
+          disabled={selectedIngredients.length !== 3 || isBrewing || !hasEnoughGold}
           className="flex-1"
         >
           {isBrewing ? t('potions.create.button.brewing') : t('potions.create.button.brew')}

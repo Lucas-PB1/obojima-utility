@@ -12,6 +12,23 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
+  React.useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   const sizeClasses = {
     sm: 'max-w-md',
     md: 'max-w-lg',
@@ -35,7 +52,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
             onClick={onClose}
           />
 
-          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex min-h-full items-end justify-center p-2 sm:items-center sm:p-4">
             <motion.div
               className={`relative w-full ${sizeClasses[size]}`}
               initial={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -43,7 +60,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
               transition={{ type: 'spring', stiffness: 360, damping: 32 }}
             >
-              <div className="relative overflow-hidden rounded-lg bg-modal-bg shadow-[var(--shadow-raised)] border border-transparent ring-1 ring-inset ring-[color:var(--hairline-strong)]">
+              <div className="relative max-h-[96vh] overflow-hidden rounded-lg bg-modal-bg shadow-[var(--shadow-raised)] border border-transparent ring-1 ring-inset ring-[color:var(--hairline-strong)]">
                 <div className="bg-primary/10 px-5 py-4 subtle-divider-bottom">
                   <div className="flex items-center justify-between gap-4">
                     <h3 className="text-lg font-semibold text-foreground">{title}</h3>

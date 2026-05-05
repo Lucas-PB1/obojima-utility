@@ -245,6 +245,19 @@ class PotionService extends BaseDataService {
     return potions.find((potion) => potion.id === id) || null;
   }
 
+  public async previewResultingPotion(
+    ingredients: Ingredient[],
+    chosenAttribute?: 'combat' | 'utility' | 'whimsy',
+    language: string = 'pt'
+  ): Promise<Potion | null> {
+    const validationError = assertValidPotionIngredients(ingredients);
+    if (validationError) return null;
+
+    const winner = resolveWinningPotionAttribute(ingredients, chosenAttribute);
+    await this.loadPotionData(language);
+    return this.selectPotion(winner.attribute, winner.score, language);
+  }
+
   public async getTotalPotionsCount(language: string = 'pt'): Promise<{
     combat: number;
     utility: number;

@@ -16,6 +16,7 @@ import { logger } from '@/utils/logger';
 import { UserProfile } from '@/types/auth';
 import { authService } from '@/services/authService';
 import { PublicUserProfile } from '@/types/social';
+import { getDevState, isDevMode, setDevState } from '@/features/dev-mode';
 
 export class ProfileService {
   private isClient(): boolean {
@@ -25,6 +26,26 @@ export class ProfileService {
   async ensurePublicProfile(
     user: Pick<UserProfile, 'uid' | 'displayName' | 'email' | 'photoURL'>
   ): Promise<void> {
+    if (isDevMode()) {
+      setDevState((state) => {
+        const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+        const profile: PublicUserProfile = {
+          uid: user.uid,
+          displayName,
+          searchName: displayName.toLowerCase(),
+          photoURL: user.photoURL,
+          lastSeen: new Date(),
+          updatedAt: new Date(),
+          createdAt: new Date()
+        };
+        return {
+          ...state,
+          publicUsers: [profile, ...state.publicUsers.filter((item) => item.uid !== user.uid)]
+        };
+      });
+      return;
+    }
+
     if (!this.isClient() || !user.uid) return;
 
     const publicRef = doc(db, 'public_users', user.uid);
@@ -45,6 +66,10 @@ export class ProfileService {
   }
 
   async getPublicProfile(uid: string): Promise<PublicUserProfile | null> {
+    if (isDevMode()) {
+      return getDevState().publicUsers.find((user) => user.uid === uid) || null;
+    }
+
     if (!this.isClient() || !uid) return null;
 
     try {
@@ -62,6 +87,19 @@ export class ProfileService {
   }
 
   async searchUsers(searchTerm: string): Promise<PublicUserProfile[]> {
+    if (isDevMode()) {
+      const term = searchTerm.toLowerCase();
+      const currentUserId = authService.getUserId();
+      return getDevState()
+        .publicUsers.filter(
+          (user) =>
+            user.uid !== currentUserId &&
+            ((user.displayName || '').toLowerCase().includes(term) ||
+              (user.searchName || '').includes(term))
+        )
+        .slice(0, 10);
+    }
+
     if (!this.isClient() || !searchTerm || searchTerm.length < 3) return [];
 
     try {
@@ -114,6 +152,16 @@ export class ProfileService {
   async updateHeartbeat(): Promise<void> {
     const userId = authService.getUserId();
     if (!userId) return;
+
+    if (isDevMode()) {
+      setDevState((state) => ({
+        ...state,
+        publicUsers: state.publicUsers.map((user) =>
+          user.uid === userId ? { ...user, lastSeen: new Date(), status: 'online' } : user
+        )
+      }));
+      return;
+    }
 
     try {
       const publicRef = doc(db, 'public_users', userId);

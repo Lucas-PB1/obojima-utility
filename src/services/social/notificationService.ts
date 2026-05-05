@@ -12,6 +12,7 @@ import { db, firebaseConfig, getClientMessaging } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { SocialNotification } from '@/types/social';
 import { logger } from '@/utils/logger';
+import { getDevUserId, isDevMode, setDevState, subscribeDevState } from '@/features/dev-mode';
 
 export type PushSetupStatus =
   | 'checking'
@@ -60,6 +61,11 @@ function getServiceWorkerUrl(): string {
 
 export class NotificationService {
   subscribeToNotifications(callback: (notifications: SocialNotification[]) => void): Unsubscribe {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.notificationsByUser[userId] || []));
+    }
+
     const userId = authService.getUserId();
     if (!userId) return () => {};
 
@@ -90,6 +96,8 @@ export class NotificationService {
   }
 
   async getPushStatus(): Promise<PushSetupStatus> {
+    if (isDevMode()) return 'ready';
+
     if (typeof window === 'undefined') return 'unsupported';
     if (!('Notification' in window) || !('serviceWorker' in navigator)) return 'unsupported';
     if (!process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY) return 'missing-config';
@@ -102,6 +110,8 @@ export class NotificationService {
   }
 
   async registerPushNotifications(): Promise<string> {
+    if (isDevMode()) return 'dev-push-token';
+
     const status = await this.getPushStatus();
 
     if (status === 'permission-required') {
@@ -136,12 +146,41 @@ export class NotificationService {
   }
 
   async markNotificationRead(notificationId: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        notificationsByUser: {
+          ...state.notificationsByUser,
+          [userId]: (state.notificationsByUser[userId] || []).map((notification) =>
+            notification.id === notificationId ? { ...notification, read: true } : notification
+          )
+        }
+      }));
+      return;
+    }
+
     await requestJson(`/api/social/notifications/${notificationId}`, {
       method: 'PATCH'
     });
   }
 
   async markAllNotificationsRead(): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        notificationsByUser: {
+          ...state.notificationsByUser,
+          [userId]: (state.notificationsByUser[userId] || []).map((notification) => ({
+            ...notification,
+            read: true
+          }))
+        }
+      }));
+      return;
+    }
+
     await requestJson('/api/social/notifications', {
       method: 'PATCH'
     });

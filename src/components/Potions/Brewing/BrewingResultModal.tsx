@@ -117,6 +117,21 @@ export function BrewingResultModal({ isOpen, onClose, result }: BrewingResultMod
               <p className="text-sm text-gray-700">{result.recipe.resultingPotion.descricao}</p>
             </div>
 
+            {result.goldSpent !== undefined && (
+              <div className="bg-totoro-yellow/10 p-4 rounded-lg shadow-[inset_0_0_0_1px_rgba(var(--whimsy-rgb),0.16)]">
+                <h4 className="font-medium text-foreground mb-2">Gold gasto</h4>
+                <p className="text-sm text-foreground/75">
+                  {result.goldSpent} gold gasto. Saldo restante: {result.goldBalanceAfter ?? 0}{' '}
+                  gold.
+                </p>
+                {result.goldWarnings?.map((warning) => (
+                  <p key={warning} className="mt-2 text-xs font-bold text-totoro-orange">
+                    {warning}
+                  </p>
+                ))}
+              </div>
+            )}
+
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium text-gray-900 mb-2">{t('potions.result.scores')}</h4>
               <div className="grid grid-cols-3 gap-3 text-sm">

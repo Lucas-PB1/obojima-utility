@@ -54,7 +54,12 @@ export function useDataTable<T>({
   );
 
   const handleFilterChange = useCallback((key: string, value: string) => {
-    setActiveFilters((prev) => ({ ...prev, [key]: value }));
+    setActiveFilters((prev) => {
+      const next = { ...prev };
+      if (value) next[key] = value;
+      else delete next[key];
+      return next;
+    });
     setCurrentPage(1);
   }, []);
 

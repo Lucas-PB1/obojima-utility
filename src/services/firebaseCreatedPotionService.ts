@@ -3,6 +3,14 @@ import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { CreatedPotion, PotionRecipe } from '@/types/ingredients';
 import { logger } from '@/utils/logger';
+import {
+  createDevId,
+  getDevState,
+  getDevUserId,
+  isDevMode,
+  setDevState,
+  subscribeDevState
+} from '@/features/dev-mode';
 
 interface PotionData {
   potion?: {
@@ -65,6 +73,26 @@ class FirebaseCreatedPotionService {
     uid?: string,
     quantity: number = 1
   ): Promise<CreatedPotion> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      const created: CreatedPotion = {
+        id: createDevId('potion'),
+        potion: recipe.resultingPotion,
+        recipe,
+        quantity,
+        createdAt: new Date(),
+        used: false
+      };
+      setDevState((state) => ({
+        ...state,
+        potionsByUser: {
+          ...state.potionsByUser,
+          [userId]: [created, ...(state.potionsByUser[userId] || [])]
+        }
+      }));
+      return created;
+    }
+
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) {
       throw new Error('Usuário não autenticado');
@@ -118,6 +146,8 @@ class FirebaseCreatedPotionService {
   }
 
   async getAllCreatedPotions(uid?: string): Promise<CreatedPotion[]> {
+    if (isDevMode()) return getDevState().potionsByUser[getDevUserId(uid)] || [];
+
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) return [];
 
@@ -136,6 +166,11 @@ class FirebaseCreatedPotionService {
   }
 
   subscribeToCreatedPotions(callback: (potions: CreatedPotion[]) => void): () => void {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.potionsByUser[userId] || []));
+    }
+
     if (!this.isClient() || !this.getUserId()) {
       callback([]);
       return () => {};
@@ -182,6 +217,27 @@ class FirebaseCreatedPotionService {
   }
 
   async usePotion(potionId: string, uid?: string): Promise<boolean> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      setDevState((state) => ({
+        ...state,
+        potionsByUser: {
+          ...state.potionsByUser,
+          [userId]: (state.potionsByUser[userId] || []).map((potion) => {
+            if (potion.id !== potionId) return potion;
+            const quantity = Math.max(0, potion.quantity - 1);
+            return {
+              ...potion,
+              quantity,
+              used: quantity === 0,
+              usedAt: quantity === 0 ? new Date() : potion.usedAt
+            };
+          })
+        }
+      }));
+      return true;
+    }
+
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) return false;
 
@@ -201,6 +257,22 @@ class FirebaseCreatedPotionService {
   }
 
   async updatePotionQuantity(potionId: string, change: number, uid?: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      setDevState((state) => ({
+        ...state,
+        potionsByUser: {
+          ...state.potionsByUser,
+          [userId]: (state.potionsByUser[userId] || [])
+            .map((potion) =>
+              potion.id === potionId ? { ...potion, quantity: potion.quantity + change } : potion
+            )
+            .filter((potion) => potion.quantity > 0)
+        }
+      }));
+      return;
+    }
+
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) return;
 
@@ -219,6 +291,18 @@ class FirebaseCreatedPotionService {
   }
 
   async removePotion(potionId: string, uid?: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId(uid);
+      setDevState((state) => ({
+        ...state,
+        potionsByUser: {
+          ...state.potionsByUser,
+          [userId]: (state.potionsByUser[userId] || []).filter((potion) => potion.id !== potionId)
+        }
+      }));
+      return;
+    }
+
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) return;
 
@@ -236,6 +320,14 @@ class FirebaseCreatedPotionService {
   }
 
   async getPotionById(potionId: string, uid?: string): Promise<CreatedPotion | null> {
+    if (isDevMode()) {
+      return (
+        (getDevState().potionsByUser[getDevUserId(uid)] || []).find(
+          (potion) => potion.id === potionId
+        ) || null
+      );
+    }
+
     const userId = uid || this.getUserId();
     if (!this.isClient() || !userId) return null;
 

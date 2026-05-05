@@ -2,6 +2,13 @@ import { doc, getDoc, setDoc, onSnapshot, Unsubscribe } from 'firebase/firestore
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { logger } from '@/utils/logger';
+import {
+  getDevState,
+  getDevUserId,
+  isDevMode,
+  setDevState,
+  subscribeDevState
+} from '@/features/dev-mode';
 
 interface Settings {
   defaultModifier: number | '';
@@ -10,6 +17,7 @@ interface Settings {
   cauldronBonus: boolean;
   potionBrewerTalent: boolean;
   potionBrewerLevel: number;
+  gold: number;
   language?: 'pt' | 'en' | 'es';
   defaultRegion?: string;
   defaultTestType?: 'natureza' | 'sobrevivencia';
@@ -22,6 +30,7 @@ const defaultSettings: Settings = {
   cauldronBonus: false,
   potionBrewerTalent: false,
   potionBrewerLevel: 1,
+  gold: 0,
   language: 'en',
   defaultRegion: '',
   defaultTestType: undefined
@@ -34,6 +43,7 @@ const defaultPlayerSettings: Omit<Settings, 'language'> = {
   cauldronBonus: false,
   potionBrewerTalent: false,
   potionBrewerLevel: 1,
+  gold: 0,
   defaultRegion: '',
   defaultTestType: undefined
 };
@@ -60,6 +70,12 @@ class FirebaseSettingsService {
   }
 
   private async getSettings(): Promise<Settings> {
+    if (isDevMode()) {
+      return (
+        (getDevState().settingsByUser[getDevUserId()] as Settings | undefined) || defaultSettings
+      );
+    }
+
     if (!this.isClient() || !this.getUserId()) return defaultSettings;
 
     try {
@@ -83,6 +99,15 @@ class FirebaseSettingsService {
   }
 
   private async saveSettings(settings: Settings): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        settingsByUser: { ...state.settingsByUser, [userId]: settings }
+      }));
+      return;
+    }
+
     if (!this.isClient() || !this.getUserId()) return;
 
     try {
@@ -95,6 +120,13 @@ class FirebaseSettingsService {
   }
 
   subscribeToSettings(callback: (settings: Settings) => void): () => void {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) =>
+        callback((state.settingsByUser[userId] as Settings | undefined) || defaultSettings)
+      );
+    }
+
     if (!this.isClient() || !this.getUserId()) {
       callback(defaultSettings);
       return () => {};
@@ -200,6 +232,17 @@ class FirebaseSettingsService {
   async setPotionBrewerLevel(level: number): Promise<void> {
     const settings = await this.getSettings();
     settings.potionBrewerLevel = Math.max(1, Math.min(20, level));
+    await this.saveSettings(settings);
+  }
+
+  async getGold(): Promise<number> {
+    const settings = await this.getSettings();
+    return Math.max(0, Math.floor(Number(settings.gold || 0)));
+  }
+
+  async setGold(gold: number): Promise<void> {
+    const settings = await this.getSettings();
+    settings.gold = Math.max(0, Math.floor(Number(gold) || 0));
     await this.saveSettings(settings);
   }
 

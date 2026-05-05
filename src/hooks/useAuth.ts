@@ -13,6 +13,8 @@ import { firebaseStorageService } from '@/services/firebaseStorageService';
 import { doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { e2eUser, isE2EMode } from '@/lib/e2e/mockData';
 import { firebaseCreatedPotionService } from '@/services/firebaseCreatedPotionService';
+import { isAdminDemoMode } from '@/features/admin/domain/adminRules';
+import { getDevState, isDevMode } from '@/features/dev-mode';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -23,17 +25,12 @@ export function useAuth() {
   useEffect(() => {
     let profileUnsubscribe: (() => void) | null = null;
 
-    if (isE2EMode()) {
+    if (isE2EMode() || isAdminDemoMode() || isDevMode()) {
+      const devState = getDevState();
+      const devProfile =
+        devState.users.find((item) => item.uid === devState.activeUserId) || devState.users[0];
       setUser(e2eUser as User);
-      setUserProfile({
-        uid: e2eUser.uid,
-        email: e2eUser.email,
-        displayName: e2eUser.displayName,
-        photoURL: e2eUser.photoURL,
-        role: 'admin',
-        createdAt: new Date().toISOString(),
-        lastLogin: new Date().toISOString()
-      });
+      setUserProfile(devProfile);
       setLoading(false);
       return;
     }
@@ -114,7 +111,7 @@ export function useAuth() {
   }, []);
 
   const logout = async () => {
-    if (isE2EMode()) return;
+    if (isE2EMode() || isAdminDemoMode() || isDevMode()) return;
 
     try {
       firebaseStorageService.cleanup();

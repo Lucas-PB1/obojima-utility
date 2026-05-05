@@ -1,5 +1,6 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '@/config/firebase';
+import { isDevMode } from '@/features/dev-mode';
 
 const MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024;
 const ALLOWED_AVATAR_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
@@ -39,6 +40,10 @@ class FirebaseFileStorageService {
     const validationKey = this.validateAvatarFile(file);
     if (validationKey) {
       throw new Error(validationKey);
+    }
+
+    if (isDevMode()) {
+      return URL.createObjectURL(file);
     }
 
     const extension = this.getAvatarExtension(file);

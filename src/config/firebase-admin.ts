@@ -61,13 +61,28 @@ function assertPrivateKey(privateKey?: string): asserts privateKey is string {
   }
 }
 
-if (!admin.apps.length) {
-  const projectId = getEnv('FIREBASE_PROJECT_ID', 'NEXT_PUBLIC_FIREBASE_PROJECT_ID');
-  const clientEmail = getEnv('FIREBASE_CLIENT_EMAIL', 'FIREBASE_ADMIN_CLIENT_EMAIL');
-  const privateKey = normalizePrivateKey(
-    getEnv('FIREBASE_PRIVATE_KEY', 'FIREBASE_ADMIN_PRIVATE_KEY')
-  );
+const projectId = getEnv('FIREBASE_PROJECT_ID', 'NEXT_PUBLIC_FIREBASE_PROJECT_ID');
+const clientEmail = getEnv('FIREBASE_CLIENT_EMAIL', 'FIREBASE_ADMIN_CLIENT_EMAIL');
+const privateKey = normalizePrivateKey(
+  getEnv('FIREBASE_PRIVATE_KEY', 'FIREBASE_ADMIN_PRIVATE_KEY')
+);
 
+export const isFirebaseAdminConfigured = Boolean(projectId && clientEmail && privateKey);
+
+function createMissingAdminProxy<T>(serviceName: string): T {
+  return new Proxy(
+    {},
+    {
+      get() {
+        throw new Error(
+          `[Firebase Admin]: ${serviceName} indisponível. Configure FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL/FIREBASE_ADMIN_CLIENT_EMAIL e FIREBASE_PRIVATE_KEY/FIREBASE_ADMIN_PRIVATE_KEY.`
+        );
+      }
+    }
+  ) as T;
+}
+
+if (!admin.apps.length && isFirebaseAdminConfigured) {
   if (!projectId || !clientEmail || !privateKey) {
     logger.error(
       '[Firebase Admin]: Variáveis de ambiente faltando. Verifique FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL/FIREBASE_ADMIN_CLIENT_EMAIL e FIREBASE_PRIVATE_KEY/FIREBASE_ADMIN_PRIVATE_KEY.'
@@ -86,10 +101,17 @@ if (!admin.apps.length) {
     });
   } catch (error) {
     logger.error('[Firebase Admin]: Erro crítico na inicialização:', error);
-    throw error;
   }
+} else if (!isFirebaseAdminConfigured) {
+  logger.warn('[Firebase Admin]: credenciais ausentes. Rotas admin reais ficam indisponíveis.');
 }
 
-export const adminAuth = admin.auth();
-export const adminDb = admin.firestore();
-export const adminMessaging = admin.messaging();
+export const adminAuth = admin.apps.length
+  ? admin.auth()
+  : createMissingAdminProxy<admin.auth.Auth>('Auth');
+export const adminDb = admin.apps.length
+  ? admin.firestore()
+  : createMissingAdminProxy<admin.firestore.Firestore>('Firestore');
+export const adminMessaging = admin.apps.length
+  ? admin.messaging()
+  : createMissingAdminProxy<admin.messaging.Messaging>('Messaging');

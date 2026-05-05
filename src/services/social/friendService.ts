@@ -11,6 +11,14 @@ import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { logger } from '@/utils/logger';
 import { BlockedUser, Friend, FriendRequest, ReportReason } from '@/types/social';
+import {
+  createDevId,
+  getDevState,
+  getDevUserId,
+  isDevMode,
+  setDevState,
+  subscribeDevState
+} from '@/features/dev-mode';
 
 function toDate(value: unknown): Date {
   if (value instanceof Timestamp) return value.toDate();
@@ -42,6 +50,35 @@ export class FriendService {
   }
 
   async sendFriendRequest(toUserId: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      const fromUser = getDevState().users.find((user) => user.uid === userId);
+      const toUser = getDevState().users.find((user) => user.uid === toUserId);
+      const request: FriendRequest = {
+        id: createDevId('friend-request'),
+        fromUserId: userId,
+        fromUserName: fromUser?.displayName || 'User',
+        fromUserPhotoURL: fromUser?.photoURL,
+        toUserId,
+        toUserName: toUser?.displayName || 'User',
+        toUserPhotoURL: toUser?.photoURL,
+        status: 'pending',
+        createdAt: new Date()
+      };
+      setDevState((state) => ({
+        ...state,
+        sentRequestsByUser: {
+          ...state.sentRequestsByUser,
+          [userId]: [request, ...(state.sentRequestsByUser[userId] || [])]
+        },
+        incomingRequestsByUser: {
+          ...state.incomingRequestsByUser,
+          [toUserId]: [request, ...(state.incomingRequestsByUser[toUserId] || [])]
+        }
+      }));
+      return;
+    }
+
     if (!this.getUserId()) throw new Error('Not authenticated');
     await requestJson('/api/social/friend-requests', {
       method: 'POST',
@@ -50,12 +87,36 @@ export class FriendService {
   }
 
   async cancelFriendRequest(requestId: string): Promise<void> {
+    if (isDevMode()) {
+      setDevState((state) => ({
+        ...state,
+        sentRequestsByUser: Object.fromEntries(
+          Object.entries(state.sentRequestsByUser).map(([uid, rows]) => [
+            uid,
+            rows.filter((request) => request.id !== requestId)
+          ])
+        ),
+        incomingRequestsByUser: Object.fromEntries(
+          Object.entries(state.incomingRequestsByUser).map(([uid, rows]) => [
+            uid,
+            rows.filter((request) => request.id !== requestId)
+          ])
+        )
+      }));
+      return;
+    }
+
     await requestJson(`/api/social/friend-requests/${requestId}`, {
       method: 'DELETE'
     });
   }
 
   subscribeToFriendRequests(callback: (requests: FriendRequest[]) => void): Unsubscribe {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.incomingRequestsByUser[userId] || []));
+    }
+
     const userId = this.getUserId();
     if (!userId) return () => {};
 
@@ -87,6 +148,11 @@ export class FriendService {
   }
 
   subscribeToSentFriendRequests(callback: (requests: FriendRequest[]) => void): Unsubscribe {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.sentRequestsByUser[userId] || []));
+    }
+
     const userId = this.getUserId();
     if (!userId) return () => {};
 
@@ -118,6 +184,58 @@ export class FriendService {
   }
 
   async respondToFriendRequest(requestId: string, accept: boolean): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => {
+        const request = (state.incomingRequestsByUser[userId] || []).find(
+          (item) => item.id === requestId
+        );
+        const nextState = {
+          ...state,
+          incomingRequestsByUser: {
+            ...state.incomingRequestsByUser,
+            [userId]: (state.incomingRequestsByUser[userId] || []).filter(
+              (item) => item.id !== requestId
+            )
+          }
+        };
+        if (!accept || !request) return nextState;
+        const friendUser = state.users.find((user) => user.uid === request.fromUserId);
+        const me = state.users.find((user) => user.uid === userId);
+        return {
+          ...nextState,
+          friendsByUser: {
+            ...nextState.friendsByUser,
+            [userId]: [
+              {
+                friendshipId: createDevId('friendship'),
+                userId: request.fromUserId,
+                displayName: friendUser?.displayName || request.fromUserName,
+                email: friendUser?.email || undefined,
+                photoURL: friendUser?.photoURL,
+                addedAt: new Date(),
+                status: 'online'
+              },
+              ...(nextState.friendsByUser[userId] || [])
+            ],
+            [request.fromUserId]: [
+              {
+                friendshipId: createDevId('friendship'),
+                userId,
+                displayName: me?.displayName || 'User',
+                email: me?.email || undefined,
+                photoURL: me?.photoURL,
+                addedAt: new Date(),
+                status: 'online'
+              },
+              ...(nextState.friendsByUser[request.fromUserId] || [])
+            ]
+          }
+        };
+      });
+      return;
+    }
+
     await requestJson(`/api/social/friend-requests/${requestId}`, {
       method: 'PATCH',
       body: JSON.stringify({ action: accept ? 'accept' : 'reject' })
@@ -125,6 +243,11 @@ export class FriendService {
   }
 
   subscribeToFriends(callback: (friends: Friend[]) => void): Unsubscribe {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.friendsByUser[userId] || []));
+    }
+
     const userId = this.getUserId();
     if (!userId) return () => {};
 
@@ -216,12 +339,31 @@ export class FriendService {
   }
 
   async removeFriend(friendId: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        friendsByUser: {
+          ...state.friendsByUser,
+          [userId]: (state.friendsByUser[userId] || []).filter(
+            (friend) => friend.userId !== friendId
+          )
+        }
+      }));
+      return;
+    }
+
     await requestJson(`/api/social/friends/${friendId}`, {
       method: 'DELETE'
     });
   }
 
   subscribeToBlockedUsers(callback: (blockedUsers: BlockedUser[]) => void): Unsubscribe {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.blockedByUser[userId] || []));
+    }
+
     const userId = this.getUserId();
     if (!userId) return () => {};
 
@@ -251,6 +393,29 @@ export class FriendService {
   }
 
   async blockUser(blockedUserId: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      const blocked = getDevState().users.find((user) => user.uid === blockedUserId);
+      setDevState((state) => ({
+        ...state,
+        blockedByUser: {
+          ...state.blockedByUser,
+          [userId]: [
+            {
+              id: createDevId('block'),
+              blockerId: userId,
+              blockedUserId,
+              displayName: blocked?.displayName || 'User',
+              photoURL: blocked?.photoURL,
+              createdAt: new Date()
+            },
+            ...(state.blockedByUser[userId] || [])
+          ]
+        }
+      }));
+      return;
+    }
+
     await requestJson('/api/social/blocks', {
       method: 'POST',
       body: JSON.stringify({ blockedUserId })
@@ -258,12 +423,46 @@ export class FriendService {
   }
 
   async unblockUser(blockedUserId: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        blockedByUser: {
+          ...state.blockedByUser,
+          [userId]: (state.blockedByUser[userId] || []).filter(
+            (block) => block.blockedUserId !== blockedUserId
+          )
+        }
+      }));
+      return;
+    }
+
     await requestJson(`/api/social/blocks/${blockedUserId}`, {
       method: 'DELETE'
     });
   }
 
   async reportUser(reportedUserId: string, reason: ReportReason, details = ''): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        reports: [
+          {
+            id: createDevId('report'),
+            reporterId: userId,
+            reportedUserId,
+            reason,
+            details,
+            status: 'open',
+            createdAt: new Date()
+          },
+          ...state.reports
+        ]
+      }));
+      return;
+    }
+
     await requestJson('/api/social/reports', {
       method: 'POST',
       body: JSON.stringify({ reportedUserId, reason, details })

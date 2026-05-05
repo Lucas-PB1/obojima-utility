@@ -16,6 +16,14 @@ import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
 import { PotionRecipe } from '@/types/ingredients';
 import { logger } from '@/utils/logger';
+import {
+  createDevId,
+  getDevState,
+  getDevUserId,
+  isDevMode,
+  setDevState,
+  subscribeDevState
+} from '@/features/dev-mode';
 
 class FirebaseRecipeService {
   private recipesUnsubscribe: Unsubscribe | null = null;
@@ -55,6 +63,21 @@ class FirebaseRecipeService {
   }
 
   async saveRecipe(recipe: PotionRecipe): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        recipesByUser: {
+          ...state.recipesByUser,
+          [userId]: [
+            { ...recipe, id: recipe.id || createDevId('recipe') },
+            ...(state.recipesByUser[userId] || [])
+          ]
+        }
+      }));
+      return;
+    }
+
     if (!this.isClient() || !this.getUserId()) return;
 
     try {
@@ -70,6 +93,8 @@ class FirebaseRecipeService {
   }
 
   async getAllRecipes(): Promise<PotionRecipe[]> {
+    if (isDevMode()) return getDevState().recipesByUser[getDevUserId()] || [];
+
     if (!this.isClient() || !this.getUserId()) return [];
 
     try {
@@ -91,6 +116,11 @@ class FirebaseRecipeService {
   }
 
   subscribeToRecipes(callback: (recipes: PotionRecipe[]) => void): () => void {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      return subscribeDevState((state) => callback(state.recipesByUser[userId] || []));
+    }
+
     if (!this.isClient() || !this.getUserId()) {
       callback([]);
       return () => {};
@@ -133,6 +163,18 @@ class FirebaseRecipeService {
   }
 
   async removeRecipe(recipeId: string): Promise<void> {
+    if (isDevMode()) {
+      const userId = getDevUserId();
+      setDevState((state) => ({
+        ...state,
+        recipesByUser: {
+          ...state.recipesByUser,
+          [userId]: (state.recipesByUser[userId] || []).filter((recipe) => recipe.id !== recipeId)
+        }
+      }));
+      return;
+    }
+
     if (!this.isClient() || !this.getUserId()) return;
 
     try {
@@ -145,6 +187,14 @@ class FirebaseRecipeService {
   }
 
   async getRecipeById(recipeId: string): Promise<PotionRecipe | null> {
+    if (isDevMode()) {
+      return (
+        (getDevState().recipesByUser[getDevUserId()] || []).find(
+          (recipe) => recipe.id === recipeId
+        ) || null
+      );
+    }
+
     if (!this.isClient() || !this.getUserId()) return null;
 
     try {
@@ -168,6 +218,12 @@ class FirebaseRecipeService {
   }
 
   async getRecipesByCategory(category: 'combat' | 'utility' | 'whimsy'): Promise<PotionRecipe[]> {
+    if (isDevMode()) {
+      return (getDevState().recipesByUser[getDevUserId()] || []).filter(
+        (recipe) => recipe.winningAttribute === category
+      );
+    }
+
     if (!this.isClient() || !this.getUserId()) return [];
 
     try {
