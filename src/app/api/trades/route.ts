@@ -17,14 +17,19 @@ function getInventoryCollection(type: TradeItem['type']) {
 }
 
 function cleanTradeItems(items: TradeItem[]): TradeItem[] {
-  return items.map((item) => ({
-    id: item.id,
-    name: item.name,
-    type: item.type,
-    quantity: item.quantity,
-    image: item.image || undefined,
-    rarity: item.rarity || undefined
-  }));
+  return items.map((item) => {
+    const cleanItem: TradeItem = {
+      id: item.id,
+      name: item.name,
+      type: item.type,
+      quantity: item.quantity
+    };
+
+    if (item.image) cleanItem.image = item.image;
+    if (item.rarity) cleanItem.rarity = item.rarity;
+
+    return cleanItem;
+  });
 }
 
 export async function POST(req: NextRequest) {

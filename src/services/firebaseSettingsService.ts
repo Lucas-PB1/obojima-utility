@@ -1,6 +1,7 @@
 import { doc, getDoc, setDoc, onSnapshot, Unsubscribe } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { authService } from '@/services/authService';
+import { UserUtils } from '@/lib/userUtils';
 import { logger } from '@/utils/logger';
 import {
   getDevState,
@@ -22,6 +23,10 @@ interface Settings {
   defaultRegion?: string;
   defaultTestType?: 'natureza' | 'sobrevivencia';
 }
+
+type StoredSettings = Omit<Settings, 'defaultTestType'> & {
+  defaultTestType: Settings['defaultTestType'] | null;
+};
 
 const defaultSettings: Settings = {
   defaultModifier: '',
@@ -47,6 +52,29 @@ const defaultPlayerSettings: Omit<Settings, 'language'> = {
   defaultRegion: '',
   defaultTestType: undefined
 };
+
+function toStoredSettings(settings: Settings): StoredSettings {
+  return {
+    defaultModifier: settings.defaultModifier,
+    defaultBonusDice: settings.defaultBonusDice ?? null,
+    doubleForageTalent: settings.doubleForageTalent,
+    cauldronBonus: settings.cauldronBonus,
+    potionBrewerTalent: settings.potionBrewerTalent,
+    potionBrewerLevel: settings.potionBrewerLevel,
+    gold: settings.gold,
+    language: settings.language || 'en',
+    defaultRegion: settings.defaultRegion || '',
+    defaultTestType: settings.defaultTestType ?? null
+  };
+}
+
+function fromStoredSettings(settings: Settings | StoredSettings): Settings {
+  return {
+    ...defaultSettings,
+    ...settings,
+    defaultTestType: settings.defaultTestType || undefined
+  };
+}
 
 class FirebaseSettingsService {
   private settingsUnsubscribe: Unsubscribe | null = null;
@@ -86,7 +114,7 @@ class FirebaseSettingsService {
         const data = snapshot.data();
         const settings = data[this.getSettingsFieldPath()] as Settings | undefined;
         if (settings) {
-          return settings;
+          return fromStoredSettings(settings);
         }
       }
 
@@ -108,11 +136,42 @@ class FirebaseSettingsService {
       return;
     }
 
-    if (!this.isClient() || !this.getUserId()) return;
+    const userId = this.getUserId();
+    if (!this.isClient() || !userId) return;
 
     try {
       const userRef = doc(db, this.getSettingsPath());
-      await setDoc(userRef, { [this.getSettingsFieldPath()]: settings }, { merge: true });
+      const snapshot = await getDoc(userRef);
+      const storedSettings = toStoredSettings(settings);
+
+      if (snapshot.exists()) {
+        const existingData = snapshot.data();
+        await setDoc(
+          userRef,
+          {
+            ...(!existingData.uid ? { uid: userId } : {}),
+            ...(!existingData.role ? { role: 'user' } : {}),
+            [this.getSettingsFieldPath()]: storedSettings
+          },
+          { merge: true }
+        );
+        return;
+      }
+
+      const user = authService.getCurrentUser();
+      const now = new Date().toISOString();
+
+      await setDoc(userRef, {
+        uid: userId,
+        email: user?.email || '',
+        displayName: user?.displayName || UserUtils.getFallbackName(user?.email || ''),
+        photoURL: user?.photoURL || null,
+        role: 'user',
+        createdAt: now,
+        lastLogin: now,
+        updatedAt: now,
+        [this.getSettingsFieldPath()]: storedSettings
+      });
     } catch (error) {
       logger.error('Erro ao salvar configurações:', error);
       throw error;
@@ -142,7 +201,7 @@ class FirebaseSettingsService {
             const data = snapshot.data();
             const settings = data[this.getSettingsFieldPath()] as Settings | undefined;
             if (settings) {
-              callback(settings);
+              callback(fromStoredSettings(settings));
             } else {
               callback(defaultSettings);
             }
@@ -284,7 +343,11 @@ class FirebaseSettingsService {
 
     try {
       const userRef = doc(db, this.getSettingsPath());
-      await setDoc(userRef, { [this.getSettingsFieldPath()]: defaultSettings }, { merge: true });
+      await setDoc(
+        userRef,
+        { [this.getSettingsFieldPath()]: toStoredSettings(defaultSettings) },
+        { merge: true }
+      );
     } catch (error) {
       logger.error('Erro ao limpar configurações:', error);
       throw error;

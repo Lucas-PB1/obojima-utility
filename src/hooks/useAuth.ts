@@ -50,8 +50,14 @@ export function useAuth() {
 
           if (userDoc.exists()) {
             const data = userDoc.data() as UserProfile;
+            const identityRepair: Partial<UserProfile> = {
+              ...(!data.uid ? { uid: currentUser.uid } : {}),
+              ...(!data.role ? { role: 'user' as const } : {})
+            };
+
             if (!data.displayName || !data.email) {
               await updateDoc(userDocRef, {
+                ...identityRepair,
                 displayName: currentUser.displayName,
                 email: currentUser.email,
                 photoURL: currentUser.photoURL,
@@ -59,14 +65,16 @@ export function useAuth() {
               });
               setUserProfile({
                 ...data,
+                ...identityRepair,
                 displayName: currentUser.displayName,
                 email: currentUser.email,
                 photoURL: currentUser.photoURL,
                 lastLogin: new Date().toISOString()
               });
             } else {
-              await updateDoc(userDocRef, { lastLogin: new Date().toISOString() });
-              setUserProfile(data);
+              const lastLogin = new Date().toISOString();
+              await updateDoc(userDocRef, { ...identityRepair, lastLogin });
+              setUserProfile({ ...data, ...identityRepair, lastLogin });
             }
           } else {
             const newProfile: UserProfile = {

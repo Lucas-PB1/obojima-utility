@@ -34,9 +34,10 @@ Este documento descreve como configurar o Firebase para o projeto Obojima Utilit
 Para o Firebase Storage, vá em "Storage" > "Rules" e publique o conteúdo de `doc/storage.rules`.
 O upload de avatar usa o caminho `users/{uid}/avatars/profile.*`.
 
-As regras garantem que cada usuário só possa acessar seus próprios dados. No Social, escritas
-sensíveis de amizade, chat, trocas, bloqueios, denúncias, notificações e tokens FCM passam pelas
-rotas `/api/social/*` com Admin SDK.
+As regras garantem que cada usuário só possa acessar seus próprios dados. O gold do jogador fica em
+`users/{uid}.settings.gold` e pode ser atualizado pelo próprio usuário junto com as demais
+preferências. No Social, escritas sensíveis de amizade, chat, trocas, bloqueios, denúncias,
+notificações e tokens FCM passam pelas rotas `/api/social/*` com Admin SDK.
 
 ## 5. Configurar Cloud Messaging
 
@@ -117,6 +118,9 @@ blocks/
 
 reports/
   {reportId}/
+
+trades/
+  {tradeId}/
 ```
 
 ## 9. Migração de Dados

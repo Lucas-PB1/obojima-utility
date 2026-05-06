@@ -5,6 +5,7 @@ export function validateTradeItems(items: TradeItem[]): string | null {
 
   for (const item of items) {
     if (!item.id || !item.name || !item.type) return 'Invalid item data';
+    if (item.type !== 'ingredient' && item.type !== 'potion') return 'Invalid item type';
     if (!Number.isInteger(item.quantity) || item.quantity <= 0) {
       return `Invalid quantity for ${item.name}`;
     }

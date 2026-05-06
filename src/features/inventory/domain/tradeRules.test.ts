@@ -10,6 +10,9 @@ describe('trade rules', () => {
     expect(
       validateTradeItems([{ id: 'item', name: 'Item', type: 'ingredient', quantity: 0 }])
     ).toMatch(/Invalid quantity/);
+    expect(
+      validateTradeItems([{ id: 'item', name: 'Item', type: 'gold', quantity: 1 } as never])
+    ).toBe('Invalid item type');
   });
 
   it('calculates addable quantities', () => {

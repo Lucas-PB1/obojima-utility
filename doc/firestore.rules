@@ -65,9 +65,11 @@ service cloud.firestore {
 
     function selfUserUpdateFields() {
       return [
+        'uid',
         'email',
         'displayName',
         'photoURL',
+        'role',
         'lastLogin',
         'updatedAt',
         'settings'
@@ -81,10 +83,24 @@ service cloud.firestore {
         request.resource.data.role == 'user';
     }
 
-    function validSelfUserUpdate() {
+    function validSelfUidUpdate(userId) {
+      return (
+        ('uid' in resource.data && request.resource.data.uid == resource.data.uid) ||
+        (!('uid' in resource.data) && request.resource.data.uid == userId)
+      );
+    }
+
+    function validSelfRoleUpdate() {
+      return (
+        ('role' in resource.data && request.resource.data.role == resource.data.role) ||
+        (!('role' in resource.data) && request.resource.data.role == 'user')
+      );
+    }
+
+    function validSelfUserUpdate(userId) {
       return request.resource.data.diff(resource.data).affectedKeys().hasOnly(selfUserUpdateFields()) &&
-        request.resource.data.uid == resource.data.uid &&
-        request.resource.data.role == resource.data.role;
+        validSelfUidUpdate(userId) &&
+        validSelfRoleUpdate();
     }
 
     function publicProfileFields() {
@@ -137,10 +153,16 @@ service cloud.firestore {
         request.resource.data.read == true;
     }
 
+    function canReadChatMessages(chatId) {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/chats/$(chatId)) &&
+        isParticipant(get(/databases/$(database)/documents/chats/$(chatId)).data.participants);
+    }
+
     match /users/{userId} {
       allow read: if canAccessUser(userId);
       allow create: if validSelfUserCreate(userId) || isAdmin();
-      allow update: if (isSelf(userId) && validSelfUserUpdate()) || isAdmin();
+      allow update: if (isSelf(userId) && validSelfUserUpdate(userId)) || isAdmin();
       allow delete: if isAdmin();
 
       match /collectedIngredients/{ingredientId} {
@@ -201,11 +223,7 @@ service cloud.firestore {
       allow delete: if isAdmin();
 
       match /messages/{messageId} {
-        // Usa senderId/receiverId no documento (evita get() no chat e falhas em queries).
-        allow read: if signedIn() && (
-          request.auth.uid == resource.data.senderId ||
-          request.auth.uid == resource.data.receiverId
-        );
+        allow read: if canReadChatMessages(chatId);
         allow create, update, delete: if isAdmin();
       }
     }

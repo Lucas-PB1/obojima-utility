@@ -77,11 +77,27 @@ export async function assertNoBlockBetween(uid1: string, uid2: string): Promise<
 
 export async function assertActiveFriendship(uid1: string, uid2: string): Promise<void> {
   const friendshipSnap = await adminDb.collection('friends').doc(getFriendshipId(uid1, uid2)).get();
-  if (!friendshipSnap.exists) {
+  let friendshipData = friendshipSnap.exists ? friendshipSnap.data() : null;
+
+  if (!friendshipData) {
+    const legacySnap = await adminDb
+      .collection('friends')
+      .where('participants', 'array-contains', uid1)
+      .limit(100)
+      .get();
+    const legacyDoc = legacySnap.docs.find((doc) => {
+      const participants = doc.data()?.participants || [];
+      return participants.includes(uid1) && participants.includes(uid2);
+    });
+
+    friendshipData = legacyDoc?.data() || null;
+  }
+
+  if (!friendshipData) {
     throw new Error('Esta ação exige amizade ativa');
   }
 
-  const participants = friendshipSnap.data()?.participants || [];
+  const participants = friendshipData.participants || [];
   if (!participants.includes(uid1) || !participants.includes(uid2)) {
     throw new Error('Amizade inválida');
   }
