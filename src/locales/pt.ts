@@ -522,18 +522,20 @@ export const pt = {
   'social.blocked.empty': 'Você não bloqueou ninguém.',
   'social.blocked.since': 'Bloqueado em',
   'social.blocked.unblock': 'Desbloquear',
-  'social.push.title': 'Ative as notificações para usar o Social',
+  'social.push.title': 'Notificações do Social',
   'social.push.enable': 'Ativar notificações',
   'social.push.status.checking': 'Verificando a configuração de push...',
-  'social.push.status.unsupported': 'Este navegador não suporta push notifications.',
+  'social.push.status.unsupported':
+    'Este navegador não suporta push, mas o Social continua funcionando aqui dentro.',
   'social.push.status.missing-config':
-    'Configure NEXT_PUBLIC_FIREBASE_VAPID_KEY para liberar o Social.',
+    'Push não está configurado no servidor. Mensagens, trocas e notificações internas continuam funcionando.',
   'social.push.status.permission-required':
-    'O Social usa push para avisar sobre mensagens, pedidos e trocas.',
+    'Ative push se quiser alertas do navegador. O Social funciona mesmo sem isso.',
   'social.push.status.denied':
-    'A permissão de notificações foi bloqueada no navegador. Libere nas configurações do site.',
+    'A permissão de notificações foi bloqueada no navegador. Você ainda receberá notificações na aba Social.',
   'social.push.status.ready': 'Push configurado.',
-  'social.push.status.error': 'Não foi possível ativar push. Tente novamente.',
+  'social.push.status.error':
+    'Não foi possível ativar push. Você ainda pode usar mensagens, trocas e notificações internas.',
   'social.trade.button': 'Trocar Item',
   'social.trade.title': 'Enviar Item',
   'social.trade.selectItem': 'Selecione o Item',

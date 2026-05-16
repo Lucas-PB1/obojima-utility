@@ -48,9 +48,42 @@ export function useUserIngredients(userId: string | undefined) {
       return;
     }
     try {
-      await firebaseStorageService.updateCollectedIngredient(id, { quantity: newQty }, userId);
-      setIngredients((prev) => prev.map((i) => (i.id === id ? { ...i, quantity: newQty } : i)));
+      await firebaseStorageService.updateCollectedIngredient(
+        id,
+        { quantity: newQty, used: false, usedAt: null },
+        userId
+      );
+      setIngredients((prev) =>
+        prev.map((i) => (i.id === id ? { ...i, quantity: newQty, used: false, usedAt: null } : i))
+      );
     } catch (error) {
+      if (firebaseStorageService.isMissingDocumentError(error)) {
+        const staleIngredient = ingredients.find((item) => item.id === id);
+
+        if (staleIngredient) {
+          try {
+            await firebaseStorageService.addCollectedIngredient(
+              {
+                ...staleIngredient,
+                id: '',
+                quantity: newQty,
+                collectedAt: new Date(),
+                used: false,
+                usedAt: undefined
+              },
+              userId
+            );
+
+            const updatedIngredients = await firebaseStorageService.getCollectedIngredients(userId);
+            setIngredients(updatedIngredients);
+          } catch (recreateError) {
+            console.error('Error recreating missing ingredient', recreateError);
+          }
+
+          return;
+        }
+      }
+
       console.error('Error updating quantity', error);
     }
   };

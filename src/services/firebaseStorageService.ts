@@ -48,6 +48,15 @@ class FirebaseStorageService {
     );
   }
 
+  isMissingDocumentError(error: unknown): boolean {
+    if (!error || typeof error !== 'object') return false;
+
+    const code = 'code' in error ? String(error.code) : '';
+    const message = 'message' in error ? String(error.message) : '';
+
+    return code === 'not-found' || message.includes('No document to update');
+  }
+
   private getCollectedIngredientsPath(uid?: string): string {
     const userId = uid || this.getUserId();
     if (!userId) throw new Error('Usuário não autenticado');
@@ -180,7 +189,8 @@ class FirebaseStorageService {
                     ...item,
                     quantity: item.quantity + ingredient.quantity,
                     collectedAt: new Date(),
-                    used: false
+                    used: false,
+                    usedAt: undefined
                   }
                 : item
             )
@@ -262,7 +272,11 @@ class FirebaseStorageService {
 
       await updateDoc(ingredientRef, updateData);
     } catch (error) {
-      logger.error('Erro ao atualizar ingrediente coletado:', error);
+      if (this.isMissingDocumentError(error)) {
+        logger.warn('Ingrediente coletado ausente ao atualizar:', { id, uid });
+      } else {
+        logger.error('Erro ao atualizar ingrediente coletado:', error);
+      }
       throw error;
     }
   }

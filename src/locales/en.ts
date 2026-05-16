@@ -521,17 +521,20 @@ export const en = {
   'social.blocked.empty': 'You have not blocked anyone.',
   'social.blocked.since': 'Blocked on',
   'social.blocked.unblock': 'Unblock',
-  'social.push.title': 'Enable notifications to use Social',
+  'social.push.title': 'Social notifications',
   'social.push.enable': 'Enable notifications',
   'social.push.status.checking': 'Checking push setup...',
-  'social.push.status.unsupported': 'This browser does not support push notifications.',
-  'social.push.status.missing-config': 'Set NEXT_PUBLIC_FIREBASE_VAPID_KEY to unlock Social.',
+  'social.push.status.unsupported':
+    'This browser does not support push, but Social still works in the app.',
+  'social.push.status.missing-config':
+    'Push is not configured on the server. Messages, trades, and in-app notifications still work.',
   'social.push.status.permission-required':
-    'Social uses push for messages, friend requests, and trades.',
+    'Enable push if you want browser alerts. Social works without it.',
   'social.push.status.denied':
-    'Notification permission is blocked in the browser. Allow it in site settings.',
+    'Notification permission is blocked in the browser. You will still receive notifications inside Social.',
   'social.push.status.ready': 'Push is configured.',
-  'social.push.status.error': 'Could not enable push. Try again.',
+  'social.push.status.error':
+    'Could not enable push. You can still use messages, trades, and in-app notifications.',
   'social.trade.button': 'Trade Item',
   'social.trade.title': 'Send Item',
   'social.trade.selectItem': 'Select Item',

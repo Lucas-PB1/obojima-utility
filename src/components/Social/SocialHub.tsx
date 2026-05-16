@@ -44,16 +44,7 @@ export function SocialHub() {
     handleStartChat
   } = useSocialHub();
 
-  if (pushStatus !== 'ready' && activeTab !== 'chat') {
-    return (
-      <PushNotificationGate
-        status={pushStatus}
-        error={pushError}
-        loading={pushLoading}
-        onEnable={handleEnablePush}
-      />
-    );
-  }
+  const showPushPrompt = pushStatus !== 'ready' && activeTab !== 'chat';
 
   const renderContent = () => {
     if (activeTab === 'chat' && activeChatFriend) {
@@ -87,6 +78,15 @@ export function SocialHub() {
 
   return (
     <div className="space-y-6">
+      {showPushPrompt && (
+        <PushNotificationGate
+          status={pushStatus}
+          error={pushError}
+          loading={pushLoading}
+          onEnable={handleEnablePush}
+        />
+      )}
+
       {activeTab !== 'chat' && (
         <div className="mx-auto grid w-full max-w-4xl grid-cols-2 gap-2 rounded-lg bg-white/5 p-1 sm:grid-cols-3 lg:grid-cols-6">
           {tabs.map(({ id, icon: Icon }) => {

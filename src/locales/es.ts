@@ -525,18 +525,20 @@ export const es = {
   'social.blocked.empty': 'No has bloqueado a nadie.',
   'social.blocked.since': 'Bloqueado el',
   'social.blocked.unblock': 'Desbloquear',
-  'social.push.title': 'Activa las notificaciones para usar Social',
+  'social.push.title': 'Notificaciones de Social',
   'social.push.enable': 'Activar notificaciones',
   'social.push.status.checking': 'Verificando la configuración de push...',
-  'social.push.status.unsupported': 'Este navegador no soporta notificaciones push.',
+  'social.push.status.unsupported':
+    'Este navegador no soporta push, pero Social sigue funcionando dentro de la app.',
   'social.push.status.missing-config':
-    'Configura NEXT_PUBLIC_FIREBASE_VAPID_KEY para desbloquear Social.',
+    'Push no está configurado en el servidor. Los mensajes, intercambios y notificaciones internas siguen funcionando.',
   'social.push.status.permission-required':
-    'Social usa push para mensajes, solicitudes e intercambios.',
+    'Activa push si quieres alertas del navegador. Social funciona sin eso.',
   'social.push.status.denied':
-    'El permiso de notificaciones está bloqueado en el navegador. Actívalo en la configuración del sitio.',
+    'El permiso de notificaciones está bloqueado en el navegador. Aun así recibirás notificaciones dentro de Social.',
   'social.push.status.ready': 'Push configurado.',
-  'social.push.status.error': 'No se pudo activar push. Inténtalo de nuevo.',
+  'social.push.status.error':
+    'No se pudo activar push. Aun así puedes usar mensajes, intercambios y notificaciones internas.',
   'social.trade.button': 'Intercambiar Ítem',
   'social.trade.title': 'Enviar Ítem',
   'social.trade.selectItem': 'Seleccionar Ítem',

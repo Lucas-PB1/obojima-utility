@@ -152,9 +152,9 @@ export interface CollectedIngredient {
   quantity: number;
   collectedAt: Date;
   used: boolean;
-  usedAt?: Date;
+  usedAt?: Date | null;
   forageAttemptId: string;
-  [key: string]: string | number | boolean | Date | object | undefined;
+  [key: string]: string | number | boolean | Date | object | null | undefined;
 }
 
 export interface Potion {
