@@ -1,274 +1,316 @@
 'use client';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { UserProfile } from '@/types/auth';
+import { UserReport } from '@/types/social';
 import { adminService } from '@/services/adminService';
 import { logger } from '@/utils/logger';
-import { AdminDashboardState, AdminUserDetails } from '../types';
+import {
+  AdminAuditEntry,
+  AdminDashboardState,
+  AdminGrantPayload,
+  AdminItemType,
+  AdminReportRow,
+  AdminUserDetails,
+  AdminUserStatus
+} from '../types';
 import { adminDemoDashboard } from '../data/demoData';
-import { clampAdminQuantity, getAdminUserStatus } from '../domain/adminRules';
+import { buildUsersCsv, getAdminUserStatus } from '../domain/adminRules';
+
+export type AdminSection = 'overview' | 'users' | 'reports' | 'audit' | 'maintenance';
+export type AdminUserSort = 'name' | 'recent' | 'lastLogin';
+
+export interface AdminToast {
+  id: number;
+  tone: 'success' | 'error';
+  message: string;
+}
+
+function timeOf(value?: string) {
+  const time = value ? new Date(value).getTime() : 0;
+  return Number.isNaN(time) ? 0 : time;
+}
 
 export function useAdminDashboard() {
+  const [section, setSection] = useState<AdminSection>('overview');
   const [dashboard, setDashboard] = useState<AdminDashboardState>(adminDemoDashboard);
-  const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
+  const [reports, setReports] = useState<AdminReportRow[]>([]);
+  const [audit, setAudit] = useState<AdminAuditEntry[]>([]);
   const [details, setDetails] = useState<AdminUserDetails | null>(null);
+  const [openUid, setOpenUid] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [detailsLoading, setDetailsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [toasts, setToasts] = useState<AdminToast[]>([]);
   const [query, setQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'disabled' | 'orphaned'>(
-    'all'
-  );
+  const [statusFilter, setStatusFilter] = useState<'all' | AdminUserStatus>('all');
+  const [roleFilter, setRoleFilter] = useState<'all' | 'admin' | 'user'>('all');
+  const [sort, setSort] = useState<AdminUserSort>('name');
+  const toastId = useRef(0);
 
   const mode = dashboard.mode;
+  const currentUid = adminService.getCurrentUid();
 
-  const refresh = useCallback(async () => {
+  const notify = useCallback((tone: AdminToast['tone'], message: string) => {
+    const id = ++toastId.current;
+    setToasts((current) => [...current, { id, tone, message }]);
+    setTimeout(() => setToasts((current) => current.filter((toast) => toast.id !== id)), 5000);
+  }, []);
+
+  const dismissToast = useCallback((id: number) => {
+    setToasts((current) => current.filter((toast) => toast.id !== id));
+  }, []);
+
+  const loadAll = useCallback(async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      setError(null);
-      setDashboard(await adminService.getDashboard());
-    } catch (err) {
-      logger.error('Error loading admin dashboard:', err);
-      setError(err instanceof Error ? err.message : 'Falha ao carregar admin');
+      const [nextDashboard, nextReports, nextAudit] = await Promise.all([
+        adminService.getDashboard(),
+        adminService.getReports().catch((error) => {
+          logger.error('Error loading reports:', error);
+          return [] as AdminReportRow[];
+        }),
+        adminService.getAudit().catch((error) => {
+          logger.error('Error loading audit:', error);
+          return [] as AdminAuditEntry[];
+        })
+      ]);
+      setDashboard(nextDashboard);
+      setReports(nextReports);
+      setAudit(nextAudit);
+    } catch (error) {
+      logger.error('Error loading admin dashboard:', error);
+      notify('error', error instanceof Error ? error.message : 'Falha ao carregar admin');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [notify]);
 
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    void loadAll();
+  }, [loadAll]);
 
-  const openUser = useCallback(async (user: UserProfile) => {
-    setSelectedUser(user);
-    setDetails(null);
+  const loadDetails = useCallback(async (uid: string) => {
     setDetailsLoading(true);
     try {
-      setDetails(await adminService.getUserDetails(user.uid));
-    } catch (err) {
-      logger.error('Error loading admin user details:', err);
-      setError(err instanceof Error ? err.message : 'Falha ao carregar detalhes');
+      setDetails(await adminService.getUserDetails(uid));
     } finally {
       setDetailsLoading(false);
     }
   }, []);
 
+  const openUser = useCallback(
+    async (uid: string) => {
+      setOpenUid(uid);
+      setDetails(null);
+      try {
+        await loadDetails(uid);
+      } catch (error) {
+        logger.error('Error loading admin user details:', error);
+        notify('error', error instanceof Error ? error.message : 'Falha ao carregar detalhes');
+        setOpenUid(null);
+      }
+    },
+    [loadDetails, notify]
+  );
+
   const closeUser = useCallback(() => {
-    setSelectedUser(null);
+    setOpenUid(null);
     setDetails(null);
   }, []);
 
-  const syncUsers = useCallback(async () => {
-    try {
-      setLoading(true);
-      await adminService.syncUsers();
-      await refresh();
-    } catch (err) {
-      logger.error('Error syncing users:', err);
-      setError(err instanceof Error ? err.message : 'Falha ao sincronizar usuários');
-    } finally {
-      setLoading(false);
-    }
-  }, [refresh]);
-
-  const updateUser = useCallback(async (uid: string, updates: Partial<UserProfile>) => {
-    try {
-      await adminService.updateUser(uid, updates);
-      setDashboard((prev) => ({
-        ...prev,
-        users: prev.users.map((user) => (user.uid === uid ? { ...user, ...updates } : user))
-      }));
-      setSelectedUser((prev) => (prev?.uid === uid ? { ...prev, ...updates } : prev));
-      setDetails((prev) =>
-        prev?.user.uid === uid ? { ...prev, user: { ...prev.user, ...updates } } : prev
-      );
-    } catch (err) {
-      logger.error('Error updating user:', err);
-      setError(err instanceof Error ? err.message : 'Falha ao atualizar usuário');
-    }
-  }, []);
-
-  const updateUserGold = useCallback(async (uid: string, gold: number) => {
-    try {
-      await adminService.updateUserGold(uid, gold);
-      setDetails((prev) => (prev?.user.uid === uid ? { ...prev, gold: Math.max(0, gold) } : prev));
-    } catch (err) {
-      logger.error('Error updating user gold:', err);
-      setError(err instanceof Error ? err.message : 'Falha ao atualizar gold');
-    }
-  }, []);
-
-  const deleteUser = useCallback(
-    async (uid: string) => {
+  /**
+   * Runs an admin action with a busy flag, a visible result message and a
+   * refresh of whatever the action may have changed.
+   */
+  const run = useCallback(
+    async (
+      key: string,
+      action: () => Promise<unknown>,
+      success: string,
+      options: { reloadDetails?: string | null; reloadAll?: boolean } = {}
+    ): Promise<boolean> => {
+      setBusy(key);
       try {
-        await adminService.deleteUser(uid);
-        setDashboard((prev) => ({
-          ...prev,
-          users: prev.users.filter((user) => user.uid !== uid)
-        }));
+        await action();
+        notify('success', success);
+        await Promise.all([
+          options.reloadAll === false ? Promise.resolve() : loadAll(),
+          options.reloadDetails ? loadDetails(options.reloadDetails) : Promise.resolve()
+        ]);
+        return true;
+      } catch (error) {
+        logger.error(`Admin action ${key} failed:`, error);
+        notify('error', error instanceof Error ? error.message : 'A ação falhou');
+        return false;
+      } finally {
+        setBusy(null);
+      }
+    },
+    [loadAll, loadDetails, notify]
+  );
+
+  const actions = useMemo(
+    () => ({
+      saveProfile: (uid: string, updates: Partial<UserProfile> & { gold?: number }) =>
+        run('profile', () => adminService.updateUser(uid, updates), 'Perfil salvo', {
+          reloadDetails: uid
+        }),
+      setDisabled: (uid: string, disabled: boolean) =>
+        run(
+          'disable',
+          () => adminService.updateUser(uid, { disabled }),
+          disabled ? 'Conta desativada e sessões encerradas' : 'Conta reativada',
+          { reloadDetails: uid }
+        ),
+      revokeSessions: (uid: string) =>
+        run(
+          'sessions',
+          () => adminService.revokeSessions(uid),
+          'Sessões encerradas em todos os dispositivos',
+          { reloadDetails: uid, reloadAll: false }
+        ),
+      notifyUser: (uid: string, title: string, message: string) =>
+        run('notify', () => adminService.notifyUser(uid, title, message), 'Notificação enviada', {
+          reloadDetails: uid,
+          reloadAll: false
+        }),
+      deleteUser: async (uid: string) => {
+        const ok = await run('delete', () => adminService.deleteUser(uid), 'Conta excluída');
+        if (ok) closeUser();
+        return ok;
+      },
+      grantItem: (uid: string, payload: AdminGrantPayload) =>
+        run(
+          'grant',
+          () => adminService.grantItem(uid, payload),
+          `${payload.quantity}x ${payload.item.nome} concedido`,
+          { reloadDetails: uid }
+        ),
+      setItemQuantity: (uid: string, type: AdminItemType, itemId: string, quantity: number) =>
+        run(
+          `item-${itemId}`,
+          () => adminService.setItemQuantity(uid, type, itemId, quantity),
+          'Quantidade atualizada',
+          { reloadDetails: uid }
+        ),
+      deleteItem: (uid: string, type: AdminItemType, itemId: string) =>
+        run(`item-${itemId}`, () => adminService.deleteItem(uid, type, itemId), 'Item removido', {
+          reloadDetails: uid
+        }),
+      setReportStatus: (reportId: string, status: UserReport['status'], note?: string) =>
+        run(
+          `report-${reportId}`,
+          () => adminService.updateReportStatus(reportId, status, note),
+          status === 'open'
+            ? 'Denúncia reaberta'
+            : status === 'reviewed'
+              ? 'Denúncia marcada como revisada'
+              : 'Denúncia dispensada',
+          { reloadDetails: openUid }
+        ),
+      syncUsers: async () => {
+        setBusy('sync');
+        try {
+          const message = await adminService.syncUsers();
+          notify('success', message);
+          await loadAll();
+        } catch (error) {
+          notify('error', error instanceof Error ? error.message : 'Falha ao sincronizar');
+        } finally {
+          setBusy(null);
+        }
+      },
+      runMaintenance: async (key: 'profiles' | 'chats') => {
+        setBusy(`maintenance-${key}`);
+        try {
+          const message = await adminService.runMaintenance(key);
+          notify('success', message);
+          await loadAll();
+        } catch (error) {
+          notify('error', error instanceof Error ? error.message : 'Falha na manutenção');
+        } finally {
+          setBusy(null);
+        }
+      },
+      resetDevData: async () => {
+        adminService.resetDevData();
+        notify('success', 'Dados de demonstração restaurados');
         closeUser();
-      } catch (err) {
-        logger.error('Error deleting user:', err);
-        setError(err instanceof Error ? err.message : 'Falha ao excluir usuário');
+        await loadAll();
       }
-    },
-    [closeUser]
-  );
-
-  const updateReportStatus = useCallback(
-    async (reportId: string, status: 'open' | 'reviewed' | 'dismissed') => {
-      try {
-        await adminService.updateReportStatus(reportId, status);
-        setDetails((prev) =>
-          prev
-            ? {
-                ...prev,
-                social: {
-                  ...prev.social,
-                  reports: prev.social.reports.map((report) =>
-                    report.id === reportId ? { ...report, status } : report
-                  )
-                }
-              }
-            : prev
-        );
-      } catch (err) {
-        logger.error('Error updating report status:', err);
-        setError(err instanceof Error ? err.message : 'Falha ao atualizar denúncia');
-      }
-    },
-    []
-  );
-
-  const updateIngredientQuantity = useCallback(
-    async (itemId: string, quantity: number) => {
-      if (!details) return;
-      const safeQuantity = clampAdminQuantity(quantity);
-      try {
-        await adminService.updateIngredientQuantity(details.user.uid, itemId, safeQuantity);
-        setDetails((prev) =>
-          prev
-            ? {
-                ...prev,
-                ingredients: prev.ingredients.map((item) =>
-                  item.id === itemId ? { ...item, quantity: safeQuantity } : item
-                )
-              }
-            : prev
-        );
-      } catch (err) {
-        logger.error('Error updating ingredient quantity:', err);
-        setError(err instanceof Error ? err.message : 'Falha ao atualizar ingrediente');
-      }
-    },
-    [details]
-  );
-
-  const deleteIngredient = useCallback(
-    async (itemId: string) => {
-      if (!details) return;
-      try {
-        await adminService.deleteIngredient(details.user.uid, itemId);
-        setDetails((prev) =>
-          prev
-            ? { ...prev, ingredients: prev.ingredients.filter((item) => item.id !== itemId) }
-            : prev
-        );
-      } catch (err) {
-        logger.error('Error deleting ingredient:', err);
-        setError(err instanceof Error ? err.message : 'Falha ao remover ingrediente');
-      }
-    },
-    [details]
-  );
-
-  const updatePotionQuantity = useCallback(
-    async (potionId: string, current: number, change: number) => {
-      if (!details) return;
-      try {
-        await adminService.updatePotionQuantity(details.user.uid, potionId, current, change);
-        setDetails((prev) =>
-          prev
-            ? {
-                ...prev,
-                potions: prev.potions
-                  .map((potion) => {
-                    if (potion.id !== potionId) return potion;
-                    const nextQuantity = current + change;
-                    return {
-                      ...potion,
-                      quantity: nextQuantity <= 0 ? 0 : clampAdminQuantity(nextQuantity)
-                    };
-                  })
-                  .filter((potion) => potion.quantity > 0)
-              }
-            : prev
-        );
-      } catch (err) {
-        logger.error('Error updating potion quantity:', err);
-        setError(err instanceof Error ? err.message : 'Falha ao atualizar poção');
-      }
-    },
-    [details]
-  );
-
-  const deletePotion = useCallback(
-    async (potionId: string) => {
-      if (!details) return;
-      try {
-        await adminService.deletePotion(details.user.uid, potionId);
-        setDetails((prev) =>
-          prev
-            ? { ...prev, potions: prev.potions.filter((potion) => potion.id !== potionId) }
-            : prev
-        );
-      } catch (err) {
-        logger.error('Error deleting potion:', err);
-        setError(err instanceof Error ? err.message : 'Falha ao remover poção');
-      }
-    },
-    [details]
+    }),
+    [run, notify, loadAll, closeUser, openUid]
   );
 
   const users = useMemo(() => {
     const term = query.trim().toLowerCase();
-    return dashboard.users.filter((user) => {
-      const matchesQuery =
-        !term ||
-        user.displayName?.toLowerCase().includes(term) ||
-        user.email?.toLowerCase().includes(term) ||
-        user.uid.toLowerCase().includes(term) ||
-        user.role.toLowerCase().includes(term);
-      const matchesStatus = statusFilter === 'all' || getAdminUserStatus(user) === statusFilter;
-      return matchesQuery && matchesStatus;
-    });
-  }, [dashboard.users, query, statusFilter]);
+    return dashboard.users
+      .filter((user) => {
+        const matchesQuery =
+          !term ||
+          user.displayName?.toLowerCase().includes(term) ||
+          user.email?.toLowerCase().includes(term) ||
+          user.uid.toLowerCase().includes(term);
+        const matchesStatus = statusFilter === 'all' || getAdminUserStatus(user) === statusFilter;
+        const matchesRole = roleFilter === 'all' || user.role === roleFilter;
+        return matchesQuery && matchesStatus && matchesRole;
+      })
+      .sort((a, b) => {
+        if (sort === 'recent') return timeOf(b.createdAt) - timeOf(a.createdAt);
+        if (sort === 'lastLogin') return timeOf(b.lastLogin) - timeOf(a.lastLogin);
+        return (a.displayName || a.email || '').localeCompare(b.displayName || b.email || '');
+      });
+  }, [dashboard.users, query, statusFilter, roleFilter, sort]);
+
+  const exportUsersCsv = useCallback(() => {
+    const csv = buildUsersCsv(users);
+    // BOM so Excel opens accented names correctly.
+    const blob = new Blob(['﻿', csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `obojima-usuarios-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    notify('success', `${users.length} usuários exportados`);
+  }, [users, notify]);
+
+  const openReports = useMemo(
+    () => reports.filter((report) => report.status === 'open'),
+    [reports]
+  );
 
   return {
+    section,
+    setSection,
+    mode,
+    currentUid,
     dashboard,
     users,
-    selectedUser,
+    reports,
+    openReports,
+    audit,
     details,
-    mode,
+    openUid,
     loading,
     detailsLoading,
-    error,
+    busy,
+    toasts,
+    dismissToast,
     query,
-    statusFilter,
     setQuery,
+    statusFilter,
     setStatusFilter,
-    setError,
-    refresh,
+    roleFilter,
+    setRoleFilter,
+    sort,
+    setSort,
+    refresh: loadAll,
     openUser,
     closeUser,
-    syncUsers,
-    updateUser,
-    updateUserGold,
-    deleteUser,
-    updateReportStatus,
-    updateIngredientQuantity,
-    deleteIngredient,
-    updatePotionQuantity,
-    deletePotion,
-    resetDevData: adminService.resetDevData
+    exportUsersCsv,
+    actions
   };
 }
+
+export type AdminDashboardModel = ReturnType<typeof useAdminDashboard>;

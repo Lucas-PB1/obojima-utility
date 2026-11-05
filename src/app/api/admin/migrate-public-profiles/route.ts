@@ -3,10 +3,11 @@ import { adminAuth, adminDb } from '@/config/firebase-admin';
 import { logger } from '@/utils/logger';
 import { Timestamp } from 'firebase-admin/firestore';
 import { apiAuthErrorResponse, requireAdmin } from '@/lib/server/apiAuth';
+import { logAdminAction } from '@/lib/server/adminAudit';
 
 export async function POST(req: NextRequest) {
   try {
-    await requireAdmin(req);
+    const admin = await requireAdmin(req);
 
     const listUsersResult = await adminAuth.listUsers();
     const authUsers = listUsersResult.users;
@@ -34,10 +35,11 @@ export async function POST(req: NextRequest) {
 
     await batch.commit();
 
-    return NextResponse.json({
-      success: true,
-      message: `Migração completa: ${updatedCount} perfis públicos sincronizados.`
-    });
+    const message = `Migração completa: ${updatedCount} perfis públicos sincronizados.`;
+
+    await logAdminAction(admin, 'maintenance.run', `Migração de perfis públicos: ${message}`);
+
+    return NextResponse.json({ success: true, message });
   } catch (error) {
     const authResponse = apiAuthErrorResponse(error);
     if (authResponse) return authResponse;

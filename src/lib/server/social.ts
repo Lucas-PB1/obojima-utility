@@ -21,6 +21,8 @@ export interface CreateSocialNotificationInput {
   type: SocialNotificationType;
   actorId?: string | null;
   actorName?: string | null;
+  /** Overrides the default title for the notification type (used by admin messages). */
+  title?: string;
   body?: string;
   link?: string | null;
   data?: Record<string, string>;
@@ -134,6 +136,7 @@ export async function createSocialNotification({
   type,
   actorId = null,
   actorName = null,
+  title,
   body,
   link = null,
   data = {}
@@ -145,7 +148,7 @@ export async function createSocialNotification({
     actorId,
     actorName,
     type,
-    title: copy.title,
+    title: title || copy.title,
     body: copy.body,
     link,
     read: false,
@@ -177,7 +180,7 @@ export async function createSocialNotification({
     const response = await adminMessaging.sendEachForMulticast({
       tokens: tokenDocs.map((entry) => entry.token),
       notification: {
-        title: copy.title,
+        title: title || copy.title,
         body: copy.body
       },
       data: {

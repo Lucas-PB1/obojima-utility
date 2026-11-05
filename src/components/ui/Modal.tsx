@@ -12,6 +12,7 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
+  const titleId = React.useId();
   React.useEffect(() => {
     if (!isOpen) return;
 
@@ -55,6 +56,9 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
           <div className="flex min-h-full items-end justify-center p-2 sm:items-center sm:p-4">
             <motion.div
               className={`relative w-full ${sizeClasses[size]}`}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={titleId}
               initial={{ opacity: 0, y: 16, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
@@ -63,7 +67,9 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
               <div className="relative max-h-[96vh] overflow-hidden rounded-lg bg-modal-bg shadow-[var(--shadow-raised)] border border-transparent ring-1 ring-inset ring-[color:var(--hairline-strong)]">
                 <div className="bg-primary/10 px-5 py-4 subtle-divider-bottom">
                   <div className="flex items-center justify-between gap-4">
-                    <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+                    <h3 id={titleId} className="text-lg font-semibold text-foreground">
+                      {title}
+                    </h3>
                     <button
                       onClick={onClose}
                       className="text-totoro-blue hover:text-totoro-blue/80 transition-colors p-2 rounded-lg hover:bg-totoro-blue/10 focus:outline-none focus:ring-4 focus:ring-totoro-blue/15"

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { adminDb } from '@/config/firebase-admin';
 import { apiAuthErrorResponse, requireAdmin } from '@/lib/server/apiAuth';
+import { logAdminAction } from '@/lib/server/adminAudit';
 import { logger } from '@/utils/logger';
 
 function participantsFromChatId(chatId: string): string[] {
@@ -11,7 +12,7 @@ function participantsFromChatId(chatId: string): string[] {
 
 export async function POST(req: NextRequest) {
   try {
-    await requireAdmin(req);
+    const admin = await requireAdmin(req);
 
     const snapshot = await adminDb.collection('chats').get();
     let updatedCount = 0;
@@ -30,10 +31,11 @@ export async function POST(req: NextRequest) {
       await batch.commit();
     }
 
-    return NextResponse.json({
-      success: true,
-      message: `Backfill completo: ${updatedCount} chats atualizados.`
-    });
+    const message = `Backfill completo: ${updatedCount} chats atualizados.`;
+
+    await logAdminAction(admin, 'maintenance.run', `Correção de participantes de chat: ${message}`);
+
+    return NextResponse.json({ success: true, message });
   } catch (error) {
     const authResponse = apiAuthErrorResponse(error);
     if (authResponse) return authResponse;

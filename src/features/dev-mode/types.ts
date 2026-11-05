@@ -1,4 +1,5 @@
 import { UserProfile } from '@/types/auth';
+import type { AdminAuditEntry } from '@/features/admin/types';
 import {
   CollectedIngredient,
   CreatedPotion,
@@ -49,4 +50,6 @@ export interface DevState {
   blockedByUser: Record<string, BlockedUser[]>;
   reports: UserReport[];
   trades: TradeTransaction[];
+  /** Admin actions recorded in demo mode (optional so older saved states still load). */
+  adminAudit?: AdminAuditEntry[];
 }

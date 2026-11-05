@@ -3,13 +3,22 @@ import { adminAuth, adminDb } from '@/config/firebase-admin';
 import { AdminLogic } from '@/lib/admin/adminLogic';
 import { logger } from '@/utils/logger';
 import { apiAuthErrorResponse, requireAdmin } from '@/lib/server/apiAuth';
+import { logAdminAction } from '@/lib/server/adminAudit';
+
+const BATCH_LIMIT = 400;
 
 export async function POST(req: NextRequest) {
   try {
-    await requireAdmin(req);
+    const admin = await requireAdmin(req);
 
-    const listUsersResult = await adminAuth.listUsers();
-    const authUsers = listUsersResult.users;
+    // listUsers() returns at most 1000 accounts per page; walk every page.
+    const authUsers: Awaited<ReturnType<typeof adminAuth.listUsers>>['users'] = [];
+    let pageToken: string | undefined;
+    do {
+      const page = await adminAuth.listUsers(1000, pageToken);
+      authUsers.push(...page.users);
+      pageToken = page.pageToken;
+    } while (pageToken);
 
     const firestoreSnap = await adminDb.collection('users').get();
     const firestoreUsers = new Map();
@@ -28,8 +37,9 @@ export async function POST(req: NextRequest) {
     }
 
     const authUids = new Set(authUsers.map((u) => u.uid));
-    const batch = adminDb.batch();
     let orphanedCount = 0;
+    let batch = adminDb.batch();
+    let pending = 0;
 
     for (const [uid, data] of firestoreUsers) {
       if (!authUids.has(uid) && data.isAuthActive !== false) {
@@ -38,15 +48,22 @@ export async function POST(req: NextRequest) {
           updatedAt: now
         });
         orphanedCount++;
+        pending++;
+        // A Firestore batch accepts at most 500 writes.
+        if (pending >= BATCH_LIMIT) {
+          await batch.commit();
+          batch = adminDb.batch();
+          pending = 0;
+        }
       }
     }
 
-    if (orphanedCount > 0) await batch.commit();
+    if (pending > 0) await batch.commit();
 
-    return NextResponse.json({
-      success: true,
-      message: `Sync completo: ${createdCount} novos, ${updatedCount} atualizados, ${orphanedCount} órfãos. Total Auth: ${authUsers.length}.`
-    });
+    const message = `Sync completo: ${createdCount} novos, ${updatedCount} atualizados, ${orphanedCount} órfãos. Total Auth: ${authUsers.length}.`;
+    await logAdminAction(admin, 'users.sync', message);
+
+    return NextResponse.json({ success: true, message });
   } catch (error) {
     const authResponse = apiAuthErrorResponse(error);
     if (authResponse) return authResponse;
@@ -62,7 +79,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        error: 'Falha ao sincronizar usuários',
+        error: `Falha ao sincronizar usuários: ${errorMessage}`,
         details: errorMessage,
         stack:
           process.env.NODE_ENV === 'development' && error instanceof Error ? error.stack : undefined
