@@ -26,7 +26,7 @@ import {
 } from '@/features/dev-mode';
 
 class FirebaseRecipeService {
-  private recipesUnsubscribe: Unsubscribe | null = null;
+  private activeRecipeListeners = new Set<Unsubscribe>();
 
   private isClient(): boolean {
     return typeof window !== 'undefined';
@@ -130,7 +130,9 @@ class FirebaseRecipeService {
       const recipesRef = collection(db, this.getRecipesPath());
       const q = query(recipesRef, orderBy('createdAt', 'desc'));
 
-      this.recipesUnsubscribe = onSnapshot(
+      // Each subscriber owns its listener; a shared field let one subscriber's
+      // cleanup tear down (or leak) another subscriber's listener.
+      const unsubscribe = onSnapshot(
         q,
         (snapshot) => {
           const recipes = snapshot.docs.map((doc) => {
@@ -149,11 +151,10 @@ class FirebaseRecipeService {
         }
       );
 
+      this.activeRecipeListeners.add(unsubscribe);
       return () => {
-        if (this.recipesUnsubscribe) {
-          this.recipesUnsubscribe();
-          this.recipesUnsubscribe = null;
-        }
+        unsubscribe();
+        this.activeRecipeListeners.delete(unsubscribe);
       };
     } catch (error) {
       logger.error('Erro ao criar subscription de receitas:', error);
@@ -274,10 +275,8 @@ class FirebaseRecipeService {
   }
 
   cleanup(): void {
-    if (this.recipesUnsubscribe) {
-      this.recipesUnsubscribe();
-      this.recipesUnsubscribe = null;
-    }
+    this.activeRecipeListeners.forEach((unsubscribe) => unsubscribe());
+    this.activeRecipeListeners.clear();
   }
 }
 

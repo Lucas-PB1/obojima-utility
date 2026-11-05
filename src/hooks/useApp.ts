@@ -16,6 +16,7 @@ export interface Tab {
   id: TabType;
   label: string;
   icon: ReactNode;
+  badge?: number;
 }
 
 const TABS_CONFIG: Pick<Tab, 'id'>[] = [

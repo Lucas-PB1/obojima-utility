@@ -1,5 +1,7 @@
 import React from 'react';
 import { ChatMessage } from '@/types/social';
+import { useTranslation } from '@/hooks/useTranslation';
+import { formatTime } from '@/lib/formatDate';
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -7,34 +9,22 @@ interface MessageBubbleProps {
 }
 
 export function MessageBubble({ message, isMe }: MessageBubbleProps) {
-  const timestamp = new Date(message.timestamp).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+  const { language } = useTranslation();
 
   return (
-    <div
-      className={`flex ${isMe ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}
-    >
-      <div className="flex flex-col gap-1 max-w-[70%]">
+    <div className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+      <div className={`flex max-w-[82%] flex-col gap-1 sm:max-w-[70%] ${isMe ? 'items-end' : ''}`}>
         <div
-          className={`
-            px-5 py-3 rounded-lg text-sm shadow-[var(--shadow-soft)] backdrop-blur-sm
-            ${
-              isMe
-                ? 'bg-gradient-to-br from-totoro-blue to-blue-500 text-white rounded-br-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.16),var(--shadow-soft)]'
-                : 'bg-white/80 text-totoro-gray rounded-bl-none glass-card'
-            }
-          `}
+          className={`whitespace-pre-wrap break-words rounded-lg px-4 py-2.5 text-sm shadow-[var(--shadow-soft)] ${
+            isMe
+              ? 'rounded-br-none bg-totoro-blue text-white'
+              : 'rounded-bl-none bg-[var(--surface-raised)] text-totoro-gray ring-1 ring-inset ring-[color:var(--hairline)]'
+          }`}
         >
           {message.content}
         </div>
-        <span
-          className={`text-[10px] opacity-60 px-1 ${
-            isMe ? 'text-right text-totoro-gray/80' : 'text-left text-totoro-gray/80'
-          }`}
-        >
-          {timestamp}
+        <span className="px-1 text-[10px] text-totoro-gray/50">
+          {formatTime(message.timestamp, language)}
         </span>
       </div>
     </div>

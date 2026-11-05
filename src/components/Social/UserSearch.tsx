@@ -1,78 +1,132 @@
 import React from 'react';
+import { Check, Clock, Loader2, MessageCircle, Search, UserPlus } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Button, Input, UserAvatar } from '@/components/ui';
-import { useUserSearch } from '@/hooks/useUserSearch';
+import { Button, UserAvatar } from '@/components/ui';
+import { MIN_SEARCH_LENGTH, useUserSearch } from '@/hooks/useUserSearch';
+import { useSocialData } from '@/contexts/SocialContext';
+import { Friend } from '@/types/social';
 
-export function UserSearch() {
+interface UserSearchProps {
+  onChat: (friend: Friend) => void;
+}
+
+export function UserSearch({ onChat }: UserSearchProps) {
   const { t } = useTranslation();
+  const { friends, requests, sentRequests, blockedUsers } = useSocialData();
   const {
     searchTerm,
     setSearchTerm,
     results,
     loading,
     loadingMap,
-    sentRequests,
     error,
-    handleAddFriend
+    handleAddFriend,
+    handleAcceptRequest
   } = useUserSearch();
 
+  const blockedIds = new Set(blockedUsers.map((blocked) => blocked.blockedUserId));
+  const visibleResults = results.filter((user) => !blockedIds.has(user.uid));
+  const term = searchTerm.trim();
+
+  const renderAction = (uid: string) => {
+    const friend = friends.find((item) => item.userId === uid);
+    if (friend) {
+      return (
+        <Button size="sm" variant="outline" onClick={() => onChat(friend)}>
+          <MessageCircle className="h-4 w-4" />
+          <span className="hidden sm:inline">{t('social.search.alreadyFriends')}</span>
+        </Button>
+      );
+    }
+
+    const incoming = requests.find((request) => request.fromUserId === uid);
+    if (incoming) {
+      return (
+        <Button
+          size="sm"
+          variant="success"
+          onClick={() => handleAcceptRequest(uid, incoming.id)}
+          disabled={loadingMap[uid]}
+        >
+          <Check className="h-4 w-4" />
+          {loadingMap[uid] ? '...' : t('social.requests.accept')}
+        </Button>
+      );
+    }
+
+    if (sentRequests.some((request) => request.toUserId === uid)) {
+      return (
+        <span className="flex items-center gap-1.5 rounded-full bg-green-100/80 px-3 py-1.5 text-xs font-bold text-green-700">
+          <Clock className="h-3.5 w-3.5" />
+          {t('social.search.requestSent')}
+        </span>
+      );
+    }
+
+    return (
+      <Button size="sm" onClick={() => handleAddFriend(uid)} disabled={loadingMap[uid]}>
+        <UserPlus className="h-4 w-4" />
+        {loadingMap[uid] ? '...' : t('social.search.addFriend')}
+      </Button>
+    );
+  };
+
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      <div className="flex gap-2">
-        <Input
+    <div className="mx-auto max-w-2xl space-y-4">
+      <div className="relative">
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-totoro-gray/40" />
+        <input
+          type="search"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(String(e))}
+          onChange={(event) => setSearchTerm(event.target.value)}
           placeholder={t('social.search.placeholder')}
-          className="flex-1"
+          aria-label={t('social.search.placeholder')}
+          autoFocus
+          className="h-12 w-full rounded-lg bg-[var(--input-bg)] pl-10 pr-10 text-sm text-totoro-gray shadow-[inset_0_0_0_1px_var(--hairline)] focus:outline-none focus:ring-2 focus:ring-totoro-blue/30"
         />
+        {loading && (
+          <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-totoro-blue" />
+        )}
       </div>
 
-      <div className="space-y-4">
-        {error && (
-          <div className="rounded-lg bg-red-100/80 px-4 py-3 text-sm font-bold text-red-700">
-            {error}
-          </div>
-        )}
+      {error && (
+        <div className="rounded-lg bg-red-100/80 px-4 py-3 text-sm font-bold text-red-700">
+          {error}
+        </div>
+      )}
 
-        {results.length === 0 && !loading && searchTerm.length >= 3 && (
-          <p className="text-center text-totoro-gray/50 italic">{t('social.search.noResults')}</p>
-        )}
+      {term.length > 0 && term.length < MIN_SEARCH_LENGTH && (
+        <p className="text-center text-sm text-totoro-gray/50">
+          {t('social.search.minChars', MIN_SEARCH_LENGTH)}
+        </p>
+      )}
 
-        {results.map((user) => (
+      {term.length === 0 && (
+        <p className="text-center text-sm text-totoro-gray/50">{t('social.search.hint')}</p>
+      )}
+
+      {visibleResults.length === 0 && !loading && !error && term.length >= MIN_SEARCH_LENGTH && (
+        <p className="text-center italic text-totoro-gray/50">{t('social.search.noResults')}</p>
+      )}
+
+      <div className="space-y-2">
+        {visibleResults.map((user) => (
           <div
             key={user.uid}
-            className="glass-panel p-5 flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 hover:shadow-[var(--shadow-raised)]"
+            className="glass-panel flex items-center justify-between gap-3 p-3 sm:p-4"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex min-w-0 items-center gap-3">
               <UserAvatar
                 src={user.photoURL}
                 name={user.displayName}
-                className="relative w-14 h-14 text-2xl shadow-sm ring-2 ring-white/40 group-hover:ring-totoro-blue/30 transition-all duration-300"
-                fallbackClassName="opacity-70 text-xl"
+                className="h-12 w-12 shrink-0"
+                fallbackClassName="text-xl"
               />
-              <div className="flex flex-col">
-                <span className="font-bold text-lg text-totoro-gray group-hover:text-totoro-blue transition-colors duration-300">
-                  {user.displayName || t('admin.users.noName')}
-                </span>
-                <span className="text-sm text-totoro-gray/60">
-                  {t('social.search.privateProfile')}
-                </span>
-              </div>
-            </div>
-            {sentRequests.has(user.uid) ? (
-              <span className="text-xs font-bold text-green-600 bg-green-100/80 px-4 py-1.5 rounded-full shadow-[inset_0_0_0_1px_rgba(var(--success-rgb),0.18)] backdrop-blur-sm">
-                {t('social.search.requestSent')}
+              <span className="truncate font-bold text-totoro-gray">
+                {user.displayName || t('admin.users.noName')}
               </span>
-            ) : (
-              <Button
-                size="sm"
-                onClick={() => handleAddFriend(user.uid)}
-                disabled={loadingMap[user.uid]}
-                className="opacity-90 group-hover:opacity-100 transition-opacity shadow-sm"
-              >
-                {loadingMap[user.uid] ? '...' : t('social.search.addFriend')}
-              </Button>
-            )}
+            </div>
+            <div className="shrink-0">{renderAction(user.uid)}</div>
           </div>
         ))}
       </div>

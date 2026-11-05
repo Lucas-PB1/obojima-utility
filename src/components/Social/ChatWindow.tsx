@@ -1,10 +1,13 @@
 import React from 'react';
+import { ArrowLeft, Loader2, MessageCircleHeart, SendHorizontal } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Friend } from '@/types/social';
 import { authService } from '@/services/authService';
-import { Button, Input, UserAvatar } from '@/components/ui';
+import { UserAvatar } from '@/components/ui';
 import { useChat } from '@/hooks/useChat';
 import { MessageBubble } from '@/components/Social';
+import { formatDayLabel, isSameCalendarDay } from '@/lib/formatDate';
+import { MAX_SOCIAL_MESSAGE_LENGTH } from '@/features/social/domain/socialRules';
 
 interface ChatWindowProps {
   friend: Friend;
@@ -12,82 +15,125 @@ interface ChatWindowProps {
 }
 
 export function ChatWindow({ friend, onClose }: ChatWindowProps) {
-  const { t } = useTranslation();
-  const { messages, sending, error, newMessage, setNewMessage, messagesEndRef, handleSend } =
-    useChat(friend.userId);
+  const { t, language } = useTranslation();
+  const {
+    messages,
+    loading,
+    sending,
+    error,
+    newMessage,
+    setNewMessage,
+    scrollContainerRef,
+    handleSend
+  } = useChat(friend.userId);
   const myId = authService.getUserId();
+  const canSend = newMessage.trim().length > 0 && !sending;
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
+      event.preventDefault();
+      void handleSend();
+    }
+  };
 
   return (
-    <div className="flex flex-col h-[600px] glass-panel p-0 overflow-hidden relative shadow-[var(--shadow-raised)] border-transparent">
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-20 pointer-events-none">
-        <div className="flex items-center gap-3 pointer-events-auto duration-300">
-          <div className="relative">
-            <UserAvatar
-              src={friend.photoURL}
-              name={friend.displayName}
-              className="w-10 h-10 bg-totoro-blue/20 text-sm shadow-inner ring-2 ring-white/20 backdrop-blur-sm"
-              fallbackClassName="text-lg"
-            />
-            <div
-              className={`absolute bottom-0 right-0 w-3 h-3 rounded-full ring-2 ring-[color:var(--surface-raised)] ${
-                friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'
-              }`}
-            />
-          </div>
-          <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full shadow-sm">
-            <h3 className="font-bold text-totoro-gray text-sm leading-tight">
-              {friend.displayName}
-            </h3>
-          </div>
-        </div>
-        <Button
-          variant="ghost"
-          size="sm"
+    <div className="mx-auto flex h-[calc(100dvh-17rem)] min-h-[360px] max-w-3xl flex-col overflow-hidden rounded-lg glass-panel p-0 shadow-[var(--shadow-raised)] md:h-[640px]">
+      <div className="flex items-center gap-3 px-3 py-3 subtle-divider-bottom sm:px-4">
+        <button
+          type="button"
           onClick={onClose}
-          className="h-9 w-9 p-0 rounded-full bg-white/40 text-totoro-gray hover:bg-red-500 hover:text-white transition-all duration-300 shadow-sm flex items-center justify-center backdrop-blur-md pointer-events-auto"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-totoro-gray transition hover:bg-totoro-blue/10 hover:text-totoro-blue"
+          aria-label={t('social.chat.back')}
+          title={t('social.chat.back')}
         >
-          ✕
-        </Button>
-      </div>
-
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 pt-16 space-y-4 bg-gradient-to-b from-white/5 to-transparent scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent">
-        {messages.map((msg) => {
-          const isMe = msg.senderId === myId;
-          return <MessageBubble key={msg.id} message={msg} isMe={isMe} />;
-        })}
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Input Area */}
-      <div className="p-4 bg-gradient-to-b from-transparent to-white/10 backdrop-blur-[2px]">
-        {error && <p className="mb-2 text-sm font-bold text-red-600">{error}</p>}
-        <form
-          onSubmit={handleSend}
-          className="glass-card p-2 rounded-lg flex gap-2 items-center shadow-[var(--shadow-soft)] bg-white/40"
-        >
-          <Input
-            value={newMessage}
-            onChange={(val) => setNewMessage(String(val))}
-            placeholder={t('social.chat.placeholder')}
-            className="flex-1"
-            inputClassName="bg-transparent border-none shadow-none focus:ring-0 placeholder:text-totoro-gray/40 text-totoro-gray h-10 p-0"
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+        <div className="relative shrink-0">
+          <UserAvatar
+            src={friend.photoURL}
+            name={friend.displayName}
+            className="h-10 w-10 bg-totoro-blue/15"
+            fallbackClassName="text-base"
           />
-          <Button
+          <span
+            className={`absolute bottom-0 right-0 h-3 w-3 rounded-full ring-2 ring-[color:var(--surface-raised)] ${
+              friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'
+            }`}
+          />
+        </div>
+        <div className="min-w-0">
+          <h3 className="truncate font-bold leading-tight text-totoro-gray">
+            {friend.displayName}
+          </h3>
+          <p className="text-xs text-totoro-gray/60">
+            {t(`social.friends.status.${friend.status}`)}
+          </p>
+        </div>
+      </div>
+
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-3 py-4 sm:px-5"
+        aria-live="polite"
+      >
+        {loading ? (
+          <div className="flex h-full items-center justify-center text-totoro-gray/50">
+            <Loader2 className="h-6 w-6 animate-spin" />
+          </div>
+        ) : messages.length === 0 ? (
+          <div className="flex h-full flex-col items-center justify-center gap-3 text-center text-totoro-gray/60">
+            <MessageCircleHeart className="h-10 w-10 text-totoro-blue/50" />
+            <p className="max-w-xs text-sm">
+              {t('social.chat.empty').replace('{name}', friend.displayName)}
+            </p>
+          </div>
+        ) : (
+          messages.map((message, index) => {
+            const previous = messages[index - 1];
+            const showDay = !previous || !isSameCalendarDay(previous.timestamp, message.timestamp);
+            return (
+              <React.Fragment key={message.id}>
+                {showDay && (
+                  <div className="flex justify-center py-1">
+                    <span className="rounded-full bg-totoro-blue/10 px-3 py-1 text-[11px] font-bold text-totoro-blue/80">
+                      {formatDayLabel(message.timestamp, language)}
+                    </span>
+                  </div>
+                )}
+                <MessageBubble message={message} isMe={message.senderId === myId} />
+              </React.Fragment>
+            );
+          })
+        )}
+      </div>
+
+      <div className="px-3 pb-3 pt-2 subtle-divider-top sm:px-4">
+        {error && <p className="mb-2 text-sm font-bold text-red-600">{error}</p>}
+        <form onSubmit={handleSend} className="flex items-end gap-2">
+          <textarea
+            value={newMessage}
+            onChange={(event) => setNewMessage(event.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={t('social.chat.placeholder')}
+            aria-label={t('social.chat.placeholder')}
+            maxLength={MAX_SOCIAL_MESSAGE_LENGTH}
+            rows={1}
+            className="max-h-32 min-h-11 flex-1 resize-none rounded-lg bg-[var(--input-bg)] px-4 py-2.5 text-sm text-totoro-gray shadow-[inset_0_0_0_1px_var(--hairline)] placeholder:text-totoro-gray/40 focus:outline-none focus:ring-2 focus:ring-totoro-blue/30"
+          />
+          <button
             type="submit"
-            disabled={!newMessage.trim() || sending}
-            className={`
-              rounded-lg h-10 px-6 font-bold shadow-[var(--shadow-soft)] transition-all duration-300
-              ${
-                !newMessage.trim() || sending
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                  : 'bg-gradient-to-r from-totoro-blue to-blue-400 text-white hover:scale-105 btn-shimmer'
-              }
-            `}
+            disabled={!canSend}
+            aria-label={t('social.chat.send')}
+            title={t('social.chat.send')}
+            className="flex h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-totoro-blue px-4 font-bold text-white shadow-[var(--shadow-soft)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {sending ? '...' : t('social.chat.send')}
-          </Button>
+            {sending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <SendHorizontal className="h-4 w-4" />
+            )}
+            <span className="hidden sm:inline">{t('social.chat.send')}</span>
+          </button>
         </form>
       </div>
     </div>

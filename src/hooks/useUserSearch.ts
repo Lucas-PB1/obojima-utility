@@ -1,61 +1,67 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PublicUserProfile } from '@/types/social';
 import { socialService } from '@/services/socialService';
 import { logger } from '@/utils/logger';
+
+export const MIN_SEARCH_LENGTH = 3;
 
 export function useUserSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<PublicUserProfile[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
-  const [sentRequests, setSentRequests] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
-    const unsubscribe = socialService.subscribeToSentFriendRequests((requests) => {
-      setSentRequests(new Set(requests.map((request) => request.toUserId)));
-    });
+    const term = searchTerm.trim();
+    if (term.length < MIN_SEARCH_LENGTH) {
+      setResults([]);
+      setLoading(false);
+      return;
+    }
 
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
+    setLoading(true);
+    const requestId = ++requestIdRef.current;
     const delayDebounceFn = setTimeout(async () => {
-      if (searchTerm.length >= 3) {
-        setLoading(true);
-        setError(null);
-        try {
-          const users = await socialService.searchUsers(searchTerm);
-          setResults(users);
-        } catch (error) {
-          logger.error('Erro ao buscar usuários:', error);
+      setError(null);
+      try {
+        const users = await socialService.searchUsers(term);
+        // Ignore responses that arrive after the player typed something newer.
+        if (requestId === requestIdRef.current) setResults(users);
+      } catch (error) {
+        logger.error('Erro ao buscar usuários:', error);
+        if (requestId === requestIdRef.current) {
           setResults([]);
           setError(error instanceof Error ? error.message : 'Erro ao buscar usuários');
-        } finally {
-          setLoading(false);
         }
-      } else {
-        setResults([]);
+      } finally {
+        if (requestId === requestIdRef.current) setLoading(false);
       }
-    }, 500);
+    }, 400);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm]);
 
-  const handleAddFriend = async (userId: string) => {
+  const runAction = async (userId: string, action: () => Promise<void>) => {
     setLoadingMap((prev) => ({ ...prev, [userId]: true }));
     setError(null);
     try {
-      await socialService.sendFriendRequest(userId);
-      setSentRequests((prev) => new Set(prev).add(userId));
+      await action();
     } catch (error) {
-      logger.error('Erro ao adicionar amigo:', error);
+      logger.error('Erro na ação social:', error);
       setError(error instanceof Error ? error.message : 'Erro ao enviar solicitação');
     } finally {
       setLoadingMap((prev) => ({ ...prev, [userId]: false }));
     }
   };
+
+  const handleAddFriend = (userId: string) =>
+    runAction(userId, () => socialService.sendFriendRequest(userId));
+
+  const handleAcceptRequest = (userId: string, requestId: string) =>
+    runAction(userId, () => socialService.respondToFriendRequest(requestId, true));
 
   return {
     searchTerm,
@@ -63,8 +69,8 @@ export function useUserSearch() {
     results,
     loading,
     loadingMap,
-    sentRequests,
     error,
-    handleAddFriend
+    handleAddFriend,
+    handleAcceptRequest
   };
 }

@@ -11,6 +11,16 @@
   --totoro-gray: #2c3e50;
   --totoro-orange: #e67e22;
 
+  /* Register the palette as Tailwind 4 colors so opacity modifiers
+     (bg-totoro-blue/10) and gradient stops (from-totoro-green) are generated.
+     They point at the runtime variables, so the dark theme still applies. */
+  --color-totoro-blue: var(--totoro-blue);
+  --color-totoro-green: var(--totoro-green);
+  --color-totoro-yellow: var(--totoro-yellow);
+  --color-totoro-gray: var(--totoro-gray);
+  --color-totoro-orange: var(--totoro-orange);
+  --color-modal-bg: var(--modal-bg);
+
   --background: #b8d6d6;
   --foreground: #2c3e50;
   --surface: #f8fbfa;
@@ -412,4 +422,37 @@ body {
     radial-gradient(at 100% 12%, rgba(168, 232, 111, 0.1) 0px, transparent 36%),
     radial-gradient(at 92% 92%, rgba(255, 209, 102, 0.08) 0px, transparent 38%),
     radial-gradient(at 0% 100%, rgba(255, 156, 102, 0.08) 0px, transparent 34%);
+}
+
+/* Horizontal scrollers (tab bars, mobile nav) without a visible scrollbar. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes xp-shine {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}
+
+.xp-bar-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  animation: xp-shine 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-bar-shine::after {
+    animation: none;
+  }
 }

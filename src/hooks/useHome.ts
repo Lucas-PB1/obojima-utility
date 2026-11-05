@@ -15,7 +15,7 @@ export function useHome() {
     handleViewCollection
   } = useApp();
 
-  const { ingredients, markAsUsed } = useIngredients();
+  const { ingredients, attempts, markAsUsed } = useIngredients();
 
   const availableIngredients = ingredients
     .filter((ing) => !ing.used && ing.quantity > 0)
@@ -42,6 +42,7 @@ export function useHome() {
     handleTabChange,
     handleViewCollection,
     availableIngredients,
+    attempts,
     handleIngredientsUsed
   };
 }
