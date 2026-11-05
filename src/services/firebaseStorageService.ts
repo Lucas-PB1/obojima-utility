@@ -27,8 +27,9 @@ import {
 } from '@/features/dev-mode';
 
 class FirebaseStorageService {
-  private collectedIngredientsUnsubscribe: Unsubscribe | null = null;
-  private forageAttemptsUnsubscribe: Unsubscribe | null = null;
+  // One entry per active subscriber, so one subscriber's cleanup can't drop another's.
+  private collectedIngredientsListeners = new Set<Unsubscribe>();
+  private forageAttemptsListeners = new Set<Unsubscribe>();
 
   private isClient(): boolean {
     return typeof window !== 'undefined';
@@ -133,7 +134,7 @@ class FirebaseStorageService {
       const ingredientsRef = collection(db, this.getCollectedIngredientsPath());
       const q = query(ingredientsRef, orderBy('collectedAt', 'desc'));
 
-      this.collectedIngredientsUnsubscribe = onSnapshot(
+      const unsubscribe: Unsubscribe = onSnapshot(
         q,
         (snapshot) => {
           const ingredients = snapshot.docs.map((doc) => {
@@ -149,7 +150,7 @@ class FirebaseStorageService {
         },
         (error) => {
           if (this.isLogoutPermissionError(error)) {
-            this.collectedIngredientsUnsubscribe = null;
+            this.collectedIngredientsListeners.delete(unsubscribe);
             callback([]);
             return;
           }
@@ -159,11 +160,10 @@ class FirebaseStorageService {
         }
       );
 
+      this.collectedIngredientsListeners.add(unsubscribe);
       return () => {
-        if (this.collectedIngredientsUnsubscribe) {
-          this.collectedIngredientsUnsubscribe();
-          this.collectedIngredientsUnsubscribe = null;
-        }
+        unsubscribe();
+        this.collectedIngredientsListeners.delete(unsubscribe);
       };
     } catch (error) {
       logger.error('Erro ao criar subscription de ingredientes:', error);
@@ -396,7 +396,7 @@ class FirebaseStorageService {
       const attemptsRef = collection(db, this.getForageAttemptsPath());
       const q = query(attemptsRef, orderBy('timestamp', 'desc'));
 
-      this.forageAttemptsUnsubscribe = onSnapshot(
+      const unsubscribe: Unsubscribe = onSnapshot(
         q,
         (snapshot) => {
           const attempts = snapshot.docs.map((doc) => {
@@ -411,7 +411,7 @@ class FirebaseStorageService {
         },
         (error) => {
           if (this.isLogoutPermissionError(error)) {
-            this.forageAttemptsUnsubscribe = null;
+            this.forageAttemptsListeners.delete(unsubscribe);
             callback([]);
             return;
           }
@@ -421,11 +421,10 @@ class FirebaseStorageService {
         }
       );
 
+      this.forageAttemptsListeners.add(unsubscribe);
       return () => {
-        if (this.forageAttemptsUnsubscribe) {
-          this.forageAttemptsUnsubscribe();
-          this.forageAttemptsUnsubscribe = null;
-        }
+        unsubscribe();
+        this.forageAttemptsListeners.delete(unsubscribe);
       };
     } catch (error) {
       logger.error('Erro ao criar subscription de tentativas:', error);
@@ -556,14 +555,10 @@ class FirebaseStorageService {
   }
 
   cleanup(): void {
-    if (this.collectedIngredientsUnsubscribe) {
-      this.collectedIngredientsUnsubscribe();
-      this.collectedIngredientsUnsubscribe = null;
-    }
-    if (this.forageAttemptsUnsubscribe) {
-      this.forageAttemptsUnsubscribe();
-      this.forageAttemptsUnsubscribe = null;
-    }
+    this.collectedIngredientsListeners.forEach((unsubscribe) => unsubscribe());
+    this.collectedIngredientsListeners.clear();
+    this.forageAttemptsListeners.forEach((unsubscribe) => unsubscribe());
+    this.forageAttemptsListeners.clear();
   }
 }
 

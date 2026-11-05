@@ -144,8 +144,9 @@ export class ProfileService {
 
       return Array.from(usersMap.values()).slice(0, 10);
     } catch (error) {
-      console.error('Error searching users:', error);
-      return [];
+      // Let the caller show the failure instead of pretending nobody matched.
+      logger.error('Error searching users:', error);
+      throw error;
     }
   }
 

@@ -226,7 +226,7 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                     <div>
                       <p className="font-bold text-sm text-totoro-gray">{item.name}</p>
                       <p className="text-[10px] text-totoro-gray/50 uppercase font-bold">
-                        {item.type}
+                        {t(`social.trade.type.${item.type}`)}
                       </p>
                     </div>
                   </div>
@@ -235,6 +235,8 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
                       x{item.quantity}
                     </span>
                     <button
+                      type="button"
+                      aria-label={t('social.trade.remove')}
                       onClick={() => removeFromCart(index)}
                       className="p-1.5 hover:bg-red-100/50 text-totoro-gray/40 hover:text-red-500 rounded-lg transition-colors"
                     >
@@ -266,7 +268,9 @@ export function TradeModal({ friend, onClose }: TradeModalProps) {
             disabled={loading || cart.length === 0}
             className="flex-[2] bg-gradient-to-r from-totoro-blue to-blue-500 hover:shadow-lg hover:shadow-blue-500/20 text-white transition-all disabled:opacity-50 disabled:shadow-none"
           >
-            {loading ? t('social.trade.sending') : `${t('social.trade.send')} (${cart.length})`}
+            {loading
+              ? t('social.trade.sending')
+              : `${t('social.trade.send')} (${cart.reduce((acc, item) => acc + item.quantity, 0)})`}
           </Button>
         </div>
       </div>

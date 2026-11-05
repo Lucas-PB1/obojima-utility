@@ -29,7 +29,8 @@ interface PotionData {
 }
 
 class FirebaseCreatedPotionService {
-  private potionsUnsubscribe: Unsubscribe | null = null;
+  // One entry per active subscriber, so one subscriber's cleanup can't drop another's.
+  private potionsListeners = new Set<Unsubscribe>();
 
   private isClient(): boolean {
     return typeof window !== 'undefined';
@@ -180,7 +181,7 @@ class FirebaseCreatedPotionService {
       const potionsRef = collection(db, this.getPotionsPath());
       const q = query(potionsRef, orderBy('createdAt', 'desc'));
 
-      this.potionsUnsubscribe = onSnapshot(
+      const unsubscribe: Unsubscribe = onSnapshot(
         q,
         (snapshot) => {
           const potions = snapshot.docs.map((doc) => {
@@ -198,11 +199,10 @@ class FirebaseCreatedPotionService {
         }
       );
 
+      this.potionsListeners.add(unsubscribe);
       return () => {
-        if (this.potionsUnsubscribe) {
-          this.potionsUnsubscribe();
-          this.potionsUnsubscribe = null;
-        }
+        unsubscribe();
+        this.potionsListeners.delete(unsubscribe);
       };
     } catch (error) {
       logger.error('Erro ao criar subscription de poções:', error);
@@ -389,10 +389,8 @@ class FirebaseCreatedPotionService {
   }
 
   cleanup(): void {
-    if (this.potionsUnsubscribe) {
-      this.potionsUnsubscribe();
-      this.potionsUnsubscribe = null;
-    }
+    this.potionsListeners.forEach((unsubscribe) => unsubscribe());
+    this.potionsListeners.clear();
   }
 }
 

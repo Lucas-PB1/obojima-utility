@@ -47,6 +47,8 @@ export interface AdminUserDetails {
     value: string;
     tone?: 'default' | 'success' | 'warning' | 'danger';
   }>;
+  /** Admin actions performed on this account, newest first. */
+  adminLog?: AdminAuditEntry[];
 }
 
 export interface AdminDashboardState {
@@ -58,4 +60,51 @@ export interface AdminDashboardState {
 export interface AdminMutationResult {
   success: boolean;
   message?: string;
+}
+
+export type AdminAuditAction =
+  | 'user.update'
+  | 'user.role'
+  | 'user.disable'
+  | 'user.enable'
+  | 'user.gold'
+  | 'user.delete'
+  | 'user.sessions'
+  | 'user.notify'
+  | 'item.grant'
+  | 'item.update'
+  | 'item.delete'
+  | 'report.status'
+  | 'users.sync'
+  | 'maintenance.run';
+
+export interface AdminAuditEntry {
+  id: string;
+  actorId: string;
+  actorName: string;
+  action: AdminAuditAction;
+  targetUid?: string | null;
+  targetName?: string | null;
+  summary: string;
+  createdAt: string;
+}
+
+export interface AdminReportRow extends Omit<UserReport, 'createdAt'> {
+  createdAt: string;
+  reviewedAt?: string | null;
+  reviewedBy?: string | null;
+  resolutionNote?: string | null;
+  reporterName: string;
+  reportedName: string;
+}
+
+export type AdminItemType = 'ingredient' | 'potion';
+
+export interface AdminGrantPayload {
+  type: AdminItemType;
+  /** Catalog entry: an Ingredient for ingredients, a Potion for potions. */
+  item: { id: number; nome: string; raridade?: string; [key: string]: unknown };
+  category?: 'combat' | 'utility' | 'whimsy';
+  quantity: number;
+  notify?: boolean;
 }

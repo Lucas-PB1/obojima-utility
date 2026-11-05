@@ -77,7 +77,8 @@ function fromStoredSettings(settings: Settings | StoredSettings): Settings {
 }
 
 class FirebaseSettingsService {
-  private settingsUnsubscribe: Unsubscribe | null = null;
+  // One entry per active subscriber, so one subscriber's cleanup can't drop another's.
+  private settingsListeners = new Set<Unsubscribe>();
 
   private isClient(): boolean {
     return typeof window !== 'undefined';
@@ -194,7 +195,7 @@ class FirebaseSettingsService {
     try {
       const userRef = doc(db, this.getSettingsPath());
 
-      this.settingsUnsubscribe = onSnapshot(
+      const unsubscribe: Unsubscribe = onSnapshot(
         userRef,
         (snapshot) => {
           if (snapshot.exists()) {
@@ -215,11 +216,10 @@ class FirebaseSettingsService {
         }
       );
 
+      this.settingsListeners.add(unsubscribe);
       return () => {
-        if (this.settingsUnsubscribe) {
-          this.settingsUnsubscribe();
-          this.settingsUnsubscribe = null;
-        }
+        unsubscribe();
+        this.settingsListeners.delete(unsubscribe);
       };
     } catch (error) {
       logger.error('Erro ao criar subscription de configurações:', error);
@@ -370,10 +370,8 @@ class FirebaseSettingsService {
   }
 
   cleanup(): void {
-    if (this.settingsUnsubscribe) {
-      this.settingsUnsubscribe();
-      this.settingsUnsubscribe = null;
-    }
+    this.settingsListeners.forEach((unsubscribe) => unsubscribe());
+    this.settingsListeners.clear();
   }
 }
 

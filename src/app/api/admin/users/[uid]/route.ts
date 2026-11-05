@@ -3,7 +3,9 @@ import { adminAuth, adminDb } from '@/config/firebase-admin';
 import { logger } from '@/utils/logger';
 import { UserProfile } from '@/types/auth';
 import { apiAuthErrorResponse, requireAdmin } from '@/lib/server/apiAuth';
-import { AdminUserDetails } from '@/features/admin/types';
+import { AdminAuditAction, AdminUserDetails } from '@/features/admin/types';
+import { getSelfActionBlock } from '@/features/admin/domain/adminRules';
+import { listAdminAudit, logAdminAction } from '@/lib/server/adminAudit';
 import {
   BlockedUser,
   ChatConversation,
@@ -98,6 +100,7 @@ async function readUserDetails(uid: string): Promise<AdminUserDetails> {
     ...(normalizeFirestoreValue(userDoc.data()) as UserProfile),
     uid
   };
+  const adminLog = await listAdminAudit({ targetUid: uid, limit: 50 }).catch(() => []);
   const settings = (userDoc.data()?.settings || {}) as { gold?: number };
 
   const reports = [
@@ -131,7 +134,8 @@ async function readUserDetails(uid: string): Promise<AdminUserDetails> {
       { id: 'createdAt', label: 'Criado em', value: user.createdAt || '-' },
       { id: 'updatedAt', label: 'Atualizado em', value: user.updatedAt || '-' },
       { id: 'lastLogin', label: 'Último login', value: user.lastLogin || '-' }
-    ]
+    ],
+    adminLog
   };
 }
 
@@ -151,53 +155,140 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ uid:
   }
 }
 
+const BATCH_LIMIT = 400;
+
+async function deleteRefs(refs: FirebaseFirestore.DocumentReference[]): Promise<number> {
+  for (let i = 0; i < refs.length; i += BATCH_LIMIT) {
+    const batch = adminDb.batch();
+    refs.slice(i, i + BATCH_LIMIT).forEach((ref) => batch.delete(ref));
+    await batch.commit();
+  }
+  return refs.length;
+}
+
+/**
+ * Removes everything that belongs to the account so it no longer shows up in
+ * search, friend lists or chats. Reports and trade records are kept as history.
+ */
+async function deleteUserData(uid: string) {
+  const [friendships, sentRequests, receivedRequests, blocksBy, blocksOn, chats] =
+    await Promise.all([
+      adminDb.collection('friends').where('participants', 'array-contains', uid).get(),
+      adminDb.collection('friendRequests').where('fromUserId', '==', uid).get(),
+      adminDb.collection('friendRequests').where('toUserId', '==', uid).get(),
+      adminDb.collection('blocks').where('blockerId', '==', uid).get(),
+      adminDb.collection('blocks').where('blockedUserId', '==', uid).get(),
+      adminDb.collection('chats').where('participants', 'array-contains', uid).get()
+    ]);
+
+  const relationshipRefs = [
+    ...friendships.docs,
+    ...sentRequests.docs,
+    ...receivedRequests.docs,
+    ...blocksBy.docs,
+    ...blocksOn.docs
+  ].map((doc) => doc.ref);
+
+  await deleteRefs(relationshipRefs);
+  // recursiveDelete also removes subcollections (messages, inventory, notifications...).
+  for (const chat of chats.docs) await adminDb.recursiveDelete(chat.ref);
+  await adminDb.collection('public_users').doc(uid).delete();
+  await adminDb.recursiveDelete(adminDb.collection('users').doc(uid));
+
+  return {
+    friendships: friendships.size,
+    requests: sentRequests.size + receivedRequests.size,
+    blocks: blocksBy.size + blocksOn.size,
+    chats: chats.size
+  };
+}
+
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
   try {
-    await requireAdmin(req);
+    const admin = await requireAdmin(req);
 
     const { uid } = await params;
     const body = await req.json();
     const { displayName, disabled, role, gold } = body as UserUpdateBody;
 
-    const updates: Partial<UserProfile> = {};
-    const authUpdates: { displayName?: string; disabled?: boolean } = {};
-
-    if (displayName !== undefined) {
-      authUpdates.displayName = displayName;
-      updates.displayName = displayName;
+    const selfBlock = getSelfActionBlock(admin.uid, uid, { role, disabled });
+    if (selfBlock) {
+      return NextResponse.json({ success: false, error: selfBlock }, { status: 400 });
     }
-    if (disabled !== undefined) {
+    if (role !== undefined && role !== 'admin' && role !== 'user') {
+      return NextResponse.json({ success: false, error: 'Invalid role' }, { status: 400 });
+    }
+    if (displayName !== undefined && !String(displayName).trim()) {
+      return NextResponse.json(
+        { success: false, error: 'Nome não pode ficar vazio' },
+        { status: 400 }
+      );
+    }
+
+    const userRef = adminDb.collection('users').doc(uid);
+    const before = (await userRef.get()).data() || {};
+    const targetName = String(before.displayName || before.email || uid);
+
+    const authUpdates: { displayName?: string; disabled?: boolean } = {};
+    const firestoreUpdates: Record<string, unknown> = { updatedAt: new Date().toISOString() };
+    const changes: Array<{ action: AdminAuditAction; summary: string }> = [];
+
+    if (displayName !== undefined && displayName.trim() !== before.displayName) {
+      authUpdates.displayName = displayName.trim();
+      firestoreUpdates.displayName = displayName.trim();
+      changes.push({
+        action: 'user.update',
+        summary: `Nome alterado de "${before.displayName || '-'}" para "${displayName.trim()}"`
+      });
+    }
+    if (disabled !== undefined && disabled !== Boolean(before.disabled)) {
       authUpdates.disabled = disabled;
-      updates.disabled = disabled;
+      firestoreUpdates.disabled = disabled;
+      changes.push({
+        action: disabled ? 'user.disable' : 'user.enable',
+        summary: disabled ? 'Conta desativada' : 'Conta reativada'
+      });
+    }
+    if (role !== undefined && role !== before.role) {
+      firestoreUpdates.role = role;
+      changes.push({
+        action: 'user.role',
+        summary: `Função alterada de ${before.role || 'user'} para ${role}`
+      });
+    }
+    if (gold !== undefined) {
+      const nextGold = Math.max(0, Math.floor(Number(gold) || 0));
+      const previousGold = Math.max(0, Math.floor(Number(before.settings?.gold || 0)));
+      if (nextGold !== previousGold) {
+        firestoreUpdates['settings.gold'] = nextGold;
+        changes.push({ action: 'user.gold', summary: `Gold: ${previousGold} → ${nextGold}` });
+      }
+    }
+
+    if (changes.length === 0) {
+      return NextResponse.json({ success: true, message: 'Nada para atualizar' });
     }
 
     if (Object.keys(authUpdates).length > 0) {
       await adminAuth.updateUser(uid, authUpdates);
     }
+    await userRef.update(firestoreUpdates);
 
-    const firestoreUpdates: Partial<UserProfile> & { updatedAt: string } = {
-      ...updates,
-      updatedAt: new Date().toISOString()
-    };
-    if (role !== undefined) {
-      if (role !== 'admin' && role !== 'user') {
-        return NextResponse.json({ success: false, error: 'Invalid role' }, { status: 400 });
-      }
-      firestoreUpdates.role = role;
-    }
-    if (gold !== undefined) {
+    if (firestoreUpdates.displayName) {
+      const name = String(firestoreUpdates.displayName);
       await adminDb
-        .collection('users')
+        .collection('public_users')
         .doc(uid)
-        .update({
-          ...firestoreUpdates,
-          'settings.gold': Math.max(0, Math.floor(Number(gold) || 0))
-        });
-
-      return NextResponse.json({ success: true, message: 'Usuário atualizado com sucesso' });
+        .set({ displayName: name, searchName: name.toLowerCase() }, { merge: true });
     }
 
-    await adminDb.collection('users').doc(uid).update(firestoreUpdates);
+    // A disabled Firebase account keeps working until its ID token expires
+    // (up to an hour); revoking refresh tokens signs it out everywhere.
+    if (disabled === true) await adminAuth.revokeRefreshTokens(uid);
+
+    await Promise.all(
+      changes.map((change) => logAdminAction(admin, change.action, change.summary, uid, targetName))
+    );
 
     return NextResponse.json({ success: true, message: 'Usuário atualizado com sucesso' });
   } catch (error) {
@@ -212,9 +303,16 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ui
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
   try {
-    await requireAdmin(req);
+    const admin = await requireAdmin(req);
 
     const { uid } = await params;
+    const selfBlock = getSelfActionBlock(admin.uid, uid, { delete: true });
+    if (selfBlock) {
+      return NextResponse.json({ success: false, error: selfBlock }, { status: 400 });
+    }
+
+    const before = (await adminDb.collection('users').doc(uid).get()).data() || {};
+    const targetName = String(before.displayName || before.email || uid);
 
     try {
       await adminAuth.deleteUser(uid);
@@ -222,9 +320,16 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ u
       logger.warn(`User ${uid} not found in Auth, continuing with Firestore cleanup.`);
     }
 
-    await adminDb.collection('users').doc(uid).delete();
+    const removed = await deleteUserData(uid);
+    await logAdminAction(
+      admin,
+      'user.delete',
+      `Conta excluída (${removed.friendships} amizades, ${removed.requests} solicitações, ${removed.blocks} bloqueios, ${removed.chats} chats removidos)`,
+      uid,
+      targetName
+    );
 
-    return NextResponse.json({ success: true, message: 'Usuário excluído com sucesso' });
+    return NextResponse.json({ success: true, message: 'Usuário excluído com sucesso', removed });
   } catch (error) {
     const authResponse = apiAuthErrorResponse(error);
     if (authResponse) return authResponse;

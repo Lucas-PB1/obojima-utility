@@ -28,6 +28,14 @@ export function MainTabNav({ tabs, activeTab, onTabChange }: MainTabNavProps) {
             <span className="relative z-10 flex items-center gap-2">
               <span className="opacity-80">{tab.icon}</span>
               <span className="hidden sm:inline">{tab.label}</span>
+              {!!tab.badge && (
+                <span
+                  className="flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-black tracking-normal text-white"
+                  aria-label={`${tab.badge}`}
+                >
+                  {tab.badge > 99 ? '99+' : tab.badge}
+                </span>
+              )}
             </span>
             {activeTab === tab.id && (
               <motion.div
